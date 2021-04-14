@@ -1,0 +1,9 @@
+[Added Associations]
+
+[Default Applications]
+application/pdf=org.pwmt.zathura.desktop
+image/jpeg=eom.desktop
+image/png=eom.desktop 
+text/html=brave-browser.desktop
+
+[Removed Associations]

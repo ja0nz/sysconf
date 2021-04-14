@@ -1,0 +1,308 @@
+#+STARTUP: content
+
+* TLDR
+This guide will walk you through the arch linux base system installation.
+The guide loosely follows the official [[https://wiki.archlinux.org/index.php/Installation_guide#Installation][ArchLinux Installation Guide]]
+
+* Contents
+:PROPERTIES:
+:TOC:      :include siblings
+:END:
+
+:CONTENTS:
+- [[#contents][Contents]]
+- [[#prelude---make-a-bootable-arch-pendrive-booting-up-and-connect-to-a-network][*Prelude* - make a bootable arch pendrive, booting up and connect to a network]]
+  - [[#make-a-bootable-ubs-pendrive][Make a bootable UBS pendrive]]
+    - [[#from-another-linux][From another Linux]]
+    - [[#from-windows][From Windows]]
+  - [[#boot-up-the-system][Boot up the system]]
+    - [[#select-another-keyboard-layout-instead-of-the-us-preset][Select another keyboard layout instead of the US preset]]
+  - [[#connect-to-the-internet][Connect to the internet]]
+    - [[#connect-to-wifi-with-wifi-menu][Connect to wifi with wifi-menu]]
+    - [[#connect-to-wifi-adhoc-with-wpa_supplicant][Connect to wifi adhoc with wpa_supplicant]]
+    - [[#connect-to-wifi-with-wpa_cli][Connect to wifi with wpa_cli]]
+    - [[#enable-dhcp][Enable dhcp]]
+- [[#installation---a-base-system][*Installation* - a base system]]
+  - [[#reflector---select-the-mirrors][Reflector - select the mirrors]]
+  - [[#install-essential-packages][Install essential packages]]
+  - [[#generate-etcfstab][Generate /etc/fstab]]
+  - [[#chroot][Chroot]]
+  - [[#timezone][Timezone]]
+  - [[#localization][Localization]]
+    - [[#fonts---dealing-with-hidpi-screens][*Fonts* - dealing with HiDPI screens]]
+  - [[#network-configuration][Network configuration]]
+  - [[#initramfs][Initramfs]]
+  - [[#root-password][Root password]]
+  - [[#boot-loader-systemd-boot][Boot loader; systemd-boot]]
+- [[#attention---futher-settings-before-rebooting][*Attention* - futher settings BEFORE rebooting]]
+- [[#finish-and-reboot][Finish and reboot]]
+:END:
+
+
+* *Prelude* - make a bootable arch pendrive, booting up and connect to a network
+This section will get you up and running Arch Linux.
+
+** Make a bootable UBS pendrive
+ You need to make a bootable arch linux pendrive of course
+
+*** From another Linux
+#+BEGIN_SRC shell
+# Create a bootable linux pendrive
+# ATTENTION: run 'lsblk' before to check if you selected the right block device!
+PATHISO=path/to/downloaded.iso
+BLKDEST=/dev/sdb # Attention!
+dd bs=4M if=$PATHISO of=$BLKDEST status=progress oflag=sync
+#+END_SRC
+
+*** From Windows
+ There are methods for this step in Windows too if needed, f.e. [[https://www.balena.io/etcher/][Balena Etcher]]
+
+** Boot up the system
+Having everything prepared we can startup the system, press F12, and boot into the pendrive.
+If the pendrive is not recognized on boot try another USB port.
+
+*** Select another keyboard layout instead of the US preset
+#+begin_src shell
+# USB boot - Select a keymap
+localectl list-keysmaps | grep de # or at, gb, neo
+loadkeys <selectYours>
+#+end_src
+
+** Connect to the internet
+In the best case you are connected to an ethernet cable which automatically connects to a dhcp provided connection.
+#+begin_src shell
+# Check connectiviy
+ip a | grep inet # Look out for something like "inet 192.168.xxx.xxx"
+#+end_src
+
+**** Connect to wifi with wifi-menu
+ #+begin_src shell
+ # 1. method: Connect to inet with wifi-menu
+ wifi-menu
+ #+end_src
+
+**** Connect to wifi adhoc with wpa_supplicant
+ #+BEGIN_SRC shell
+ # 2. method: a manual method to connect
+ ip link # Get interface name
+ ip link set INTERFACE up # Start wifi interface
+ set +o history
+ wpa_supplicant -B -i INTERFACE -c <(wpa_passphrase SSID PASSPHRASE) &
+ set -o history
+ #+END_SRC
+
+**** Connect to wifi with wpa_cli
+ #+BEGIN_SRC shell
+ # 3. method: use the wpa_cli tool
+ ip link # Get interface name
+ ip link set INTERFACE up # Start wifi interface
+
+ wpa_supplicant -B -i INTERFACE -c <(echo "ctrl_interface=/run/wpa_supplicant update_config=1")
+ wpa_cli -i INTERFACE
+ # In repl
+ > scan
+ > scan_results
+ If you see the network
+ > add_network
+ > set_network 0 ssid "Network Name"
+ > set_network 0 psk "Network Password"
+ > enable_network 0
+ > save_config
+ # Ctrl-c
+ #+END_SRC
+
+**** Enable dhcp
+ At this step you should be connected to the router but not the internet.
+ #+begin_src shell
+ # # Enable dhcp
+ dhcpcd
+
+ # Test with ip a or ping
+ ping -c3 google.com
+ #+end_src
+
+*** Synchronize with network time protocol
+ #+begin_src shell
+ # Synchronize time
+ timedatectl set-ntp true
+ #+end_src
+
+*** Check EFI boot entries
+ There might be already a Windows Boot Manager on dual boot.
+ You will add a *Linux Boot Manager* later on and move it to first boot priority.
+
+ #+begin_src shell
+ # Just test if EFI is available - if not you can skip this guide
+ efibootmgr
+ #+end_src
+
+* *Interlude* - get your mountpoints in place
+Refer the other guide for a *luks encrypted btrfs partioning* and mounting.
+Link: [[file:multiboot-btrfs-partitioning.org][multiboot btrfs partitioning]]
+
+* *Installation* - a base system
+With all mountpoints in place you may continue with the installation.
+
+** Reflector - select the mirrors
+ Arch comes with [[https://wiki.archlinux.org/index.php/reflector][reflector]] to retrieve the latest mirror list from the Arch Linux Mirror Status page, filter the most up-to-date mirrors, sort them by speed and overwrite the file /etc/pacman.d/mirrorlist.
+ #+begin_src shell
+ # Generate mirrorlist for Germany
+ reflector -c Germany -a 6 --sort rate --save /etc/pacman.d/mirrorlist
+ #+end_src
+
+** Install essential packages
+Use the pacstrap script to install the base package, Linux kernel and firmware for common hardware:
+#+begin_src shell
+# Essential packages
+pacstrap /mnt linux-lts base base-devel btrfs-progs intel-ucode linux-firmware vim
+#+end_src
+Reference:
+- [[https://archlinux.org/packages/core/x86_64/linux-lts/][linux-lts]] kernel (or *linux* for the latest kernel)
+- [[https://archlinux.org/packages/core/any/base/][base]] package
+- [[https://archlinux.org/groups/x86_64/base-devel/][base-devel]] package group
+- [[https://archlinux.org/packages/core/x86_64/btrfs-progs/][btrfs-progs]] package
+- [[https://archlinux.org/packages/extra/any/intel-ucode/][intel-ucode]] package (or amd-ucode if amd chipset)
+- [[https://archlinux.org/packages/core/any/linux-firmware/][linux-firmware]] package (f. e. wireless driver for Intel's current wireless chips)
+- [[https://archlinux.org/packages/extra/x86_64/vim/][vim]] package (editor)
+
+** Generate /etc/fstab
+This generates with LABEL=ROOT. Use *-U* flag instead for UUID.
+ #+begin_src shell
+ # Generate /etc/fstab with LABEL=ROOT
+ genfstab -L /mnt >> /mnt/etc/fstab
+ #+end_src
+
+** Chroot
+Change root into the new system
+#+begin_src shell
+# Change root
+arch-chroot /mnt
+#+end_src
+
+** Timezone
+#+begin_src shell
+#Set the time zone:
+ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
+# Run hwclock(8) to generate /etc/adjtime:
+hwclock --systohc
+#+end_src
+
+** Localization
+#+begin_src shell
+# Edit */etc/locale.gen* and uncomment *en_US.UTF-8 UTF-8* and other needed locales.
+vim /etc/locale.gen
+locale-gen
+
+# Create the locale.conf(5) file, and set the LANG variable accordingly:
+echo LANG=en_US.UTF-8 > /etc/locale.conf
+echo LANGUAGE=en_US >> /etc/locale.conf
+
+# List keymaps again
+localectl list-keysmaps | grep de # or at, gb, neo
+# If you set the keyboard layout, make the changes persistent in vconsole.conf(5):
+echo KEYMAP=de-latin1 > /etc/vconsole.conf
+echo FONT=lat9w-16 >> /etc/vconsole.conf
+#+end_src
+
+*** *Fonts* - dealing with HiDPI screens
+At this point it makes sense to persist a font which renders big enough to read on HiDPI screens.
+#+begin_src shell
+# Install the terminus font
+pacaur -S terminus-font
+# Test font - depending on the size you want: ter-p24n, ter-p28n, ter-p32n
+setfont ter-p32n # or ter-p32b for bold
+# If the font looks right persist it in vconsole.conf
+#+end_src
+
+** Network configuration
+Create the hostname file:
+#+begin_src shell
+ # Set your hostname
+ echo alfa > /etc/hostname
+ # Add matching entries to hosts(5):
+ echo "
+ 127.0.0.1 localhost
+ ::1       localhost
+ 127.0.0.1 alfa.localdomain alfa
+ " >> /etc/hosts
+#+end_src
+
+** Initramfs
+You must recreate the initramfs with some more [[https://wiki.archlinux.org/index.php/Mkinitcpio#Common_hooks][HOOKS]] added.
+- keyboard -> this should be present BUT you should move it before encrypt. Otherwise you may not be able to type your password
+- keymap -> to activate your */etc/vconsole.conf KEYMAP*
+- encrypt -> Adds the dm_crypt kernel module and the cryptsetup tool to the image to encrpy the partition on boot
+- btrfs (optional) -> This hook is not required for using Btrfs on a single device / single hard drive. Just added for reference.
+- fsck -> Can be removed
+
+#+begin_src shell
+ # Change mkinitcpio.conf
+ vim /etc/mkinitcpio.conf
+ # HOOKS=(base udev autodetect keyboard keymap modconf block encrypt btrfs filesystems)
+
+ # Recreate it
+ mkinitcpio -p linux-lts # Or just linux if you use the latest kernel
+#+end_src
+
+** Root password
+#+begin_src shell
+# Set the root password
+passwd
+#+end_src
+
+** Boot loader; systemd-boot
+Here we are using [[https://wiki.archlinux.org/index.php/Systemd-boot][systemd-boot]] which is far better than GRUB in terms of speed and size.
+If you have an Intel or AMD CPU, enable [[https://wiki.archlinux.org/index.php/Microcode#systemd-boot][microcode]] updates in addition.
+
+#+begin_src shell
+# Install systemd-boot:
+bootctl --path=/boot install
+
+# The UUID of the root partition can be determined via:
+blkid -s UUID -o value /dev/sdX<no> #The identifier of the LUKS2 partition!
+
+# The subvolid can be determined via /etc/fstab:
+cat /etc/fstab # Look for the / root subvolid
+
+# Create a file /boot/loader/entries/arch.conf and fill it with:
+echo "
+title Arch Linux
+linux /vmlinuz-linux-lts         # or /vmlinux-linux
+initrd /intel-ucode.img
+initrd /initramfs-linux-lts.img  # or /initramfs-linux.img
+options cryptdevice=UUID=<YOUR UUID>:luks:allow-discards root=/dev/mapper/luks rootflags=subvolid=<YOUR ID> rd.luks.options=discard rw
+" > /boot/loader/entries/arch.conf
+
+# Edit file /boot/loader/loader.conf and fill it with:
+echo "
+default  arch
+timeout  4
+console-mode max
+editor   no
+" > /boot/loader/loader.conf
+#+end_src
+
+
+
+
+
+* *Attention* - futher settings BEFORE rebooting
+If you reboot now you will certainly have running Arch Linux system BUT without network connection:)
+So before you reboot you should install some more packages.
+
+As this is already super long you find more information in the Arch guide.
+
+* Finish and reboot
+Exit chroot, unmount partitions and reboot:
+#+begin_src shell
+# Final sequence
+exit
+umount -R /mnt
+reboot
+#+end_src
+
+Have fun with your system!
+* Further references
+[[https://austinmorlan.com/posts/arch_linux_install/][Austin Morlan - Arch Linux - UEFI, systemd-boot, LUKS, and btrfs]]
+[[https://www.youtube.com/watch?v=oT7gs2CmsnQ][Unicks - Arch My Way 1 [YouTube German]​]]
+[[https://www.nerdstuff.org/posts/2020/2020-004_arch_linux_luks_btrfs_systemd-boot/][Nerdstuff.org - Installing Arch Linux with Btrfs, systemd-boot and LUKS]]

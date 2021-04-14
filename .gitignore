@@ -1,0 +1,6 @@
+*.AppImage
+.gitsecret/keys/random_seed
+!*.secret
+_secret/ssh/known_hosts
+_secret/ssh/ssh-peteler-family
+_secret/ssh/ssh-peteler-family-cert.pub

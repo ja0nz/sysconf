@@ -1,0 +1,213 @@
+* Sysconf - a opinionated home of *nix systems
+** Content
+:PROPERTIES:
+:TOC:      :include all
+:END:
+:CONTENTS:
+- [[#sysconf---a-opinionated-home-of-nix-systems][Sysconf - a opinionated home of *nix systems]]
+  - [[#content][Content]]
+  - [[#intro][Intro]]
+- [[#programs][Programs]]
+- [[#online-services][Online services]]
+- [[#devops][DevOps]]
+  - [[#informative-system][Informative system]]
+  - [[#find-and-discover][Find and discover]]
+  - [[#process-management][Process management]]
+  - [[#networking][Networking]]
+  - [[#xdg-mime-applications][XDG MIME Applications]]
+  - [[#command-line-utilities][Command Line Utilities]]
+  - [[#security---encryption-keymanagement][Security - encryption, keymanagement]]
+  - [[#partitioning][Partitioning]]
+  - [[#virtualization][Virtualization]]
+  - [[#sound-management][Sound management]]
+  - [[#maildir][Maildir]]
+- [[#development---coding-writing][Development - coding, writing]]
+  - [[#utilities][Utilities]]
+  - [[#dictionaries][Dictionaries]]
+  - [[#databases][Databases]]
+  - [[#python][Python]]
+  - [[#javascript][JavaScript]]
+  - [[#nix][Nix]]
+  - [[#other-languages][Other languages]]
+- [[#file-generators---extractors-compressors-converters-parsers][File Generators - Extractors, Compressors, Converters, Parsers]]
+- [[#presentation][Presentation]]
+- [[#gui---theme-menu-notifications][GUI - theme, menu, notifications]]
+:END:
+
+** TODO Intro
+   A copy paste nix* packages! Use with nix package manager
+* Copy paste your programs
+* Programs
+  #+begin_src nix
+  emacs                     # The extensible, customizable GNU text editor
+  firefox-bin               # A web browser built from Firefox source tree (with plugins: )
+  chromium                  # An open source web browser from Google
+  brave                     # Privacy-oriented browser for Desktop and Laptop computers
+  vlc                       # Cross-platform media player and streaming server
+  (mate.caja-with-extensions.override { extensions = [ mate.caja-extensions mate.caja-dropbox ]; })
+  mate.eom                  # An image viewing and cataloging program for the MATE desktop
+  libreoffice               # Comprehensive, professional-quality productivity suite (Still/Stable release)
+  gimp                     # The GNU Image Manipulation Program
+  okular                    # KDE document viewer
+  #+end_src
+
+
+* Online services
+  #+begin_src nix
+  bitwarden-cli           # A secure and free password manager for all of your devices.
+  zoom-us                # zoom.us video conferencing application
+  dropbox-cli            # Command line client for the dropbox daemon
+  spotify                # Play music from the Spotify music service
+  signal-desktop         # Private, simple, and secure messenger
+  discord                # All-in-one cross-platform voice and text chat for gamers
+  #+end_src
+
+
+* Operations
+** Informative system
+   #+begin_src nix
+   neofetch                 # A fast, highly customizable system info script
+   inxi                     # A full featured CLI system information tool
+   #+end_src
+
+** Find and discover
+   #+begin_src nix
+   tree                     # Command to produce a depth indented directory listing
+   fzf                      # A command-line fuzzy finder written
+   bat              # A cat(1) clone with syntax highlighting and Git integration
+   ripgrep          # A utility that combines the usability of The Silver Searcher
+   exa              # Replacement for 'ls' written in Rust
+   #+end_src
+
+** Process management
+   #+begin_src nix
+   htop                     # An interactive process viewer for Linux
+   psmisc                   # A set of small useful utilities that use the proc filesystem - fuser, killall, pidof, pstree
+#+end_src
+
+** Networking
+   #+begin_src nix
+   httpie                   # A command line HTTP client whose goal is to make CLI human-friendly
+   wget                     # Tool for retrieving files using HTTP, HTTPS, and FTP
+   curl                     # A command line tool for transferring files with URL syntax
+   iftop                     # Display bandwidth usage on a network interface
+   mtr                       # A network diagnostics tool
+   croc                      # Easily and securely send things from one computer to another
+   nmap                      # A free and open source utility for network discovery and security auditing
+   tcpdump                   # Network sniffer
+   gnutls                    # The GNU Transport Layer Security Library
+   #+end_src
+
+** XDG MIME Applications
+   #+begin_src nix
+   xdg_utils                # A set of command line tools that assist applications desktop integration
+   shared-mime-info         # A database of common MIME types
+   file                     # A program that shows the type of files
+   #+end_src
+
+** Command Line Utilities
+   Some command line helpers
+   #+begin_src nix
+   calc # C-style arbitrary precision calculator
+   rlwrap # Readline wrapper for console programs
+   #+end_src
+
+** Security - encryption, keymanagement
+   #+begin_src nix
+   cryptsetup               # LUKS for dm-crypt
+   gnupg                    # GNU Privacy Guard, a GPL OpenPGP implementation
+   mkpasswd                 # Overfeatured front-end to crypt, from Debian whois package
+   pinentry                 # GnuPG’s ncurses interface to passphrase input
+   #+end_src
+
+** Partitioning
+   #+begin_src nix
+   gparted                  # Graphical disk partitioning tool
+   parted                    # Create, destroy, resize, check, and copy partitions
+   #+end_src
+
+** Virtualization
+   #+begin_src nix
+   virtmanager               # Desktop user interface for managing virtual machines
+   #+end_src
+
+** Sound management
+   #+begin_src nix
+   pamixer                  # Pulseaudio command line mixer
+   pavucontrol              # PulseAudio Volume Control
+   playerctl                # Command-line utility for controlling media players that implement MPRIS
+   #+end_src
+
+** Maildir
+   #+begin_src src
+   mu                        # A collection of utilties for indexing and searching Maildirs
+   isync                     # Free IMAP and MailDir mailbox synchronizer
+   #+end_src
+
+
+* Development - coding, writing
+** Utilities
+   #+begin_src nix
+   devd # A local webserver for developers
+   (callPackage sizzy {})    # The browser for Developers & Designers
+   #+end_src
+
+** Dictionaries
+   #+begin_src nix
+   aspell                   # Spell checker for many languages
+   aspellDicts.en           # Aspell dictionary for English
+   aspellDicts.de           # Aspell dictionary for German
+   #+end_src
+
+** Databases
+   #+begin_src nix
+   sqlite # A self-contained, serverless, zero-configuration SQL db engine
+   #+end_src
+** Python
+   #+begin_src nix
+   python3
+   #+end_src
+
+** JavaScript
+   #+begin_src nix
+   nodejs_latest             # Event-driven I/O framework for the V8 JavaScript engine
+   deno                      # A secure runtime for JavaScript and TypeScript
+   yarn                      # Fast, reliable, and secure dependency management for javascript
+   #+end_src
+
+** Nix
+   Nix language ecosystem
+   #+begin_src nix
+   nixfmt # An opinionated formatter for Nix
+   cachix                   # Command line client for Nix binary cache hosting https://cachix.org
+   manix                    # A Fast Documentation Searcher for Nix
+   nixpkgs-fmt              # Nix code formatter for nixpkgs
+   nix-info
+   nix-index                # A files database for nixpkgs
+   #+end_src
+** Other languages
+   #+begin_src nix
+   guile # Embedded Scheme implementation
+   racket # A programmable programming language
+   #+end_src
+
+
+* File Generators - Extractors, Compressors, Converters, Parsers
+  #+begin_src nix
+  unp # Command line tool for unpacking archives easily
+  unzip                    # An extraction utility for archives compressed in .zip format
+  zip                      # Compressor/archiver for creating and modifying zipfiles
+  pandoc # Conversion between markup formats
+  pdftk                    # Simple tool for doing everyday things with PDF documents - split and merge
+  ditaa # Convert ascii art diagrams into proper bitmap graphics
+  jq # A lightweight and flexible command-line JSON processor
+  graphviz # Graph visualization tools
+  imagemagick              # A software suite to create, edit, compose, or convert bitmap images
+  #+end_src
+
+
+* Presentation
+  #+begin_src nix
+  catt                    # Cast All The Things allows you to send videos from many, many online sources to your Chromecast
+  xlibs.xeyes              # Moving eyes
+  #+end_src

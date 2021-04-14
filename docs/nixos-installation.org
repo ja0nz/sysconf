@@ -1,0 +1,164 @@
+#+STARTUP: content
+
+* TLDR
+This guide will walk you through the NixOS linux base system installation.
+The guide loosely follows the official [[https://nixos.org/manual/nixos/stable/index.html#sec-installation][NixOS Installation Guide]]
+
+* Contents
+:PROPERTIES:
+:TOC:      :include siblings
+:END:
+
+:CONTENTS:
+- [[#contents][Contents]]
+- [[#prelude---make-a-bootable-nixos-pendrive-booting-up-and-connect-to-a-network][*Prelude* - make a bootable NixOS pendrive, booting up and connect to a network]]
+  - [[#make-a-bootable-ubs-pendrive][Make a bootable UBS pendrive]]
+    - [[#from-another-linux][From another Linux]]
+    - [[#from-windows][From Windows]]
+  - [[#boot-up-the-system][Boot up the system]]
+    - [[#select-another-keyboard-layout-instead-of-the-us-preset][Select another keyboard layout instead of the US preset]]
+  - [[#connect-to-the-internet][Connect to the internet]]
+    - [[#connect-to-wifi-adhoc-with-wpa_supplicant][Connect to wifi adhoc with wpa_supplicant]]
+    - [[#connect-to-wifi-with-wpa_cli][Connect to wifi with wpa_cli]]
+    - [[#enable-dhcp][Enable dhcp]]
+:END:
+
+* *Prelude* - make a bootable NixOS pendrive, booting up and connect to a network
+This section will get you up and running NixOS Linux.
+
+** Make a bootable UBS pendrive
+ You need to make a bootable nixOS linux pendrive of course
+
+*** From another Linux
+#+BEGIN_SRC shell
+# Create a bootable linux pendrive
+# ATTENTION: run 'lsblk' before to check if you selected the right block device!
+PATHISO=path/to/downloaded.iso
+BLKDEST=/dev/sdb # Attention!
+dd bs=4M if=$PATHISO of=$BLKDEST status=progress oflag=sync
+#+END_SRC
+
+*** From Windows
+ There are methods for this step in Windows too if needed, f.e. [[https://www.balena.io/etcher/][Balena Etcher]]
+
+** Boot up the system
+Having everything prepared we can startup the system, press F12, and boot into the pendrive.
+If the pendrive is not recognized on boot try another USB port.
+
+*** Change to root user
+NixOS boots up to the nixos user. For the next steps you may have to type a lot of *sudo*. Just change to root user.
+#+begin_src shell
+# Set a root password
+sudo passwd root
+# new password
+
+# Switch to root
+su -
+#+end_src
+
+*** Select another keyboard layout instead of the US preset
+#+begin_src shell
+# USB boot - Select a keymap
+localectl list-keysmaps | grep de # or at, gb, neo
+loadkeys <selectYours>
+#+end_src
+
+*** Increase the terminal font size if too small
+#+begin_src shell
+setfont ter-v32n
+#+end_src
+
+** Connect to the internet
+In the best case you are connected to an ethernet cable which automatically connects to a dhcp provided connection.
+#+begin_src shell
+# Check connectiviy
+ip a | grep inet # Look out for something like "inet 192.168.xxx.xxx"
+#+end_src
+
+**** Connect to wifi adhoc with wpa_supplicant
+ #+BEGIN_SRC shell
+ # 2. method: a manual method to connect
+ ip link # Get interface name
+ ip link set INTERFACE up # Start wifi interface
+ set +o history
+ wpa_supplicant -B -i INTERFACE -c <(wpa_passphrase SSID PASSPHRASE) &
+ set -o history
+ #+END_SRC
+
+**** Connect to wifi with wpa_cli
+ #+BEGIN_SRC shell
+ # 3. method: use the wpa_cli tool
+ ip link # Get interface name
+ ip link set INTERFACE up # Start wifi interface
+
+ wpa_supplicant -B -i INTERFACE -c <(echo "ctrl_interface=/run/wpa_supplicant update_config=1")
+ wpa_cli -i INTERFACE
+ # In repl
+ > scan
+ > scan_results
+ If you see the network
+ > add_network
+ > set_network 0 ssid "Network Name"
+ > set_network 0 psk "Network Password"
+ > enable_network 0
+ > save_config
+ # Ctrl-c
+ #+END_SRC
+
+**** Enable dhcp
+ At this step you should be connected to the router but not the internet.
+ #+begin_src shell
+ # # Enable dhcp
+ dhcpcd
+
+ # Test with ip a or ping
+ ping -c3 google.com
+ #+end_src
+
+*** Synchronize with network time protocol
+ #+begin_src shell
+ # Synchronize time
+ timedatectl set-ntp true
+ #+end_src
+
+*** Check EFI boot entries
+ There might be already a Windows Boot Manager on dual boot.
+ You will add a *Linux Boot Manager* later on and move it to first boot priority.
+
+ #+begin_src shell
+ # Just test if EFI is available - if not you can skip this guide
+ efibootmgr
+ #+end_src
+* *Interlude* - get your mountpoints in place
+Refer the other guide for a *luks encrypted btrfs partioning* and mounting.
+Link: [[file:multiboot-btrfs-partitioning.org][multiboot btrfs partitioning]]
+
+* *Installation* - a base system
+With all mountpoints in place you may continue with the installation.
+
+** Let NixOS figure out the config
+#+begin_src shell
+nixos-generate-config --root /mnt
+#+end_src
+
+** Edit /mnt/etc/hardware-configuration.nix
+/var/log should have the *neededForBoot = true* property to log on boot.
+Strangely I had to add *noatime* to all boot entries manually.
+
+** Edit /mnt/etc/configuration.nix
+You may just enable some settings to log back in again after reboot. The *configuration.nix* file points you very good the the needed settings.
+
+** Install the nix system
+#+begin_src shell
+nixos-install
+#+end_src
+
+* Finish and reboot
+Unmount partitions and reboot:
+#+begin_src shell
+# Final sequence
+umount -R /mnt
+reboot
+#+end_src
+
+Have fun with your system!

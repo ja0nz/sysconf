@@ -1,0 +1,110 @@
+#+STARTUP: content
+
+* ThinkPad X1 Nano Gen1
+This installation holds a *full workstation* installation of NixOS. It includes
+- TODO
+
+** Contents
+:PROPERTIES:
+:TOC:      :include siblings
+:END:
+:CONTENTS:
+- [[#system-specs][System specs]]
+:END:
+
+** System specs
+   #+begin_center
+   System:    Host: jannixos Kernel: 5.10.27 x86_64 bits: 64 Desktop: sway 1.6-7a68a284
+              Distro: NixOS 21.05pre281004.3d1a7716d7f (Okapi)
+   Machine:   Type: Laptop System: LENOVO product: 20UN002DGE v: ThinkPad X1 Nano Gen 1 serial: <superuser required>
+              Mobo: LENOVO model: 20UN002DGE v: SDK0J40697 WIN serial: <superuser required> UEFI: LENOVO
+              v: N2TET44W (1.13 ) date: 11/20/2020
+   Battery:   ID-1: BAT0 charge: 49.4 Wh (100.0%) condition: 49.4/48.3 Wh (102.4%)
+   CPU:       Info: Quad Core model: 11th Gen Intel Core i5-1130G7 bits: 64 type: MT MCP cache: L2: 8 MiB
+              Speed: 1000 MHz min/max: 400/4000 MHz Core speeds (MHz): 1: 1000 2: 1001 3: 1000 4: 1001 5: 1001
+              6: 1001 7: 1000 8: 1001
+   Graphics:  Message: No Device data found.
+              Device-1: Chicony Integrated Camera type: USB driver: uvcvideo
+              Display: wayland server: N/A compositor: sway driver: loaded: N/A resolution: <missing: xdpyinfo>
+              Message: Unable to show advanced data. Required tool glxinfo missing.
+   Audio:     Device-1: sof-hda-dsp driver: sof-hda-dsp
+              Sound Server-1: ALSA v: k5.10.27 running: yes
+              Sound Server-2: PulseAudio v: 14.2-rebootstrapped running: yes
+   Network:   Message: No Device data found.
+              Device-1: Realtek USB 10/100/1000 LAN type: USB driver: r8152
+              IF: enp0s13f0u3u4 state: up speed: 100 Mbps duplex: full mac: a0:ce:c8:e5:cb:1a
+              IF-ID-1: wlp0s20f3 state: down mac: 56:37:3c:7e:aa:09
+   Bluetooth: Device-1: N/A type: USB driver: btusb
+              Report: This feature requires one of these tools: hciconfig/bt-adapter
+   Drives:    Local Storage: total: 476.94 GiB used: 18.43 GiB (3.9%)
+              ID-1: /dev/nvme0n1 vendor: Western Digital model: PC SN530 SDBPMPZ-512G-1001 size: 476.94 GiB
+   Partition: ID-1: / size: 374.98 GiB used: 18.31 GiB (4.9%) fs: btrfs dev: /dev/dm-0
+              ID-2: /boot size: 499 MiB used: 128.8 MiB (25.8%) fs: vfat dev: /dev/nvme0n1p1
+              ID-3: /var/log size: 374.98 GiB used: 18.31 GiB (4.9%) fs: btrfs dev: /dev/dm-0
+   Swap:      ID-1: swap-1 type: partition size: 5 GiB used: 0 KiB (0.0%) dev: /dev/nvme0n1p6
+   Sensors:   Missing: Required tool sensors not installed. Check --recommends
+   Info:      Processes: 233 Uptime: 1h 25m Memory: 15.37 GiB used: 2.45 GiB (16.0%) Shell: fish inxi: 3.3.03
+   #+end_center
+
+** Installation
+*** Clone this repo
+    Clone this repo into $HOME directory. If you rename it, you need to adapt some variables (next step)
+*** Manually link to *configuration.nix*
+    This is the only manual link you need to set!
+    #+begin_src shell
+    # Link to configuration.nix
+    sudo ln -s ~/sysconf/nixOS/ThinkPad_X1_Nano_Gen1/home.nix /etc/nixos/configuration.nix
+    #+end_src
+*** Optional: Adapt some variables
+    You need to adapt the /_sysconfHomeStr/ in *home.nix*. There are some *#TODO* markers which you can grep along.
+*** Optional: Decrypt with git-secret if you have secret files in your repo
+    Ensure you have your *~/.gnupg* in place and necessary keys loaded
+    #+begin_src shell
+    # Get a git-secret shell
+    nix-shell -p git-secret
+
+    # Reveal/Decrypt all secrets
+    git-secret-reveal
+    #+end_src
+
+*** Set needed channels
+    This installation needs *home-manager, nixos, nixpkgs-wayland*.
+    Unfortunately, only _nixos-unstable_ as main channel is supported due to nixpkgs-wayland.
+    #+begin_src shell
+    # List channels
+    sudo nix-channel --list
+    # home-manager https://github.com/nix-community/home-manager/archive/master.tar.gz
+    # nixos https://nixos.org/channels/nixos-unstable
+    # nixpkgs-wayland https://github.com/colemickens/nixpkgs-wayland/archive/master.tar.gz
+
+    # Add channel nixos-unstable
+    sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+    #+end_src
+
+*** Run build
+    #+begin_src shell
+    # NixOS build and reboot
+    sudo nixos-rebuild boot && reboot
+    #+end_src
+
+** Post Installation
+*** Sway set Input/Output devices
+    Probably need to adapt some settings in the sway config depending on your hardware devices.
+    There is a grepable *#TODO* marker
+    #+begin_src shell
+    swaymsg -t get_inputs
+    swaymsg -t get_outputs
+    #+end_src
+
+*** Signed in to Dropbox
+*** No sound?
+    Run *Pulseaudio Volume Control* to maybe uncheck a box or so
+*** Bluetooth mouse
+    Run *Bluetooth Manager*: pair, connect, trust
+
+* TODO here
+  - authinfo.gpg (and maybe freenode.gpg)
+  - flakes https://github.com/nix-community/home-manager#nix-flakes https://github.com/alexarice/dotfiles/blob/master/flake.nix
+  - refactor out of Thinkpad
+  - move emacs to homemanager
+  - fstrim systemd?

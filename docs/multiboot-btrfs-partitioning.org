@@ -1,0 +1,326 @@
+#+STARTUP: content
+
+* TLDR
+This guide walks through all the steps from a OEM shipped Windows 10 computer to a *encrypted mutiboot Linux-Windows partitioning*.
+Outcome:
+- bootable Windows 10
+- encrypted btrfs linux partition
+- multiboot subvolume partitioning
+- unencrypted swap partition
+- mountpoints set for a distro to be installed
+
+It contains the architectural decisions and step by step configuration.
+
+* Contents
+:PROPERTIES:
+:TOC:      :include siblings
+:END:
+
+:CONTENTS:
+- [[#contents][Contents]]
+- [[#status-quo---a-vanilla-thinkpad-machine-with-windows-10][*Status Quo* - a vanilla Thinkpad machine with Windows 10]]
+  - [[#make-some-disk-space][Make some disk space]]
+  - [[#disable-fast-boot][Disable Fast Boot]]
+  - [[#disable-secure-boot][Disable Secure Boot]]
+- [[#planning---architecting-a-fully-encrypted-multiboot-nix-system-on-btrfs][*Planning* - architecting a fully encrypted, multiboot nix system on btrfs]]
+  - [[#1-layer-disk-encryption][1. Layer: Disk encryption]]
+  - [[#2-layer-root-btrfs-partition][2. Layer: ROOT btrfs partition]]
+- [[#execution---formatting-and-mounting-the-hard-drive][*Execution* - formatting and mounting the hard drive]]
+  - [[#efi-boot-partition][EFI boot partition]]
+    - [[#if-present-but-too-small-100mb][If present but too small <100MB]]
+    - [[#if-not-present][If not present]]
+  - [[#swap-partition][SWAP partition]]
+  - [[#luks2-partition][LUKS2 partition]]
+    - [[#create-a-bare-bone-linux-partition-which-spans-to-the-end-of-the-hard-drive][Create a bare bone Linux partition which spans to the end of the hard drive]]
+    - [[#encrypt-the-partition-with-luksformat][Encrypt the partition with luksFormat]]
+    - [[#open-the-newly-created-partition-with-luksopen][Open the newly created partition with luksOpen]]
+  - [[#btrfs-on-luks2][BTRFS on LUKS2]]
+  - [[#btrfs-create-subvolumes][BTRFS create subvolumes]]
+  - [[#btrfs-mount-subvolumes][BTRFS mount subvolumes]]
+  - [[#mount-the-efi-partition][Mount the EFI partition]]
+:END:
+
+
+* *Status Quo* - a vanilla Thinkpad machine with Windows 10
+
+I like to start with a vanilla Windows machine which you might want to keep. If not just skip this section.
+
+First things first, inspect the booted Windows machine partition scheme. To do so search for *Disk Management* to open Windows Disk Management tool
+
+A normal windows installation comes with a:
+- An EFI boot partition: A small (100MB or 260MB) FAT32 formatted partition
+- Microsoft Recovery partition
+- Microsoft Reserved partition
+- Microsoft Basic Data: The big (C:\\) NTFS formatted and maybe BitLocker encrypted partition
+
+If you plan to install Linux on the same disk as Windows you probably need to make space before.
+
+** Make some disk space
+Just clicking right on the C:\\ partition and select shrink. Just leave some GBs to Windows:)
+
+One word about the EFI partition: 260MB would be sufficient for [[https://wiki.archlinux.org/index.php/systemd-boot][systemd-boot]] or EFISTUB.
+I am not familiar with the GRUB boot loader but I heard its comparably bigger +bloated+: There is a full kernel image for each boot entry which /might/ fill up the boot partition.
+
+** Disable Fast Boot
+The target system will boot from the same EFI partition. To prevent Linux/Windows hibernation conflicts its the safest to disable *Hibernation and Fast Boot* on Windows altogether.
+More in depth information can be find in the related Arch Wiki [[https://wiki.archlinux.org/index.php/Dual_boot_with_Windows#Fast_Startup_and_hibernation][Fast Startup and Hibernation]] article.
+
+To disable Fast Boot:
+- click right in *Windows START menu*
+- click: *Windows Powershell (Administrator)*
+- run: ~powercfg -h off~
+
+This step will disable hibernation, disable fast startup, delete the hiberfil.sys file, and remove the Hibernate after power option under Sleep.
+
+** Disable Secure Boot
+The official arch installation image does not support Secure Boot ([[https://bugs.archlinux.org/task/53864][FS#53864]]). There are ways to [[https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface/Secure_Boot][enable Secure Boot on Arch]] but this is out of scope for this manual.
+
+Disable Secure boot from Windows: /Settings > Update & Security > Recovery > Advanced startup (Restart now) > Troubleshoot > Advanced options > UEFI Firmware settings > restart/
+
+A BIOS menu will start on reboot where you have to look for: UEFI Secure Boot. Disable.
+
+* *Planning* - architecting a fully encrypted, multiboot nix system on btrfs
+This section is highly subjective! You might generate subvolumes according to your needs.
+
+** 1. Layer: Disk encryption
+Encryption is a must on a personal computer device. Note that I left the swap partition out intentionally. There are ways to integrate a swapfile into btrfs but I haven't try this method.
+The boot partition is a FAT32 device and should have the size >260MB.
+
+#+begin_src artist
++-----------------------------------------------------------------------+ +----------------+ +----------------+ +--------------+
+|                   btrfs formatted block device                        | | SWAP partition | | Boot partition | | Optional:    |
+|                   LABEL=ROOT /dev/mapper/luks                         | | [SWAP]         | | /boot          | | Windows      |
+|                                                                       | |                | |                | | Partitions   |
+|                                                                       | |                | |                | | 1 - 3        |
+|-----------------------------------------------------------------------| |                | |                | |              |
+|                   LUKS2 encrypted partition                           | |                | | (may be on     | | (leave       |
+|                   /dev/sda3 -> /dev/mapper/luks                       | |                | | other device)  | | untouched)   |
+|                   cryptdevice                                         | |                | |                | |              |
+|                                                                       | | /dev/sda2      | | /dev/sda1      | |              |
++-----------------------------------------------------------------------+ +----------------+ +----------------+ +--------------+
+#+end_src
+
+If you are looking for a more sophisticated layout with lets say multiple hard drives go and see the references at: [[https://btrfs.wiki.kernel.org/index.php/SysadminGuide#Btrfs_on_top_of_dmcrypt][Btrfs on top of dmcrypt]]
+
+** 2. Layer: ROOT btrfs partition
+A btrfs file system feels pratically more like folder/file tree you have in your home directory for example.
+Just run =tree -L 2= in your favourite console
+
+*Output:*
+.
+├── arch_setup.org
+├── Music
+│   ├── foo.mp3
+│   ├── thisthat.mp3
+│   └── baz.mp3
+...
+
+In "btrfs speech"
+- a folder is a *subvolume*
+- the root folder is a *btrfs-pool or subvolid=5*
+
+The following layout which assumes a /single user installation/: the user named *me*. Fine for me. The *@* annotation refers to *subvolumes* and therefore makes it easier to distinguish between subvolumes and plain old folders.
+
+A *example btrfs layout for arch* might look like this:
+#+begin_src artist
+btrfs-pool, LABEL=ROOT
+.
+├── @arch1
+│   ├── @           mount to /
+│   ├── @home       mount to /home/me
+│   ├── @pkgcache   mount to /var/cache/pacman/pkg
+│   ├── @log        mount to /var/log
+│   └── @snapshots  mount to /.snapshots
+├── @data           mount to /home/me/data
+├── @emacs          mount to /home/me/.emacs.d
+└── @nixos1         some other OS:)
+    └── @
+#+end_src
+
+The reason why there is a extra *pkgcache subvolume* is due to the /non-recursive snapshot feature/. Every nested subvolume will be an empty directory inside the snapshot.
+In this setup, taking a snapshot of the *@arch1/@* subvolume will traverse the all normal sys folder EXCEPT the package cache subfolder and home folder. I will back up the home folder seperately.
+You might want to include some more subvolumes which won't be needed in a arch backup:
+- /var/cache
+- /var/spool
+- /var/tmp
+
+But I found rather keep it simple here.
+
+* *Execution* - formatting and mounting the hard drive
+
+Boot from a *USB pendrive linux* (arch, nixOS)
+
+Inspect disk with =parted -l= or =lsblk=
+- There should be one (or multiple) hard drives named either _/dev/sda, /dev/vda, /dev/nvme0n1_
+- Dont confuse it with the USB pendrive block device
+
+Inspect the disk more in depth with and see how much free space is left for your next installation
+#+begin_src shell
+# Inspect hard drive
+parted /dev/sda print free
+# and/or:
+gdisk -l /dev/sda
+#+end_src
+
+** EFI boot partition
+*** If present but too small <100MB
+ Most EFI partitions nowadays come with 260MB. This should be enough!
+ Resizing is a painful process because you need to make space around the EFI partition first which means offsetting all following partitions by lets say '+400MB'
+
+ Use [[https://gparted.org/download.php][GParted Live]] for this. On the command line its way to easy to mess things up.
+ Shift all partitions to the right and resize the EFI partition.
+
+The resizing part is tricky as FAT32 does not allow to be resized:
+#+begin_src shell
+# mount another persistent drive
+mkdir efibackup
+mount /dev/XXX efibackup
+
+# Clone the full EFI partition
+rsync -axHAWXS --numeric-ids --info=progress2 /mnt/boot/ efibackup/
+
+# Check back that everythis is moved correctly!
+ls -halt efibackup
+
+# unmount boot
+umount /mnt/boot
+
+# Reformat the partition
+mkfs.vfat -F 32 -n EFI /dev/sdX<efi>
+
+# ReMount it and rsync everything back in place
+#+end_src
+
+*** If not present
+ #+BEGIN_SRC shell
+ # Generate EFI boot partition
+ gdisk /dev/sdX
+ n # new partition
+ # Enter partition number
+ # Enter start of partition
+ +555M # This is the size I use for EFI partitions
+ ef00 # Enter EFI hex code
+ p # Print new table
+ w # write
+ y # Yes
+
+ # Format FAT 32
+ mkfs.vfat -F 32 -n EFI /dev/sdX<efi>
+ #+END_SRC
+
+** SWAP partition
+Unfortunately btrfs does not support swap partitions. You should make a traditional block device partition.
+ #+BEGIN_SRC shell                                    .
+ # Generate SWAP partition
+ gdisk /dev/sdX
+ n # new partition
+ # Enter partition number
+ # Enter start of partition                        .
+ +8G # This is the size I use for EFI partitions
+ 8200 # Enter EFI hex code
+ p # Print new table
+ w # write
+ y # Yes
+
+ #Makeswap
+ mkswap -L SWAP /dev/sdX<no>                         .
+ swapon /dev/sdX<no>
+
+ # Test if activated
+ free -h
+ #+END_SRC
+
+** LUKS2 partition
+*** Create a bare bone Linux partition which spans to the end of the hard drive
+ #+BEGIN_SRC shell
+ # Just a plain Linux partiton
+ gdisk /dev/sdX
+ n # new partition
+ # Enter partition number
+ # Enter start of partition
+ # Enter end of partition
+ # Linux filesystem type
+ p # Print new table
+ w # write
+ y # Yes
+ #+END_SRC
+
+*** Encrypt the partition with luksFormat
+#+begin_src shell
+ # LUKS2 encrypt partition
+ cryptsetup luksFormat /dev/sdaX<no>
+#+end_src
+
+*** Open the newly created partition with luksOpen
+#+begin_src shell
+ cryptsetup luksOpen /dev/sdaX<no> luks
+#+end_src
+ Now your OPEN partition is linked in */dev/mapper/luks* which is in fact a symlink too.
+
+** BTRFS on LUKS2
+#+begin_src shell
+# Make filesystem on top of LUKS2
+mkfs.btrfs -L ROOT /dev/mapper/luks
+#+end_src
+
+** BTRFS create subvolumes
+Adapt the naming accordingly to your linux distro of choice.
+You may lookup where the package cache exists so you can exclude it. This is recommended if you plan to make systems snapshots.
+
+#+begin_src shell
+# Mount the btrfs pool
+mount /dev/mapper/luks /mnt
+
+# Create the subvolumes
+btrfs sub create /mnt/@arch1
+btrfs sub create /mnt/@arch1/@
+btrfs sub create /mnt/@arch1/@pkgcache
+btrfs sub create /mnt/@arch1/@log
+btrfs sub create /mnt/@arch1/@snapshots
+btrfs sub create /mnt/@arch1/@home
+btrfs sub create /mnt/@emacs
+btrfs sub create /mnt/@data
+
+# Create a mount table file so you can lookup the ids later
+btrfs sub list -a /mnt >> btrfstable.temp
+umount /mnt
+#+end_src
+
+** BTRFS mount subvolumes
+
+There are some special [[https://btrfs.wiki.kernel.org/index.php/Manpage/btrfs(5)][btrfs mount options]] I would briefly mention for reference:
+- noatime -> disable the last accessed timestamp. Includes /nodiratime/. See: [[https://gms.tf/btrfs-requires-noatime.html][btrfs requires noatime]]
+- compress -> I use a *zstd:4* compression. More in depth information: [[https://btrfs.wiki.kernel.org/index.php/Compression][btrfs compression]], [[https://docs.google.com/spreadsheets/d/1x9-3OQF4ev1fOCrYuYWt1QmxYRmPilw_nLik5H_2_qA/edit#gid=0][ZSTD Level Performance [Google Sheets]​]]
+- space_cache (default: on) -> Options to control the free space cache. The free space cache greatly improves performance when reading block group free space into memory.
+- ssd -> Turned on/off automatically by /sys/block/<device>/queue/rotational
+- subvolid -> either reference subvolumes by id or name. I prefer IDs.
+
+Note:
+- most mount options apply to the whole filesystem and only options in the first mounted subvolume will take effect!
+- adapt mountpoints to your needs! The basic mountpoints (/, /var/log) should be equal in many distros.
+
+#+begin_src shell
+# Lookup ids
+cat btrfstable.temp
+# Mount devices
+# Mount the first partition WITH compress
+mount -o noatime,compress=zstd:4,subvolid=XXX /dev/mapper/luks /mnt
+mkdir -p /mnt/{home/me/{.emacs.d,data},var/cache/pacman/pkg,/var/log,.snapshots}
+# Compress is "inherited" from first subvolume
+mount -o noatime,subvolid=XXX /dev/mapper/luks /mnt/home/me
+mount -o noatime,subvolid=XXX /dev/mapper/luks /mnt/home/me/.emacs.d
+mount -o noatime,subvolid=XXX /dev/mapper/luks /mnt/home/me/data
+mount -o noatime,subvolid=XXX /dev/mapper/luks /mnt/var/cache/pacman/pkg
+mount -o noatime,subvolid=XXX /dev/mapper/luks /mnt/var/log
+mount -o noatime,subvolid=XXX /dev/mapper/luks /mnt/.snapshots
+
+# Check the mount table
+df -Th
+#+end_src
+
+** Mount the EFI partition
+#+begin_src shell
+# Mount the efi partion
+mkdir /mnt/boot
+mount /dev/sda1 /mnt/boot
+#+end_src
