@@ -1,15 +1,8 @@
 { config, pkgs, lib, ... }:
 
-with lib;
-{
+with lib; {
   options = {
-    machine = mkOption {
-      type = types.enum [
-        "laptop"
-        "desktop"
-        "rpi"
-      ];
-    };
+    machine = mkOption { type = types.enum [ "laptop" "desktop" "rpi" ]; };
   };
 
   imports = [ ./home.nix ./users.nix ];
@@ -29,12 +22,12 @@ with lib;
         export XDG_SESSION_TYPE=wayland
         systemctl --user import-environment
       '';
-      extraPackages = [];
+      extraPackages = [ ];
     };
 
     boot.loader = if config.machine == "rpi" then {
-       grub.enable = false;
-       generic-extlinux-compatible.enable = true;
+      grub.enable = false;
+      generic-extlinux-compatible.enable = true;
     } else {
       # Use the systemd-boot EFI boot loader.
       systemd-boot.enable = true;
@@ -86,26 +79,24 @@ with lib;
 
     # System packages
     environment = {
-      systemPackages = with pkgs; [
-        git
-        bup
-      ];
+      systemPackages = with pkgs; [ git bup ];
       homeBinInPath = true;
     };
 
     # Load fonts
     fonts = {
-      fonts = with pkgs; [
-        source-code-pro
-        iosevka
-        powerline-fonts
-        symbola
-        dejavu_fonts
-        emacs-all-the-icons-fonts
-        noto-fonts
-        # nerdfonts
-        fira-code
-      ] ++ optional (config.machine != "rpi") noto-fonts;
+      fonts = with pkgs;
+        [
+          source-code-pro
+          iosevka
+          powerline-fonts
+          symbola
+          dejavu_fonts
+          emacs-all-the-icons-fonts
+          noto-fonts
+          # nerdfonts
+          fira-code
+        ] ++ optional (config.machine != "rpi") noto-fonts;
       enableDefaultFonts = mkIf (config.machine == "rpi") false;
 
       fontconfig = {
@@ -141,10 +132,10 @@ with lib;
     #   ];
     # };
 
-#    services.gvfs.enable = mkIf (config.machine != "rpi") true;
+    #    services.gvfs.enable = mkIf (config.machine != "rpi") true;
 
     programs.dconf.enable = mkIf (config.machine != "rpi") true;
-#    programs.adb.enable = mkIf (config.machine != "rpi") true;
+    #    programs.adb.enable = mkIf (config.machine != "rpi") true;
 
     # Enable sound.
     sound.enable = true;
@@ -161,20 +152,20 @@ with lib;
       '';
     };
 
-#    virtualisation.libvirtd = {
-#      enable = true;
-#      allowedBridges = [ "virbr0" ];
-#    };
+    #    virtualisation.libvirtd = {
+    #      enable = true;
+    #      allowedBridges = [ "virbr0" ];
+    #    };
 
-#    fileSystems."/home/jan" = {
-#      device = "/dev/disk/by-label/HOME";
-#      options = [ "rw" "noatime" ];
-#      encrypted = {
-#        enable = true;
-#        blkDev = "/dev/sda5";
-#        label = "home";
-#      };
-#    };
+    #    fileSystems."/home/jan" = {
+    #      device = "/dev/disk/by-label/HOME";
+    #      options = [ "rw" "noatime" ];
+    #      encrypted = {
+    #        enable = true;
+    #        blkDev = "/dev/sda5";
+    #        label = "home";
+    #      };
+    #    };
 
     # This value determines the NixOS release with which your system is to be
     # compatible, in order to avoid breaking some software such as database

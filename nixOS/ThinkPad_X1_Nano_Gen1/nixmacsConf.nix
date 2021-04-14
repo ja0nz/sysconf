@@ -3,8 +3,7 @@
 let
   # catt-mode = epkgs.callPackage ./pkgs/catt/catt-mode.nix { };
   org-agda-export = epkgs.callPackage ./pkgs/org/ox-agda-html.nix { };
-in
-{
+in {
   layers = {
     agda.enable = true;
     ivy.enable = true;
@@ -19,18 +18,14 @@ in
     c.enable = false;
     org = {
       enable = true;
-      agenda-files = [
-        "/home/alex/Dropbox/org/SortOutLife.org"
-      ];
+      agenda-files = [ "/home/alex/Dropbox/org/SortOutLife.org" ];
     };
     python.enable = true;
     javascript.enable = true;
     systemd.enable = true;
     yaml.enable = true;
     lsp.enable = true;
-    haskell = {
-      enable = true;
-    };
+    haskell = { enable = true; };
     markdown.enable = true;
   };
 
@@ -52,11 +47,9 @@ in
     ox-agda-html = {
       enable = true;
       package = org-agda-export;
-      use-package.commands = [
-        "org-publish-lagda"
-      ];
+      use-package.commands = [ "org-publish-lagda" ];
     };
-    haskell-mode.external-packages = [];
+    haskell-mode.external-packages = [ ];
     direnv.enable = true;
     xah-fly-keys = {
       enable = true;
@@ -95,7 +88,7 @@ in
     };
     fonts = {
       unicode-font = "DejaVu Sans";
-#      font = "Source Code Pro 10";
+      #      font = "Source Code Pro 10";
     };
   };
 }

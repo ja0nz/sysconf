@@ -10,79 +10,79 @@
     #all-agda.url = "github:alexarice/all-agda";
   };
 
-  outputs = { self, nixpkgs, /*master,*/ nixpkgs-wayland, home-manager }:
-  # let overlays = [
-  #   nixpkgs-wayland.overlay
-  #   all-agda.overlay
-  #   (self: super: {
-  #     nixmacs = nixmacs.nixmacs {
-  #       configurationFile = ./nixmacsConf.nix;
-  #       package = self.pkgs.emacs;
-  #       extraOverrides = self: super: {
-  #         agda2-mode = all-agda.legacyPackages."x86_64-linux".agdaPackages-master.agda-mode super;
-  #       };
-  #     };
-  #   })
-  # ];
-  # in
+  outputs = { self, nixpkgs, # master,
+    nixpkgs-wayland, home-manager }:
+    # let overlays = [
+    #   nixpkgs-wayland.overlay
+    #   all-agda.overlay
+    #   (self: super: {
+    #     nixmacs = nixmacs.nixmacs {
+    #       configurationFile = ./nixmacsConf.nix;
+    #       package = self.pkgs.emacs;
+    #       extraOverrides = self: super: {
+    #         agda2-mode = all-agda.legacyPackages."x86_64-linux".agdaPackages-master.agda-mode super;
+    #       };
+    #     };
+    #   })
+    # ];
+    # in
     {
-    nixosConfigurations = {
-      # desktop = nixpkgs.lib.nixosSystem {
-      #   system = "x86_64-linux";
-      #   modules = [
-      #     ./common.nix
-      #     ./users.nix
-      #     ./home.nix
-      #     ./overlays.nix
-      #     ./hardware/desktop.nix
-      #     ./cachix.nix
-      #     home-manager.nixosModules.home-manager
-      #     ({ ... }: {
-      #       nixpkgs.overlays = overlays;
-      #       machine = "desktop";
-      #       networking.hostName = "Desktop_Nixos";
-      #       system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
-      #     })
-      #   ];
-      # };
-      laptop = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./common.nix
-          ./users.nix
-          ./home.nix   # Configuration nix
-          ./overlays.nix
-          ./hardware/laptop.nix
-          ./cachix.nix
-          home-manager.nixosModules.home-manager
-          ({ ... }: {
-            nixpkgs.overlays = overlays;
-            boot.initrd.luks.devices = {
-              cryptlvm = {
-                device = "/dev/sda2";
-                allowDiscards = true;
-                preLVM = true;
+      nixosConfigurations = {
+        # desktop = nixpkgs.lib.nixosSystem {
+        #   system = "x86_64-linux";
+        #   modules = [
+        #     ./common.nix
+        #     ./users.nix
+        #     ./home.nix
+        #     ./overlays.nix
+        #     ./hardware/desktop.nix
+        #     ./cachix.nix
+        #     home-manager.nixosModules.home-manager
+        #     ({ ... }: {
+        #       nixpkgs.overlays = overlays;
+        #       machine = "desktop";
+        #       networking.hostName = "Desktop_Nixos";
+        #       system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
+        #     })
+        #   ];
+        # };
+        laptop = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./common.nix
+            ./users.nix
+            ./home.nix # Configuration nix
+            ./overlays.nix
+            ./hardware/laptop.nix
+            ./cachix.nix
+            home-manager.nixosModules.home-manager
+            ({ ... }: {
+              nixpkgs.overlays = overlays;
+              boot.initrd.luks.devices = {
+                cryptlvm = {
+                  device = "/dev/sda2";
+                  allowDiscards = true;
+                  preLVM = true;
+                };
               };
-            };
 
-            machine = "laptop";
+              machine = "laptop";
 
-            networking.hostName = "Alex_Nixos"; # Define your hostname.
+              networking.hostName = "Alex_Nixos"; # Define your hostname.
 
-            hardware = {
-              cpu.intel.updateMicrocode = true;
-            };
+              hardware = { cpu.intel.updateMicrocode = true; };
 
-            services = {
-              upower.enable = true;
+              services = {
+                upower.enable = true;
 
-              tlp.enable = true;
-              logind.lidSwitch = "ignore";
-            };
-            system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
-          })
-        ];
+                tlp.enable = true;
+                logind.lidSwitch = "ignore";
+              };
+              system.configurationRevision =
+                nixpkgs.lib.mkIf (self ? rev) self.rev;
+            })
+          ];
+        };
       };
     };
-  };
 }

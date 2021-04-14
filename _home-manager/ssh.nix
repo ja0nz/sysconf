@@ -1,9 +1,7 @@
 { config, ... }:
 
-let
-  inherit (config) _secret _sysconfHomeStr;
-in
-{
+let inherit (config) _secret _sysconfHomeStr;
+in {
   programs.ssh = {
     enable = true;
     userKnownHostsFile = "${_sysconfHomeStr}/_secret/ssh/known_hosts";
@@ -22,9 +20,7 @@ in
         port = 2222;
         checkHostIP = false;
       };
-      "github.com" = {
-        user = "git";
-      };
+      "github.com" = { user = "git"; };
     };
   };
 }

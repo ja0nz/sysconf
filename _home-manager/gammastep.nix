@@ -1,6 +1,5 @@
-/*
-Optional requires:
-- geoclue2
+/* Optional requires:
+   - geoclue2
 */
 { pkgs, ... }:
 

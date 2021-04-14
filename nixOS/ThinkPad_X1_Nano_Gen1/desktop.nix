@@ -14,9 +14,9 @@
 
   networking.hostName = "desktop-nixos";
 
-#  services.xserver.videoDrivers = [ "amdgpu" ];
+  #  services.xserver.videoDrivers = [ "amdgpu" ];
 
-#  environment.variables.VK_ICD_FILENAMES = "${pkgs.amdvlk}/share/vulkan/icd.d/amd_icd64.json";
+  #  environment.variables.VK_ICD_FILENAMES = "${pkgs.amdvlk}/share/vulkan/icd.d/amd_icd64.json";
 
-#  services.sshd.enable = true;
+  #  services.sshd.enable = true;
 }

@@ -1,37 +1,35 @@
-/*
-Optional requires:
-- brillo
-- caja
-- brave browser
-- dropbox
-- emacs
-- playerctl
+/* Optional requires:
+   - brillo
+   - caja
+   - brave browser
+   - dropbox
+   - emacs
+   - playerctl
 */
 { config, lib, pkgs, ... }:
 
 let
   inherit (config) _static;
   modifier = "Mod4";
-in
-{
+in {
 
   # Packages
   home.packages = with pkgs; [
     wldash
-    wl-clipboard             # Command-line copy/paste utilities for Wayland
-    grim                     # Grab images from a Wayland compositor
-    slurp                    # Select a region in a Wayland compositor
-    swaylock                 # Screen locker for Wayland
+    wl-clipboard # Command-line copy/paste utilities for Wayland
+    grim # Grab images from a Wayland compositor
+    slurp # Select a region in a Wayland compositor
+    swaylock # Screen locker for Wayland
 
-    hicolor-icon-theme       # Default fallback theme used by implementations of the icon theme specification
+    hicolor-icon-theme # Default fallback theme used by implementations of the icon theme specification
 
     # dmenu network selector
-    dmenu                    # A generic, highly customizable, and efficient menu for the X Window System
-    networkmanager_dmenu     # Small script to manage NetworkManager connections with dmenu
+    dmenu # A generic, highly customizable, and efficient menu for the X Window System
+    networkmanager_dmenu # Small script to manage NetworkManager connections with dmenu
 
     # Notifications
-    libnotify                 # A library that sends desktop notifications to a notification daemon
-    libappindicator           # A library to allow applications to export a menu into the Unity Menu bar
+    libnotify # A library that sends desktop notifications to a notification daemon
+    libappindicator # A library to allow applications to export a menu into the Unity Menu bar
   ];
 
   wayland.windowManager.sway = {
@@ -39,7 +37,7 @@ in
     package = null;
 
     config = {
-      bars = [];
+      bars = [ ];
       colors = {
         focused = {
           border = "#81c1e4";
@@ -87,29 +85,33 @@ in
         "${modifier}+Ctrl+n" = "exec brave";
         "${modifier}+p" = "exec ${_static + "/take_screenshot"}";
         "${modifier}+Shift+p" = "exec ${_static + "/take_screenshot"} full";
-        "${modifier}+l" = "exec \"swaylock -f -c 000000\"";
-        "XF86MonBrightnessUp" = "exec \"brillo -A 1\"";
-        "XF86MonBrightnessDown" = "exec \"brillo -U 1\"";
-        "XF86AudioMute" = "exec \"pactl set-sink-mute @DEFAULT_SINK@ toggle\"";
-        "XF86AudioLowerVolume" = "exec \"pactl set-sink-volume @DEFAULT_SINK@ -5%\"";
-        "XF86AudioRaiseVolume" = "exec \"pactl set-sink-volume @DEFAULT_SINK@ +5%\"";
-        "XF86AudioPlay" = "exec \"playerctl play\"";
-        "XF86AudioPause" = "exec \"playerctl pause\"";
-        "XF86AudioNext" = "exec \"playerctl next\"";
-        "XF86AudioPrev" = "exec \"playerctl previous\"";
+        "${modifier}+l" = ''exec "swaylock -f -c 000000"'';
+        "XF86MonBrightnessUp" = ''exec "brillo -A 1"'';
+        "XF86MonBrightnessDown" = ''exec "brillo -U 1"'';
+        "XF86AudioMute" = ''exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"'';
+        "XF86AudioLowerVolume" =
+          ''exec "pactl set-sink-volume @DEFAULT_SINK@ -5%"'';
+        "XF86AudioRaiseVolume" =
+          ''exec "pactl set-sink-volume @DEFAULT_SINK@ +5%"'';
+        "XF86AudioPlay" = ''exec "playerctl play"'';
+        "XF86AudioPause" = ''exec "playerctl pause"'';
+        "XF86AudioNext" = ''exec "playerctl next"'';
+        "XF86AudioPrev" = ''exec "playerctl previous"'';
         "${modifier}+Ctrl+d" = "exec networkmanager_dmenu";
         "${modifier}+Ctrl+g" = "exec reboot";
-        "${modifier}+Ctrl+h" = "exec \"shutdown -h now\"";
-        "${modifier}+Ctrl+f" = "exec \"swaylock -f -c 000000 && systemctl suspend\"";
+        "${modifier}+Ctrl+h" = ''exec "shutdown -h now"'';
+        "${modifier}+Ctrl+f" =
+          ''exec "swaylock -f -c 000000 && systemctl suspend"'';
       };
       window = {
         border = 2;
         titlebar = false;
       };
 
-      startup = [
-        { command = "dropbox start"; always = true; }
-      ];
+      startup = [{
+        command = "dropbox start";
+        always = true;
+      }];
       #TODO Set your input devices
       # swaymsg -t get_inputs
       input = {
@@ -129,9 +131,7 @@ in
       #TODO Set your input/output devices
       # swaymsg -t get_outputs
       output = {
-        "*" = {
-          bg = "\"${_static + "/background-image.png"}\" fill";
-        };
+        "*" = { bg = ''"${_static + "/background-image.png"}" fill''; };
         "eDP-1" = {
           pos = "0,0";
           scale = "1.4";

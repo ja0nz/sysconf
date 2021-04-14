@@ -5,7 +5,7 @@
     enable = true;
     userName = "ja0nz";
     userEmail = "mail@ja.nz";
-    ignores = ["*~"];
+    ignores = [ "*~" ];
     signing = {
       key = "8117C874"; # Short key: gpg --list-secret-keys --keyid-format short
       signByDefault = true;
@@ -22,8 +22,8 @@
   };
 
   home.packages = with pkgs; [
-    gitAndTools.git-extras   # GIT utilities -- repo summary, repl, changelog population
-    gitAndTools.delta        # A syntax-highlighting pager for git
-    git-secret               # A bash-tool to store your private data inside a git repository
+    gitAndTools.git-extras # GIT utilities -- repo summary, repl, changelog population
+    gitAndTools.delta # A syntax-highlighting pager for git
+    git-secret # A bash-tool to store your private data inside a git repository
   ];
 }

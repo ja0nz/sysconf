@@ -3,26 +3,24 @@
 {
   imports = [
     ./common.nix
-    /etc/nixos/hardware-configuration.nix #TODO
-    /etc/nixos/cachix.nix #TODO
+    /etc/nixos/hardware-configuration.nix # TODO
+    /etc/nixos/cachix.nix # TODO
   ];
 
   config = {
-#    boot.initrd.luks.devices = {
-#      cryptlvm = {
-#        device = "/dev/sda2";
-#        allowDiscards = true;
-#        preLVM = true;
-#      };
-#   };
+    #    boot.initrd.luks.devices = {
+    #      cryptlvm = {
+    #        device = "/dev/sda2";
+    #        allowDiscards = true;
+    #        preLVM = true;
+    #      };
+    #   };
 
     machine = "laptop";
 
     networking.hostName = "jan_nixos"; # Define your hostname.
 
-    hardware = {
-      cpu.intel.updateMicrocode = true;
-    };
+    hardware = { cpu.intel.updateMicrocode = true; };
 
     services = {
       upower.enable = true;

@@ -1,10 +1,7 @@
-
 { config, pkgs, lib, ... }:
 
 {
-  imports = [
-    ./common.nix
-  ];
+  imports = [ ./common.nix ];
 
   config = {
     machine = "rpi";
@@ -14,15 +11,15 @@
     nixpkgs.overlays = [
       (self: super: {
         python37 = super.python37.override {
-	        packageOverrides = pself: psuper: {
-	          discordpy = psuper.discordpy.overrideAttrs(attrs: {
+          packageOverrides = pself: psuper: {
+            discordpy = psuper.discordpy.overrideAttrs (attrs: {
               patchPhase = ''
                 substituteInPlace "requirements.txt" \
                   --replace "aiohttp>=3.6.0,<3.7.0" "aiohttp>=3.6.0,<3.8.0" \
               '';
             });
-	        };
-	      };
+          };
+        };
       })
     ];
 
@@ -30,7 +27,7 @@
     boot.loader.generic-extlinux-compatible.enable = true;
 
     boot.kernelPackages = pkgs.linuxPackages_4_19;
-    boot.kernelParams = ["cma=32M"];
+    boot.kernelParams = [ "cma=32M" ];
 
     fileSystems = {
       "/" = {
@@ -38,7 +35,10 @@
         fsType = "ext4";
       };
     };
-    swapDevices = [ { device = "/swapfile"; size = 1024; } ];
+    swapDevices = [{
+      device = "/swapfile";
+      size = 1024;
+    }];
 
     networking.networkmanager.enable = true;
     networking.hostName = "rpi-nixos";
@@ -49,7 +49,10 @@
       enable = true;
       wantedBy = [ "multi-user.target" ];
       description = "BookBot service";
-      path = [ (pkgs.python37.withPackages (p: [ p.discordpy p.gspread p.oauth2client ])) ];
+      path = [
+        (pkgs.python37.withPackages
+          (p: [ p.discordpy p.gspread p.oauth2client ]))
+      ];
       script = "/home/alex/BookBot/discordbot.py";
       serviceConfig = {
         RestartSec = 3;

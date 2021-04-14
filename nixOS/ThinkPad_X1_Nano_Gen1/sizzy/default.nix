@@ -6,8 +6,7 @@ let
   name = "${pname}-${version}";
   src = ./. + "/Sizzy-${version}.AppImage";
   appimageContents = appimageTools.extractType2 { inherit name src; };
-in
-appimageTools.wrapType2 {
+in appimageTools.wrapType2 {
   inherit name src;
   extraInstallCommands = ''
     mv $out/bin/${name} $out/bin/${pname}
