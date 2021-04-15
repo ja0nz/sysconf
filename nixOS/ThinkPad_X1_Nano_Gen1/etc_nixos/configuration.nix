@@ -2,9 +2,9 @@
 
 {
   imports = [
-    ./common.nix
-    /etc/nixos/hardware-configuration.nix # TODO
-    /etc/nixos/cachix.nix # TODO
+    ../common.nix
+    ./hardware-configuration.nix # TODO
+    ./cachix.nix # TODO
   ];
 
   config = {
@@ -18,7 +18,7 @@
 
     machine = "laptop";
 
-    networking.hostName = "jan_nixos"; # Define your hostname.
+    networking.hostName = "nixos_nano"; # Define your hostname.
 
     hardware = { cpu.intel.updateMicrocode = true; };
 

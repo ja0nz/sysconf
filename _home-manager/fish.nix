@@ -24,6 +24,9 @@
     }];
   };
 
+  # Enabled bat to not break 'cat'
+  programs.bat.enable = true;
+
   home.sessionVariables = {
     EDITOR = "emacsclient -c";
     BROWSER = "brave";
@@ -33,8 +36,6 @@
 
   home.packages = with pkgs; [
     any-nix-shell # fish and zsh support for nix-shell
-    bat # A cat(1) clone with syntax highlighting and Git integration
-    ripgrep # A utility that combines the usability of The Silver Searcher
   ];
 
   # Setting a fish theme
