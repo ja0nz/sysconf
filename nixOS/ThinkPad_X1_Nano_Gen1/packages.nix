@@ -20,9 +20,9 @@ in {
     inxi # A full featured CLI system information tool
 
     # Find and discover
-    exa # Replacement for 'ls' written in Rust
     tree # Command to produce a depth indented directory listing
     fzf # A command-line fuzzy finder written
+    ripgrep # A utility that combines the usability of The Silver Searcher
 
     # Process management
     htop # An interactive process viewer for Linux

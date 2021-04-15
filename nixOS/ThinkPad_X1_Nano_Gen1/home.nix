@@ -36,17 +36,19 @@ with lib;
       # -- Sensors --
       /blueman.nix
       /udiskie.nix
+      # -- SHELL --
+      /fish.nix
+      /exa.nix
+      /lorri.nix
+      /direnv.nix
       # -- OPS --
       /emails.nix
       /git.nix
       /gtk.nix
-      /fish.nix
-      /lorri.nix
-      /direnv.nix
       /gpg.nix
       /ssh.nix
       /zathura.nix
-      /systemd.nix
+      #/systemd.nix
       /xdg.nix
     ] ++ [ ./packages.nix ];
 

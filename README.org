@@ -76,7 +76,6 @@
    fzf                      # A command-line fuzzy finder written
    bat              # A cat(1) clone with syntax highlighting and Git integration
    ripgrep          # A utility that combines the usability of The Silver Searcher
-   exa              # Replacement for 'ls' written in Rust
    #+end_src
 
 ** Process management
