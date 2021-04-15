@@ -1,10 +1,10 @@
 /* Optional requires:
-   - brillo
-   - caja
-   - brave browser
-   - dropbox
-   - emacs
-   - playerctl
+   - brillo -> as key combination
+   - caja -> as key combination
+   - brave browser -> as key combination
+   - dropbox -> as service on start
+   - emacs -> as key combination
+   - playerctl -> as key combination
 */
 { config, lib, pkgs, ... }:
 

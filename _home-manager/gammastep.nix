@@ -1,7 +1,7 @@
 /* Optional requires:
    - geoclue2
 */
-{ pkgs, ... }:
+{ ... }:
 
 {
   services.gammastep = {

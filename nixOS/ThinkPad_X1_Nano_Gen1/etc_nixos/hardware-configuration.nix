@@ -4,68 +4,67 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules =
+    [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/27bff9f6-3904-4ce4-bebf-386340b2f5e5";
-      fsType = "btrfs";
-      options = [ "subvol=@nixos1/@" "compress=zstd:4" "noatime" ];
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/27bff9f6-3904-4ce4-bebf-386340b2f5e5";
+    fsType = "btrfs";
+    options = [ "subvol=@nixos1/@" "compress=zstd:4" "noatime" ];
+  };
 
-  boot.initrd.luks.devices."luks".device = "/dev/disk/by-uuid/3d0d9544-bc6f-403f-bd0e-709143c9ebe4";
+  boot.initrd.luks.devices."luks".device =
+    "/dev/disk/by-uuid/3d0d9544-bc6f-403f-bd0e-709143c9ebe4";
 
-  fileSystems."/home/me" =
-    { device = "/dev/disk/by-uuid/27bff9f6-3904-4ce4-bebf-386340b2f5e5";
-      fsType = "btrfs";
-      options = [ "subvol=@nixos1/@home" "noatime" ];
-    };
+  fileSystems."/home/me" = {
+    device = "/dev/disk/by-uuid/27bff9f6-3904-4ce4-bebf-386340b2f5e5";
+    fsType = "btrfs";
+    options = [ "subvol=@nixos1/@home" "noatime" ];
+  };
 
-  fileSystems."/home/me/.emacs.d" =
-    { device = "/dev/disk/by-uuid/27bff9f6-3904-4ce4-bebf-386340b2f5e5";
-      fsType = "btrfs";
-      options = [ "subvol=@emacs" "noatime" ];
-    };
+  fileSystems."/home/me/.emacs.d" = {
+    device = "/dev/disk/by-uuid/27bff9f6-3904-4ce4-bebf-386340b2f5e5";
+    fsType = "btrfs";
+    options = [ "subvol=@emacs" "noatime" ];
+  };
 
-  fileSystems."/home/me/data" =
-    { device = "/dev/disk/by-uuid/27bff9f6-3904-4ce4-bebf-386340b2f5e5";
-      fsType = "btrfs";
-      options = [ "subvol=@data" "noatime" ];
-    };
+  fileSystems."/home/me/data" = {
+    device = "/dev/disk/by-uuid/27bff9f6-3904-4ce4-bebf-386340b2f5e5";
+    fsType = "btrfs";
+    options = [ "subvol=@data" "noatime" ];
+  };
 
-  fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/27bff9f6-3904-4ce4-bebf-386340b2f5e5";
-      fsType = "btrfs";
-      options = [ "subvol=@nixos1/@nix" "noatime" ];
-    };
+  fileSystems."/nix" = {
+    device = "/dev/disk/by-uuid/27bff9f6-3904-4ce4-bebf-386340b2f5e5";
+    fsType = "btrfs";
+    options = [ "subvol=@nixos1/@nix" "noatime" ];
+  };
 
-  fileSystems."/.snapshots" =
-    { device = "/dev/disk/by-uuid/27bff9f6-3904-4ce4-bebf-386340b2f5e5";
-      fsType = "btrfs";
-      options = [ "subvol=@nixos1/@snapshots" "noatime" ];
-    };
+  fileSystems."/.snapshots" = {
+    device = "/dev/disk/by-uuid/27bff9f6-3904-4ce4-bebf-386340b2f5e5";
+    fsType = "btrfs";
+    options = [ "subvol=@nixos1/@snapshots" "noatime" ];
+  };
 
-  fileSystems."/var/log" =
-    { device = "/dev/disk/by-uuid/27bff9f6-3904-4ce4-bebf-386340b2f5e5";
-      fsType = "btrfs";
-      options = [ "subvol=@nixos1/@log" "noatime" ];
-      neededForBoot = true;
-    };
+  fileSystems."/var/log" = {
+    device = "/dev/disk/by-uuid/27bff9f6-3904-4ce4-bebf-386340b2f5e5";
+    fsType = "btrfs";
+    options = [ "subvol=@nixos1/@log" "noatime" ];
+    neededForBoot = true;
+  };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/2040-AE7D";
-      fsType = "vfat";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/2040-AE7D";
+    fsType = "vfat";
+  };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/565f3522-d3e7-4740-ab96-c25b5346328b"; }
-    ];
+    [{ device = "/dev/disk/by-uuid/565f3522-d3e7-4740-ab96-c25b5346328b"; }];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   # high-resolution display

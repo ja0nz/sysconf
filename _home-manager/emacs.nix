@@ -6,7 +6,5 @@
     # https://github.com/emacsmirror/epkgs
     extraPackages = epkgs: [ epkgs.use-package ];
   };
-  services.emacs ={
-    enable = true;
-  };
+  services.emacs = { enable = true; };
 }

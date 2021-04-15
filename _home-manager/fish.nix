@@ -1,4 +1,7 @@
-{ config, pkgs, ... }:
+/* Optional requires:
+   - Ripgrep as alias 'rg'
+*/
+{ pkgs, ... }:
 
 {
   programs.fish = {
@@ -11,7 +14,7 @@
       nix-stray-roots =
         "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/w+-system|{memory)'";
     };
-    promptInit = "\n    any-nix-shell fish --info-right | source\n    ";
+    promptInit = "\n any-nix-shell fish --info-right | source\n";
 
     plugins = [{
       name = "z";
@@ -34,9 +37,10 @@
     #PATH = "$HOME/.yarn/bin:$PATH"; # Impure but harmless!
   };
 
-  home.packages = with pkgs; [
-    any-nix-shell # fish and zsh support for nix-shell
-  ];
+  home.packages = with pkgs;
+    [
+      any-nix-shell # fish and zsh support for nix-shell
+    ];
 
   # Setting a fish theme
   xdg.configFile."fish/functions".source = pkgs.fetchFromGitHub {

@@ -1,6 +1,5 @@
 { lib, config, pkgs, ... }:
-let
-  mailjanz = "mail@ja.nz";
+let mailjanz = "mail@ja.nz";
 in {
   accounts.email.accounts = {
     "mail@ja.nz" = rec {
@@ -23,16 +22,18 @@ in {
     };
   };
 
-  home.file.".emacs.d/authinfo.gpg".source = "${config._secret}/authinfo_emacs.gpg";
+  home.file.".emacs.d/authinfo.gpg".source =
+    "${config._secret}/authinfo_emacs.gpg";
 
   programs.mbsync = {
     enable = true;
     package = pkgs.isync;
   };
-  home.packages = with pkgs; [
-    mu # A collection of utilties for indexing and searching Maildirs
-  ];
-  home.activation.muInit = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  home.packages = with pkgs;
+    [
+      mu # A collection of utilties for indexing and searching Maildirs
+    ];
+  home.activation.muInit = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     mu info | grep ${mailjanz} || mu init --my-address=${mailjanz}
     # For multiple users;
     # mu info | grep ${mailjanz} && mu info | grep another@email \

@@ -1,5 +1,5 @@
 /* Optional requires:
-   - Iosevka as font! Test with: fc-list | grep iosevka
+   - Iosevka as font! Test with: fc-list : family | grep Iosevka
    - Brave browser as mouse launcher
 */
 { ... }:

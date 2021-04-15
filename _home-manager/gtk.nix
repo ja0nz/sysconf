@@ -1,3 +1,6 @@
+/* Optional requires:
+   - Source Code Pro as font! Test with: fc-list : family | grep 'Source Code Pro'
+*/
 { pkgs, ... }:
 
 {

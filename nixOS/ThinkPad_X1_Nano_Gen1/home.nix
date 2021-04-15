@@ -1,11 +1,11 @@
-{ config, lib, pkgs, ... }:
+{ lib, ... }:
 
 with lib;
 
 {
   imports = [ <home-manager/nixos> ];
 
-  home-manager.users.me = { pkgs, lib, ... }: {
+  home-manager.users.me = { ... }: {
     config = {
 
       #TODO Set your repo path
@@ -22,7 +22,7 @@ with lib;
 
       nixpkgs.overlays = builtins.attrValues (import ./overlays.nix);
       #_module.args.setEnvironment = config.system.build.setEnvironment;
-      home.stateVersion = "20.09";
+      home.stateVersion = "21.05";
     };
 
     # Home manager imports

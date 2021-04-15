@@ -1,7 +1,7 @@
 /* Optional requires:
-   - pavucontrol
-   - playerctl
-   - spotify
+   - pavucontrol -> lauch pulseaudio control
+   - playerctl -> player control (for spotify)
+   - spotify -> the player itself
 */
 { config, ... }:
 
