@@ -21,12 +21,13 @@ with lib;
       };
 
       nixpkgs.overlays = builtins.attrValues (import ./overlays.nix);
-      _module.args.setEnvironment = config.system.build.setEnvironment;
+      #_module.args.setEnvironment = config.system.build.setEnvironment;
       home.stateVersion = "20.09";
     };
 
     # Home manager imports
     imports = map (pkg: ../../_home-manager + pkg) [
+      /emacs.nix
       # -- GUI --
       /sway.nix
       /mako.nix

@@ -4,7 +4,6 @@ let sizzy = import ./sizzy;
 in {
   home.packages = with pkgs; [
     # Programs
-    emacs # The extensible, customizable GNU text editor
     brave # Privacy-oriented browser for Desktop and Laptop computers
     (mate.caja-with-extensions.override {
       extensions = [ mate.caja-extensions mate.caja-dropbox ];
