@@ -103,7 +103,6 @@ This installation holds a *full workstation* installation of NixOS. It includes
     Run *Bluetooth Manager*: pair, connect, trust
 
 * TODO here
-  - authinfo.gpg (and maybe freenode.gpg)
   - flakes https://github.com/nix-community/home-manager#nix-flakes https://github.com/alexarice/dotfiles/blob/master/flake.nix
   - refactor out of Thinkpad
   - move emacs to homemanager

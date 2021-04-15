@@ -54,10 +54,6 @@ in {
     aspellDicts.en # Aspell dictionary for English
     aspellDicts.de # Aspell dictionary for German
 
-    # Emails
-    mu # A collection of utilties for indexing and searching Maildirs
-    isync # Free IMAP and MailDir mailbox synchronizer
-
     # Database (org-roam)
     sqlite # A self-contained, serverless, zero-configuration SQL db engine
 

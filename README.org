@@ -141,7 +141,7 @@
 ** Maildir
    #+begin_src src
    mu                        # A collection of utilties for indexing and searching Maildirs
-   isync                     # Free IMAP and MailDir mailbox synchronizer
+   isync                     # (mbsync) Free IMAP and MailDir mailbox synchronizer
    #+end_src
 
 
