@@ -34,6 +34,7 @@ in {
   home.packages = with pkgs; [
     # -- Programs --
     brave # Privacy-oriented browser for Desktop and Laptop computers
+    #    (callPackage sizzy {})    # The browser for Developers & Designers
     (mate.caja-with-extensions.override {
       extensions = [ mate.caja-extensions mate.caja-dropbox ];
     })
@@ -90,13 +91,5 @@ in {
 
     # For emacs: Database (org-roam)
     sqlite # A self-contained, serverless, zero-configuration SQL db engine
-
-    # -- Software Development --
-    python3 # A high-level dynamically-typed programming language
-    nixfmt # An opinionated formatter for Nix
-    manix # A Fast Documentation Searcher for Nix
-    #    (callPackage sizzy {})    # The browser for Developers & Designers
-    devd # A local webserver for developers
-    yarn # Fast, reliable, and secure dependency management for javascript
   ];
 }

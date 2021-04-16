@@ -20,7 +20,7 @@ in {
     wl-clipboard # Command-line copy/paste utilities for Wayland
     grim # Grab images from a Wayland compositor
     slurp # Select a region in a Wayland compositor
-    swaylock-fancy # swaylock bash script blurs the background and adds a lock icon and text
+    swaylock-effects # Screen locker for wayland
 
     hicolor-icon-theme # Default fallback theme used by implementations of the icon theme specification
 
@@ -80,13 +80,31 @@ in {
       terminal = "alacritty";
       workspaceAutoBackAndForth = true;
       inherit modifier;
-      keybindings = lib.mkOptionDefault {
+      keybindings = let
+        lockcmd = ''
+          swaylock \
+              -f \
+              --screenshots \
+              --clock \
+              --indicator \
+              --indicator-radius 150 \
+              --indicator-thickness 7 \
+              --effect-blur 7x5 \
+              --effect-vignette 0.6:0.6 \
+              --ring-color bb00cc \
+              --key-hl-color 880033 \
+              --line-color 00000000 \
+              --inside-color 00000088 \
+              --separator-color 00000000 \
+              --grace 2 \
+              --fade-in 0.2 '';
+      in lib.mkOptionDefault {
         "${modifier}+Ctrl+t" = "exec caja";
         "${modifier}+Ctrl+r" = lib.mkForce "exec emacsclient -c";
         "${modifier}+Ctrl+n" = "exec brave";
         "${modifier}+p" = "exec ${_static + "/take_screenshot"}";
         "${modifier}+Shift+p" = "exec ${_static + "/take_screenshot"} full";
-        "${modifier}+l" = ''exec "swaylock-fancy"'';
+        "${modifier}+l" = ''exec "${lockcmd}"'';
         "XF86MonBrightnessUp" = ''exec "brillo -A 1"'';
         "XF86MonBrightnessDown" = ''exec "brillo -U 1"'';
         "XF86AudioMute" = ''exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"'';
@@ -101,8 +119,7 @@ in {
         "${modifier}+Ctrl+d" = "exec networkmanager_dmenu";
         "${modifier}+Ctrl+g" = "exec reboot";
         "${modifier}+Ctrl+h" = ''exec "shutdown -h now"'';
-        "${modifier}+Ctrl+f" =
-          ''exec "swaylock-fancy && systemctl suspend"'';
+        "${modifier}+Ctrl+f" = ''exec "${lockcmd} && systemctl suspend"'';
       };
       window = {
         border = 2;
