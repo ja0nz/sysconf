@@ -1,13 +1,11 @@
 { lib, ... }:
 
-with lib;
-
 {
   imports = [ ./packages.nix ];
   config = {
 
     #TODO Set your repo path
-    _sysconfHomeStr = "~/sysconf";
+    _repoRootStringPath = "~/sysconf";
     _static = ../../_static;
     _secret = ../../_secret;
 
@@ -31,8 +29,8 @@ with lib;
   };
 
   # Global options
-  options = {
-    _sysconfHomeStr = mkOption { type = types.str; };
+  options = with lib; {
+    _repoRootStringPath = mkOption { type = types.str; };
     _static = mkOption { type = types.path; };
     _secret = mkOption { type = types.path; };
   };

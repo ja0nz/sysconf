@@ -1,10 +1,10 @@
 { config, ... }:
 
-let inherit (config) _secret _sysconfHomeStr;
+let inherit (config) _secret _repoRootStringPath;
 in {
   programs.ssh = {
     enable = true;
-    userKnownHostsFile = "${_sysconfHomeStr}/_secret/ssh/known_hosts";
+    userKnownHostsFile = "${_repoRootStringPath}/_secret/ssh/known_hosts";
     controlMaster = "auto";
     controlPersist = "15m";
     matchBlocks = {

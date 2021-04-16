@@ -1,17 +1,17 @@
-{ lib, ... }:
+{ lib, config, ... }:
 
-with lib;
-
-{
+let
+  inherit (config) _configInUse _repoRootStringPath;
+  packagePath = _configInUse + /packages.nix;
+in {
   imports = [ <home-manager/nixos> ];
 
   home-manager.users.me = { ... }: {
 
-    imports = [ ./packages.nix ];
+    imports = [ packagePath ];
     config = {
 
-      #TODO Set your repo path
-      _sysconfHomeStr = "~/sysconf";
+      inherit _repoRootStringPath;
       _static = ../../_static;
       _secret = ../../_secret;
 
@@ -28,8 +28,8 @@ with lib;
     };
 
     # Global options
-    options = {
-      _sysconfHomeStr = mkOption { type = types.str; };
+    options = with lib; {
+      _repoRootStringPath = mkOption { type = types.str; };
       _static = mkOption { type = types.path; };
       _secret = mkOption { type = types.path; };
     };

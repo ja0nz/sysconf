@@ -10,7 +10,7 @@
 
   outputs = { self, nixpkgs, # master,
     nixpkgs-wayland, home-manager }:
-    let overlays = [ ];
+    let overlays = [ nixpkgs-wayland.overlay ];
     in {
       nixosConfigurations = {
         nixos-nano = nixpkgs.lib.nixosSystem {

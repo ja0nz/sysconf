@@ -78,18 +78,17 @@ with lib; {
 
     # Load fonts
     fonts = {
-      fonts = with pkgs;
-        [
-          source-code-pro
-          iosevka
-          powerline-fonts
-          symbola
-          dejavu_fonts
-          emacs-all-the-icons-fonts
-          noto-fonts
-          # nerdfonts
-          fira-code
-        ];
+      fonts = with pkgs; [
+        source-code-pro
+        iosevka
+        powerline-fonts
+        symbola
+        dejavu_fonts
+        emacs-all-the-icons-fonts
+        noto-fonts
+        # nerdfonts
+        fira-code
+      ];
       #enableDefaultFonts = true;
 
       fontconfig = {

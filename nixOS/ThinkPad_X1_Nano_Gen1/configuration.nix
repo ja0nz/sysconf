@@ -1,0 +1,39 @@
+{ pkgs, lib, ... }:
+
+with lib; {
+  imports = [
+    ./hardware-configuration.nix
+    ../_shared/common.nix
+    ../_shared/cachix.nix
+  ];
+
+  config = {
+
+    #TODO: Define your hostname.
+    networking.hostName = "nixos_nano";
+
+    # MySettings
+    _repoRootStringPath = "~/sysconf";
+    _configInUse = ../ThinkPad_X1_Nano_Gen1;
+
+    hardware = { cpu.intel.updateMicrocode = true; };
+
+    services = {
+      upower.enable = true;
+
+      tlp.enable = true;
+      logind.lidSwitch = "ignore";
+
+      # Udev laptop killswitch
+      udev.extraRules = ''
+        ACTION=="remove", SUBSYSTEM=="block", ENV{ID_SERIAL_SHORT}=="0116007138600721", RUN+="${pkgs.systemd}/bin/shutdown -h now"
+      '';
+    };
+  };
+
+  # Global options
+  options = {
+    _repoRootStringPath = mkOption { type = types.str; };
+    _configInUse = mkOption { type = types.path; };
+  };
+}
