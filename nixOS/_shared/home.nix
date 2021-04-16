@@ -1,7 +1,7 @@
 { lib, config, ... }:
 
 let
-  inherit (config) _configInUse _repoRootStringPath;
+  inherit (config) _configInUse _repoRoot;
   packagePath = _configInUse + /packages.nix;
 in {
   imports = [ <home-manager/nixos> ];
@@ -11,7 +11,7 @@ in {
     imports = [ packagePath ];
     config = {
 
-      inherit _repoRootStringPath;
+      inherit _repoRoot;
       _static = ../../_static;
       _secret = ../../_secret;
 
@@ -29,7 +29,7 @@ in {
 
     # Global options
     options = with lib; {
-      _repoRootStringPath = mkOption { type = types.str; };
+      _repoRoot = mkOption { type = types.path; };
       _static = mkOption { type = types.path; };
       _secret = mkOption { type = types.path; };
     };

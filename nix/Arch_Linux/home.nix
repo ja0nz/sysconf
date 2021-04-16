@@ -4,8 +4,8 @@
   imports = [ ./packages.nix ];
   config = {
 
-    #TODO Set your repo path
-    _repoRootStringPath = "~/sysconf";
+    #TODO Set your repo root path
+    _repoRoot = ~/sysconf;
     _static = ../../_static;
     _secret = ../../_secret;
 
@@ -30,7 +30,7 @@
 
   # Global options
   options = with lib; {
-    _repoRootStringPath = mkOption { type = types.str; };
+    _repoRoot = mkOption { type = types.path; };
     _static = mkOption { type = types.path; };
     _secret = mkOption { type = types.path; };
   };

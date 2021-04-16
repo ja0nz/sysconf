@@ -9,11 +9,9 @@ with lib; {
 
   config = {
 
-    #TODO: Define your hostname.
+    #TODO: Set your values
     networking.hostName = "nixos_nano";
-
-    # MySettings
-    _repoRootStringPath = "~/sysconf";
+    _repoRoot = /home/me/sysconf;
     _configInUse = ../ThinkPad_X1_Nano_Gen1;
 
     hardware = { cpu.intel.updateMicrocode = true; };
@@ -33,7 +31,7 @@ with lib; {
 
   # Global options
   options = {
-    _repoRootStringPath = mkOption { type = types.str; };
+    _repoRoot = mkOption { type = types.path; };
     _configInUse = mkOption { type = types.path; };
   };
 }

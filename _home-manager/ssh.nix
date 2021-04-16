@@ -1,10 +1,10 @@
 { config, ... }:
 
-let inherit (config) _secret _repoRootStringPath;
+let inherit (config) _secret _repoRoot;
 in {
   programs.ssh = {
     enable = true;
-    userKnownHostsFile = "${_repoRootStringPath}/_secret/ssh/known_hosts";
+    userKnownHostsFile = builtins.toString _repoRoot + "/_secret/ssh/known_hosts";
     controlMaster = "auto";
     controlPersist = "15m";
     matchBlocks = {
