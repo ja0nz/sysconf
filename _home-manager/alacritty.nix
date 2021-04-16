@@ -25,7 +25,7 @@
           family = "Iosevka";
           style = "Bold Italic";
         };
-        size = 10;
+        size = 12;
       };
       colors = {
         primary = {
@@ -55,7 +55,7 @@
           white = "#e6e6e6";
         };
       };
-      background_opacity = 0.8;
+      background_opacity = 0.9;
       mouse.url.launcher = "brave";
     };
   };

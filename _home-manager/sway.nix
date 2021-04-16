@@ -38,6 +38,8 @@ in {
     package = null;
 
     config = {
+      left = "n";
+      right = "t";
       bars = [ ];
       colors = {
         focused = {
@@ -149,11 +151,12 @@ in {
       #TODO Set your input/output devices
       # swaymsg -t get_outputs
       output = {
-        "*" = { bg = ''"${_static + "/background-image.png"}" fill''; };
+        "*" = { bg = ''"${_static + "/background-image-secondary.png"}" fill''; };
         "eDP-1" = {
           pos = "0,0";
           scale = "1.4";
           res = "2160x1350";
+          bg = ''"${_static + "/background-image-primary.png"}" fill'';
         };
       };
     };
