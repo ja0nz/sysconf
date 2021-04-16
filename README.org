@@ -1,4 +1,7 @@
 * Sysconf - a opinionated home of *nix systems
+  Packages used directly in *packages.nix* or in a nix-shell.
+  Every package I use will end up here.
+  Search function is your best friend in here
 ** Content
 :PROPERTIES:
 :TOC:      :include all
@@ -8,38 +11,75 @@
   - [[#content][Content]]
   - [[#intro][Intro]]
 - [[#programs][Programs]]
+  - [[#home-manager-modules][Home manager modules]]
+    - [[#emacs][Emacs]]
+    - [[#zathura][Zathura]]
+  - [[#nix-packages][Nix packages]]
 - [[#online-services][Online services]]
-- [[#devops][DevOps]]
-  - [[#informative-system][Informative system]]
-  - [[#find-and-discover][Find and discover]]
-  - [[#process-management][Process management]]
-  - [[#networking][Networking]]
-  - [[#xdg-mime-applications][XDG MIME Applications]]
-  - [[#command-line-utilities][Command Line Utilities]]
-  - [[#security---encryption-keymanagement][Security - encryption, keymanagement]]
-  - [[#partitioning][Partitioning]]
-  - [[#virtualization][Virtualization]]
-  - [[#sound-management][Sound management]]
-  - [[#maildir][Maildir]]
-- [[#development---coding-writing][Development - coding, writing]]
-  - [[#utilities][Utilities]]
-  - [[#dictionaries][Dictionaries]]
-  - [[#databases][Databases]]
-  - [[#python][Python]]
-  - [[#javascript][JavaScript]]
-  - [[#nix][Nix]]
-  - [[#other-languages][Other languages]]
+  - [[#nix-packages][Nix packages]]
+- [[#gui-sway-plus-utilities][GUI (sway plus utilities)]]
+  - [[#home-manager-modules][Home manager modules]]
+    - [[#sway][Sway]]
+    - [[#mako][Mako]]
+    - [[#waybar][Waybar]]
+    - [[#gammastep][Gammastep]]
+    - [[#alarcitty][Alarcitty]]
+    - [[#xdg][XDG]]
+    - [[#gtk][GTK]]
+- [[#shell-tooling][SHELL tooling]]
+  - [[#home-manager-modules][Home manager modules]]
+    - [[#fish][Fish]]
+    - [[#exa][Exa]]
+    - [[#lorri][Lorri]]
+    - [[#direnv][Direnv]]
+    - [[#git][Git]]
+    - [[#gnupg][GnuPG]]
+    - [[#ssh][SSH]]
+  - [[#nix-packages][Nix packages]]
+    - [[#system-information][System information]]
+    - [[#find-and-discover][Find and discover]]
+    - [[#process-management][Process management]]
+    - [[#networking][Networking]]
+    - [[#xdg-mime-applications][XDG MIME Applications]]
+    - [[#sound-and-light-management][Sound and light management]]
+    - [[#security---encryption-keymanagement][Security - encryption, keymanagement]]
+    - [[#partitioning][Partitioning]]
+    - [[#virtualization][Virtualization]]
+    - [[#command-line-utilities][Command Line Utilities]]
 - [[#file-generators---extractors-compressors-converters-parsers][File Generators - Extractors, Compressors, Converters, Parsers]]
+  - [[#nix-packages][Nix packages]]
+- [[#maildir--emails][Maildir / Emails]]
+  - [[#home-manager-modules][Home manager modules]]
+    - [[#emails][Emails]]
+  - [[#nix-packages][Nix packages]]
+- [[#hardware-connectivity][Hardware connectivity]]
+  - [[#home-manager-modules][Home manager modules]]
+    - [[#blueman][Blueman]]
+    - [[#udiskie][Udiskie]]
+- [[#software-development][Software development]]
+  - [[#nix-packages][Nix packages]]
+    - [[#utilities][Utilities]]
+    - [[#dictionaries][Dictionaries]]
+    - [[#databases][Databases]]
+    - [[#python][Python]]
+    - [[#javascript][JavaScript]]
+    - [[#nix][Nix]]
+    - [[#other-languages][Other languages]]
 - [[#presentation][Presentation]]
-- [[#gui---theme-menu-notifications][GUI - theme, menu, notifications]]
+  - [[#nix-packages][Nix packages]]
 :END:
 
-** TODO Intro
-   A copy paste nix* packages! Use with nix package manager
-* Copy paste your programs
 * Programs
+  Full fledged programs with GUI.
+** Home manager modules
+*** Emacs
+    File: [[file:_home-manager/emacs.nix][emacs.nix]]
+    Emacs plus emacs as systemd user service.
+*** Zathura
+    File: [[file:_home-manager/zathura.nix][zathura.nix]]
+    zathura is a highly customizable and functional document viewer mainly focuses on keyboard interaction.
+** Nix packages
   #+begin_src nix
-  emacs                     # The extensible, customizable GNU text editor
   firefox-bin               # A web browser built from Firefox source tree (with plugins: )
   chromium                  # An open source web browser from Google
   brave                     # Privacy-oriented browser for Desktop and Laptop computers
@@ -47,12 +87,14 @@
   (mate.caja-with-extensions.override { extensions = [ mate.caja-extensions mate.caja-dropbox ]; })
   mate.eom                  # An image viewing and cataloging program for the MATE desktop
   libreoffice               # Comprehensive, professional-quality productivity suite (Still/Stable release)
-  gimp                     # The GNU Image Manipulation Program
+  gparted                   # Graphical disk partitioning tool
+  pavucontrol              # PulseAudio Volume Control
+  gimp                      # The GNU Image Manipulation Program
   okular                    # KDE document viewer
   #+end_src
 
-
 * Online services
+** Nix packages
   #+begin_src nix
   bitwarden-cli           # A secure and free password manager for all of your devices.
   zoom-us                # zoom.us video conferencing application
@@ -62,136 +104,121 @@
   discord                # All-in-one cross-platform voice and text chat for gamers
   #+end_src
 
+* GUI (sway plus utilities)
+** Home manager modules
+*** Sway
+    File: [[file:_home-manager/sway.nix][sway.nix]]
+    The wayland compositor. This module includes some basic utilities!
+*** Mako
+    File: [[file:_home-manager/mako.nix][mako.nix]]
+    The wayland notification daemon.
+*** Waybar
+    File: [[file:_home-manager/waybar.nix][waybar.nix]]
+    The wayland status bar plus config.
+*** Gammastep
+    File: [[file:_home-manager/gammastep.nix][gammastep.nix]]
+    Adjust the color temperature of your screen according to your surroundings.
+    *Geoclue2* must be installed!
+*** Alarcitty
+    File: [[file:_home-manager/alacritty.nix][alacritty.nix]]
+    The terminal emulator
+    *Iosevka* font must be installed!
+*** XDG
+    File: [[file:_home-manager/xdg.nix][xdg.nix]]
+    Setting XDG MIME default apps.
+*** GTK
+    File: [[file:_home-manager/gtk.nix][gtk.nix]]
+    Setting a overall GTK theme.
 
-* Operations
-** Informative system
-   #+begin_src nix
-   neofetch                 # A fast, highly customizable system info script
-   inxi                     # A full featured CLI system information tool
-   #+end_src
-
-** Find and discover
-   #+begin_src nix
-   tree                     # Command to produce a depth indented directory listing
-   fzf                      # A command-line fuzzy finder written
-   bat              # A cat(1) clone with syntax highlighting and Git integration
-   ripgrep          # A utility that combines the usability of The Silver Searcher
-   #+end_src
-
-** Process management
-   #+begin_src nix
-   htop                     # An interactive process viewer for Linux
-   psmisc                   # A set of small useful utilities that use the proc filesystem - fuser, killall, pidof, pstree
-#+end_src
-
-** Networking
-   #+begin_src nix
-   httpie                   # A command line HTTP client whose goal is to make CLI human-friendly
-   wget                     # Tool for retrieving files using HTTP, HTTPS, and FTP
-   curl                     # A command line tool for transferring files with URL syntax
-   iftop                     # Display bandwidth usage on a network interface
-   mtr                       # A network diagnostics tool
-   croc                      # Easily and securely send things from one computer to another
-   nmap                      # A free and open source utility for network discovery and security auditing
-   tcpdump                   # Network sniffer
-   gnutls                    # The GNU Transport Layer Security Library
-   #+end_src
-
-** XDG MIME Applications
-   #+begin_src nix
-   xdg_utils                # A set of command line tools that assist applications desktop integration
-   shared-mime-info         # A database of common MIME types
-   file                     # A program that shows the type of files
-   #+end_src
-
-** Command Line Utilities
-   Some command line helpers
-   #+begin_src nix
-   calc # C-style arbitrary precision calculator
-   rlwrap # Readline wrapper for console programs
-   #+end_src
-
-** Security - encryption, keymanagement
-   #+begin_src nix
-   cryptsetup               # LUKS for dm-crypt
-   gnupg                    # GNU Privacy Guard, a GPL OpenPGP implementation
-   mkpasswd                 # Overfeatured front-end to crypt, from Debian whois package
-   pinentry                 # GnuPG’s ncurses interface to passphrase input
-   #+end_src
-
-** Partitioning
-   #+begin_src nix
-   gparted                  # Graphical disk partitioning tool
-   parted                    # Create, destroy, resize, check, and copy partitions
-   #+end_src
-
-** Virtualization
-   #+begin_src nix
-   virtmanager               # Desktop user interface for managing virtual machines
-   #+end_src
-
-** Sound management
-   #+begin_src nix
-   pamixer                  # Pulseaudio command line mixer
-   pavucontrol              # PulseAudio Volume Control
-   playerctl                # Command-line utility for controlling media players that implement MPRIS
-   #+end_src
-
-** Maildir
-   #+begin_src src
-   mu                        # A collection of utilties for indexing and searching Maildirs
-   isync                     # (mbsync) Free IMAP and MailDir mailbox synchronizer
-   #+end_src
-
-
-* Development - coding, writing
-** Utilities
-   #+begin_src nix
-   devd # A local webserver for developers
-   (callPackage sizzy {})    # The browser for Developers & Designers
-   #+end_src
-
-** Dictionaries
-   #+begin_src nix
-   aspell                   # Spell checker for many languages
-   aspellDicts.en           # Aspell dictionary for English
-   aspellDicts.de           # Aspell dictionary for German
-   #+end_src
-
-** Databases
-   #+begin_src nix
-   sqlite # A self-contained, serverless, zero-configuration SQL db engine
-   #+end_src
-** Python
-   #+begin_src nix
-   python3
-   #+end_src
-
-** JavaScript
-   #+begin_src nix
-   nodejs_latest             # Event-driven I/O framework for the V8 JavaScript engine
-   deno                      # A secure runtime for JavaScript and TypeScript
-   yarn                      # Fast, reliable, and secure dependency management for javascript
-   #+end_src
-
-** Nix
-   Nix language ecosystem
-   #+begin_src nix
-   nixfmt # An opinionated formatter for Nix
-   cachix                   # Command line client for Nix binary cache hosting https://cachix.org
-   manix                    # A Fast Documentation Searcher for Nix
-   nixpkgs-fmt              # Nix code formatter for nixpkgs
-   nix-info
-   nix-index                # A files database for nixpkgs
-   #+end_src
-** Other languages
-   #+begin_src nix
-   guile # Embedded Scheme implementation
-   racket # A programmable programming language
-   #+end_src
-
+* SHELL tooling
+** Home manager modules
+*** Fish
+    File: [[file:_home-manager/fish.nix][fish.nix]]
+    The fish shell plus config. Comes with *alias cat=bat* preinstalled.
+*** Exa
+    File: [[file:_home-manager/exa.nix][exa.nix]]
+    A modern replacement for 'ls'. Comes with some aliases.
+*** Lorri
+    File: [[file:_home-manager/lorri.nix][lorri.nix]]
+    lorri is a nix-shell replacement for project development.
+    lorri is based around fast direnv integration for robust CLI and editor integration.
+*** Direnv
+    File: [[file:_home-manager/direnv.nix][direnv.nix]]
+    direnv is an extension for your shell. Good for local *env* setting.
+*** Git
+    File: [[file:_home-manager/git.nix][git.nix]]
+    Git versioning with some extra packages and delta pager
+*** GnuPG
+    File: [[file:_home-manager/gpg.nix][gpg.nix]]
+    GPG with [[https://github.com/ioerror/duraconf][duraconf]] settings. Enables gpg-agent too.
+*** SSH
+    File: [[file:_home-manager/ssh.nix][ssh.nix]]
+    SSH with identities
+** Nix packages
+*** System information
+    #+begin_src nix
+    neofetch                 # A fast, highly customizable system info script
+    inxi                     # A full featured CLI system information tool
+    #+end_src
+*** Find and discover
+    #+begin_src nix
+    tree                     # Command to produce a depth indented directory listing
+    fzf                      # A command-line fuzzy finder written
+    bat              # A cat(1) clone with syntax highlighting and Git integration
+    ripgrep          # A utility that combines the usability of The Silver Searcher
+    #+end_src
+*** Process management
+    #+begin_src nix
+    htop                     # An interactive process viewer for Linux
+    psmisc                   # A set of small useful utilities that use the proc filesystem - fuser, killall, pidof, pstree
+    #+end_src
+*** Networking
+    #+begin_src nix
+    httpie                   # A command line HTTP client whose goal is to make CLI human-friendly
+    wget                     # Tool for retrieving files using HTTP, HTTPS, and FTP
+    curl                     # A command line tool for transferring files with URL syntax
+    iftop                     # Display bandwidth usage on a network interface
+    mtr                       # A network diagnostics tool
+    croc                      # Easily and securely send things from one computer to another
+    nmap                      # A free and open source utility for network discovery and security auditing
+    tcpdump                   # Network sniffer
+    gnutls                    # The GNU Transport Layer Security Library
+    #+end_src
+*** XDG MIME Applications
+    #+begin_src nix
+    xdg_utils                # A set of command line tools that assist applications desktop integration
+    shared-mime-info         # A database of common MIME types
+    file                     # A program that shows the type of files
+    #+end_src
+*** Sound and light management
+    #+begin_src nix
+    pamixer                  # Pulseaudio command line mixer
+    playerctl                # Command-line utility for controlling media players that implement MPRIS
+    brillo                   # Backlight and Keyboard LED control tool
+    #+end_src
+*** Security - encryption, keymanagement
+    #+begin_src nix
+    cryptsetup               # LUKS for dm-crypt
+    gnupg                    # GNU Privacy Guard, a GPL OpenPGP implementation
+    mkpasswd                 # Overfeatured front-end to crypt, from Debian whois package
+    pinentry                 # GnuPG’s ncurses interface to passphrase input
+    #+end_src
+*** Partitioning
+    #+begin_src nix
+    parted                    # Create, destroy, resize, check, and copy partitions
+    #+end_src
+*** Virtualization
+    #+begin_src nix
+    virtmanager               # Desktop user interface for managing virtual machines
+    #+end_src
+*** Command Line Utilities
+    #+begin_src nix
+    calc # C-style arbitrary precision calculator
+    rlwrap # Readline wrapper for console programs
+    #+end_src
 
 * File Generators - Extractors, Compressors, Converters, Parsers
+** Nix packages
   #+begin_src nix
   unp # Command line tool for unpacking archives easily
   unzip                    # An extraction utility for archives compressed in .zip format
@@ -204,8 +231,66 @@
   imagemagick              # A software suite to create, edit, compose, or convert bitmap images
   #+end_src
 
+* Maildir / Emails
+** Home manager modules
+*** Emails
+    File: [[file:_home-manager/emails.nix][emails.nix]]
+** Nix packages
+  #+begin_src nix
+  mu                        # A collection of utilties for indexing and searching Maildirs
+  isync                     # (mbsync) Free IMAP and MailDir mailbox synchronizer
+  #+end_src
+
+* Hardware connectivity
+** Home manager modules
+*** Blueman
+    File: [[file:_home-manager/blueman.nix][blueman.nix]]
+*** Udiskie
+    File: [[file:_home-manager/udiskie.nix][udiskie.nix]]
+* Software development
+** Nix packages
+*** Utilities
+    #+begin_src nix
+    devd # A local webserver for developers
+    (callPackage sizzy {})    # The browser for Developers & Designers
+    #+end_src
+*** Dictionaries                                                      :emacs:
+    #+begin_src nix
+    aspell                   # Spell checker for many languages
+    aspellDicts.en           # Aspell dictionary for English
+    aspellDicts.de           # Aspell dictionary for German
+    #+end_src
+*** Databases                                                         :emacs:
+    #+begin_src nix
+    sqlite                   # A self-contained, serverless, zero-configuration SQL db engine
+    #+end_src
+*** Python
+    #+begin_src nix
+    python3                   # A high-level dynamically-typed programming language
+    #+end_src
+*** JavaScript
+    #+begin_src nix
+    nodejs_latest             # Event-driven I/O framework for the V8 JavaScript engine
+    deno                      # A secure runtime for JavaScript and TypeScript
+    yarn                      # Fast, reliable, and secure dependency management for javascript
+    #+end_src
+*** Nix
+    Nix language ecosystem
+    #+begin_src nix
+    nixfmt # An opinionated formatter for Nix
+    cachix                   # Command line client for Nix binary cache hosting https://cachix.org
+    nixpkgs-fmt              # Nix code formatter for nixpkgs
+    nix-info
+    nix-index                # A files database for nixpkgs
+    #+end_src
+*** Other languages
+    #+begin_src nix
+    guile # Embedded Scheme implementation
+    racket # A programmable programming language
+    #+end_src
 
 * Presentation
+** Nix packages
   #+begin_src nix
   catt                    # Cast All The Things allows you to send videos from many, many online sources to your Chromecast
   xlibs.xeyes              # Moving eyes

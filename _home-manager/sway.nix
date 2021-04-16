@@ -5,6 +5,7 @@
    - dropbox -> as service on start
    - emacs -> as key combination
    - playerctl -> as key combination
+   - Source Code Pro as font! Test with: fc-list : family | grep 'Source Code Pro'
 */
 { config, lib, pkgs, ... }:
 
