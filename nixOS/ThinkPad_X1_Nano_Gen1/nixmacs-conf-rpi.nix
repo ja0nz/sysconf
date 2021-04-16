@@ -1,5 +1,0 @@
-{ ... }:
-
-{
-  layers.nixmacs.enable = true;
-}

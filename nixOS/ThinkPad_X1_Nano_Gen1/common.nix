@@ -1,12 +1,8 @@
 { config, pkgs, lib, ... }:
 
 with lib; {
-  options = {
-    machine = mkOption { type = types.enum [ "laptop" "desktop" "rpi" ]; };
-  };
-
   imports = [ ./home.nix ./users.nix ];
-
+  options = { };
   config = {
     nixpkgs.config = { allowUnfree = true; };
 
@@ -25,10 +21,7 @@ with lib; {
       extraPackages = [ ];
     };
 
-    boot.loader = if config.machine == "rpi" then {
-      grub.enable = false;
-      generic-extlinux-compatible.enable = true;
-    } else {
+    boot.loader = {
       # Use the systemd-boot EFI boot loader.
       systemd-boot.enable = true;
       systemd-boot.consoleMode = "max";
@@ -52,7 +45,6 @@ with lib; {
     hardware = {
       pulseaudio = {
         enable = true;
-        support32Bit = mkIf (config.machine != "rpi") true;
         extraModules = [ pkgs.pulseaudio-modules-bt ];
         package = pkgs.pulseaudioFull;
       };
@@ -61,7 +53,6 @@ with lib; {
         package = pkgs.bluezFull;
       };
       opengl.enable = true;
-      opengl.driSupport32Bit = mkIf (config.machine != "rpi") true;
       brillo.enable = true;
     };
 
@@ -69,6 +60,7 @@ with lib; {
     time.timeZone = "Europe/Berlin";
 
     nix = {
+      package = pkgs.nixFlakes;
       extraOptions = ''
         keep-outputs = true
         keep-derivations = true
@@ -97,8 +89,8 @@ with lib; {
           noto-fonts
           # nerdfonts
           fira-code
-        ] ++ optional (config.machine != "rpi") noto-fonts;
-      enableDefaultFonts = mkIf (config.machine == "rpi") false;
+        ];
+      #enableDefaultFonts = true;
 
       fontconfig = {
         enable = true;
@@ -133,10 +125,10 @@ with lib; {
     #   ];
     # };
 
-    #    services.gvfs.enable = mkIf (config.machine != "rpi") true;
+    #    services.gvfs.enable = true;
 
-    programs.dconf.enable = mkIf (config.machine != "rpi") true;
-    #    programs.adb.enable = mkIf (config.machine != "rpi") true;
+    programs.dconf.enable = true;
+    #    programs.adb.enable = true;
 
     # Enable sound.
     sound.enable = true;

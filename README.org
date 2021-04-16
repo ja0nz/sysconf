@@ -235,12 +235,12 @@
 ** Home manager modules
 *** Emails
     File: [[file:_home-manager/emails.nix][emails.nix]]
+    This modules comes with *mu* and *isync* (mbsync) already!
 ** Nix packages
   #+begin_src nix
   mu                        # A collection of utilties for indexing and searching Maildirs
   isync                     # (mbsync) Free IMAP and MailDir mailbox synchronizer
   #+end_src
-
 * Hardware connectivity
 ** Home manager modules
 *** Blueman
@@ -295,3 +295,11 @@
   catt                    # Cast All The Things allows you to send videos from many, many online sources to your Chromecast
   xlibs.xeyes              # Moving eyes
   #+end_src
+
+* Fonts
+** Nix packages
+   #+begin_src nix
+   source-code-pro
+   iosevka
+   powerline-fonts
+   #+end_src

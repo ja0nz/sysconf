@@ -3,20 +3,11 @@
 {
   imports = [
     ../common.nix
-    ./hardware-configuration.nix # TODO
-    ./cachix.nix # TODO
+    /etc/nixos/hardware-configuration.nix # TODO
+    /etc/nixos/cachix.nix # TODO
   ];
 
   config = {
-    #    boot.initrd.luks.devices = {
-    #      cryptlvm = {
-    #        device = "/dev/sda2";
-    #        allowDiscards = true;
-    #        preLVM = true;
-    #      };
-    #   };
-
-    machine = "laptop";
 
     networking.hostName = "nixos_nano"; # Define your hostname.
 

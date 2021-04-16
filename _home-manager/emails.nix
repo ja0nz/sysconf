@@ -22,8 +22,7 @@ in {
     };
   };
 
-  home.file.".emacs.d/authinfo.gpg".source =
-    "${config._secret}/authinfo_emacs.gpg";
+  home.file.".authinfo.gpg".source = "${config._secret}/authinfo_emacs.gpg";
 
   programs.mbsync = {
     enable = true;

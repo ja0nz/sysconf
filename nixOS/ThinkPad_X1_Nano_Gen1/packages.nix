@@ -1,6 +1,6 @@
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 
-let sizzy = import ./sizzy;
+let sizzy = import ../../_home-manager/sizzy;
 in {
 
   # Home manager imports
@@ -91,7 +91,7 @@ in {
     # For emacs: Database (org-roam)
     sqlite # A self-contained, serverless, zero-configuration SQL db engine
 
-    # -- Software Development
+    # -- Software Development --
     python3 # A high-level dynamically-typed programming language
     nixfmt # An opinionated formatter for Nix
     manix # A Fast Documentation Searcher for Nix
