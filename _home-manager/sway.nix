@@ -20,7 +20,7 @@ in {
     wl-clipboard # Command-line copy/paste utilities for Wayland
     grim # Grab images from a Wayland compositor
     slurp # Select a region in a Wayland compositor
-    swaylock # Screen locker for Wayland
+    swaylock-fancy # swaylock bash script blurs the background and adds a lock icon and text
 
     hicolor-icon-theme # Default fallback theme used by implementations of the icon theme specification
 
@@ -76,17 +76,17 @@ in {
         bottom = -6;
         smartBorders = "on";
       };
-      inherit modifier;
       menu = "wldash";
       terminal = "alacritty";
       workspaceAutoBackAndForth = true;
+      inherit modifier;
       keybindings = lib.mkOptionDefault {
         "${modifier}+Ctrl+t" = "exec caja";
         "${modifier}+Ctrl+r" = lib.mkForce "exec emacsclient -c";
         "${modifier}+Ctrl+n" = "exec brave";
         "${modifier}+p" = "exec ${_static + "/take_screenshot"}";
         "${modifier}+Shift+p" = "exec ${_static + "/take_screenshot"} full";
-        "${modifier}+l" = ''exec "swaylock -f -c 000000"'';
+        "${modifier}+l" = ''exec "swaylock-fancy"'';
         "XF86MonBrightnessUp" = ''exec "brillo -A 1"'';
         "XF86MonBrightnessDown" = ''exec "brillo -U 1"'';
         "XF86AudioMute" = ''exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"'';
@@ -102,7 +102,7 @@ in {
         "${modifier}+Ctrl+g" = "exec reboot";
         "${modifier}+Ctrl+h" = ''exec "shutdown -h now"'';
         "${modifier}+Ctrl+f" =
-          ''exec "swaylock -f -c 000000 && systemctl suspend"'';
+          ''exec "swaylock-fancy && systemctl suspend"'';
       };
       window = {
         border = 2;
