@@ -60,11 +60,9 @@ with lib; {
     time.timeZone = "Europe/Berlin";
 
     nix = {
-      package = pkgs.nixFlakes;
       extraOptions = ''
         keep-outputs = true
         keep-derivations = true
-        experimental-features = nix-command flakes
       '';
       autoOptimiseStore = true;
       trustedUsers = [ "@wheel" ];
