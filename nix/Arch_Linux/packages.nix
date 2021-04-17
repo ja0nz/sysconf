@@ -8,6 +8,7 @@ in {
     # -- Programs --
     /emacs.nix
     /zathura.nix
+    /brave.nix
     # -- GUI --
     /sway.nix
     /mako.nix
@@ -33,7 +34,6 @@ in {
 
   home.packages = with pkgs; [
     # -- Programs --
-    brave # Privacy-oriented browser for Desktop and Laptop computers
     (mate.caja-with-extensions.override {
       extensions = [ mate.caja-extensions mate.caja-dropbox ];
     })

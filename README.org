@@ -73,16 +73,19 @@
   Full fledged programs with GUI.
 ** Home manager modules
 *** Emacs
-    File: [[file:_home-manager/emacs.nix][emacs.nix]]
+    File: [[file:_home-manager/emacs.nix][emacs.nix]] \
     Emacs plus emacs as systemd user service.
 *** Zathura
-    File: [[file:_home-manager/zathura.nix][zathura.nix]]
+    File: [[file:_home-manager/zathura.nix][zathura.nix ]]\
     zathura is a highly customizable and functional document viewer mainly focuses on keyboard interaction.
+*** Brave
+    File: [[file:_home-manager/brave.nix][brave.nix]] \
+    Privacy-oriented browser for Desktop and Laptop computers. \
+    Comes with some plugins.
 ** Nix packages
   #+begin_src nix
   firefox-bin               # A web browser built from Firefox source tree (with plugins: )
   chromium                  # An open source web browser from Google
-  brave                     # Privacy-oriented browser for Desktop and Laptop computers
   vlc                       # Cross-platform media player and streaming server
   (mate.caja-with-extensions.override { extensions = [ mate.caja-extensions mate.caja-dropbox ]; })
   mate.eom                  # An image viewing and cataloging program for the MATE desktop
