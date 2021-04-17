@@ -7,11 +7,9 @@
    - playerctl -> as key combination
    - Source Code Pro as font! Test with: fc-list : family | grep 'Source Code Pro'
 */
-{ config, lib, pkgs, ... }:
+{ lib, pkgs, ... }:
 
-let
-  inherit (config) _static;
-  modifier = "Mod4";
+let modifier = "Mod4";
 in {
 
   # Packages
@@ -82,31 +80,13 @@ in {
       terminal = "alacritty";
       workspaceAutoBackAndForth = true;
       inherit modifier;
-      keybindings = let
-        lockcmd = ''
-          swaylock \
-              -f \
-              --screenshots \
-              --clock \
-              --indicator \
-              --indicator-radius 150 \
-              --indicator-thickness 7 \
-              --effect-blur 7x5 \
-              --effect-vignette 0.6:0.6 \
-              --ring-color bb00cc \
-              --key-hl-color 880033 \
-              --line-color 00000000 \
-              --inside-color 00000088 \
-              --separator-color 00000000 \
-              --grace 2 \
-              --fade-in 0.2 '';
-      in lib.mkOptionDefault {
+      keybindings = lib.mkOptionDefault {
         "${modifier}+Ctrl+t" = "exec caja";
         "${modifier}+Ctrl+r" = lib.mkForce "exec emacsclient -c";
         "${modifier}+Ctrl+n" = "exec brave";
-        "${modifier}+p" = "exec ${_static + "/take_screenshot"}";
-        "${modifier}+Shift+p" = "exec ${_static + "/take_screenshot"} full";
-        "${modifier}+l" = ''exec "${lockcmd}"'';
+        "${modifier}+p" = "exec ${./take_screenshot}";
+        "${modifier}+Shift+p" = "exec ${./take_screenshot} full";
+        "${modifier}+l" = "exec ${./swaylock}";
         "XF86MonBrightnessUp" = ''exec "brillo -A 1"'';
         "XF86MonBrightnessDown" = ''exec "brillo -U 1"'';
         "XF86AudioMute" = ''exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"'';
@@ -119,9 +99,10 @@ in {
         "XF86AudioNext" = ''exec "playerctl next"'';
         "XF86AudioPrev" = ''exec "playerctl previous"'';
         "${modifier}+Ctrl+d" = "exec networkmanager_dmenu";
-        "${modifier}+Ctrl+g" = "exec reboot";
-        "${modifier}+Ctrl+h" = ''exec "shutdown -h now"'';
-        "${modifier}+Ctrl+f" = ''exec "${lockcmd} && systemctl suspend"'';
+        "${modifier}+Shift+g" = "exec reboot";
+        "${modifier}+Shift+h" = ''exec "shutdown -h now"'';
+        "${modifier}+Ctrl+f" = ''exec "${./swaylock} && systemctl suspend"'';
+        "${modifier}+q" = "kill";
       };
       window = {
         border = 2;
@@ -151,12 +132,12 @@ in {
       #TODO Set your input/output devices
       # swaymsg -t get_outputs
       output = {
-        "*" = { bg = ''"${_static + "/background-image-secondary.png"}" fill''; };
+        "*" = { bg = ''"${./background-image-secondary.png}" fill''; };
         "eDP-1" = {
           pos = "0,0";
           scale = "1.4";
           res = "2160x1350";
-          bg = ''"${_static + "/background-image-primary.png"}" fill'';
+          bg = ''"${./background-image-primary.png}" fill'';
         };
       };
     };

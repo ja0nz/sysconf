@@ -10,6 +10,7 @@
       groups = "id (whoami)";
       node = "env NODE_NO_READLINE=1 rlwrap node";
       rg = "rg --hidden --glob '!.git'";
+      newmacs = "GDK_BACKEND=x11 emacs -q -l ~/emacs.d/init.el &; disown && exit";
       cat = "bat";
       nix-stray-roots =
         "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/w+-system|{memory)'";

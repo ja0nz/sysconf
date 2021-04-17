@@ -1,6 +1,6 @@
 /*
 Other options:
-Manual restore of _static/vimium-options.json (Advanced options)
+Manual restore ./vimium-options.json (Advanced options in vimium settings)
 */
 { pkgs, ... }:
 

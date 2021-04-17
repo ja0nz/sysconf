@@ -6,13 +6,13 @@ in {
   # Home manager imports
   imports = map (pkg: ../../_home-manager + pkg) [
     # -- Programs --
-    /emacs.nix
-    /zathura.nix
-    /brave.nix
+    /emacs
+    /zathura
+    /brave
     # -- GUI --
-    /sway.nix
+    /sway
+    /waybar
     /mako.nix
-    /waybar.nix
     /gammastep.nix
     /alacritty.nix
     /xdg.nix

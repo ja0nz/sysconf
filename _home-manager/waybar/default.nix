@@ -3,13 +3,13 @@
    - playerctl -> player control (for spotify)
    - spotify -> the player itself
 */
-{ config, ... }:
+{ ... }:
 
 {
   programs.waybar = {
     enable = true;
     systemd.enable = true;
-    style = builtins.readFile (config._static + "/waybar.css");
+    style = builtins.readFile ./waybar.css;
     settings = [{
       layer = "bottom";
       position = "bottom";

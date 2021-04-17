@@ -12,7 +12,6 @@ in {
     config = {
 
       inherit _repoRoot;
-      _static = ../../_static;
       _secret = ../../_secret;
 
       nixpkgs.config = {
@@ -30,7 +29,6 @@ in {
     # Global options
     options = with lib; {
       _repoRoot = mkOption { type = types.path; };
-      _static = mkOption { type = types.path; };
       _secret = mkOption { type = types.path; };
     };
   };
