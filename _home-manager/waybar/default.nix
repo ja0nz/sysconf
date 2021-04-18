@@ -49,10 +49,6 @@
           format-wifi = "{essid} ({signalStrength}%)";
           format-ethernet = "{ifname}: {ipaddr}/{cidr}";
           format-disconnected = "Disconnected ⚠";
-          on-click = ''
-            nmcli networking connectivity | grep -q none \
-                        && nmcli networking on \
-                        || nmcli networking off '';
           on-click-right = "nm-connection-editor";
         };
         pulseaudio = {

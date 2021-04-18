@@ -1,0 +1,20 @@
+#+title: Ja0nz Emacs Configuration
+#+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/personal/config.el :mkdirp yes
+
+* Require use-package
+  #+begin_src emacs-lisp
+    (require 'use-package)
+    (setq use-package-always-ensure t)
+  #+end_src
+
+* Keybindings
+  #+begin_src emacs-lisp
+    (define-key prelude-mode-map (kbd "M-s-r") 'crux-recentf-find-file)
+    (global-set-key (kbd "C-x b") 'counsel-buffer-or-recentf)
+  #+end_src
+
+* Org-bullets
+  #+begin_src emacs-lisp
+    (use-package org-bullets
+      :hook (org-mode . org-bullets-mode))
+  #+end_src

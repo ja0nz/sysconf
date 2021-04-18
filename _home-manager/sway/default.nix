@@ -18,6 +18,7 @@ in {
     wldash
     wl-clipboard # Command-line copy/paste utilities for Wayland
     grim # Grab images from a Wayland compositor
+    jq # A lightweight and flexible command-line JSON processor
     slurp # Select a region in a Wayland compositor
     swaylock-effects # Screen locker for wayland
     hicolor-icon-theme # Default fallback theme used by implementations of the icon theme specification
@@ -77,12 +78,15 @@ in {
       workspaceAutoBackAndForth = true;
       inherit modifier;
       keybindings = lib.mkOptionDefault {
-        "${modifier}+Ctrl+t" = "exec caja";
-        "${modifier}+Ctrl+r" = lib.mkForce "exec emacsclient -c";
+        "${modifier}+Ctrl+d" = "exec networkmanager_dmenu";
         "${modifier}+Ctrl+n" = "exec brave";
-        "${modifier}+p" = "exec ${./take_screenshot}";
-        "${modifier}+Shift+p" = "exec ${./take_screenshot} full";
+        "${modifier}+Ctrl+t" = "exec caja";
+        "${modifier}+Ctrl+r" = ''exec "emacsclient -c"'';
+        "${modifier}+Ctrl+f" = ''exec "${./swaylock} && systemctl suspend"'';
         "${modifier}+l" = "exec ${./swaylock}";
+        "${modifier}+q" = "kill";
+        "Print" = "exec ${./take_screenshot}";
+        "Ctrl+Print" = "exec ${./take_screenshot} full";
         "XF86MonBrightnessUp" = ''exec "brillo -A 1"'';
         "XF86MonBrightnessDown" = ''exec "brillo -U 1"'';
         "XF86AudioMute" = ''exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"'';
@@ -94,11 +98,13 @@ in {
         "XF86AudioPause" = ''exec "playerctl pause"'';
         "XF86AudioNext" = ''exec "playerctl next"'';
         "XF86AudioPrev" = ''exec "playerctl previous"'';
-        "${modifier}+Ctrl+d" = "exec networkmanager_dmenu";
-        "${modifier}+Shift+g" = "exec reboot";
-        "${modifier}+Shift+h" = ''exec "shutdown -h now"'';
-        "${modifier}+Ctrl+f" = ''exec "${./swaylock} && systemctl suspend"'';
-        "${modifier}+q" = "kill";
+        "XF86AudioMicMute" =
+          ''exec "pactl set-source-mute @DEFAULT_SOURCE@ toggle"'';
+        "XF86Display" = ''exec "swaymsg 'output DP-4 toggle'"'';
+        "XF86WLAN" = ''
+          exec "nmcli networking connectivity | \
+                    grep -q none && nmcli networking on || nmcli networking off"'';
+        "XF86Favorites" = ''exec "shutdown -h now"'';
       };
       window = {
         border = 2;

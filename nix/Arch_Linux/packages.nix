@@ -84,7 +84,6 @@ in {
     pandoc # Conversion betrween markup formats
     graphviz # Graph visualization tools
     ditaa # Convert ascii art diagrams into proper bitmap graphics
-    jq # A lightweight and flexible command-line JSON processor
 
     # For emacs: Dictionaries
     aspell # Spell checker for many languages
