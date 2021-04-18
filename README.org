@@ -177,9 +177,12 @@
     #+end_src
 *** Networking
     #+begin_src nix
-    httpie                   # A command line HTTP client whose goal is to make CLI human-friendly
-    wget                     # Tool for retrieving files using HTTP, HTTPS, and FTP
-    curl                     # A command line tool for transferring files with URL syntax
+    networkmanagerapplet      # NetworkManager control applet for GNOME
+    dmenu                     # A generic, highly customizable, menu for the X Window System
+    networkmanager_dmenu      # Small script to manage NetworkManager connections with dmenu
+    httpie                    # A command line HTTP client whose goal is to make CLI human-friendly
+    wget                      # Tool for retrieving files using HTTP, HTTPS, and FTP
+    curl                      # A command line tool for transferring files with URL syntax
     iftop                     # Display bandwidth usage on a network interface
     mtr                       # A network diagnostics tool
     croc                      # Easily and securely send things from one computer to another

@@ -1,5 +1,7 @@
 /* Optional requires:
-   - pavucontrol -> lauch pulseaudio control
+   - pavucontrol -> launch pulseaudio control
+   - networkmanager -> launch network control
+   - brave browser -> launch google calendar
    - playerctl -> player control (for spotify)
    - spotify -> the player itself
 */
@@ -22,9 +24,10 @@
       modules = {
         tray = { spacing = 10; };
         clock = {
-          format = "{:%a %d %b | %H:%M}";
-          tooltip-format = "{:%Y-%m-%d | %H:%M}";
+          format = "{:%a %d %b | %H:%M | W%V}";
+          tooltip-format = "{:%Y-%m-%d | %H:%M | W%V}";
           format-alt = "{:%Y-%m-%d}";
+          on-click-right = "brave calendar.google.com";
         };
         cpu = { format = "<b>CPU</b>: {usage}%"; };
         backlight = {
@@ -46,6 +49,11 @@
           format-wifi = "{essid} ({signalStrength}%)";
           format-ethernet = "{ifname}: {ipaddr}/{cidr}";
           format-disconnected = "Disconnected ⚠";
+          on-click = ''
+            nmcli networking connectivity | grep -q none \
+                        && nmcli networking on \
+                        || nmcli networking off '';
+          on-click-right = "nm-connection-editor";
         };
         pulseaudio = {
           format = "{volume}% {icon}";

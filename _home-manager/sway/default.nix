@@ -2,6 +2,7 @@
    - brillo -> as key combination
    - caja -> as key combination
    - brave browser -> as key combination
+   - networkmanager_dmenu -> as key combination
    - dropbox -> as service on start
    - emacs -> as key combination
    - playerctl -> as key combination
@@ -19,12 +20,7 @@ in {
     grim # Grab images from a Wayland compositor
     slurp # Select a region in a Wayland compositor
     swaylock-effects # Screen locker for wayland
-
     hicolor-icon-theme # Default fallback theme used by implementations of the icon theme specification
-
-    # dmenu network selector
-    dmenu # A generic, highly customizable, and efficient menu for the X Window System
-    networkmanager_dmenu # Small script to manage NetworkManager connections with dmenu
 
     # Notifications
     libnotify # A library that sends desktop notifications to a notification daemon

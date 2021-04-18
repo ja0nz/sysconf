@@ -41,6 +41,7 @@ in {
     mate.eom # An image viewing and cataloging program for the MATE desktop
     okular # KDE document viewer
     pavucontrol # PulseAudio Volume Control
+    networkmanagerapplet      # NetworkManager control applet for GNOME
 
     # -- Online services --
     dropbox-cli # Command line client for the dropbox daemon
@@ -59,6 +60,8 @@ in {
     psmisc # A set of small useful utilities that use the proc filesystem - pstree
 
     # -- Networking --
+    dmenu                     # A generic, highly customizable, menu for the X Window System
+    networkmanager_dmenu      # Small script to manage NetworkManager connections with dmenu
     httpie # A command line HTTP client whose goal is to make CLI human-friendly
     wget # Tool for retrieving files using HTTP, HTTPS, and FTP
     curl # A command line tool for transferring files with URL syntax
