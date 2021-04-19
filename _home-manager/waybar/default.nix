@@ -2,7 +2,7 @@
    - pavucontrol -> launch pulseaudio control
    - networkmanager -> launch network control
    - brave browser -> launch google calendar
-   - playerctl -> player control (for spotify)
+   - playerctl -> player control (for spotify, brave browser, ctc)
    - spotify -> the player itself
 */
 { ... }:
@@ -50,6 +50,7 @@
           format-ethernet = "{ifname}: {ipaddr}/{cidr}";
           format-disconnected = "Disconnected ⚠";
           on-click-right = "nm-connection-editor";
+          max-length = 30;
         };
         pulseaudio = {
           format = "{volume}% {icon}";
@@ -68,13 +69,13 @@
           on-click = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
           on-click-right = "pavucontrol";
         };
-        "sway/window" = { max-length = 80; };
+        "sway/window" = { max-length = 70; };
         "sway/mode" = {
           format = "{}";
           max-length = 50;
         };
         "custom/waybar-mpris" = {
-          format = "📻 {}";
+          # format = "📻 {}";
           return-type = "json";
           exec = "${./waybar-mpris} --position --autofocus";
           on-click = "${./waybar-mpris} --send toggle";
@@ -87,7 +88,7 @@
           #on-scroll-up = "waybar-mpris --send next";
           #on-scroll-down = "waybar-mpris --send prev";
           escape = true;
-          max-length = 50;
+          max-length = 40;
         };
         "custom/root" = {
           format = "<b>\\</b> {}";
