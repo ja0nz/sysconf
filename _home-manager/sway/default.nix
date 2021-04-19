@@ -78,13 +78,23 @@ in {
       workspaceAutoBackAndForth = true;
       inherit modifier;
       keybindings = lib.mkOptionDefault {
+        "${modifier}+q" = "kill";
+        "${modifier}+g" = "floating toggle";
+        "${modifier}+space" = "workspace number 1";
+        "${modifier}+h" = "layout tabbed";
+        "${modifier}+Ctrl+h" = "layout toggle split";
         "${modifier}+Ctrl+d" = "exec networkmanager_dmenu";
         "${modifier}+Ctrl+n" = "exec brave";
         "${modifier}+Ctrl+t" = "exec caja";
         "${modifier}+Ctrl+r" = ''exec "emacsclient -c"'';
-        "${modifier}+Ctrl+f" = ''exec "${./swaylock} && systemctl suspend"'';
-        "${modifier}+l" = "exec ${./swaylock}";
-        "${modifier}+q" = "kill";
+        "${modifier}+k" = "exec ${./swaylock}";
+        "${modifier}+Ctrl+k" = ''exec "${./swaylock} && systemctl suspend"'';
+
+        "${modifier}+b" = ''exec "playerctl play-pause"'';
+        "${modifier}+Ctrl+b" = ''exec "playerctl stop"'';
+        "${modifier}+m" = ''exec "playerctl next"'';
+        "${modifier}+Ctrl+m" = ''exec "playerctl previous"'';
+
         "Print" = "exec ${./take_screenshot}";
         "Ctrl+Print" = "exec ${./take_screenshot} full";
         "XF86MonBrightnessUp" = ''exec "brillo -A 1"'';
@@ -94,10 +104,10 @@ in {
           ''exec "pactl set-sink-volume @DEFAULT_SINK@ -5%"'';
         "XF86AudioRaiseVolume" =
           ''exec "pactl set-sink-volume @DEFAULT_SINK@ +5%"'';
-        "XF86AudioPlay" = ''exec "playerctl play"'';
-        "XF86AudioPause" = ''exec "playerctl pause"'';
-        "XF86AudioNext" = ''exec "playerctl next"'';
-        "XF86AudioPrev" = ''exec "playerctl previous"'';
+        # "XF86AudioPlay" = ''exec "playerctl play"'';
+        # "XF86AudioPause" = ''exec "playerctl pause"'';
+        # "XF86AudioNext" = ''exec "playerctl next"'';
+        # "XF86AudioPrev" = ''exec "playerctl previous"'';
         "XF86AudioMicMute" =
           ''exec "pactl set-source-mute @DEFAULT_SOURCE@ toggle"'';
         "XF86Display" = ''exec "swaymsg 'output DP-4 toggle'"'';
