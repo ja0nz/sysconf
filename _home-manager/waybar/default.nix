@@ -17,7 +17,7 @@
       position = "bottom";
       height = 25;
       modules-left =
-        [ "sway/workspaces" "cpu" "backlight" "pulseaudio" "custom/spotify" ];
+        [ "sway/workspaces" "cpu" "backlight" "pulseaudio" "custom/waybar-mpris" ];
       modules-center = [ "sway/window" ];
       modules-right =
         [ "sway/mode" "custom/root" "network" "battery" "clock" "tray" ];
@@ -73,16 +73,21 @@
           format = "{}";
           max-length = 50;
         };
-        "custom/spotify" = {
-          format = " {}";
-          interval = 5;
-          max-length = 100;
-          on-click = "playerctl previous";
-          on-click-right = "playerctl next";
-          on-click-middle = "playerctl play-pause";
-          exec =
-            "sleep 0.5 ; playerctl metadata -f '{{artist}}: {{title}}' | sed 's/&/&amp;/g'";
-          exec-if = "pgrep spotify";
+        "custom/waybar-mpris" = {
+          format = "📻 {}";
+          return-type = "json";
+          exec = "${./waybar-mpris} --position --autofocus";
+          on-click = "${./waybar-mpris} --send toggle";
+          # This option will switch between players on right click.
+          on-click-right = "${./waybar-mpris} --send player-next";
+          ## The options below will switch the selected player on scroll
+          #on-scroll-up = "waybar-mpris --send player-next";
+          #on-scroll-down = "waybar-mpris --send player-prev";
+          ## The options below will go to next/previous track on scroll
+          #on-scroll-up = "waybar-mpris --send next";
+          #on-scroll-down = "waybar-mpris --send prev";
+          escape = true;
+          max-length = 50;
         };
         "custom/root" = {
           format = "<b>\\</b> {}";
