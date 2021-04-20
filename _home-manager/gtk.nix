@@ -1,12 +1,12 @@
 /* Optional requires:
-   - Source Code Pro as font! Test with: fc-list : family | grep 'Source Code Pro'
+   - _monoFont! Test with: fc-list : family | grep <MonoFontName>
 */
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   gtk = {
     enable = true;
-    font.name = "Source Code Pro 10";
+    font.name = config._monoFont.name + " 10";
     iconTheme = {
       package = pkgs.arc-icon-theme;
       name = "Arc";

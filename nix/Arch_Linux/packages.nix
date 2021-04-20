@@ -41,6 +41,7 @@ in {
     okular # KDE document viewer
     pavucontrol # PulseAudio Volume Control
     networkmanagerapplet      # NetworkManager control applet for GNOME
+    neovim                    # Vim text editor fork focused on extensibility and agility
 
     # -- Online services --
     dropbox-cli # Command line client for the dropbox daemon

@@ -11,7 +11,7 @@
      config.el.org builds towards ~/.emacs/personal/config.el
   */
   home.activation.initEmacs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    emacs --batch --eval "(require 'org)" \
-      --eval '(org-babel-tangle-file "${./config.el.org}")'
+    #emacs --batch --eval "(require 'org)" \
+    #  --eval '(org-babel-tangle-file "${./config.el.org}")'
   '';
 }

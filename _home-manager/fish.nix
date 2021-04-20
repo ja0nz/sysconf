@@ -1,5 +1,6 @@
 /* Optional requires:
    - Ripgrep as alias 'rg'
+   - Neovim as alias 'vim'
 */
 { pkgs, ... }:
 
@@ -12,6 +13,7 @@
       rg = "rg --hidden --glob '!.git'";
       newmacs = "GDK_BACKEND=x11 emacs -q -l ~/emacs.d/init.el &; disown && exit";
       cat = "bat";
+      vim = "nvim";
       nix-stray-roots =
         "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/w+-system|{memory)'";
     };

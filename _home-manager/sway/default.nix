@@ -6,9 +6,9 @@
    - dropbox -> as service on start
    - emacs -> as key combination
    - playerctl -> as key combination
-   - Source Code Pro as font! Test with: fc-list : family | grep 'Source Code Pro'
+   - _monoFont! Test with: fc-list : family | grep <MonoFontName>
 */
-{ lib, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
 let modifier = "Mod4";
 in {
@@ -66,7 +66,7 @@ in {
           childBorder = "#FF0000";
         };
       };
-      fonts = [ "Source Code Pro 9" ];
+      fonts = [ (config._monoFont.name + " 9") ];
       gaps = {
         inner = 10;
         outer = -10;

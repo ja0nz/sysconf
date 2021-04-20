@@ -13,6 +13,18 @@ with lib; {
     networking.hostName = "nixos_nano";
     _repoRoot = /home/me/sysconf;
     _configInUse = ../ThinkPad_X1_Nano_Gen1;
+    _monoFont = {
+      name = "JetBrains Mono";
+      pkg = pkgs.jetbrains-mono;
+    };
+    _sansFont = {
+      name = "Noto Sans";
+      pkg = pkgs.noto-fonts;
+    };
+    _serifFont = {
+      name = "DeJaVu Serif";
+      pkg = pkgs.dejavu_fonts;
+    };
 
     hardware = { cpu.intel.updateMicrocode = true; };
 
@@ -33,5 +45,8 @@ with lib; {
   options = {
     _repoRoot = mkOption { type = types.path; };
     _configInUse = mkOption { type = types.path; };
+    _monoFont = mkOption { type = types.attrs; };
+    _sansFont = mkOption { type = types.attrs; };
+    _serifFont = mkOption { type = types.attrs; };
   };
 }

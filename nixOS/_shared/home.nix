@@ -1,7 +1,7 @@
 { lib, config, ... }:
 
 let
-  inherit (config) _configInUse _repoRoot;
+  inherit (config) _configInUse _repoRoot _monoFont;
   packagePath = _configInUse + /packages.nix;
 in {
   imports = [ <home-manager/nixos> ];
@@ -11,7 +11,7 @@ in {
     imports = [ packagePath ];
     config = {
 
-      inherit _repoRoot;
+      inherit _repoRoot _monoFont;
       _secret = ../../_secret;
 
       nixpkgs.config = {
@@ -29,6 +29,7 @@ in {
     # Global options
     options = with lib; {
       _repoRoot = mkOption { type = types.path; };
+      _monoFont = mkOption { type = types.attrs; };
       _secret = mkOption { type = types.path; };
     };
   };

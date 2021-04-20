@@ -94,6 +94,7 @@
   pavucontrol              # PulseAudio Volume Control
   gimp                      # The GNU Image Manipulation Program
   okular                    # KDE document viewer
+  neovim                    # Vim text editor fork focused on extensibility and agility
   #+end_src
 
 * Online services
@@ -125,7 +126,7 @@
 *** Alarcitty
     File: [[file:_home-manager/alacritty.nix][alacritty.nix]]
     The terminal emulator
-    *Iosevka* font must be installed!
+    *JetBrains Mono* (or any other monofont) must be installed!
 *** XDG
     File: [[file:_home-manager/xdg.nix][xdg.nix]]
     Setting XDG MIME default apps.
@@ -195,6 +196,7 @@
     xdg_utils                # A set of command line tools that assist applications desktop integration
     shared-mime-info         # A database of common MIME types
     file                     # A program that shows the type of files
+    fd                       # A simple, fast and user-friendly alternative to find
     #+end_src
 *** Sound and light management
     #+begin_src nix

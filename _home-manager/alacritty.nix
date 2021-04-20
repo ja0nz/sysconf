@@ -1,8 +1,8 @@
 /* Optional requires:
-   - Iosevka as font! Test with: fc-list : family | grep Iosevka
    - Brave browser as mouse launcher
+   - _monoFont! Test with: fc-list : family | grep <MonoFontName>
 */
-{ ... }:
+{ config, ... }:
 
 {
   programs.alacritty = {
@@ -10,22 +10,22 @@
     settings = {
       font = {
         normal = {
-          family = "Iosevka";
+          family = config._monoFont.name;
           style = "Regular";
         };
         bold = {
-          family = "Iosevka";
+          family = config._monoFont.name;
           style = "Bold";
         };
         italic = {
-          family = "Iosevka";
+          family = config._monoFont.name;
           style = "Italic";
         };
         bold-italic = {
-          family = "Iosevka";
+          family = config._monoFont.name;
           style = "Bold Italic";
         };
-        size = 12;
+        size = 11;
       };
       colors = {
         primary = {

@@ -42,6 +42,7 @@ in {
     okular # KDE document viewer
     pavucontrol # PulseAudio Volume Control
     networkmanagerapplet      # NetworkManager control applet for GNOME
+    neovim                    # Vim text editor fork focused on extensibility and agility
 
     # -- Online services --
     dropbox-cli # Command line client for the dropbox daemon
@@ -68,6 +69,7 @@ in {
 
     # -- XDG MIME --
     file # A program that shows the type of files
+    fd # A simple, fast and user-friendly alternative to find
     xdg_utils # A set of command line tools that assist applications desktop integration
     shared-mime-info # A database of common MIME types
 

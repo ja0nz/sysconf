@@ -76,16 +76,17 @@ with lib; {
 
     # Load fonts
     fonts = {
-      fonts = with pkgs; [
-        source-code-pro
-        iosevka
-        powerline-fonts
-        symbola
-        dejavu_fonts
-        emacs-all-the-icons-fonts
-        noto-fonts
+      fonts = [
+        config._monoFont.pkg
+        config._sansFont.pkg
+        config._serifFont.pkg
+        pkgs.emacs-all-the-icons-fonts
+        pkgs.symbola
         # nerdfonts
-        fira-code
+        # powerline-fonts
+        # iosevka
+        # fira-code
+        # source-code-pro
       ];
       #enableDefaultFonts = true;
 
@@ -94,9 +95,9 @@ with lib; {
         antialias = true;
         cache32Bit = true;
         defaultFonts = {
-          monospace = [ "Source Code Pro" "DejaVu Sans Mono" ];
-          sansSerif = [ "DejaVu Sans" ];
-          serif = [ "DejaVu Serif" ];
+          monospace = [ config._monoFont.name ];
+          sansSerif = [ config._sansFont.name ];
+          serif = [ config._serifFont.name ];
         };
       };
     };
