@@ -4,6 +4,7 @@
 { lib, config, pkgs, ... }:
 let
   mailjanz = "mail@ja.nz";
+  janpetelergmailcom = "jan.peteler@gmail.com";
   maildir = ".mail";
 in {
   accounts.email = {
@@ -11,19 +12,70 @@ in {
     accounts = {
       "mail@ja.nz" = rec {
         primary = true;
+        flavor = "plain";
         address = mailjanz;
         userName = mailjanz;
         realName = "Ja0nz";
         passwordCommand =
-          "gpg2 -q --for-your-eyes-only --no-tty -d ${config._secret}/mbsyncpass_maildir.gpg";
+          "gpg2 -q --for-your-eyes-only --no-tty -d ${config._secret}/mbsync_janz.gpg";
         mbsync = {
           enable = true;
           create = "maildir";
           expunge = "both";
-          extraConfig.account.AuthMechs = "Plain";
+          #  extraConfig.account.AuthMechs = "Plain";
         };
         imap = {
           host = "imap.purelymail.com";
+          tls.enable = true;
+        };
+      };
+      "jan.peteler@gmail.com" = {
+        flavor = "gmail.com";
+        address = janpetelergmailcom;
+        userName = janpetelergmailcom;
+        realName = "Jan";
+        passwordCommand =
+          "gpg2 -q --for-your-eyes-only --no-tty -d ${config._secret}/mbsync_gmail.gpg";
+        mbsync = {
+          enable = true;
+          extraConfig.account.PipelineDepth = 50;
+          groups.gmail.channels = {
+            inbox = {
+              masterPattern = "INBOX";
+              slavePattern = "INBOX";
+              extraConfig = { Expunge = "Both"; };
+            };
+            trash = {
+              masterPattern = "[Gmail]/Bin";
+              slavePattern = "Trash";
+              extraConfig = { Create = "Slave"; };
+            };
+            drafts = {
+              masterPattern = "[Gmail]/Drafts";
+              slavePattern = "Drafts";
+              extraConfig = {
+                Create = "Slave";
+                Expunge = "Both";
+              };
+            };
+            sent = {
+              masterPattern = "[Gmail]/Sent Mail";
+              slavePattern = "Sent";
+              extraConfig = { Create = "Slave"; };
+            };
+            archive = {
+              masterPattern = "[Gmail]/All Mail";
+              slavePattern = "Archive";
+              extraConfig = {
+                Create = "Slave";
+                Sync = "Push";
+                Expunge = "Both";
+              };
+            };
+          };
+        };
+        imap = {
+          host = "imap.gmail.com";
           tls.enable = true;
         };
       };
@@ -45,10 +97,11 @@ in {
      .mail and .mail/.attachments are the default locations of Doom Emacs
   */
   home.activation.muInit = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    mu info | grep ${mailjanz} || mu init --maildir ${maildir} --my-address=${mailjanz}
-    # For multiple users;
-    # mu info | grep ${mailjanz} && mu info | grep another@email \
-    #   || mu init --maildir ${maildir} --my-address=${mailjanz} --my-address=another@email
+    # For single user:
+    # mu info | grep ${mailjanz} || mu init --maildir ${maildir} --my-address=${mailjanz}
+    # For multiple users:
+    mu info | grep ${mailjanz} && mu info | grep ${janpetelergmailcom} \
+       || mu init --maildir ${maildir} --my-address=${mailjanz} --my-address=${janpetelergmailcom}
     mu index
     mkdir -p ${maildir}/.attachments
   '';
