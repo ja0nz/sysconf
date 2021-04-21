@@ -16,11 +16,16 @@
       layer = "bottom";
       position = "bottom";
       height = 25;
-      modules-left =
-        [ "sway/workspaces" "cpu" "backlight" "pulseaudio" "custom/waybar-mpris" ];
+      modules-left = [
+        "sway/workspaces"
+        "cpu"
+        "backlight"
+        "pulseaudio"
+        "custom/waybar-mpris"
+      ];
       modules-center = [ "sway/window" ];
       modules-right =
-        [ "sway/mode" "custom/root" "network" "battery" "clock" "tray" ];
+        [ "sway/mode" "network" "custom/root" "battery" "clock" "tray" ];
       modules = {
         tray = { spacing = 10; };
         clock = {
@@ -46,11 +51,12 @@
           format-icons = [ "" "" "" "" "" ];
         };
         network = {
-          format-wifi = "{essid} ({signalStrength}%)";
-          format-ethernet = "{ifname}: {ipaddr}/{cidr}";
-          format-disconnected = "Disconnected ⚠";
+          format-wifi = "{essid} | {signalStrength}%";
+          format-ethernet = "{ipaddr} 🔌";
+          tooltip-format-ethernet = "{ifname}: {ipaddr}/{cidr}";
           on-click-right = "nm-connection-editor";
-          max-length = 30;
+          format-disconnected = "Disconnected ⚠";
+          max-length = 40;
         };
         pulseaudio = {
           format = "{volume}% {icon}";
@@ -58,7 +64,7 @@
           format-muted = "";
           format-icons = {
             headphones = "";
-            handsfree = "";
+            handsfree = "🎙";
             headset = "";
             phone = "";
             portable = "";
@@ -74,10 +80,12 @@
           format = "{}";
           max-length = 50;
         };
+        # Waybar-mpris taken from
+        # https://git.hrfee.pw/hrfee/waybar-mpris
         "custom/waybar-mpris" = {
           # format = "📻 {}";
           return-type = "json";
-          exec = "${./waybar-mpris} --position --autofocus";
+          exec = "${./waybar-mpris} --play ▶ --pause ⏸ --position --autofocus";
           on-click = "${./waybar-mpris} --send toggle";
           # This option will switch between players on right click.
           on-click-right = "${./waybar-mpris} --send player-next";
@@ -91,7 +99,7 @@
           max-length = 40;
         };
         "custom/root" = {
-          format = "<b>\\</b> {}";
+          format = "{} 🖴";
           interval = 60;
           exec = "df -h | gawk '$6 == \"/\" {print $3 \"/\" $2}'";
         };
