@@ -8,8 +8,8 @@
     enable = true;
     font.name = config._monoFont.name + " 10";
     iconTheme = {
-      package = pkgs.arc-icon-theme;
-      name = "Arc";
+      package = pkgs.moka-icon-theme;
+      name = "Moka";
     };
     theme = {
       # package = pkgs.dracula-theme;
