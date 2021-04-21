@@ -104,7 +104,7 @@ with lib; {
 
     services = {
       getty.autologinUser = "me";
-
+      fstrim.enable = true;
       geoclue2.enable = true;
 
       blueman.enable = true;
