@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 {
   programs.emacs = {
@@ -6,6 +6,16 @@
     extraPackages = epkgs: with epkgs; [ use-package ];
   };
   services.emacs = { enable = true; };
+
+  home.packages = with pkgs; [
+    # Dictionaries
+    aspell # Spell checker for many languages
+    aspellDicts.en # Aspell dictionary for English
+    aspellDicts.de # Aspell dictionary for German
+
+    # Database for org-roam
+    sqlite # A self-contained, serverless, zero-configuration SQL db engine
+  ];
 
   /* config_packages.org -> ~/.doom.d/config.el & ~/.doom.d/packages.el
      init.el -> ~/.doom.d/init.el

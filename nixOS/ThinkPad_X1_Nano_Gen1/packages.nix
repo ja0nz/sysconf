@@ -41,8 +41,8 @@ in {
     mate.eom # An image viewing and cataloging program for the MATE desktop
     okular # KDE document viewer
     pavucontrol # PulseAudio Volume Control
-    networkmanagerapplet      # NetworkManager control applet for GNOME
-    neovim                    # Vim text editor fork focused on extensibility and agility
+    networkmanagerapplet # NetworkManager control applet for GNOME
+    neovim # Vim text editor fork focused on extensibility and agility
 
     # -- Online services --
     dropbox-cli # Command line client for the dropbox daemon
@@ -55,21 +55,21 @@ in {
     tree # Command to produce a depth indented directory listing
     fzf # A command-line fuzzy finder written
     ripgrep # A utility that combines the usability of The Silver Searcher
+    fd # A simple, fast and user-friendly alternative to find
 
     # -- Process management --
     htop # An interactive process viewer for Linux
     psmisc # A set of small useful utilities that use the proc filesystem - pstree
 
     # -- Networking --
-    dmenu                     # A generic, highly customizable, menu for the X Window System
-    networkmanager_dmenu      # Small script to manage NetworkManager connections with dmenu
+    dmenu # A generic, highly customizable, menu for the X Window System
+    networkmanager_dmenu # Small script to manage NetworkManager connections with dmenu
     httpie # A command line HTTP client whose goal is to make CLI human-friendly
     wget # Tool for retrieving files using HTTP, HTTPS, and FTP
     curl # A command line tool for transferring files with URL syntax
 
     # -- XDG MIME --
     file # A program that shows the type of files
-    fd # A simple, fast and user-friendly alternative to find
     xdg_utils # A set of command line tools that assist applications desktop integration
     shared-mime-info # A database of common MIME types
 
@@ -87,13 +87,5 @@ in {
     pandoc # Conversion betrween markup formats
     graphviz # Graph visualization tools
     ditaa # Convert ascii art diagrams into proper bitmap graphics
-
-    # For emacs: Dictionaries
-    aspell # Spell checker for many languages
-    aspellDicts.en # Aspell dictionary for English
-    aspellDicts.de # Aspell dictionary for German
-
-    # For emacs: Database (org-roam)
-    sqlite # A self-contained, serverless, zero-configuration SQL db engine
   ];
 }
