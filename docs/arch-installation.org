@@ -197,6 +197,16 @@ locale-gen
 echo LANG=en_US.UTF-8 > /etc/locale.conf
 echo LANGUAGE=en_US >> /etc/locale.conf
 
+# You may want to use English as your systems language but set other date/time/money standards of your country
+echo "
+LC_MEASUREMENT=de_DE.UTF-8
+LC_MONETARY=de_DE.UTF-8
+LC_NUMERIC=de_DE.UTF-8
+LC_PAPER=de_DE.UTF-8
+LC_TIME=de_DE.UTF-8
+" >> /etc/locale.conf
+
+** Keymaps and Fonts
 # List keymaps again
 localectl list-keysmaps | grep de # or at, gb, neo
 # If you set the keyboard layout, make the changes persistent in vconsole.conf(5):
@@ -204,7 +214,6 @@ echo KEYMAP=de-latin1 > /etc/vconsole.conf
 echo FONT=lat9w-16 >> /etc/vconsole.conf
 #+end_src
 
-*** *Fonts* - dealing with HiDPI screens
 At this point it makes sense to persist a font which renders big enough to read on HiDPI screens.
 #+begin_src shell
 # Install the terminus font

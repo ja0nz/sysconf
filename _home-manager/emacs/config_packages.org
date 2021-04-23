@@ -186,7 +186,8 @@ Original for reference
 ** Org Roam
 #+begin_src emacs-lisp
 ;; Org Roam Settings
-(setq org-roam-directory org-directory
+(setq +org-roam-open-buffer-on-find-file nil
+      org-roam-directory org-directory
       org-roam-rename-file-on-title-change nil
       org-roam-capture-templates
       '(("d" "default" plain (function org-roam-capture--get-point)
