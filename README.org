@@ -1,3 +1,6 @@
+#+STARTUP: content
+#+OPTIONS: \n:t
+
 * Sysconf - a opinionated home of *nix systems
   Packages used directly in *packages.nix* or in a nix-shell.
   Every package I use will end up here.
@@ -73,14 +76,14 @@
   Full fledged programs with GUI.
 ** Home manager modules
 *** Emacs
-    File: [[file:_home-manager/emacs.nix][emacs.nix]] \
+    File: [[file:_home-manager/emacs.nix][emacs.nix]]
     Emacs plus emacs as systemd user service.
 *** Zathura
-    File: [[file:_home-manager/zathura.nix][zathura.nix ]]\
+    File: [[file:_home-manager/zathura.nix][zathura.nix]]
     zathura is a highly customizable and functional document viewer mainly focuses on keyboard interaction.
 *** Brave
-    File: [[file:_home-manager/brave.nix][brave.nix]] \
-    Privacy-oriented browser for Desktop and Laptop computers. \
+    File: [[file:_home-manager/brave.nix][brave.nix]]
+    Privacy-oriented browser for Desktop and Laptop computers.
     Comes with some plugins.
 ** Nix packages
   #+begin_src nix

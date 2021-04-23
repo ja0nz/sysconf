@@ -29,6 +29,12 @@ Here are some additional functions/macros that could help you configure Doom:
 ;; Use nr instead of jk - Neo2 Keyboard layout
 (use-package! evil-escape
   :init (setq evil-escape-key-sequence "nr"))
+
+;; No evil snipe mode if there is avy!
+(after! evil-snipe
+  (evil-snipe-mode -1)
+  (define-key evil-normal-state-map (kbd "s") 'evil-avy-goto-char-timer)
+  (define-key evil-normal-state-map (kbd "S") 'avy-goto-char))
 #+end_src
 
 ** Theming, Fonts
