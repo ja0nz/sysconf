@@ -1,11 +1,9 @@
 #+STARTUP: content
 
 * Sysconf - a opinionated home of Nix* systems
-#+begin_verse
-Once upon a time, in the pale light of the winters sun, this narrator looked up from his even more paler screen and in a wave of existential thoughts he looked back on this little device in front of him and wondered silently: How can it be this is so hard to set up / to maintain / to replicate?!
+> Once upon a time, in the pale light of the winters sun, this narrator looked up from his even more paler screen and in a wave of existential thoughts he looked back on this little device in front of him and wondered silently: How can it be this is so hard to set up / to maintain / to replicate?!
 
-So he looked back up again and a plan was sneaking into his mind: A fully reproducible system, fully documented, easy to reason and to enhance...
-#+end_verse
+ > So he looked back up again and a plan was sneaking into his mind: A fully reproducible system, fully documented, easy to reason and to enhance...
 
 The product of this evening is this repository. A reproducible system sitting on shoulders of [[https://nixos.org/][NixOS]] and the allmighty [[https://github.com/nix-community/home-manager][Home Manager]]. A bag full of opinionated choices but documented enough to adapt it to your opinionated needs.
 
