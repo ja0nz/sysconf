@@ -60,6 +60,14 @@ Here are some additional functions/macros that could help you configure Doom:
 #+begin_src emacs-lisp
 (setq +snippets-dir "~/sysconf/_home-manager/emacs/snippets")
 #+end_src
+* Swiper/Ivy
+#+begin_src emacs-lisp
+(after! ivy
+  (setq ivy-use-virtual-buffers t))
+
+(map! :leader
+      :desc "Quick Buffer/File Switcher" "SPC" #'ivy-switch-buffer)
+#+end_src
 
 * Org
 ** Base Settings
@@ -288,16 +296,6 @@ Original for reference
 #+begin_src emacs-lisp
 (setq calendar-date-style "european"
       calendar-week-start-day 1)
-#+end_src
-* Consult
-#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
-(package! consult)
-#+end_src
-
-#+begin_src emacs-lisp
-;; Remap SPC SPC to consult-buffer
-(map! :leader
-      :desc "Quick Buffer/File Switcher" "SPC" #'consult-buffer)
 #+end_src
 * Terminal Here
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
