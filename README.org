@@ -76,7 +76,7 @@
   Full fledged programs with GUI.
 ** Home manager modules
 *** Emacs
-    File: [[file:_home-manager/emacs.nix][emacs.nix]]
+    File: [[file:_home-manager/emacs.nix][emacs.nix]] \\
     Emacs plus emacs as systemd user service.
 *** Zathura
     File: [[file:_home-manager/zathura.nix][zathura.nix]]
