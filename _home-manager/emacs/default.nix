@@ -3,6 +3,7 @@
 {
   programs.emacs = {
     enable = true;
+    package = pkgs.emacsGcc;
     extraPackages = epkgs: with epkgs; [ use-package ];
   };
   services.emacs = { enable = true; };
