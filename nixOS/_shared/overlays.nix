@@ -12,5 +12,13 @@
     };
   };
 
-  myWaylandOverlay = import <nixpkgs-wayland>;
+  nixCommunity = (import (builtins.fetchTarball {
+    url =
+      "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
+  }));
+
+  myWaylandOverlay = (import (builtins.fetchTarball {
+    url =
+      "https://github.com/colemickens/nixpkgs-wayland/archive/master.tar.gz";
+  }));
 }
