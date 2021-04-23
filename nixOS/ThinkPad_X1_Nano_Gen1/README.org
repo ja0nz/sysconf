@@ -1,4 +1,5 @@
 #+STARTUP: content
+#+OPTIONS: \n:t
 
 * ThinkPad X1 Nano Gen1
 This installation holds a *full workstation* installation of NixOS. It includes
