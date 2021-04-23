@@ -168,6 +168,19 @@ Original for reference
       (lambda () (if (not (file-exists-p (buffer-file-name))) (org-agenda-file-to-front t))))
 ;;org-journal-file-header "#+title: W%V_%Y-%m-%d\n#+roam_key: file:_kanban.org\n"
 ;;org-journal-skip-carryover-drawers (list "LOGBOOK")
+
+(use-package! org-journal
+  :bind (:map org-mode-map
+         ("M-s-n p" . org-set-property) ;; CATEGORY
+         ("M-s-n e" . org-set-effort) ;; Effort
+         ("M-s-n t" . counsel-org-tag) ;; Tag
+         ("M-s-n d" . org-update-all-dblocks) ;; Dblock
+         ("M-s-n f" . export-clocktable-csv) ;; Export Clock to csv
+         ("M-s-n a" . org-agenda-file-to-front) ;; add current file to agenda files
+         :map global-map
+         ("M-s-n n" . org-journal-new-entry) ;; Entry
+         ("M-s-n r" . org-journal-open-current-journal-file) ;; Current file
+         ("M-s-n s" . org-journal-new-scheduled-entry))) ;; Scheduled
 #+end_src
 *** Export Clocktable Function
 #+begin_src emacs-lisp
@@ -208,8 +221,18 @@ Original for reference
                       (replace-match today))
                   (pop-global-mark))))))
 
-(after! org-roam
-  (add-hook 'after-save-hook 'org_roam__bump_revision_date nil t))
+(add-hook 'org-roam-mode-hook
+          (lambda ()
+            (add-hook 'after-save-hook #'org_roam__bump_revision_date)))
+
+(use-package! org-roam
+  :bind (:map org-roam-mode-map
+         ("M-s-s l" . org-roam) ;; show links
+         ("M-s-s g" . org-roam-graph) ;; show in browser
+         :map org-mode-map
+         ("M-s-s i" . org-roam-insert) ;; insert links in org documents
+         :map global-map
+         ("M-s-s f" . org-roam-find-file))) ;; quickly jump in / New
 #+end_src
 
 * MU4E

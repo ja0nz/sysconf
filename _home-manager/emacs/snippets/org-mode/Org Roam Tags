@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Org Roam Tags 
+# key: rt
+# --
+- tags :: $0

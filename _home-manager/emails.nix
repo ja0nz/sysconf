@@ -10,7 +10,7 @@ in {
   accounts.email = {
     maildirBasePath = maildir;
     accounts = {
-      "mail@ja.nz" = rec {
+      "mail@ja.nz" = {
         primary = true;
         flavor = "plain";
         address = mailjanz;
@@ -22,7 +22,6 @@ in {
           enable = true;
           create = "maildir";
           expunge = "both";
-          #  extraConfig.account.AuthMechs = "Plain";
         };
         imap = {
           host = "imap.purelymail.com";

@@ -21,4 +21,4 @@ The product of this evening is this repository. A reproducible system sitting on
 ** I want to run NixOS in a VirtualBox
 ** I have a running Linux machine and want to manage my packages with Nix
 ** I already have a machine running Windows and want dual boot NixOS alongside
-** I have just want a NixOS machine :beginner:
+** I have just want a NixOS machine
