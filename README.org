@@ -1,5 +1,5 @@
 #+STARTUP: content
-#+OPTIONS: \n:t
+#+OPTIONS: line-break:t
 
 * Sysconf - a opinionated home of *nix systems
   Packages used directly in *packages.nix* or in a nix-shell.
