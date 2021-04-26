@@ -1,0 +1,12 @@
+# key: nhc
+# name: Nix Header Comment
+# --
+/*
+#+TITLE: $1
+#+FILETAGS: $2
+
+* Mandatory configuration
+$3
+* Optional configuration
+$4
+*/
