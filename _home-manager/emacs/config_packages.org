@@ -68,7 +68,6 @@ Here are some additional functions/macros that could help you configure Doom:
 (map! :leader
       :desc "Quick Buffer/File Switcher" "SPC" #'ivy-switch-buffer)
 #+end_src
-
 * Org
 ** Base Settings
 #+begin_src emacs-lisp

@@ -1,5 +1,24 @@
-/* Setup:
-   - Get keys and keygrip by: gpg -K --with-keygrip --keyid-format LONG
+/* #+TITLE: GnuPG - GNU Privacy Guard + Agent
+   #+FILETAGS: :encrypt:auth:ssh:
+
+   * Mandatory configuration
+     Set up GPG and insert default key value.
+     Get keys and keygrip by: ~gpg -K --with-keygrip --keyid-format LONG~
+
+   * Optional configuration
+   ** Change GPG Settings
+     The settings section following the Riseup OpenGPG Best Practices
+     https://github.com/ioerror/duraconf/blob/master/configs/gnupg/gpg.conf
+
+   ** Use GPG Agent
+     You can manage your ssh authentication(s) with GPG! Except for
+     ssh certificates this works pretty well.
+
+     *One word of warning for Emacs/magit users:*
+     Emacs server will start earlier than GPG and consequently miss
+     the later set SSH_AUTH_SOCK variable. Magit won't work.
+     You may either change the startup order or "hardwire" the env variable
+     in your bash/fish/doomemacs config.
 */
 { ... }:
 
@@ -7,7 +26,7 @@
   programs.gpg = {
     enable = true;
     settings = {
-      default-key = "8B7845E28117C874";
+      default-key = "8B7845E28117C874"; # TODO Insert default sign key
       # behavior
       no-emit-version = true;
       no-comments = true;
@@ -27,9 +46,13 @@
         "SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed";
     };
   };
+
+  # Optional: if you want to use GPG for SSH authentication
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
-    sshKeys = [ "D937A7A38C77F36C88A0A8CA49E3DECFBD704FCC" ];
+    sshKeys = [
+      "D937A7A38C77F36C88A0A8CA49E3DECFBD704FCC"
+    ]; # TODO Insert keygrip(s) of auth key(s)
   };
 }

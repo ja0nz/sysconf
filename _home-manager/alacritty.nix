@@ -1,28 +1,35 @@
-/* Optional requires:
-   - Brave browser as mouse launcher
-   - _monoFont! Test with: fc-list : family | grep <MonoFontName>
+/* #+TITLE: Alacritty - a terminal emulater
+   #+FILETAGS: :ui:sway:
+
+   * Mandatory configuration
+     Either pass in the variable or set manually.
+     Run ~fc-list : family~ and choose a font family.
+
+   * Optional configuration
+     Set your favourite browser as mouse launcher.
 */
 { config, ... }:
 
-{
+let fontfamily = config._monoFont.name; # TODO Pass in a font or set it manually
+in {
   programs.alacritty = {
     enable = true;
     settings = {
       font = {
         normal = {
-          family = config._monoFont.name;
+          family = fontfamily;
           style = "Regular";
         };
         bold = {
-          family = config._monoFont.name;
+          family = fontfamily;
           style = "Bold";
         };
         italic = {
-          family = config._monoFont.name;
+          family = fontfamily;
           style = "Italic";
         };
         bold-italic = {
-          family = config._monoFont.name;
+          family = fontfamily;
           style = "Bold Italic";
         };
         size = 11;
@@ -56,7 +63,7 @@
         };
       };
       background_opacity = 0.9;
-      mouse.url.launcher = "brave";
+      mouse.url.launcher = "brave"; # TODO Set your browser
     };
   };
 }

@@ -1,11 +1,21 @@
-/* Optional requires:
-   - GPG2 for password retrieval
+/* #+TITLE: Email Accounts w/ isync & mu
+   #+FILETAGS: :user:
+
+   This config hosts two examples of a normal/plain email account
+   and a Gmail account which needs extra treatment.
+   Handle with care: This section is highly subjective.
+
+   * Mandatory configuration
+   Set up your GPG keyfiles:
+   ~gpg -e --default-recipient-self <filewithpassword>~
+   You may use pass or bitwarden instead. Up to you.
 */
 { lib, config, pkgs, ... }:
 let
   mailjanz = "mail@ja.nz";
   janpetelergmailcom = "jan.peteler@gmail.com";
   maildir = ".mail";
+  passwordcmd = "gpg -q --for-your-eyes-only --no-tty -d";
 in {
   accounts.email = {
     maildirBasePath = maildir;
@@ -16,8 +26,7 @@ in {
         address = mailjanz;
         userName = mailjanz;
         realName = "Ja0nz";
-        passwordCommand =
-          "gpg2 -q --for-your-eyes-only --no-tty -d ${config._secret}/mbsync_janz.gpg";
+        passwordCommand = passwordcmd + "${config._secret}/mbsync_janz.gpg";
         mbsync = {
           enable = true;
           create = "maildir";
@@ -33,8 +42,7 @@ in {
         address = janpetelergmailcom;
         userName = janpetelergmailcom;
         realName = "Jan";
-        passwordCommand =
-          "gpg2 -q --for-your-eyes-only --no-tty -d ${config._secret}/mbsync_gmail.gpg";
+        passwordCommand = passwordcmd + "${config._secret}/mbsync_gmail.gpg";
         mbsync = {
           enable = true;
           extraConfig.account.PipelineDepth = 50;
@@ -83,10 +91,10 @@ in {
 
   home.file.".authinfo.gpg".source = "${config._secret}/authinfo_emacs.gpg";
 
-  programs.mbsync = {
-    enable = true;
-    package = pkgs.isync;
-  };
+  # programs.mbsync = {
+  #   enable = true;
+  #   package = pkgs.isync;
+  # };
   home.packages = with pkgs;
     [
       mu # A collection of utilties for indexing and searching Maildirs

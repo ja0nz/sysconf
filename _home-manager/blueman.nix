@@ -1,6 +1,9 @@
-/* Attention:
-   Note, for the applet to work, the 'blueman' service should be enabled system-wide.
-   in NixOS: services.blueman.enable = true;
+/* #+TITLE: Blueman Bluetooth Applet
+   #+FILETAGS: :ui:sway:
+
+   * Mandatory configuration
+      For the applet the 'blueman' service should be enabled system-wide.
+      In NixOS: ~services.blueman.enable = true;~
 */
 { ... }:
 
