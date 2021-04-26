@@ -241,6 +241,34 @@ Original for reference
          :map global-map
          ("M-s-s f" . org-roam-find-file))) ;; quickly jump in / New
 #+end_src
+** Org MRU Clock
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+(package! org-mru-clock)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! org-mru-clock 
+  :bind (:map global-map
+         ("M-s-t r" . org-mru-clock-in)
+         ("M-s-t i" . org-clock-in)
+         ("M-s-t o" . org-clock-out)
+         ("M-s-t u" . org-update-all-dblocks)))
+#+end_src
+** Org pomodoro
+#+begin_src emacs-lisp
+(after! org-pomodoro
+  (setq org-pomodoro-audio-player (executable-find "notify-send")))
+
+(setq org-pomodoro-start-sound-p t
+      org-pomodoro-killed-sound-p t
+      org-pomodoro-start-sound " *org-pomodoro* - ⏱START⏱"
+      org-pomodoro-finished-sound " *org-pomodoro* - 🏃FINISH🏃"
+      org-pomodoro-overtime-sound " *org-pomodoro* - ⏰OVERTIME⏰"
+      org-pomodoro-killed-sound " *org-pomodoro* - 💀KILLED💀"
+      org-pomodoro-short-break-sound " *org-pomodoro* - 🍰SHORT BREAK FINISHED🍰"
+      org-pomodoro-long-break-sound " *org-pomodoro* - 🍖LONG BREAK FINISHED🍖"
+      org-pomodoro-ticking-sound " *org-pomodoro* - 🥁ticktack🥁")
+#+end_src
 
 * MU4E
 [[ https://github.com/hlissner/doom-emacs/blob/develop/modules/email/mu4e/README.org][Doom Emacs MU4E]]
