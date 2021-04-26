@@ -81,8 +81,7 @@ in {
         "${modifier}+q" = "kill";
         "${modifier}+g" = "floating toggle";
         "${modifier}+space" = "workspace number 1";
-        "${modifier}+h" = "layout tabbed";
-        "${modifier}+Ctrl+h" = "layout toggle split";
+        "${modifier}+h" = "layout toggle splith tabbed";
         "${modifier}+Ctrl+d" = "exec networkmanager_dmenu";
         "${modifier}+Ctrl+n" = "exec brave";
         "${modifier}+Ctrl+t" = "exec caja";
