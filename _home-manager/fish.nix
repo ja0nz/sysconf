@@ -1,17 +1,19 @@
-/* Optional requires:
-   - Ripgrep as alias 'rg'
-   - Neovim as alias 'vim'
+/* #+TITLE: Fish - a friendly interactive shell w/ bat
+   #+FILETAGS: :development:
+
+   * Optional configuration
+    Some aliases come are preset. This is of course a non breaking setting.
+    You may add/alter them to your liking.
 */
 { pkgs, ... }:
 
 {
   programs.fish = {
     enable = true;
-    shellAliases = {
+    shellAliases = { # TODO Adapt aliases to your needs
       groups = "id (whoami)";
       node = "env NODE_NO_READLINE=1 rlwrap node";
       rg = "rg --hidden --glob '!.git'";
-      newmacs = "GDK_BACKEND=x11 emacs -q -l ~/emacs.d/init.el &; disown && exit";
       cat = "bat";
       vim = "nvim";
       nix-stray-roots =
@@ -19,6 +21,7 @@
     };
     promptInit = "\n any-nix-shell fish --info-right | source\n";
 
+    # Adding 'z' -> https://github.com/jethrokuan/z
     plugins = [{
       name = "z";
       src = pkgs.fetchFromGitHub {
@@ -30,7 +33,7 @@
     }];
   };
 
-  # Enabled bat to not break 'cat'
+  # Enabled bat which is a sane 'cat' replacement
   programs.bat.enable = true;
 
   home.sessionVariables = {
@@ -46,6 +49,7 @@
     ];
 
   # Setting a fish theme
+  # Currently -> https://github.com/wyqydsyq/emoji-powerline
   xdg.configFile."fish/functions".source = pkgs.fetchFromGitHub {
 
     #   owner = "oh-my-fish";

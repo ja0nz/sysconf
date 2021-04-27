@@ -1,3 +1,10 @@
+/* #+TITLE: XDG - base directory specification for X11/Wayland
+   #+FILETAGS: :ui:
+
+   * Optional configuration
+    This mimeapps list is not crucial. It's just replicating the values
+    set by the system. You may easily go without using this module.
+*/
 { ... }:
 
 {

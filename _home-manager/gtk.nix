@@ -1,5 +1,9 @@
-/* Optional requires:
-   - _monoFont! Test with: fc-list : family | grep <MonoFontName>
+/* #+TITLE: GTK - icons and theming
+   #+FILETAGS: :ui:
+
+   * Mandatory configuration
+    To set a font you can either pass in the variable or set manually.
+    Run ~fc-list : family~ and choose a font family.
 */
 { pkgs, config, ... }:
 

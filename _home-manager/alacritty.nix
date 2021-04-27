@@ -2,11 +2,12 @@
    #+FILETAGS: :ui:sway:
 
    * Mandatory configuration
-     Either pass in the variable or set manually.
-     Run ~fc-list : family~ and choose a font family.
+    Alacritty needs a (monospace) font.
+    You either pass the variable in your config or set manually.
+    Run ~fc-list : family~ and choose a font family.
 
    * Optional configuration
-     Set your favourite browser as mouse launcher.
+    Set your favourite browser as mouse launcher.
 */
 { config, ... }:
 

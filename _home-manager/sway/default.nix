@@ -75,12 +75,12 @@ in {
       };
       menu = "wldash";
       terminal = "alacritty";
-      workspaceAutoBackAndForth = true;
+      #workspaceAutoBackAndForth = true;
       inherit modifier;
       keybindings = lib.mkOptionDefault {
         "${modifier}+q" = "kill";
         "${modifier}+g" = "floating toggle";
-        "${modifier}+space" = "workspace number 1";
+        "${modifier}+space" = "workspace back_and_forth";
         "${modifier}+h" = "layout toggle splith tabbed";
         "${modifier}+Ctrl+d" = "exec networkmanager_dmenu";
         "${modifier}+Ctrl+n" = "exec brave";
@@ -120,10 +120,18 @@ in {
         titlebar = false;
       };
 
-      startup = [{
-        command = "dropbox start";
-        always = true;
-      }];
+      startup = [
+        {
+          command = "dropbox start";
+          always = true;
+        }
+        {
+          command = "systemctl --user restart waybar";
+          always = true;
+        }
+        { command = "swaymsg 'workspace 1; exec emacsclient -c'"; }
+        { command = "swaymsg 'workspace 2; exec brave'"; }
+      ];
       #TODO Set your input devices
       # swaymsg -t get_inputs
       input = {

@@ -6,9 +6,9 @@
    Handle with care: This section is highly subjective.
 
    * Mandatory configuration
-   Set up your GPG keyfiles:
-   ~gpg -e --default-recipient-self <filewithpassword>~
-   You may use pass or bitwarden instead. Up to you.
+    Set up your GPG keyfiles:
+    ~gpg -e --default-recipient-self <filewithpassword>~
+    You may use pass or bitwarden instead. Up to you.
 */
 { lib, config, pkgs, ... }:
 let

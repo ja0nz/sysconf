@@ -2,8 +2,9 @@
    #+FILETAGS: :encrypt:auth:ssh:
 
    * Mandatory configuration
-     Set up GPG and insert default key value.
-     Get keys and keygrip by: ~gpg -K --with-keygrip --keyid-format LONG~
+    Set up GPG and insert default key value.
+    Get keys and keygrip by: ~gpg -K --with-keygrip --keyid-format LONG~
+    Look out for [S] for signing key
 
    * Optional configuration
    ** Change GPG Settings

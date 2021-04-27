@@ -1,13 +1,25 @@
+/* #+TITLE: Git - the version control system /w extras
+   #+FILETAGS: :development:
+
+   * Mandatory configuration
+    You must set your git credentials.
+    Short key: ~gpg --list-secret-keys --keyid-format LONG~
+    Look out for [S] for signing key
+
+   * Optional configuration
+    This config uses https://github.com/dandavison/delta as git pager.
+    You may like it or not.
+*/
 { pkgs, ... }:
 
 {
   programs.git = {
     enable = true;
-    userName = "ja0nz";
-    userEmail = "mail@ja.nz";
+    userName = "ja0nz"; # TODO Set your credentials
+    userEmail = "mail@ja.nz"; # TODO Set your credentials
     ignores = [ "*~" ];
     signing = {
-      key = "8117C874"; # Short key: gpg --list-secret-keys --keyid-format short
+      key = "8B7845E28117C874"; # TODO Set default signing key
       signByDefault = true;
     };
     extraConfig = {

@@ -1,3 +1,6 @@
+/* #+TITLE: Lorri - a better nix-shell/development environment
+   #+FILETAGS: :development:
+*/
 { ... }:
 
 {
