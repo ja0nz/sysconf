@@ -66,7 +66,10 @@ in {
           childBorder = "#FF0000";
         };
       };
-      fonts = [ (config._monoFont.name + " 9") ];
+      fonts = {
+        names = [ config._monoFont.name ];
+        size = 9.0;
+      };
       gaps = {
         inner = 10;
         outer = -10;
@@ -83,9 +86,9 @@ in {
         "${modifier}+space" = "workspace back_and_forth";
         "${modifier}+h" = "layout toggle splith tabbed";
         "${modifier}+Ctrl+d" = "exec networkmanager_dmenu";
-        "${modifier}+Ctrl+n" = "exec brave";
+        "${modifier}+Ctrl+n" = ''exec "emacsclient -c"'';
+        "${modifier}+Ctrl+r" = "exec brave";
         "${modifier}+Ctrl+t" = "exec caja";
-        "${modifier}+Ctrl+r" = ''exec "emacsclient -c"'';
         "${modifier}+k" = "exec ${./swaylock}";
         "${modifier}+Ctrl+k" = ''exec "${./swaylock} && systemctl suspend"'';
 
@@ -129,8 +132,6 @@ in {
           command = "systemctl --user restart waybar";
           always = true;
         }
-        { command = "swaymsg 'workspace 1; exec emacsclient -c'"; }
-        { command = "swaymsg 'workspace 2; exec brave'"; }
       ];
       #TODO Set your input devices
       # swaymsg -t get_inputs
