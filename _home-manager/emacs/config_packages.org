@@ -88,6 +88,11 @@ Here are some additional functions/macros that could help you configure Doom:
       org-goto-interface 'outline-path-completion
       org-startup-with-inline-images t)
 #+end_src
+** Org habit
+#+begin_src emacs-lisp
+(after! org
+  (add-to-list 'org-modules 'org-habit))
+#+end_src
 ** Org Refile
 #+begin_src emacs-lisp
 ;; Org Refile Targets
@@ -115,8 +120,29 @@ Here are some additional functions/macros that could help you configure Doom:
              org-pomodoro-ticking-sound " *org-pomodoro* - 🥁ticktack🥁"))
    #+end_src
 ** Org Capture
-*** Backup
-Original for reference
+I capture every activity on my laptop by (broad) category. May change over time. Currently, there are following activities:
+- development - concrete project development
+- research - various technology related explorative/design work
+- operations - linux/emacs related time sinks
+- spanish - language learning
+- cooking - offline topic; Gathering of cooking recipes
+#+begin_src emacs-lisp
+;; Org Capture Templates
+(after! org-capture
+  (setq org-capture-templates
+        (mapcar
+         (lambda (word)
+           (list
+            (substring word 0 1)
+            (concat "Category: " word)
+            'entry
+            '(function org-journal-open-current-journal-file)
+            (concat "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\") t)\n:PROPERTIES:\n:CATEGORY: " word  "\n:Effort:   0:25\n:END:\n")
+            :jump-to-captured t))
+         '("development" "research" "operations" "spanish" "cooking"))))
+#+end_src
+*** Backup (untangled)
+Backup of the Doom Emacs Capture templates for future reference
 #+begin_src
 ;;https://github.com/hlissner/doom-emacs/blob/f621ff80471e8d08a72e5ece00641c70b121873a/modules/lang/org/config.el#L342
 (("t" "Personal todo" entry
@@ -142,22 +168,6 @@ Original for reference
  ("ot" "Project todo" entry #'+org-capture-central-project-todo-file "* TODO %?\n %i\n %a" :heading "Tasks" :prepend nil)
  ("on" "Project notes" entry #'+org-capture-central-project-notes-file "* %U %?\n %i\n %a" :heading "Notes" :prepend t)
  ("oc" "Project changelog" entry #'+org-capture-central-project-changelog-file "* %U %?\n %i\n %a" :heading "Changelog" :prepend t))
-#+end_src
-*** Overwrite
-#+begin_src emacs-lisp
-;; Org Capture Templates
-(after! org-capture
-  (setq org-capture-templates
-        (mapcar
-         (lambda (word)
-           (list
-            (substring word 0 1)
-            (concat "Category: " word)
-            'entry
-            '(function org-journal-open-current-journal-file)
-            (concat "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\") t)\n:PROPERTIES:\n:CATEGORY: " word  "\n:Effort:   0:25\n:END:\n")
-            '(:jump-to-captured t)))
-         '("reading" "writing" "looking" "cooking" "sporting"))))
 #+end_src
 ** Org Journal
 #+begin_src emacs-lisp
@@ -275,13 +285,16 @@ Original for reference
 #+begin_src emacs-lisp
 ;; Mu4e settings
 (add-to-list 'load-path "~/.nix-profile/share/emacs/site-lisp/mu4e")
+(after! mu4e
+  (setq mu4e-update-interval 300
+        mu4e-sent-messages-behavior (lambda () (if (string-suffix-p "gmail.com" (message-sendmail-envelope-from)) 'delete 'sent))))
+
 (setq mu4e-get-mail-command "mbsync -a"
-      mu4e-update-interval 300
-      mu4e-sent-messages-behavior (lambda () (if (string-suffix-p "gmail.com" (message-sendmail-envelope-from)) 'delete 'sent))
       starttls-use-gnutls t
       message-citation-line-format "On %a, %d %b %Y at %R, %f wrote:\n"
       message-citation-line-function 'message-insert-formatted-citation-line)
 #+end_src
+
 ** mail@ja.nz
 #+begin_src emacs-lisp
 (set-email-account! "mail@ja.nz"
@@ -337,4 +350,16 @@ Original for reference
         :prefix "o"
         :desc "Launch terminal here" "t" #'terminal-here-launch
         :desc "Launch terminal ROOT" "T" #'terminal-here-project-launch))
+#+end_src
+* Envrc global mode
+#+begin_src emacs-lisp
+(envrc-global-mode)
+#+end_src
+* Crux
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+(package! crux)
+#+end_src
+* Racket mode
+#+begin_src emacs-lisp
+(add-to-list '+format-on-save-enabled-modes 'racket-mode t)
 #+end_src
