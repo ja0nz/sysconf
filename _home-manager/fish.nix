@@ -1,5 +1,5 @@
 /* #+TITLE: Fish - a friendly interactive shell w/ bat
-   #+FILETAGS: :development:
+   #+FILETAGS: :shell:development:
 
    * Optional configuration
     Some aliases come are preset. This is of course a non breaking setting.

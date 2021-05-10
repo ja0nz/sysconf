@@ -1,35 +1,38 @@
+/* #+TITLE: Systemd --user services
+   #+FILETAGS: :user:
+
+   Currently not use! But here for reference if needed:)
+   Gather status of runnung user services:
+   ~systemctl --user status~
+*/
 { config, pkgs, lib, setEnvironment, ... }:
 
 {
   systemd.user.services = {
-    # waybar = {
-    #   Unit = {
-    #     Description = pkgs.waybar.meta.description;
-    #     PartOf = [ "graphical-session.target" ];
-    #   };
-    #   Install = {
-    #     WantedBy = [ "sway-session.target" ];
-    #   };
-    #   Service = {
-    #     ExecStart = "${pkgs.waybar}/bin/waybar";
-    #     RestartSec = 3;
-    #     Restart = "always";
-    #   };
-    # };
-    # mako = {
-    #   Unit = {
-    #     Description = pkgs.mako.meta.description;
-    #     PartOf = [ "graphical-session.target" ];
-    #   };
-    #   Install = {
-    #     WantedBy = [ "sway-session.target" ];
-    #   };
-    #   Service = {
-    #     ExecStart = "${pkgs.mako}/bin/mako --default-timeout 10000";
-    #     RestartSec = 3;
-    #     Restart = "always";
-    #   };
-    # };
+    waybar = {
+      Unit = {
+        Description = pkgs.waybar.meta.description;
+        PartOf = [ "graphical-session.target" ];
+      };
+      Install = { WantedBy = [ "sway-session.target" ]; };
+      Service = {
+        ExecStart = "${pkgs.waybar}/bin/waybar";
+        RestartSec = 3;
+        Restart = "always";
+      };
+    };
+    mako = {
+      Unit = {
+        Description = pkgs.mako.meta.description;
+        PartOf = [ "graphical-session.target" ];
+      };
+      Install = { WantedBy = [ "sway-session.target" ]; };
+      Service = {
+        ExecStart = "${pkgs.mako}/bin/mako --default-timeout 10000";
+        RestartSec = 3;
+        Restart = "always";
+      };
+    };
     emacs = {
       Unit = {
         Description = "Emacs text editor";

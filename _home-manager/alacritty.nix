@@ -1,5 +1,5 @@
 /* #+TITLE: Alacritty - a terminal emulater
-   #+FILETAGS: :ui:sway:
+   #+FILETAGS: :shell:ui:sway:
 
    * Mandatory configuration
     Alacritty needs a (monospace) font.
