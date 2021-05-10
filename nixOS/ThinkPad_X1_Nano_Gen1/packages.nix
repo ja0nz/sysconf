@@ -87,5 +87,8 @@ in {
     pandoc # Conversion betrween markup formats
     graphviz # Graph visualization tools
     ditaa # Convert ascii art diagrams into proper bitmap graphics
+
+    # --- Programming --
+    nodejs
   ];
 }
