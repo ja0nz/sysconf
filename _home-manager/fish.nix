@@ -12,7 +12,6 @@
     enable = true;
     shellAliases = { # TODO Adapt aliases to your needs
       groups = "id (whoami)";
-      node = "env NODE_NO_READLINE=1 rlwrap node";
       rg = "rg --hidden --glob '!.git'";
       cat = "bat";
       vim = "nvim";
@@ -39,7 +38,6 @@
   home.sessionVariables = {
     EDITOR = "emacsclient -c";
     BROWSER = "brave";
-    GDK_BACKEND = "wayland";
     #PATH = "$HOME/.yarn/bin:$PATH"; # Impure but harmless!
   };
 
