@@ -15,7 +15,7 @@ let
   mailjanz = "mail@ja.nz";
   janpetelergmailcom = "jan.peteler@gmail.com";
   maildir = ".mail";
-  passwordcmd = "gpg -q --for-your-eyes-only --no-tty -d";
+  passwordcmd = "gpg -q --for-your-eyes-only --no-tty -d ";
 in {
   accounts.email = {
     maildirBasePath = maildir;
@@ -91,10 +91,10 @@ in {
 
   home.file.".authinfo.gpg".source = "${config._secret}/authinfo_emacs.gpg";
 
-  # programs.mbsync = {
-  #   enable = true;
-  #   package = pkgs.isync;
-  # };
+  programs.mbsync = {
+    enable = true;
+    package = pkgs.isync; # Free IMAP and MailDir mailbox synchronizer
+  };
   home.packages = with pkgs;
     [
       mu # A collection of utilties for indexing and searching Maildirs
