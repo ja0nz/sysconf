@@ -34,7 +34,7 @@ in {
 
   home.packages = with pkgs; [
     # -- Programs --
-    #    (callPackage sizzy {})    # The browser for Developers & Designers
+    (callPackage sizzy { }) # The browser for Developers & Designers
     (mate.caja-with-extensions.override {
       extensions = [ mate.caja-extensions mate.caja-dropbox ];
     })

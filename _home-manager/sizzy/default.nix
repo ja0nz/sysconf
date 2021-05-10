@@ -1,8 +1,8 @@
-{ appimageTools, lib }:
+{ appimageTools, lib, ... }:
 
 let
   pname = "sizzy";
-  version = "49.2.0";
+  version = "54.0.0";
   name = "${pname}-${version}";
   src = ./. + "/Sizzy-${version}.AppImage";
   appimageContents = appimageTools.extractType2 { inherit name src; };
