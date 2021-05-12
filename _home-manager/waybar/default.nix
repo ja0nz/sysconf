@@ -1,9 +1,13 @@
-/* Optional requires:
-   - pavucontrol -> launch pulseaudio control
-   - networkmanager -> launch network control
-   - brave browser -> launch google calendar
-   - playerctl -> player control (for spotify, brave browser, ctc)
-   - spotify -> the player itself
+/* #+TITLE: Waybar
+   #+FILETAGS: :sway:
+
+   * Optional configuration
+    Some waybar areas expect certain programs. This is a nonbreaking issue.
+    - pavucontrol -> launch pulseaudio control
+    - networkmanager -> launch network control
+    - brave browser -> launch google calendar
+    - playerctl -> player control (for spotify, brave browser, ctc)
+    - spotify -> the player itself
 */
 { ... }:
 

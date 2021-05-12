@@ -1,10 +1,19 @@
+/* #+TITLE: Emacs
+   #+FILETAGS: :program:
+
+   * Mandatory configuration
+    Add emacs-overlay if needed. This is the fast, compiled emacs version
+
+   * Optional configuration
+    Add your config.el files or untangle them
+*/
 { lib, pkgs, ... }:
 
 {
   programs.emacs = {
     enable = true;
-    package = pkgs.emacsGcc;
-    extraPackages = epkgs: with epkgs; [ use-package ];
+    package = pkgs.emacsGcc; # TODO Requires emacs-overlay (see overlays.nix)
+    #extraPackages = epkgs: with epkgs; [ use-package ];
   };
   services.emacs = { enable = true; };
 
@@ -20,7 +29,6 @@
 
   /* config_packages.org -> ~/.doom.d/config.el & ~/.doom.d/packages.el
      init.el -> ~/.doom.d/init.el
-     snippets -> ~/.doom.d/snippets
   */
   home.activation.initEmacs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     emacs --batch --eval "(require 'org)" --eval '(progn

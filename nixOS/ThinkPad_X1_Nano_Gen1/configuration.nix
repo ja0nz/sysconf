@@ -3,13 +3,13 @@
 with lib; {
   imports = [
     ./hardware-configuration.nix
+    ../_shared/cachix/cachix.nix
     ../_shared/common.nix
-    ../_shared/cachix.nix
   ];
 
   config = {
 
-    #TODO: Set your values
+    # TODO Set your values
     networking.hostName = "nixos_nano";
     _repoRoot = /home/me/sysconf;
     _configInUse = ../ThinkPad_X1_Nano_Gen1;

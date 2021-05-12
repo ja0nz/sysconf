@@ -1,8 +1,14 @@
+/* #+TITLE: Sizzy Dev Brower
+   #+FILETAGS: :development:
+
+   * Mandatory configuration
+    After obtaining the latest AppImage adjust the version accordingly
+*/
 { appimageTools, lib, ... }:
 
 let
   pname = "sizzy";
-  version = "54.0.0";
+  version = "54.0.0"; # TODO Adjust version number
   name = "${pname}-${version}";
   src = ./. + "/Sizzy-${version}.AppImage";
   appimageContents = appimageTools.extractType2 { inherit name src; };
@@ -20,8 +26,7 @@ in appimageTools.wrapType2 {
   meta = with lib; {
     description = "The browser for Developers & Designers";
     homepage = "https://www.sizzy.co/";
-    #license = with licenses; [ unfree ];
-    #maintainers = with maintainers; [ ja0nz ];
+    license = with licenses; [ unfree ];
     platforms = [ "x86_64-linux" ];
   };
 }

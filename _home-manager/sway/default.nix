@@ -1,12 +1,18 @@
-/* Optional requires:
-   - brillo -> as key combination
-   - caja -> as key combination
-   - brave browser -> as key combination
-   - networkmanager_dmenu -> as key combination
-   - dropbox -> as service on start
-   - emacs -> as key combination
-   - playerctl -> as key combination
-   - _monoFont! Test with: fc-list : family | grep <MonoFontName>
+/* #+TITLE: Sway - Tiling window manager based on wayland
+   #+FILETAGS: :sway:
+
+   * Mandatory configuration
+    Set your input/output devices!
+
+   * Optional configuration / packages (not imported here)
+      - brillo -> as key combination
+      - caja -> as key combination
+      - brave browser -> as key combination
+      - networkmanager_dmenu -> as key combination
+      - dropbox -> as service on start
+      - emacs -> as key combination
+      - playerctl -> as key combination
+      - _monoFont! Test with: fc-list : family | grep <MonoFontName>
 */
 { lib, config, pkgs, ... }:
 
@@ -133,7 +139,7 @@ in {
           always = true;
         }
       ];
-      #TODO Set your input devices
+      # TODO Set your input devices
       # swaymsg -t get_inputs
       input = {
         "1267:12624:ELAN0670:00_04F3:3150_Touchpad" = {
@@ -149,7 +155,7 @@ in {
           xkb_options = "grp:rctrl_rshift_toggle";
         };
       };
-      #TODO Set your input/output devices
+      # TODO Set your input/output devices
       # swaymsg -t get_outputs
       output = {
         "*" = { bg = ''"${./background-image-secondary.png}" fill''; };

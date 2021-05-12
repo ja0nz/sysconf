@@ -4,7 +4,7 @@
   imports = [ ./packages.nix ];
   config = {
 
-    #TODO Set your repo root path
+    # TODO Set your repo root path
     _repoRoot = ~/sysconf;
     _secret = ../../_secret;
 
