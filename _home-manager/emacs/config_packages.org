@@ -361,5 +361,5 @@ Backup of the Doom Emacs Capture templates for future reference
 #+end_src
 * Racket mode
 #+begin_src emacs-lisp
-(add-to-list '+format-on-save-enabled-modes 'racket-mode t)
+;;(add-to-list '+format-on-save-enabled-modes 'racket-mode t)
 #+end_src

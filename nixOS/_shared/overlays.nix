@@ -29,8 +29,8 @@
 
   nixCommunity = (import (builtins.fetchTarball {
     url =
-      "https://github.com/nix-community/emacs-overlay/archive/2f84fea8fb79ac3848dd857ca5b7d9169332e466.tar.gz";
-    sha256 = "1c700jaz8kzhdc1nka1pzv69n3ag1ppyn6pd1hz6kpmsm75k8161";
+      "https://github.com/nix-community/emacs-overlay/archive/b74d4784e7a508f1a4eeec588c4057510ac2fbbb.tar.gz";
+    sha256 = "193lxmn6k97d169yfh1271r3kndhs0y1sgspvpqqv2x3si21xgj7";
   }));
 
   myWaylandOverlay = (import (builtins.fetchTarball {
