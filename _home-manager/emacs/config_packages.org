@@ -92,6 +92,13 @@ Here are some additional functions/macros that could help you configure Doom:
       org-support-shift-select 'always
       org-goto-interface 'outline-path-completion
       org-startup-with-inline-images t)
+
+;; Custom org agenda shortcut
+(defun org-agenda-week (&optional arg)
+  (interactive "P")
+  (org-agenda arg "a"))
+
+(define-key global-map (kbd "M-s-d d") 'org-agenda-week)
 #+end_src
 ** Org habit
 #+begin_src emacs-lisp
@@ -336,6 +343,12 @@ Backup of the Doom Emacs Capture templates for future reference
 (after! mu4e
   (add-to-list 'mu4e-headers-actions '("org-contact-add" . mu4e-action-add-org-contact) t)
   (add-to-list 'mu4e-view-actions '("org-contact-add" . mu4e-action-add-org-contact) t))
+#+end_src
+* Magit
+#+begin_src emacs-lisp
+(use-package! magit
+  :bind (:map global-map
+         ("M-s-m m" . magit-status)))
 #+end_src
 * Calendar
 #+begin_src emacs-lisp
