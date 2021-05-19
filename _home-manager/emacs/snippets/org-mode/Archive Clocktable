@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Archive Clocktable
+# key: clock
+# --
+#+BEGIN: clocktable :scope agenda :compact t :narrow 60! :fileskip0 t :properties ("CATEGORY" "ALLTAGS" "Effort") :block `(format-time-string "%Y-W%V")`
+$0
+#+END:
