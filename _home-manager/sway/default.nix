@@ -28,6 +28,7 @@ in {
     slurp # Select a region in a Wayland compositor
     swaylock-effects # Screen locker for wayland
     hicolor-icon-theme # Default fallback theme used by implementations of the icon theme specification
+    capitaine-cursors # An x-cursor theme inspired by macOS and based on KDE Breeze
 
     # Notifications
     libnotify # A library that sends desktop notifications to a notification daemon
@@ -42,6 +43,7 @@ in {
       left = "n";
       right = "t";
       bars = [ ];
+      seat = { "*" = { xcursor_theme = "capitaine-cursors 30"; }; };
       colors = {
         focused = {
           border = "#81c1e4";
