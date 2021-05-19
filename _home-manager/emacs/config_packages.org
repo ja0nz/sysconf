@@ -83,6 +83,9 @@ Here are some additional functions/macros that could help you configure Doom:
        (directory-files
         org-directory t
         (concat "^W" (format-time-string "%V"))))
+      org-agenda-bulk-custom-functions
+      '((?m (lambda () (call-interactively 'org-agenda-date-later-minutes)))
+        (?h (lambda () (call-interactively 'org-agenda-date-later-hours))))
       org-complete-tags-always-offer-all-agenda-tags t
       org-agenda-start-with-clockreport-mode t
       org-agenda-clockreport-parameter-plist '(:link t :properties ("ALLTAGS" "Effort") :fileskip0 t :compact t)
@@ -139,7 +142,7 @@ I capture every activity on my laptop by (broad) category. May change over time.
             (concat "Category: " word)
             'entry
             '(function org-journal-open-current-journal-file)
-            (concat "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\") t)\n:PROPERTIES:\n:CATEGORY: " word  "\n:Effort:   0:25\n:END:\n")
+            (concat "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \".\") t)\n:PROPERTIES:\n:CATEGORY: " word  "\n:Effort:   0:25\n:END:\n")
             :jump-to-captured t))
          '("development" "research" "operations" "spanish" "cooking"))))
 #+end_src

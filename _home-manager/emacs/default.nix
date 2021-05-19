@@ -25,6 +25,9 @@
 
     # Database for org-roam
     sqlite # A self-contained, serverless, zero-configuration SQL db engine
+
+    # Needed by doom emacs
+    html-tidy # A HTML validator and `tidier'
   ];
 
   /* config_packages.org -> ~/.doom.d/config.el & ~/.doom.d/packages.el
