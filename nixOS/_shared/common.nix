@@ -52,15 +52,16 @@ with lib; {
     };
 
     hardware = {
-      pulseaudio = {
-        enable = true;
-        extraModules = [ pkgs.pulseaudio-modules-bt ];
-        package = pkgs.pulseaudioFull;
-      };
-      bluetooth = {
-        enable = true;
-        package = pkgs.bluezFull;
-      };
+      #pulseaudio = {
+      #  enable = true;
+      #  extraModules = [ pkgs.pulseaudio-modules-bt ];
+      #  package = pkgs.pulseaudioFull;
+      #};
+      bluetooth.enable = true;
+      #bluetooth = {
+      #  enable = true;
+      #  package = pkgs.bluezFull;
+      #};
       opengl.enable = true;
       brillo.enable = true;
     };
@@ -115,14 +116,7 @@ with lib; {
       getty.autologinUser = "me";
       fstrim.enable = true;
       geoclue2.enable = true;
-
       blueman.enable = true;
-
-      # xserver = {
-      #   enable = true;
-      #   desktopManager.plasma5.enable = true;
-      #   displayManager.startx.enable = true;
-      # };
     };
 
     # xdg.portal = {
@@ -137,8 +131,21 @@ with lib; {
     programs.dconf.enable = true;
     #    programs.adb.enable = true;
 
-    # Enable sound.
-    sound.enable = true;
+    #sound.enable = false;
+    # rtkit is optional but recommended
+    security.rtkit.enable = true;
+    services.pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      # If you want to use JACK applications, uncomment this
+      #jack.enable = true;
+
+      # use the example session manager (no others are packaged yet so this is enabled by default,
+      # no need to redefine it in your config for now)
+      #media-session.enable = true;
+    };
 
     programs.fish = {
       enable = true;
@@ -155,16 +162,6 @@ with lib; {
     #    virtualisation.libvirtd = {
     #      enable = true;
     #      allowedBridges = [ "virbr0" ];
-    #    };
-
-    #    fileSystems."/home/jan" = {
-    #      device = "/dev/disk/by-label/HOME";
-    #      options = [ "rw" "noatime" ];
-    #      encrypted = {
-    #        enable = true;
-    #        blkDev = "/dev/sda5";
-    #        label = "home";
-    #      };
     #    };
 
     # This value determines the NixOS release with which your system is to be

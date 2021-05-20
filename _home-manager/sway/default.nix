@@ -27,6 +27,7 @@ in {
     jq # A lightweight and flexible command-line JSON processor
     slurp # Select a region in a Wayland compositor
     swaylock-effects # Screen locker for wayland
+    pulsemixer # Cli and curses mixer for pulseaudio
     hicolor-icon-theme # Default fallback theme used by implementations of the icon theme specification
     capitaine-cursors # An x-cursor theme inspired by macOS and based on KDE Breeze
 
@@ -109,11 +110,14 @@ in {
         "Ctrl+Print" = "exec ${./take_screenshot} full";
         "XF86MonBrightnessUp" = ''exec "brillo -A 1"'';
         "XF86MonBrightnessDown" = ''exec "brillo -U 1"'';
-        "XF86AudioMute" = ''exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"'';
-        "XF86AudioLowerVolume" =
-          ''exec "pactl set-sink-volume @DEFAULT_SINK@ -5%"'';
-        "XF86AudioRaiseVolume" =
-          ''exec "pactl set-sink-volume @DEFAULT_SINK@ +5%"'';
+        "XF86AudioMute" = ''exec "pulsemixer --toggle-mute"'';
+        "XF86AudioLowerVolume" = ''exec "pulsemixer --change-volume -5"'';
+        "XF86AudioRaiseVolume" = ''exec "pulsemixer --change-volume +5"'';
+        # "XF86AudioMute" = ''exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"'';
+        # "XF86AudioLowerVolume" =
+        #   ''exec "pactl set-sink-volume @DEFAULT_SINK@ -5%"'';
+        # "XF86AudioRaiseVolume" =
+        #   ''exec "pactl set-sink-volume @DEFAULT_SINK@ +5%"'';
         # "XF86AudioPlay" = ''exec "playerctl play"'';
         # "XF86AudioPause" = ''exec "playerctl pause"'';
         # "XF86AudioNext" = ''exec "playerctl next"'';
