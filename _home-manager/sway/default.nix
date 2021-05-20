@@ -110,20 +110,20 @@ in {
         "Ctrl+Print" = "exec ${./take_screenshot} full";
         "XF86MonBrightnessUp" = ''exec "brillo -A 1"'';
         "XF86MonBrightnessDown" = ''exec "brillo -U 1"'';
+
+        # TODO --set-default-sink once merged
+        # https://github.com/GeorgeFilipkin/pulsemixer/issues/64
         "XF86AudioMute" = ''exec "pulsemixer --toggle-mute"'';
         "XF86AudioLowerVolume" = ''exec "pulsemixer --change-volume -5"'';
         "XF86AudioRaiseVolume" = ''exec "pulsemixer --change-volume +5"'';
-        # "XF86AudioMute" = ''exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"'';
-        # "XF86AudioLowerVolume" =
-        #   ''exec "pactl set-sink-volume @DEFAULT_SINK@ -5%"'';
-        # "XF86AudioRaiseVolume" =
-        #   ''exec "pactl set-sink-volume @DEFAULT_SINK@ +5%"'';
         # "XF86AudioPlay" = ''exec "playerctl play"'';
         # "XF86AudioPause" = ''exec "playerctl pause"'';
         # "XF86AudioNext" = ''exec "playerctl next"'';
         # "XF86AudioPrev" = ''exec "playerctl previous"'';
-        "XF86AudioMicMute" =
-          ''exec "pactl set-source-mute @DEFAULT_SOURCE@ toggle"'';
+
+        # TODO --set-default-source once merged
+        # https://github.com/GeorgeFilipkin/pulsemixer/issues/64
+        "XF86AudioMicMute" = ''exec "pulsemixer --id source-52 --toggle-mute"'';
         "XF86Display" = ''exec "swaymsg 'output DP-4 toggle'"'';
         "XF86WLAN" = ''
           exec "nmcli networking connectivity | \
