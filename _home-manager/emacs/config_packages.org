@@ -69,6 +69,11 @@ Here are some additional functions/macros that could help you configure Doom:
 
 (map! :leader
       :desc "Quick Buffer/File Switcher" "SPC" #'ivy-switch-buffer)
+
+(map! :leader
+      :prefix "s"
+      :desc "Org GoTo" "g" #'counsel-org-goto
+      :desc "Counsel Projectile RG" "p" #'counsel-projectile-rg)
 #+end_src
 * Org
 ** Base Settings
@@ -92,7 +97,9 @@ Here are some additional functions/macros that could help you configure Doom:
       org-support-shift-select 'always
       org-goto-interface 'outline-path-completion
       org-startup-with-inline-images t)
-
+#+end_src
+** Org agenda
+#+begin_src emacs-lisp
 ;; Custom org agenda shortcut
 (defun org-agenda-week (&optional arg)
   (interactive "P")
@@ -115,22 +122,6 @@ Here are some additional functions/macros that could help you configure Doom:
           ("~/Dropbox/org/_archive.org" :maxlevel . 1)
           ("~/Dropbox/org/_kanban.org" :maxlevel . 1))))
 #+end_src
-** TODO Org Pomodoro
-   #+begin_src
-     (use-package org-pomodoro
-       :bind (("M-s-t t" . org-pomodoro))
-       :config
-       (setq org-pomodoro-audio-player (executable-find "notify-send")
-             org-pomodoro-start-sound-p t
-             org-pomodoro-killed-sound-p t
-             org-pomodoro-start-sound " *org-pomodoro* - ⏱START⏱"
-             org-pomodoro-finished-sound " *org-pomodoro* - 🏃FINISH🏃"
-             org-pomodoro-overtime-sound " *org-pomodoro* - ⏰OVERTIME⏰"
-             org-pomodoro-killed-sound " *org-pomodoro* - 💀KILLED💀"
-             org-pomodoro-short-break-sound " *org-pomodoro* - 🍰SHORT BREAK FINISHED🍰"
-             org-pomodoro-long-break-sound " *org-pomodoro* - 🍖LONG BREAK FINISHED🍖"
-             org-pomodoro-ticking-sound " *org-pomodoro* - 🥁ticktack🥁"))
-   #+end_src
 ** Org Capture
 I capture every activity on my laptop by (broad) category. May change over time. Currently, there are following activities:
 - development - concrete project development
