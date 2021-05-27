@@ -48,31 +48,31 @@ in {
           extraConfig.account.PipelineDepth = 50;
           groups.gmail.channels = {
             inbox = {
-              masterPattern = "INBOX";
-              slavePattern = "INBOX";
+              farPattern = "INBOX";
+              nearPattern = "INBOX";
               extraConfig = { Expunge = "Both"; };
             };
             trash = {
-              masterPattern = "[Gmail]/Bin";
-              slavePattern = "Trash";
+              farPattern = "[Gmail]/Bin";
+              nearPattern = "Trash";
               extraConfig = { Create = "Slave"; };
             };
             drafts = {
-              masterPattern = "[Gmail]/Drafts";
-              slavePattern = "Drafts";
+              farPattern = "[Gmail]/Drafts";
+              nearPattern = "Drafts";
               extraConfig = {
                 Create = "Slave";
                 Expunge = "Both";
               };
             };
             sent = {
-              masterPattern = "[Gmail]/Sent Mail";
-              slavePattern = "Sent";
+              farPattern = "[Gmail]/Sent Mail";
+              nearPattern = "Sent";
               extraConfig = { Create = "Slave"; };
             };
             archive = {
-              masterPattern = "[Gmail]/All Mail";
-              slavePattern = "Archive";
+              farPattern = "[Gmail]/All Mail";
+              nearPattern = "Archive";
               extraConfig = {
                 Create = "Slave";
                 Sync = "Push";
