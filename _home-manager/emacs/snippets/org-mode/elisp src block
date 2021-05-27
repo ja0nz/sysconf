@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: TypeScript SRC block
+# key: ts
+# expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region t))
+# --
+#+begin_src typescript
+$0
+#+end_src
