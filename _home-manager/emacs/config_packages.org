@@ -30,6 +30,9 @@ Here are some additional functions/macros that could help you configure Doom:
 (use-package! evil-escape
   :init (setq evil-escape-key-sequence "nr"))
 
+;; Use primary selection instead of clipboard
+(setq select-enable-primary t)
+
 ;; No evil snipe mode if there is avy!
 (after! evil-snipe
   (evil-snipe-mode -1)
