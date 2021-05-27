@@ -5,9 +5,6 @@
     Alacritty needs a (monospace) font.
     You either pass the variable in your config or set manually.
     Run ~fc-list : family~ and choose a font family.
-
-   * Optional configuration
-    Set your favourite browser as mouse launcher.
 */
 { config, ... }:
 
@@ -64,7 +61,6 @@ in {
         };
       };
       background_opacity = 0.9;
-      mouse.url.launcher = "brave"; # TODO Set your browser
     };
   };
 }
