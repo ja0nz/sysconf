@@ -3,5 +3,10 @@
 # key: clock
 # --
 #+BEGIN: clocktable :scope agenda :compact t :narrow 60! :fileskip0 t :properties ("CATEGORY" "ALLTAGS" "Effort") :block `(format-time-string "%Y-W%V")`
-$0
+Current week: `(format-time-string "%V")`
+set week number in :block and function
+run org-babel-execute-src-block
+#+begin_src emacs-lisp
+(let ((org-agenda-files (directory-files org-directory t "^W[0-9]"))) (org-dynamic-block-insert-dblock "clocktable"))$0
+#+end_src
 #+END:
