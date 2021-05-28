@@ -1,0 +1,4 @@
+# -*- mode: snippet -*-
+# name: Deno REPL import (only run vMode)
+# --
+let $0 = await import('`(format "https://cdn.skypack.dev/%s" (string-trim yas-selected-text "[\"\']+" "[\"\'\n]+"))`')
