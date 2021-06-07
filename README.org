@@ -16,9 +16,37 @@ The product of this evening is this repository. A reproducible system sitting on
   - [[#i-have-a-running-linux-machine-and-want-to-manage-my-packages-with-nix][I have a running Linux machine and want to manage my packages with Nix]]
   - [[#i-already-have-a-machine-running-windows-and-want-dual-boot-nixos-alongside][I already have a machine running Windows and want dual boot NixOS alongside]]
   - [[#i-have-just-want-a-nixos-machine][I have just want a NixOS machine]]
+- [[#used-filetags][Used FILETAGS]]
 
 * Where to start?
 ** I want to run NixOS in a VirtualBox
 ** I have a running Linux machine and want to manage my packages with Nix
 ** I already have a machine running Windows and want dual boot NixOS alongside
 ** I have just want a NixOS machine
+
+* Used FILETAGS
+alarcitty -> :shell:ui:sway:
+blueman -> :ui:sway:
+direnv -> :development:
+emails -> :user:
+exa -> :navigation:
+fish -> :shell:development:
+gammastep -> :ui:sway:
+git -> :development:
+gpg -> :encrypt:auth:ssh:
+gtk -> :ui:
+lorri -> :development:
+mako -> :ui:sway:
+ssh -> :shell:
+systemd -> :user:
+udiskie -> :hardware:
+xdg -> :ui:
+
+brave -> :program:
+emacs -> :program:
+sizzy -> :development:
+sway -> :sway:
+waybar -> :sway:
+zathura -> :program:
+
+overlays -> :user:sway:

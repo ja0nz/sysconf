@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Deno Import Entry (only run VMode)
+# expand-env: ((yas-indent-line 'auto))
+# --
+"`(string-trim yas-selected-text "[\"\']+" "[\"\'\n]+")`": "`(concat "https://cdn.skypack.dev/" (string-trim yas-selected-text "[\"\']+" "[\"\'\n]+") "?dts")`",

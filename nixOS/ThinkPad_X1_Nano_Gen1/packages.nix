@@ -89,6 +89,7 @@ in {
     ditaa # Convert ascii art diagrams into proper bitmap graphics
 
     # --- Programming --
-    nodejs
+    nodejs # Some globals depend on this (unfortunately)
+    niv # Easy dependency management for Nix projects -> good fit with lorri & direnv
   ];
 }
