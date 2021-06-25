@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Description Block
+# key: desc
+# expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region t))
+# --
+#+begin_description
+$0
+#+end_description

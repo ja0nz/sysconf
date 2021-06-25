@@ -15,7 +15,10 @@
     package = pkgs.emacsGcc; # TODO Requires emacs-overlay (see overlays.nix)
     #extraPackages = epkgs: with epkgs; [ use-package ];
   };
-  services.emacs = { enable = true; };
+  services.emacs = {
+    enable = true;
+    socketActivation.enable = true;
+  };
 
   home.packages = with pkgs; [
     # Dictionaries

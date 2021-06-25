@@ -292,6 +292,17 @@ Backup of the Doom Emacs Capture templates for future reference
       org-pomodoro-ticking-sound " *org-pomodoro* - 🥁ticktack🥁")
 #+end_src
 
+** Org table copy cell :hack:
+#+begin_src emacs-lisp
+(defun org-table-yank-cell ()
+  "Copy cell value and trim surrounding whitepaces."
+  (interactive)
+  (when (org-at-table-p)
+    (kill-new
+      (string-trim
+        (substring-no-properties(org-table-get-field))))))
+#+end_src
+
 * MU4E
 [[ https://github.com/hlissner/doom-emacs/blob/develop/modules/email/mu4e/README.org][Doom Emacs MU4E]]
 #+begin_src emacs-lisp
@@ -369,14 +380,17 @@ Backup of the Doom Emacs Capture templates for future reference
         :desc "Launch terminal here" "t" #'terminal-here-launch
         :desc "Launch terminal ROOT" "T" #'terminal-here-project-launch))
 #+end_src
+
 * Envrc global mode
 #+begin_src emacs-lisp
 (envrc-global-mode)
 #+end_src
+
 * Crux
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
 (package! crux)
 #+end_src
+
 * Racket mode
 #+begin_src emacs-lisp
 ;;(add-to-list '+format-on-save-enabled-modes 'racket-mode t)
@@ -386,4 +400,37 @@ Backup of the Doom Emacs Capture templates for future reference
 #+begin_src emacs-lisp
 ;;https://github.com/js-emacs/xref-js2
 (setq xref-js2-search-program 'rg)
+#+end_src
+
+* Ascii-art-to-unicode
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+(package! ascii-art-to-unicode)
+#+end_src
+* Web Mode
+** Config
+#+begin_src emacs-lisp
+(setq web-mode-markup-indent-offset 2)
+#+end_src
+
+** Web Mode :hack:
+Related to this issue of web mode: https://github.com/fxbois/web-mode/issues/799
+In short: changing dir-locals alone is not working with web mode. This is a hack
+to get it working.
+
+#+begin_src emacs-lisp
+(add-to-list 'safe-local-variable-values '(hack-web-mode-engine . "go"))
+(defun hack-web-mode-hook ()
+  "Hooks for Web mode. Add a local hook which set the engine to the one specified by
+   `hack-web-mode-engine` local variable."
+  (add-hook
+   'hack-local-variables-hook
+   (lambda ()
+     (if (boundp 'hack-web-mode-engine)
+         (progn
+           (message "web-mode-engine is %s" hack-web-mode-engine)
+           (web-mode-set-engine hack-web-mode-engine))
+       (progn
+         (message "no web-mode-engine settled")
+         (web-mode-set-engine "none"))))))
+(add-hook 'web-mode-hook  'hack-web-mode-hook nil nil)
 #+end_src

@@ -15,6 +15,7 @@
     enable = true;
     package = pkgs.brave;
     extensions = [
+      { id = "fihnjjcciajhdojfnbdddfaoknhalnja"; } # I don't care about cookies
       { id = "nngceckbapebfimnlniiiahkandclblb"; } # Bitwarden
       { id = "cdockenadnadldjbbgcallicgledbeoc"; } # VisBug
       { id = "dbepggeogbaibhgnhhndojpepiihcmeb"; } # Vimium

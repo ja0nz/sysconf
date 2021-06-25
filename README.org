@@ -1,25 +1,47 @@
 #+STARTUP: content
 
-* Sysconf - a opinionated home of Nix* systems
+* Sysconf - an opinionated home of Nix* systems
 #+begin_quote
-Once upon a time, in the pale light of the winters sun, this narrator looked up from his even more paler screen and in a wave of existential thoughts he looked back on this little device in front of him and wondered silently: How can it be this is so hard to set up / to maintain / to replicate?!
+Once upon a time, in the pale light of the winters sun, the narrator sat in front of his even paler screen of his new computer device. He was hacking in anger. Angry about the hours, heck even days, he would have to spend to set up his heavy customized computing environment. "Never again", this time things should be more streamlined, more clear, more deterministic, more flexible, more documented, more more
 
-So he looked back up again and a plan was sneaking into his mind: A fully reproducible system, fully documented, easy to reason and to enhance...
+So he looked back up again and went on his long journey down the nix* rabbit hole...
 #+end_quote
 
-The product of this evening is this repository. A reproducible system sitting on shoulders of [[https://nixos.org/][NixOS]] and the allmighty [[https://github.com/nix-community/home-manager][Home Manager]]. A bag full of opinionated choices but documented enough to adapt it to your opinionated needs.
+This repository is the continious output of this journel:
+- A fully reproducible system sitting on shoulders of [[https://nixos.org/][NixOS]] and the allmighty [[https://github.com/nix-community/home-manager][Home Manager]].
+- A bare metal system or full desktop envirnoment.
+- A bag full of opinionated choices but documented enough to adapt it to your opinionated needs.
 
 * Contents :toc:
-- [[#sysconf---a-opinionated-home-of-nix-systems][Sysconf - a opinionated home of Nix* systems]]
+- [[#sysconf---an-opinionated-home-of-nix-systems][Sysconf - an opinionated home of Nix* systems]]
+- [[#a-short-tour-into-this-repo][A short tour into this repo]]
+  - [[#docs][./docs/]]
+  - [[#_home-manager][./_home-manager/]]
+  - [[#nixos][./nixOS/]]
+  - [[#nix][./nix/]]
 - [[#where-to-start][Where to start?]]
-  - [[#i-want-to-run-nixos-in-a-virtualbox][I want to run NixOS in a VirtualBox]]
+  - [[#i-want-to-run-nixos-in-a-virtualbox-et-cetera][I want to run NixOS in a VirtualBox (et cetera)]]
   - [[#i-have-a-running-linux-machine-and-want-to-manage-my-packages-with-nix][I have a running Linux machine and want to manage my packages with Nix]]
   - [[#i-already-have-a-machine-running-windows-and-want-dual-boot-nixos-alongside][I already have a machine running Windows and want dual boot NixOS alongside]]
   - [[#i-have-just-want-a-nixos-machine][I have just want a NixOS machine]]
 - [[#used-filetags][Used FILETAGS]]
 
+* A short tour into this repo
+** ./docs/
+Mostly *pre intallation* stuff like filesystem setups or arch installation walkthrough. Probably also some ramblings about nix systems and tooling which are a bit side tracked from the actual installation.
+** ./_home-manager/
+Here you can find some configurations of [[https://rycee.gitlab.io/home-manager/options.html][packages available to Home Manager]]. Home Manager is, as the name suggests, a *user environment manager* made for nix* systems. This is the most valueable part of the configuration as most of the *systems software* is made up by those configurations.
+
+Home Manager runs on both, nixOS and any other system running the nix package manager. See [[file:docs/][./docs/]] for home manager istallation.
+** ./nixOS/
+This folder contains the nixOS installations I have running each with it's on documentation.
+** ./nix/
+This folder contains bundled home manager packages to be consumed by any system running the nix* package manager.
+
 * Where to start?
-** I want to run NixOS in a VirtualBox
+This depends highly on your use case. It first may be a good idea to look around make yourself comfortable
+** I want to run NixOS in a VirtualBox (et cetera)
+
 ** I have a running Linux machine and want to manage my packages with Nix
 ** I already have a machine running Windows and want dual boot NixOS alongside
 ** I have just want a NixOS machine
