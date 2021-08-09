@@ -34,10 +34,9 @@ Here are some additional functions/macros that could help you configure Doom:
 (setq select-enable-primary t)
 
 ;; No evil snipe mode if there is avy!
-(after! evil-snipe
-  (evil-snipe-mode -1)
-  (define-key evil-normal-state-map (kbd "s") 'evil-avy-goto-char-timer)
-  (define-key evil-normal-state-map (kbd "S") 'avy-goto-char))
+(remove-hook 'doom-first-input-hook #'evil-snipe-mode)
+(define-key evil-normal-state-map (kbd "s") 'evil-avy-goto-char-timer)
+(define-key evil-normal-state-map (kbd "S") 'avy-goto-char)
 
 (setq custom-file nil)
 
