@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: brazil flag
+# expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region t))
+# --
+🇧🇷 $0
