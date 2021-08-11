@@ -75,12 +75,12 @@ Here are some additional functions/macros that could help you configure Doom:
   (setq ivy-use-virtual-buffers t))
 
 (map! :leader
-      :desc "Quick Buffer/File Switcher" "SPC" #'ivy-switch-buffer)
+      :desc "Quick Buffer/File Switcher" "SPC" #'consult-buffer)
 
 (map! :leader
       :prefix "s"
-      :desc "Org GoTo" "g" #'counsel-org-goto
-      :desc "Counsel Projectile RG" "p" #'counsel-projectile-rg)
+      :desc "Org GoTo" "g" #'consult-org-heading
+      :desc "Counsel Projectile RG" "p" #'consult-ripgrep)
 #+end_src
 * Org
 ** Base Settings
@@ -201,7 +201,7 @@ Backup of the Doom Emacs Capture templates for future reference
   :bind (:map org-mode-map
          ("M-s-n p" . org-set-property) ;; CATEGORY
          ("M-s-n e" . org-set-effort) ;; Effort
-         ("M-s-n t" . counsel-org-tag) ;; Tag
+         ("M-s-n t" . org-set-tags-command) ;; Tag
          ("M-s-n d" . org-update-all-dblocks) ;; Dblock
          ("M-s-n f" . export-clocktable-csv) ;; Export Clock to csv
          ("M-s-n a" . org-agenda-file-to-front) ;; add current file to agenda files
@@ -229,12 +229,12 @@ Backup of the Doom Emacs Capture templates for future reference
 ;; Org Roam Settings
 (setq +org-roam-open-buffer-on-find-file nil
       org-roam-directory org-directory
-      org-roam-rename-file-on-title-change nil
       org-roam-capture-templates
-      '(("d" "default" plain (function org-roam-capture--get-point)
+      '(("d" "default" plain
          "%?"
-         :file-name "%<%Y%m%d%H%M%S>-${slug}"
-         :head "#+title: ${title}\n#+CREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+REVISION: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+STARTUP: fold\n"
+         :if-new
+         (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+         "#+title: ${title}\n#+CREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+REVISION: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+STARTUP: fold\n")
          :unnarrowed t)))
 
 (defun org_roam__bump_revision_date ()
@@ -254,13 +254,13 @@ Backup of the Doom Emacs Capture templates for future reference
             (add-hook 'after-save-hook #'org_roam__bump_revision_date)))
 
 (use-package! org-roam
-  :bind (:map org-roam-mode-map
-         ("M-s-s l" . org-roam) ;; show links
-         ("M-s-s g" . org-roam-graph) ;; show in browser
-         :map org-mode-map
-         ("M-s-s i" . org-roam-insert) ;; insert links in org documents
+  :bind (:map org-mode-map
+         ("M-s-s i" . org-roam-node-insert) ;; insert links in org documents
+         ("M-s-s b" . org-roam-buffer-toggle) ;; toggle backlinks overview
          :map global-map
-         ("M-s-s f" . org-roam-find-file))) ;; quickly jump in / New
+         ("M-s-s f" . org-roam-node-find) ;; quickly find
+         ("M-s-s c" . org-roam-capture))) ;; capture information
+
 #+end_src
 ** Org MRU Clock
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
@@ -383,11 +383,6 @@ Backup of the Doom Emacs Capture templates for future reference
 * Envrc global mode
 #+begin_src emacs-lisp
 (envrc-global-mode)
-#+end_src
-
-* Crux
-#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
-(package! crux)
 #+end_src
 
 * Racket mode
