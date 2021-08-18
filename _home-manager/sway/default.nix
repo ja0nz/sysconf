@@ -123,7 +123,7 @@ in {
 
         # TODO --set-default-source once merged
         # https://github.com/GeorgeFilipkin/pulsemixer/issues/64
-        "XF86AudioMicMute" = ''exec "pulsemixer --id source-52 --toggle-mute"'';
+        "XF86AudioMicMute" = ''exec "pulsemixer --id source-5 --toggle-mute"'';
         "XF86Display" = ''exec "swaymsg 'output DP-4 toggle'"'';
         "XF86WLAN" = ''
           exec "nmcli networking connectivity | \

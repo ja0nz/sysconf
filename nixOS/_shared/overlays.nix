@@ -29,13 +29,13 @@
 
   nixCommunity = (import (builtins.fetchTarball {
     url =
-      "https://github.com/nix-community/emacs-overlay/archive/73538fa26b715cc7b4d265ee7b0c582e6c27fe4c.tar.gz";
-    sha256 = "0r7axyvhffl9z1lhq6j1czj0h4q7qpwm7lgfr4myjawhvvzz590h";
+      "https://github.com/nix-community/emacs-overlay/archive/c252073b4e9b5f62a9ba6e7bec3551bea2e26a32.tar.gz";
+    sha256 = "0sxwrk2k5rfic6x63k03nyqidqsbhh086g6k8xdx25bn019n0mz3";
   }));
 
   myWaylandOverlay = (import (builtins.fetchTarball {
     url =
-      "https://github.com/colemickens/nixpkgs-wayland/archive/60657d00538514b8ba565537a51e0d5b59f05d44.tar.gz";
-    sha256 = "1gcrykq94h58j29251cxslcbddaiqyl78hjmjdaqcj3kmdwmaars";
+      "https://github.com/colemickens/nixpkgs-wayland/archive/f84ac0bf7868d2160141e3ab54cbf47c6a01a903.tar.gz";
+    sha256 = "0ck6q135nn4r7ba037bzjw2sbj6sss24033n3gzklpc53n2ry3jh";
   }));
 }
