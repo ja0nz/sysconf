@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: DOT graphviz src block
+# key: dot
+# expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region t))
+# --
+#+begin_src dot :file /tmp/`(format-time-string "%Y%m%d%H%M%S")`_dotGraph.png :exports results
+$0
+#+end_src

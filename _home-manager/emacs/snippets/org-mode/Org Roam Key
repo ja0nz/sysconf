@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: Org Roam Key 
-# key: rk
-# --
-#+roam_key: $0
