@@ -71,8 +71,6 @@ Here are some additional functions/macros that could help you configure Doom:
 #+end_src
 * Consult
 #+begin_src emacs-lisp
-(evil-define-key nil evil-normal-state-map "p" 'consult-yank-pop)
-
 (map! :leader
       :desc "Quick Buffer/File Switcher" "SPC" #'consult-buffer)
 
@@ -141,16 +139,8 @@ I capture every activity on my laptop by (broad) category. May change over time.
 ;; Org Capture Templates
 (after! org-capture
   (setq org-capture-templates
-        (mapcar
-         (lambda (word)
-           (list
-            (substring word 0 1)
-            (concat "Category: " word)
-            'entry
-            '(function org-journal-open-current-journal-file)
-            (concat "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \".\") t)\n:PROPERTIES:\n:CATEGORY: " word  "\n:Effort:   0:25\n:END:\n")
-            :jump-to-captured t))
-         '("development" "research" "operations" "spanish" "cooking"))))
+         '(("p" "Blog > Post" entry (file+headline "~/data/git/ja.nz/README.org" "Posts") "* TODO %^{title}\nSCHEDULED: %t%^{export_hugo_bundle}p%^{export_file_name}p\n#+begin_description\n%?\n#+end_description\n** scratchpad :noexport:\n" :prepend t :jump-to-captured t)
+           ("x" "Journal > Todo" entry (function org-journal-open-current-journal-file) "* TODO %^{title}\nSCHEDULED: %T%^{CATEGORY}p%^{Effort}p\n%?" :jump-to-captured t))))
 #+end_src
 *** Backup (untangled)
 Backup of the Doom Emacs Capture templates for future reference
