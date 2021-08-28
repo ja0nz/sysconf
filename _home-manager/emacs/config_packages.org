@@ -219,29 +219,30 @@ Backup of the Doom Emacs Capture templates for future reference
 ;; Org Roam Settings
 (setq +org-roam-open-buffer-on-find-file nil
       org-roam-directory org-directory
+      org-roam-completion-everywhere nil
       org-roam-capture-templates
       '(("d" "default" plain
          "%?"
          :if-new
          (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-         "#+title: ${title}\n#+CREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+REVISION: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+STARTUP: fold\n")
+          "#+title: ${title}\n#+CREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+REVISION: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+STARTUP: fold\n")
          :unnarrowed t)))
 
 (defun org_roam__bump_revision_date ()
   "Retriving REVISION and replace it naively with current time stamp."
-  (let ((lastrev (car (cdr (car (org-collect-keywords '("REVISION"))))))
-        (today (format-time-string (org-time-stamp-format))))
-    (cond ((not lastrev) nil)
-          ((not (string= lastrev today))
-           (progn (push-mark)
-                  (re-search-backward "REVISION" nil 1)
-                  (if (re-search-forward lastrev nil 1)
-                      (replace-match today))
-                  (pop-global-mark))))))
+  (when (string-match-p "^[0-9]\\{14\\}-" (file-name-base))
+    (let ((lastrev (car (cdr (car (org-collect-keywords '("REVISION"))))))
+          (today (format-time-string (org-time-stamp-format))))
+      (cond ((not lastrev) nil)
+            ((not (string= lastrev today))
+             (progn (push-mark)
+                    (re-search-backward "REVISION" nil 1)
+                    (if (re-search-forward lastrev nil 1)
+                        (replace-match today))
+                    (pop-global-mark)))))))
 
-(add-hook 'org-roam-mode-hook
-          (lambda ()
-            (add-hook 'after-save-hook #'org_roam__bump_revision_date)))
+(add-hook! org-mode
+    (add-hook 'after-save-hook #'org_roam__bump_revision_date))
 
 (use-package! org-roam
   :bind (:map org-mode-map
