@@ -51,6 +51,7 @@
   # Optional: if you want to use GPG for SSH authentication
   services.gpg-agent = {
     enable = true;
+    defaultCacheTtl = 6000;
     enableSshSupport = true;
     sshKeys = [
       "D937A7A38C77F36C88A0A8CA49E3DECFBD704FCC"
