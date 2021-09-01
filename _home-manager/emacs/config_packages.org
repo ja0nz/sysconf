@@ -40,7 +40,7 @@ Here are some additional functions/macros that could help you configure Doom:
 
 (setq custom-file nil)
 
-;; Antagonist for evil-goto-definin -> g d; jump back with -> g b
+;; Antagonist for evil-goto-definition -> g d; jump back with -> g b
 (map! :map evil-motion-state-map
       :prefix "g"
       "b" #'evil-jump-backward)
@@ -105,13 +105,16 @@ Here are some additional functions/macros that could help you configure Doom:
       org-startup-with-inline-images t)
 #+end_src
 ** Org agenda
+:PROPERTIES:
+:ID:       1261439c-2fd1-45b9-b320-d78b8895d824
+:END:
 #+begin_src emacs-lisp
 ;; Custom org agenda shortcut
 (defun org-agenda-week (&optional arg)
   (interactive "P")
   (org-agenda arg "a"))
 
-(define-key global-map (kbd "M-s-d d") 'org-agenda-week)
+(map! :leader :prefix "o" :map global-map :desc "Open Org Agenda Week" "w" #'org-agenda-week)
 #+end_src
 ** Org habit
 #+begin_src emacs-lisp
@@ -187,18 +190,29 @@ Backup of the Doom Emacs Capture templates for future reference
 ;;org-journal-file-header "#+title: W%V_%Y-%m-%d\n#+roam_key: file:_kanban.org\n"
 ;;org-journal-skip-carryover-drawers (list "LOGBOOK")
 
-(use-package! org-journal
-  :bind (:map org-mode-map
-         ("M-s-n p" . org-set-property) ;; CATEGORY
-         ("M-s-n e" . org-set-effort) ;; Effort
-         ("M-s-n t" . org-set-tags-command) ;; Tag
-         ("M-s-n d" . org-update-all-dblocks) ;; Dblock
-         ("M-s-n f" . export-clocktable-csv) ;; Export Clock to csv
-         ("M-s-n a" . org-agenda-file-to-front) ;; add current file to agenda files
-         :map global-map
-         ("M-s-n n" . org-journal-new-entry) ;; Entry
-         ("M-s-n r" . org-journal-open-current-journal-file) ;; Current file
-         ("M-s-n s" . org-journal-new-scheduled-entry))) ;; Scheduled
+
+(map! :leader :prefix "r"
+        (:map org-mode-map
+         :desc "Org Set Property" "p" #'org-set-property
+         :desc "Org Set Effort" "e" #'org-set-effort
+         :desc "Org Set Tags" "t" #'org-set-tags-command
+         :desc "Org Agenda File To Front" "a" #'org-agenda-file-to-front)
+        (:map global-map
+         :desc "Org Journal New Entry" "n" #'org-journal-new-entry
+         :desc "Org Journal New Scheduled Entry" "s" #'org-journal-new-scheduled-entry
+         :desc "Org Journal Open Current" "r" #'org-journal-open-current-journal-file))
+;; (use-package! org-journal
+;;   :bind (:map org-mode-map
+;;          ("M-s-n p" . org-set-property) ;; CATEGORY
+;;          ("M-s-n e" . org-set-effort) ;; Effort
+;;          ("M-s-n t" . org-set-tags-command) ;; Tag
+;;          ("M-s-n d" . org-update-all-dblocks) ;; Dblock
+;;          ("M-s-n f" . export-clocktable-csv) ;; Export Clock to csv
+;;          ("M-s-n a" . org-agenda-file-to-front) ;; add current file to agenda files
+;;          :map global-map
+;;          ("M-s-n n" . org-journal-new-entry) ;; Entry
+;;          ("M-s-n r" . org-journal-open-current-journal-file) ;; Current file
+;;          ("M-s-n s" . org-journal-new-scheduled-entry))) ;; Scheduled
 #+end_src
 *** Export Clocktable Function
 #+begin_src emacs-lisp
@@ -225,7 +239,7 @@ Backup of the Doom Emacs Capture templates for future reference
          "%?"
          :if-new
          (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-          "#+title: ${title}\n#+CREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+REVISION: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+STARTUP: fold\n")
+                    "#+title: ${title}\n#+CREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+REVISION: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+STARTUP: fold\n")
          :unnarrowed t)))
 
 (defun org_roam__bump_revision_date ()
@@ -242,16 +256,23 @@ Backup of the Doom Emacs Capture templates for future reference
                     (pop-global-mark)))))))
 
 (add-hook! org-mode
-    (add-hook 'after-save-hook #'org_roam__bump_revision_date))
+  (add-hook 'after-save-hook #'org_roam__bump_revision_date))
 
-(use-package! org-roam
-  :bind (:map org-mode-map
-         ("M-s-s i" . org-roam-node-insert) ;; insert links in org documents
-         ("M-s-s b" . org-roam-buffer-toggle) ;; toggle backlinks overview
-         :map global-map
-         ("M-s-s f" . org-roam-node-find) ;; quickly find
-         ("M-s-s c" . org-roam-capture))) ;; capture information
+;; (use-package! org-roam
+;;   :bind (:map org-mode-map
+;;          ("M-s-s i" . org-roam-node-insert) ;; insert links in org documents
+;;          ("M-s-s b" . org-roam-buffer-toggle) ;; toggle backlinks overview
+;;          :map global-map
+;;          ("M-s-s f" . org-roam-node-find) ;; quickly find
+;;          ("M-s-s c" . org-roam-capture))) ;; capture information
 
+(map! :leader :prefix "r"
+        (:map org-mode-map
+         :desc "Org Roam Node Insert" "i" #'org-roam-node-insert
+         :desc "Org Roam Buffer Toggle" "b" #'org-roam-buffer-toggle)
+        (:map global-map
+         :desc "Org Roam Goto Node" "g" #'org-roam-node-find
+         :desc "Org Roam Capture" "c" #'org-roam-capture))
 #+end_src
 ** Org MRU Clock
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
@@ -259,12 +280,16 @@ Backup of the Doom Emacs Capture templates for future reference
 #+end_src
 
 #+begin_src emacs-lisp
-(use-package! org-mru-clock 
-  :bind (:map global-map
-         ("M-s-t r" . org-mru-clock-in)
-         ("M-s-t i" . org-clock-in)
-         ("M-s-t o" . org-clock-out)
-         ("M-s-t u" . org-update-all-dblocks)))
+(map! :map org-mode-map :localleader :prefix "c"
+      :desc "Org MRU clock" "m" #'org-mru-clock-in
+      :desc "Org Update All DBlocks" "u" #'org-update-all-dblocks)
+
+;; (use-package! org-mru-clock
+;;   :bind (:map global-map
+;;          ("M-s-t r" . org-mru-clock-in)
+;;          ("M-s-t i" . org-clock-in)
+;;          ("M-s-t o" . org-clock-out)
+;;          ("M-s-t u" . org-update-all-dblocks)))
 #+end_src
 ** Org pomodoro
 #+begin_src emacs-lisp
@@ -345,8 +370,8 @@ Backup of the Doom Emacs Capture templates for future reference
   (add-to-list 'mu4e-headers-actions '("org-contact-add" . mu4e-action-add-org-contact) t)
   (add-to-list 'mu4e-view-actions '("org-contact-add" . mu4e-action-add-org-contact) t))
 #+end_src
-* Magit
-#+begin_src emacs-lisp
+* Magit *deprecated* -> SPC g g
+#+begin_src
 (use-package! magit
   :bind (:map global-map
          ("M-s-m m" . magit-status)))
