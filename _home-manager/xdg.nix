@@ -14,7 +14,7 @@
     associations = { added = { "image/png" = "eom.desktop"; }; };
     defaultApplications = {
       "application/pdf" = [ "org.pwmt.zathura.desktop" ];
-      "text/html" = [ "brave-browser.desktop" ];
+      "text/html" = [ "chromium-browser.desktop" ];
       "image/png" = [ "eom.desktop " ];
       "image/jpeg" = [ "eom.desktop" ];
     };

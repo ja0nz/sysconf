@@ -37,7 +37,7 @@
 
   home.sessionVariables = {
     EDITOR = "emacsclient -c";
-    BROWSER = "brave";
+    BROWSER = "chromium";
     #PATH = "$HOME/.yarn/bin:$PATH"; # Impure but harmless!
   };
 

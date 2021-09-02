@@ -81,7 +81,7 @@ with lib; {
     # System packages
     environment = {
       systemPackages = with pkgs; [ git bup ];
-      homeBinInPath = true;
+      homeBinInPath = true; # PATH=~/bin:$PATH -> for adhoc binaries
     };
 
     # Load fonts
@@ -119,12 +119,11 @@ with lib; {
       blueman.enable = true;
     };
 
-    # xdg.portal = {
-    #   enable = true;
-    #   extraPortals = with pkgs; [
-    #     xdg-desktop-portal-wlr
-    #   ];
-    # };
+    # For screen sharing in wayland
+    xdg.portal = {
+      enable = true;
+      extraPortals = with pkgs; [ xdg-desktop-portal-wlr ];
+    };
 
     #    services.gvfs.enable = true;
 

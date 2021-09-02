@@ -96,7 +96,8 @@ in {
         "${modifier}+h" = "layout toggle splith tabbed";
         "${modifier}+Ctrl+d" = "exec networkmanager_dmenu";
         "${modifier}+Ctrl+n" = ''exec "emacsclient -c"'';
-        "${modifier}+Ctrl+r" = "exec brave";
+        "${modifier}+Ctrl+r" =
+          "exec chromium --enable-features=UseOzonePlatform --ozone-platform=wayland";
         "${modifier}+Ctrl+t" = "exec caja";
         "${modifier}+k" = "exec ${./swaylock}";
         "${modifier}+Ctrl+k" = ''exec "${./swaylock} && systemctl suspend"'';
