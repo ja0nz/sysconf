@@ -35,7 +35,7 @@ From scratch I tried to push as [[https://rycee.gitlab.io/home-manager/options.h
 
 Home Manager sits in between [[file:nixOS/][nixOS]] and [[file:nix/][nix]] as configurations can be applied on both. How to install Home Manager? See [[file:docs/][./docs]] for home manager installation or the respective [[https://github.com/nix-community/home-manager][Home Manager GitHub]] repository.
 ** [[file:_secret/][./_secret]]
-Artifatcs I need for my system to work but encrypted with [[https://git-secret.io/][Git Secret]].
+Sensitive artifacts needed for my system to work; encrypted with [[https://git-secret.io/][Git Secret]].
 ** [[file:nixOS/][./nixOS]]
 This folder contains the nixOS installations I have running each with it's on documentation.
 ** [[file:nix/][./nix]]

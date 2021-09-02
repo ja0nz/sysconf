@@ -15,10 +15,10 @@ in {
       _secret = ../../_secret;
 
       nixpkgs.config = {
-        allowBroken = true;
+        #allowBroken = true;
         allowUnfree = true;
-        allowUnsupportedSystem = true;
-        oraclejdk.accept_license = true;
+        #allowUnsupportedSystem = true;
+        #oraclejdk.accept_license = true;
       };
 
       nixpkgs.overlays = builtins.attrValues (import ./overlays.nix);
