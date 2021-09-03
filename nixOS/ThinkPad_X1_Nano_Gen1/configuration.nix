@@ -1,16 +1,28 @@
+/* #+TITLE: ThinkPad X1 Nano Gen1
+
+   * Mandatory configuration
+     Set repoPath and configPath
+
+   * Optional configuration
+*/
 { pkgs, lib, ... }:
 
 with lib; {
-  imports = [
+
+  imports = let shared = ../_shared;
+  in [
     ./hardware-configuration.nix
-    ../_shared/cachix/cachix.nix
-    ../_shared/common.nix
+    (shared + /cachix/cachix.nix)
+    (shared + /boot.nix)
+    (shared + /base.nix)
+    (shared + /users.nix)
+    (shared + /fonts.nix)
+    (shared + /pipewire.nix)
+    (shared + /localization.nix)
   ];
 
   config = {
-
     # TODO Set your values
-    networking.hostName = "nixos_nano";
     _repoRoot = /home/me/sysconf;
     _configInUse = ../ThinkPad_X1_Nano_Gen1;
     _monoFont = {
@@ -26,19 +38,53 @@ with lib; {
       pkg = pkgs.dejavu_fonts;
     };
 
-    hardware = { cpu.intel.updateMicrocode = true; };
+    networking = {
+      hostName = "nixos_nano";
+      # wireless.iwd.enable = true;
+      networkmanager = {
+        enable = true;
+        # wifi.backend = "iwd";
+      };
+    };
+
+    hardware = {
+      cpu.intel.updateMicrocode = true;
+      #pulseaudio = {
+      #  enable = true;
+      #  extraModules = [ pkgs.pulseaudio-modules-bt ];
+      #  package = pkgs.pulseaudioFull;
+      #};
+      bluetooth = {
+        enable = true;
+        package = pkgs.bluez; # pkgs.bluezFull;
+      };
+      opengl.enable = true;
+      brillo.enable = true;
+    };
 
     services = {
       upower.enable = true;
-
+      fstrim.enable = true;
+      geoclue2.enable = true;
+      blueman.enable = true;
       tlp.enable = true;
       logind.lidSwitch = "ignore";
-
       # Udev laptop killswitch
       udev.extraRules = ''
         ACTION=="remove", SUBSYSTEM=="block", ENV{ID_SERIAL_SHORT}=="0116007138600721", RUN+="${pkgs.systemd}/bin/shutdown -h now"
       '';
     };
+
+    #    services.gvfs.enable = true;
+    programs.dconf.enable = true;
+    #    programs.adb.enable = true;
+
+    #    virtualisation.libvirtd = {
+    #      enable = true;
+    #      allowedBridges = [ "virbr0" ];
+    #    };
+
+    system.stateVersion = "21.05"; # Did you read the comment?
   };
 
   # Global options
