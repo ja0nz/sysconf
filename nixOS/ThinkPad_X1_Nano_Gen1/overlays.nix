@@ -1,7 +1,7 @@
 /* #+TITLE: Define some useful overlays
 
    This file defines some overlays which are needed by wayland/sway and the
-   Emacs GCC version.
+   Emacs GCC version. Imported by ../_shared/users.nix
 
    * Mandatory configuration
     You may remove the sha256 assignments or update them to stay updated.

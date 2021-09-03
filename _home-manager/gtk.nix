@@ -10,7 +10,10 @@
 {
   gtk = {
     enable = true;
-    font.name = config._monoFont.name + " 10";
+    font = {
+      name = config._monoFont.name;
+      size = 10;
+    };
     iconTheme = {
       package = pkgs.moka-icon-theme;
       name = "Moka";

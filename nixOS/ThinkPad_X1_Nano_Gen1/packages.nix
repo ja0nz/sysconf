@@ -1,3 +1,6 @@
+/* #+TITLE: Packages in use
+   Packages imported by ../_shared/users.nix
+*/
 { pkgs, ... }:
 
 let sizzy = import ../../_home-manager/sizzy;
