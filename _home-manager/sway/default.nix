@@ -38,7 +38,13 @@ in {
 
   wayland.windowManager.sway = {
     enable = true;
-    package = null;
+    #package = null;
+    extraSessionCommands = ''
+      export _JAVA_AWT_WM_NONREPARENTING=1
+      export XDG_CURRENT_DESKTOP=sway
+      export XDG_SESSION_TYPE=wayland
+      systemctl --user import-environment
+    '';
 
     config = {
       left = "n";
@@ -168,6 +174,7 @@ in {
         "*" = { bg = ''"${./background-image-secondary.png}" fill''; };
         "eDP-1" = {
           pos = "0,0";
+          # TODO I case of small rendering you may raise the scale
           scale = "1.4";
           res = "2160x1350";
           bg = ''"${./background-image-primary.png}" fill'';

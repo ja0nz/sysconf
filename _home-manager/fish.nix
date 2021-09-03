@@ -10,6 +10,14 @@
 {
   programs.fish = {
     enable = true;
+    loginShellInit = ''
+      if not set -q SWAYSTARTED
+        if not set -q DISPLAY && test (tty) = /dev/tty1
+          set -g SWAYSTARTED 1
+          exec sway
+        end
+      end
+    '';
     shellAliases = { # TODO Adapt aliases to your needs
       groups = "id (whoami)";
       rg = "rg --hidden --glob '!.git'";
@@ -26,8 +34,8 @@
       src = pkgs.fetchFromGitHub {
         owner = "jethrokuan";
         repo = "z";
-        rev = "e0e1b9dfdba362f8ab1ae8c1afc7ccf62b89f7eb";
-        sha256 = "0dbnir6jbwjpjalz14snzd3cgdysgcs3raznsijd6savad3qhijc";
+        rev = "45a9ff6d0932b0e9835cbeb60b9794ba706eef10";
+        sha256 = "1kjyl4gx26q8175wcizvsm0jwhppd00rixdcr1p7gifw6s308sd5";
       };
     }];
   };
