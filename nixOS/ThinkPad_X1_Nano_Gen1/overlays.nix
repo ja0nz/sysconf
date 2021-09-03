@@ -1,5 +1,4 @@
 /* #+TITLE: Define some useful overlays
-   #+FILETAGS: :user:sway:
 
    This file defines some overlays which are needed by wayland/sway and the
    Emacs GCC version.
