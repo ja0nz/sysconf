@@ -15,10 +15,12 @@ let
 in {
   imports = [ <home-manager/nixos> ];
 
+  # AutoLogin the main user
   services = { getty.autologinUser = mainUser; };
 
   # Disable useradd/groupadd
   users.mutableUsers = false;
+
   users.users = {
     root = {
       shell = pkgs.fish;

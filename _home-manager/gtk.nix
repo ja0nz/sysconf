@@ -15,8 +15,8 @@
       size = 10;
     };
     iconTheme = {
-      package = pkgs.moka-icon-theme;
-      name = "Moka";
+      package = pkgs.numix-icon-theme;
+      name = "Numix";
     };
     theme = {
       # package = pkgs.dracula-theme;

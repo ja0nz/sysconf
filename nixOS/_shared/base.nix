@@ -15,6 +15,7 @@
     # Console settings
     console = {
       font = "Lat2-Terminus16";
+      # TODO You may not want to use neo2 keyboard
       keyMap = "neo";
     };
 

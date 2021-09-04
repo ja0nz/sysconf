@@ -40,10 +40,10 @@ with lib; {
 
     networking = {
       hostName = "nixos_nano";
-      # wireless.iwd.enable = true;
+      wireless.iwd.enable = true;
       networkmanager = {
         enable = true;
-        # wifi.backend = "iwd";
+        wifi.backend = "iwd";
       };
     };
 
