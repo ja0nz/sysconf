@@ -2,18 +2,25 @@
 #+OPTIONS: \n:t
 
 * ThinkPad X1 Nano Gen1
-This installation holds a *full workstation* installation of NixOS. It includes
-- TODO
+This installation holds a *full workstation* installation of NixOS.
 
-** Contents
-:PROPERTIES:
-:TOC:      :include siblings
-:END:
-:CONTENTS:
+** Contents :toc:
+- [[#thinkpad-x1-nano-gen1][ThinkPad X1 Nano Gen1]]
 - [[#system-specs][System specs]]
-:END:
+- [[#installation][Installation]]
+  - [[#clone-this-repo][Clone this repo]]
+  - [[#manually-link-to-configurationnix][Manually link to *configuration.nix*]]
+  - [[#optional-adapt-some-variables][Optional: Adapt some variables]]
+  - [[#optional-decrypt-with-git-secret-if-you-have-secret-files-in-your-repo][Optional: Decrypt with git-secret if you have secret files in your repo]]
+  - [[#set-needed-channels][Set needed channels]]
+  - [[#run-build][Run build]]
+- [[#post-installation][Post Installation]]
+  - [[#sway-set-inputoutput-devices][Sway set Input/Output devices]]
+  - [[#signed-in-to-dropbox][Signed in to Dropbox]]
+  - [[#no-sound][No sound?]]
+  - [[#bluetooth-mouse][Bluetooth mouse]]
 
-** System specs
+* System specs
    #+begin_center
    System:    Host: jannixos Kernel: 5.10.27 x86_64 bits: 64 Desktop: sway 1.6-7a68a284
               Distro: NixOS 21.05pre281004.3d1a7716d7f (Okapi)
@@ -47,64 +54,58 @@ This installation holds a *full workstation* installation of NixOS. It includes
    Info:      Processes: 233 Uptime: 1h 25m Memory: 15.37 GiB used: 2.45 GiB (16.0%) Shell: fish inxi: 3.3.03
    #+end_center
 
-** Installation
-*** Clone this repo
-    Clone this repo into $HOME directory. If you rename it, you need to adapt some variables (next step)
-*** Manually link to *configuration.nix*
-    This is the only manual link you need to set!
-    #+begin_src shell
-    # Link to configuration.nix
-    sudo ln -s ~/sysconf/nixOS/ThinkPad_X1_Nano_Gen1/home.nix /etc/nixos/configuration.nix
-    #+end_src
-*** Optional: Adapt some variables
-    You need to adapt the /_sysconfHomeStr/ in *home.nix*. There are some *# TODO* markers which you can grep along.
-*** Optional: Decrypt with git-secret if you have secret files in your repo
-    Ensure you have your *~/.gnupg* in place and necessary keys loaded
-    #+begin_src shell
-    # Get a git-secret shell
-    nix-shell -p git-secret
+* Installation
+** Clone this repo
+Clone this repo into $HOME directory. If you rename it, you need to adapt some variables (next step)
+** Manually link to *configuration.nix*
+This is the only manual link you need to set!
+#+begin_src shell
+# Link to configuration.nix
+sudo ln -s ~/sysconf/nixOS/ThinkPad_X1_Nano_Gen1/home.nix /etc/nixos/configuration.nix
+#+end_src
+** Optional: Adapt some variables
+You need to adapt the /_sysconfHomeStr/ in *home.nix*. There are some *#TODO* markers which you can grep along.
+** Optional: Decrypt with git-secret if you have secret files in your repo
+Ensure you have your *~/.gnupg* in place and necessary keys loaded
+#+begin_src shell
+# Get a git-secret shell
+nix-shell -p git-secret
 
-    # Reveal/Decrypt all secrets
-    git-secret-reveal
-    #+end_src
+# Reveal/Decrypt all secrets
+git-secret-reveal
+#+end_src
 
-*** Set needed channels
-    This installation needs *home-manager, nixos, nixpkgs-wayland*.
-    Unfortunately, only _nixos-unstable_ as main channel is supported due to nixpkgs-wayland.
-    #+begin_src shell
-    # List channels
-    sudo nix-channel --list
-    # home-manager https://github.com/nix-community/home-manager/archive/master.tar.gz
-    # nixos https://nixos.org/channels/nixos-unstable
-    # nixpkgs-wayland https://github.com/colemickens/nixpkgs-wayland/archive/master.tar.gz
+** Set needed channels
+This installation needs *home-manager, nixos, nixpkgs-wayland*.
+Unfortunately, only _nixos-unstable_ as main channel is supported due to nixpkgs-wayland.
+#+begin_src shell
+# List channels
+sudo nix-channel --list
+# home-manager https://github.com/nix-community/home-manager/archive/master.tar.gz
+# nixos https://nixos.org/channels/nixos-unstable
+# nixpkgs-wayland https://github.com/colemickens/nixpkgs-wayland/archive/master.tar.gz
 
-    # Add channel nixos-unstable
-    sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
-    #+end_src
+# Add channel nixos-unstable
+sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+#+end_src
 
-*** Run build
-    #+begin_src shell
-    # NixOS build and reboot
-    sudo nixos-rebuild boot && reboot
-    #+end_src
+** Run build
+#+begin_src shell
+# NixOS build and reboot
+sudo nixos-rebuild boot && reboot
+#+end_src
 
-** Post Installation
-*** Sway set Input/Output devices
-    Probably need to adapt some settings in the sway config depending on your hardware devices.
-    There is a grepable *# TODO* marker
-    #+begin_src shell
-    swaymsg -t get_inputs
-    swaymsg -t get_outputs
-    #+end_src
+* Post Installation
+** Sway set Input/Output devices
+Probably need to adapt some settings in the sway config depending on your hardware devices.
+There is a grepable *# TODO* marker
+#+begin_src shell
+swaymsg -t get_inputs
+swaymsg -t get_outputs
+#+end_src
 
-*** Signed in to Dropbox
-*** No sound?
-    Run *Pulseaudio Volume Control* to maybe uncheck a box or so
-*** Bluetooth mouse
-    Run *Bluetooth Manager*: pair, connect, trust
-
-* TODO here
-  - flakes https://github.com/nix-community/home-manager#nix-flakes https://github.com/alexarice/dotfiles/blob/master/flake.nix
-  - refactor out of Thinkpad
-  - move emacs to homemanager
-  - fstrim systemd?
+** Signed in to Dropbox
+** No sound?
+Run *Pulseaudio Volume Control* to maybe uncheck a box or so
+** Bluetooth mouse
+Run *Bluetooth Manager*: pair, connect, trust
