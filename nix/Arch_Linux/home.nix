@@ -1,11 +1,11 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 {
   imports = [ ./packages.nix ];
   config = {
 
     # TODO Set your repo root path
-    _repoRoot = ~/sysconf;
+    _repoRoot = /home/me/sysconf;
     _secret = ../../_secret;
 
     nixpkgs.config = {
@@ -17,14 +17,18 @@
 
     nixpkgs.overlays = builtins.attrValues (import ./overlays.nix);
     #_module.args.setEnvironment = config.system.build.setEnvironment;
-    home.stateVersion = "21.05";
+    home = {
+      username = "me";
+      homeDirectory = "/home/me";
+      stateVersion = "21.11";
+    };
 
     # Enable fontconfig
     fonts.fontconfig.enable = true;
 
     # Let Home Manager install and manage itself.
     # Managed by channel update?
-    # programs.home-manager.enable = true;
+    programs.home-manager.enable = true;
   };
 
   # Global options

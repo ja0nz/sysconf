@@ -1,1 +1,56 @@
-* Fonts! Not installed by home-manager
+#+STARTUP: content
+#+OPTIONS: \n:t
+
+* Nix + Home Manager + Arch combo
+This installation walks you from an *vanilla Arch Linux* (described throughly in [[file:~/sysconf/docs/arch-installation.org][Arch Linux installation]] or in the [[https://wiki.archlinux.org/title/Installation_guide#Installation][Official Arch Linux docs]]) to an system containing *nix and home manager* on top.
+
+* Contents :toc:
+- [[#nix--home-manager--arch-combo][Nix + Home Manager + Arch combo]]
+- [[#nix-installation][Nix Installation]]
+  - [[#install-the-archlinux-nix-git-helper-script][Install the archlinux-nix-git helper script]]
+  - [[#install-the-bootrapped-nix][Install the bootrapped nix]]
+  - [[#add-nixpkgs-channel][Add nixpkgs channel]]
+  - [[#reboot][Reboot]]
+- [[#home-manager-installation][Home Manager installation]]
+  - [[#add-home-manager-channel][Add home manager channel]]
+  - [[#clonedownload-this-repo][Clone/Download this repo]]
+  - [[#link-to-homenix][Link to home.nix]]
+- [[#caveats][Caveats]]
+  - [[#fonts-not-installed-by-home-manager][Fonts! Not installed by home-manager]]
+
+* Nix Installation
+The installation requires a user *with sudo privileges* as nix itself needs to set up groups and a daemon.
+Furthermore you git should be available (otherwise you need to download and unzip manually).
+** Install the [[https://aur.archlinux.org/packages/archlinux-nix-git/][archlinux-nix-git]] helper script
+#+begin_src shell
+sudo pacman -S --needed base-devel
+git clone https://aur.archlinux.org/archlinux-nix-git.git
+cd archlinux-nix-git
+makepkg -si
+#+end_src
+** Install the bootrapped nix
+#+begin_src shell
+sudo archlinux-nix install            # install nix
+sudo archlinux-nix setup-build-group  # setup build groups
+sudo archlinux-nix bootstrap          # bootstrap the system
+#+end_src
+** Add nixpkgs channel
+#+begin_src
+nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+nix-channel --update
+#+end_src
+** Reboot
+* Home Manager installation
+test your running system
+#+begin_src shell
+nix-shell -p hello --run hello
+#+end_src
+** Add home manager channel
+** Clone/Download this repo
+#+begin_src shell
+git clone https://github.com/ja0nz/sysconf
+#+end_src
+** Link to home.nix
+
+* Caveats
+** Fonts! Not installed by home-manager
