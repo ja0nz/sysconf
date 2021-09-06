@@ -8,13 +8,17 @@ This installation walks you from an *vanilla Arch Linux* (described throughly in
 - [[#nix--home-manager--arch-combo][Nix + Home Manager + Arch combo]]
 - [[#nix-installation][Nix Installation]]
   - [[#install-the-archlinux-nix-git-helper-script][Install the archlinux-nix-git helper script]]
-  - [[#install-the-bootrapped-nix][Install the bootrapped nix]]
-  - [[#add-nixpkgs-channel][Add nixpkgs channel]]
-  - [[#reboot][Reboot]]
+  - [[#install-the-bootrapped-nix-by-root-user][Install the bootrapped nix (by root user)]]
+  - [[#add-underprivileged-user-to-nixbld-group-by-root-user][Add underprivileged user to "nixbld" group (by root user)]]
+  - [[#add-nixpkgs-channel-by-normal-user][Add nixpkgs channel (by normal user)]]
+  - [[#test-your-nix-installation][Test your nix installation]]
 - [[#home-manager-installation][Home Manager installation]]
   - [[#add-home-manager-channel][Add home manager channel]]
+  - [[#optional-but-recommended-extend-nix_path][(Optional; but recommended) Extend NIX_PATH]]
+  - [[#install-the-home-manager][Install the home manager]]
   - [[#clonedownload-this-repo][Clone/Download this repo]]
-  - [[#link-to-homenix][Link to home.nix]]
+  - [[#link-to-repo---homenix][Link to repo -> home.nix]]
+  - [[#switch-to-a-new-home][Switch to a new home]]
 - [[#caveats][Caveats]]
   - [[#fonts-not-installed-by-home-manager][Fonts! Not installed by home-manager]]
 
@@ -28,29 +32,70 @@ git clone https://aur.archlinux.org/archlinux-nix-git.git
 cd archlinux-nix-git
 makepkg -si
 #+end_src
-** Install the bootrapped nix
+** Install the bootrapped nix (by root user)
 #+begin_src shell
-sudo archlinux-nix install            # install nix
-sudo archlinux-nix setup-build-group  # setup build groups
+sudo archlinux-nix install            # install standalone nix
 sudo archlinux-nix bootstrap          # bootstrap the system
 #+end_src
-** Add nixpkgs channel
+There are two commands which shown in the console:
+- *nix-env -i ...* (something like this) for initiating the nix-env
+- *source /etc/profile.d/nix{,-daemon}.nix* for refreshing the $PATHS
+
+If those commands not throwing an error you may [[id:5626db53-5b02-451e-b890-f1d2264bfa39][need to add the user to the nixbld group]] first.
+Then repeat those commands. They should not be run as super user!
+
+** Add underprivileged user to "nixbld" group (by root user)
+:PROPERTIES:
+:ID:       5626db53-5b02-451e-b890-f1d2264bfa39
+:END:
+#+begin_src shell
+sudo usermod -a -G nixbld <user>
+#+end_src
+
+** Add nixpkgs channel (by normal user)
 #+begin_src
 nix-channel --add https://nixos.org/channels/nixpkgs-unstable
 nix-channel --update
 #+end_src
-** Reboot
-* Home Manager installation
-test your running system
+** Test your nix installation
 #+begin_src shell
 nix-shell -p hello --run hello
 #+end_src
+If not working you may reboot/logout just to be sure.
+
+* Home Manager installation
+test your running system. It should greet you back as NORMAL user!
+#+begin_src shell
+nix-shell -p hello --run hello
+#+end_src
+
+If in trouble you may check the [[https://github.com/nix-community/home-manager][official home manager GitHub]] for further installation details.
 ** Add home manager channel
+#+begin_src shell
+nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+nix-channel --update
+#+end_src
+** (Optional; but recommended) Extend NIX_PATH
+#+begin_src shell
+export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
+#+end_src
+** Install the home manager
+#+begin_src shell
+nix-shell '<home-manager>' -A install
+#+end_src
 ** Clone/Download this repo
 #+begin_src shell
 git clone https://github.com/ja0nz/sysconf
 #+end_src
-** Link to home.nix
+** Link to repo -> home.nix
+#+begin_src shell
+rm ~/.config/nixpkgs/home.nix # remove factory home.nix
+ln -s ~/sysconf/path/to/home.nix ~/.config/nixpkgs/home.nix
+#+end_src
+** Switch to a new home
+#+begin_src shell
+home-manager switch
+#+end_src
 
 * Caveats
 ** Fonts! Not installed by home-manager
