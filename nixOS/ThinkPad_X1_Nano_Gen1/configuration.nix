@@ -19,6 +19,7 @@ with lib; {
     (shared + /fonts.nix)
     (shared + /pipewire.nix)
     (shared + /localization.nix)
+    (shared + /virtualization.nix)
   ];
 
   config = {
@@ -76,13 +77,7 @@ with lib; {
     };
 
     #    services.gvfs.enable = true;
-    programs.dconf.enable = true;
     #    programs.adb.enable = true;
-
-    #    virtualisation.libvirtd = {
-    #      enable = true;
-    #      allowedBridges = [ "virbr0" ];
-    #    };
 
     system.stateVersion = "21.05"; # Did you read the comment?
   };
