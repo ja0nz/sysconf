@@ -10,8 +10,9 @@ This installation walks you from an *vanilla Arch Linux* (described throughly in
   - [[#install-the-archlinux-nix-git-helper-script][Install the archlinux-nix-git helper script]]
   - [[#install-the-bootrapped-nix-by-root-user][Install the bootrapped nix (by root user)]]
   - [[#add-underprivileged-user-to-nixbld-group-by-root-user][Add underprivileged user to "nixbld" group (by root user)]]
-  - [[#add-nixpkgs-channel-by-normal-user][Add nixpkgs channel (by normal user)]]
+  - [[#add-nixpkgs-channel-by-normal-user-and-root-user][Add nixpkgs channel (by normal user AND root user)]]
   - [[#test-your-nix-installation][Test your nix installation]]
+  - [[#fix-nix-daemon-systemd-startup][Fix nix-daemon systemd startup]]
 - [[#home-manager-installation][Home Manager installation]]
   - [[#add-home-manager-channel][Add home manager channel]]
   - [[#optional-but-recommended-extend-nix_path][(Optional; but recommended) Extend NIX_PATH]]
@@ -52,20 +53,29 @@ Then repeat those commands. They should not be run as super user!
 sudo usermod -a -G nixbld <user>
 #+end_src
 
-** Add nixpkgs channel (by normal user)
-#+begin_src
+** Add nixpkgs channel (by normal user AND root user)
+One of the quirks of nix is the the assumption of a channel which belongs to the root user. If you check the NIX_PATH you will see the pointer. While technically nothings breaks if you don't add a channel you will be greeted by frequent error lines. So I just add a channel to root as well and forget about it.
+#+begin_src shell
+# Normal user; in nixbld group
+nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+nix-channel --update
+# Root user; do once and forget
+su - # or sudo nix-channel...
 nix-channel --add https://nixos.org/channels/nixpkgs-unstable
 nix-channel --update
 #+end_src
 ** Test your nix installation
+... and reboot and do it again:)
 #+begin_src shell
 nix-shell -p hello --run hello
 #+end_src
-If not working you may reboot/logout just to be sure.
+** Fix nix-daemon systemd startup
+TODO
 
 * Home Manager installation
 test your running system. It should greet you back as NORMAL user!
 #+begin_src shell
+archlinux-nix status # Get an overview over important parameters
 nix-shell -p hello --run hello
 #+end_src
 
