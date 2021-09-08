@@ -1,18 +1,21 @@
 /* #+TITLE: Sway - Tiling window manager based on wayland
    #+FILETAGS: :sway:
+   !Attention! Using this sway module by home manager alone is not sufficient!
+   Related discussion: https://github.com/NixOS/nixpkgs/pull/89019#issuecomment-634845631
 
    * Mandatory configuration
-    Set your input/output devices!
+    - Set your input/output devices!
+    - To make swaylock work: security.pam.services.swaylock = { };
 
    * Optional configuration / packages (not imported here)
-      - brillo -> as key combination
-      - caja -> as key combination
-      - brave browser -> as key combination
-      - networkmanager_dmenu -> as key combination
-      - dropbox -> as service on start
-      - emacs -> as key combination
-      - playerctl -> as key combination
-      - _monoFont! Test with: fc-list : family | grep <MonoFontName>
+    - brillo -> as key combination
+    - caja -> as key combination
+    - chromium browser -> as key combination
+    - networkmanager_dmenu -> as key combination
+    - dropbox -> as service on start
+    - emacs -> as key combination
+    - playerctl -> as key combination
+    - _monoFont! Test with: fc-list : family | grep <MonoFontName>
 */
 { lib, config, pkgs, ... }:
 

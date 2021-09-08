@@ -76,6 +76,9 @@ with lib; {
       '';
     };
 
+    # Related to sway, no other way to set in home-manager!
+    security.pam.services.swaylock = { };
+
     #    services.gvfs.enable = true;
     #    programs.adb.enable = true;
 

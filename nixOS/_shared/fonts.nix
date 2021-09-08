@@ -20,7 +20,7 @@
       # fira-code
       # source-code-pro
     ];
-    #enableDefaultFonts = true;
+    enableDefaultFonts = true;
 
     fontconfig = {
       enable = true;
