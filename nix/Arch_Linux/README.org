@@ -2,75 +2,76 @@
 #+OPTIONS: \n:t
 
 * Nix + Home Manager + Arch combo
-This installation walks you from an *vanilla Arch Linux* (described throughly in [[file:~/sysconf/docs/arch-installation.org][Arch Linux installation]] or in the [[https://wiki.archlinux.org/title/Installation_guide#Installation][Official Arch Linux docs]]) to an system containing *nix and home manager* on top.
+This manual walks you from an already existing *vanilla Arch Linux* (described throughly in [[file:~/sysconf/docs/arch-installation.org][Arch Linux installation]] or in the [[https://wiki.archlinux.org/title/Installation_guide#Installation][Official Arch Linux docs]]) to an system containing *nix and home manager* on top.
+
+This manual will probably work with other *nix distro (and even MacOS)! But as I just tried and tested it with Arch Linux I will restrict this manual to Arch only.
 
 * Contents :toc:
 - [[#nix--home-manager--arch-combo][Nix + Home Manager + Arch combo]]
 - [[#nix-installation][Nix Installation]]
-  - [[#install-the-archlinux-nix-git-helper-script][Install the archlinux-nix-git helper script]]
-  - [[#install-the-bootrapped-nix-by-root-user][Install the bootrapped nix (by root user)]]
-  - [[#add-underprivileged-user-to-nixbld-group-by-root-user][Add underprivileged user to "nixbld" group (by root user)]]
-  - [[#add-nixpkgs-channel-by-normal-user-and-root-user][Add nixpkgs channel (by normal user AND root user)]]
+  - [[#single-user-installation][Single User installation]]
+  - [[#multi-user-installation][Multi User installation]]
   - [[#test-your-nix-installation][Test your nix installation]]
-  - [[#fix-nix-daemon-systemd-startup][Fix nix-daemon systemd startup]]
 - [[#home-manager-installation][Home Manager installation]]
   - [[#add-home-manager-channel][Add home manager channel]]
-  - [[#optional-but-recommended-extend-nix_path][(Optional; but recommended) Extend NIX_PATH]]
+  - [[#extend-nix_path-multi-user-nix-installation-only][Extend NIX_PATH (multi user nix installation only)]]
   - [[#install-the-home-manager][Install the home manager]]
   - [[#clonedownload-this-repo][Clone/Download this repo]]
   - [[#link-to-repo---homenix][Link to repo -> home.nix]]
-  - [[#switch-to-a-new-home][Switch to a new home]]
+  - [[#switch-to-a-new-home-generation][Switch to a new home generation]]
 - [[#caveats][Caveats]]
   - [[#fonts-not-installed-by-home-manager][Fonts! Not installed by home-manager]]
 
 * Nix Installation
-The installation requires a user *with sudo privileges* as nix itself needs to set up groups and a daemon.
-Furthermore you git should be available (otherwise you need to download and unzip manually).
-** Install the [[https://aur.archlinux.org/packages/archlinux-nix-git/][archlinux-nix-git]] helper script
-#+begin_src shell
-sudo pacman -S --needed base-devel
-git clone https://aur.archlinux.org/archlinux-nix-git.git
-cd archlinux-nix-git
-makepkg -si
-#+end_src
-** Install the bootrapped nix (by root user)
-#+begin_src shell
-sudo archlinux-nix install            # install standalone nix
-sudo archlinux-nix bootstrap          # bootstrap the system
-#+end_src
-There are two commands which shown in the console:
-- *nix-env -i ...* (something like this) for initiating the nix-env
-- *source /etc/profile.d/nix{,-daemon}.nix* for refreshing the $PATHS
+** Single User installation
+_Requirements:_
+- sudo rights OR ~mkdir /nix && chown <alice> /nix~ beforehand
 
-If those commands not throwing an error you may [[id:5626db53-5b02-451e-b890-f1d2264bfa39][need to add the user to the nixbld group]] first.
-Then repeat those commands. They should not be run as super user!
+The whole process is described in the [[https://nixos.org/manual/nix/stable/#sect-single-user-installation][nix manual]]. Please refer to it directly.
 
-** Add underprivileged user to "nixbld" group (by root user)
-:PROPERTIES:
-:ID:       5626db53-5b02-451e-b890-f1d2264bfa39
-:END:
+Using nix as single user is very straight forward and a good choice on a single "throw away" dev machine.
+
+*** Remove single user installation
 #+begin_src shell
-sudo usermod -a -G nixbld <user>
+# remove the . "$HOME/.nix-profile/etc/profile.d/nix.sh" line in your ~/.profile or ~/.bash_profile
+rm -rf $HOME/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs}
+sudo rm -rf /nix # for the nix store
+#+end_src
+** Multi User installation
+_Requirements:_
+- rsync
+- sudo rights
+
+The whole process is described in the [[https://nixos.org/manual/nix/stable/#sect-multi-user-installation][nix manual]]. Please refer to it directly.
+
+*** Remove multi user installation
+#+begin_src shell
+sudo rm -rf /root/{.nix-channels,.nix-defexpr,.nix-profile}
+rm -rf $HOME/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs}
+sudo rm -rf /etc/nix /nix # for the nix store
+
+# If you are on Linux with systemd, you will need to run:
+sudo systemctl stop nix-daemon.socket
+sudo systemctl stop nix-daemon.service
+sudo systemctl disable nix-daemon.socket
+sudo systemctl disable nix-daemon.service
+sudo systemctl daemon-reload
 #+end_src
 
-** Add nixpkgs channel (by normal user AND root user)
-One of the quirks of nix is the the assumption of a channel which belongs to the root user. If you check the NIX_PATH you will see the pointer. While technically nothings breaks if you don't add a channel you will be greeted by frequent error lines. So I just add a channel to root as well and forget about it.
+*** Restricting access
+To limit which users can perform Nix operations, you can use the permissions on the directory /nix/var/nix/daemon-socket. For instance, if you want to restrict the use of Nix to the members of a group called *nix-users*, do
+
 #+begin_src shell
-# Normal user; in nixbld group
-nix-channel --add https://nixos.org/channels/nixpkgs-unstable
-nix-channel --update
-# Root user; do once and forget
-su - # or sudo nix-channel...
-nix-channel --add https://nixos.org/channels/nixpkgs-unstable
-nix-channel --update
+sudo chgrp nix-users /nix/var/nix/daemon-socket
+sudo chmod ug=rwx,o= /nix/var/nix/daemon-socket
 #+end_src
+
+This way, users who are not in the nix-users group cannot connect to the Unix domain socket /nix/var/nix/daemon-socket/socket, so they cannot perform Nix operations.
+
 ** Test your nix installation
-... and reboot and do it again:)
 #+begin_src shell
 nix-shell -p hello --run hello
 #+end_src
-** Fix nix-daemon systemd startup
-TODO
 
 * Home Manager installation
 test your running system. It should greet you back as NORMAL user!
@@ -85,27 +86,35 @@ If in trouble you may check the [[https://github.com/nix-community/home-manager]
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --update
 #+end_src
-** (Optional; but recommended) Extend NIX_PATH
+
+** Extend NIX_PATH (multi user nix installation only)
+See the tracking issue [[https://github.com/NixOS/nix/issues/2033][nix#2033]]
 #+begin_src shell
+# Put this in your .bashrc or the like
 export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
 #+end_src
+
 ** Install the home manager
 #+begin_src shell
 nix-shell '<home-manager>' -A install
 #+end_src
+
 ** Clone/Download this repo
 #+begin_src shell
 git clone https://github.com/ja0nz/sysconf
 #+end_src
+
 ** Link to repo -> home.nix
 #+begin_src shell
 rm ~/.config/nixpkgs/home.nix # remove factory home.nix
 ln -s ~/sysconf/path/to/home.nix ~/.config/nixpkgs/home.nix
 #+end_src
-** Switch to a new home
+
+** Switch to a new home generation
 #+begin_src shell
 home-manager switch
 #+end_src
+
 
 * Caveats
 ** Fonts! Not installed by home-manager
