@@ -2,7 +2,7 @@
 #+OPTIONS: \n:t
 
 * Nix + Home Manager + Arch combo
-This manual walks you from an already existing *vanilla Arch Linux* (described throughly in [[file:~/sysconf/docs/arch-installation.org][Arch Linux installation]] or in the [[https://wiki.archlinux.org/title/Installation_guide#Installation][Official Arch Linux docs]]) to an system containing *nix and home manager* on top.
+This manual walks you from an already existing *vanilla Arch Linux* (described throughly in [[file:../../docs/arch-installation.org][Arch Linux installation]] or in the [[https://wiki.archlinux.org/title/Installation_guide#Installation][Official Arch Linux docs]]) to an system containing *nix and home manager* on top.
 
 This manual will probably work with other *nix distro (and even MacOS)! But as I just tried and tested it with Arch Linux I will restrict this manual to Arch only.
 
@@ -13,8 +13,8 @@ This manual will probably work with other *nix distro (and even MacOS)! But as I
   - [[#multi-user-installation][Multi User installation]]
   - [[#test-your-nix-installation][Test your nix installation]]
 - [[#home-manager-installation][Home Manager installation]]
-  - [[#add-home-manager-channel][Add home manager channel]]
-  - [[#extend-nix_path-multi-user-nix-installation-only][Extend NIX_PATH (multi user nix installation only)]]
+  - [[#add-the-home-manager-nix-channel][Add the home manager nix channel]]
+  - [[#extend-nix_path-multi-user-nix-only][Extend NIX_PATH (multi user nix only)]]
   - [[#install-the-home-manager][Install the home manager]]
   - [[#clonedownload-this-repo][Clone/Download this repo]]
   - [[#link-to-repo---homenix][Link to repo -> home.nix]]
@@ -35,6 +35,10 @@ Using nix as single user is very straight forward and a good choice on a single 
 # remove the . "$HOME/.nix-profile/etc/profile.d/nix.sh" line in your ~/.profile or ~/.bash_profile
 rm -rf $HOME/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs}
 sudo rm -rf /nix # for the nix store
+#+end_src
+*** Update nix from time to time
+#+begin_src shell
+nix-channel --update; nix-env -iA nixpkgs.nix nixpkgs.cacert
 #+end_src
 ** Multi User installation
 _Requirements:_
@@ -66,6 +70,10 @@ sudo chmod ug=rwx,o= /nix/var/nix/daemon-socket
 #+end_src
 
 This way, users who are not in the nix-users group cannot connect to the Unix domain socket /nix/var/nix/daemon-socket/socket, so they cannot perform Nix operations.
+*** Update nix from time to time
+#+begin_src shell
+nix-channel --update; nix-env -iA nixpkgs.nix nixpkgs.cacert; systemctl daemon-reload; systemctl restart nix-daemon
+#+end_src
 
 ** Test your nix installation
 #+begin_src shell
@@ -73,20 +81,18 @@ nix-shell -p hello --run hello
 #+end_src
 
 * Home Manager installation
-test your running system. It should greet you back as NORMAL user!
-#+begin_src shell
-archlinux-nix status # Get an overview over important parameters
-nix-shell -p hello --run hello
-#+end_src
+_Requirements:_
+- a running nix -> test with ~nix-shell -p hello --run hello~
 
-If in trouble you may check the [[https://github.com/nix-community/home-manager][official home manager GitHub]] for further installation details.
-** Add home manager channel
+The whole process of installing home manager is described in the [[https://github.com/nix-community/home-manager][official home manager GitHub]]. Please refer to it in case you got stuck.
+
+** Add the home manager nix channel
 #+begin_src shell
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --update
 #+end_src
 
-** Extend NIX_PATH (multi user nix installation only)
+** Extend NIX_PATH (multi user nix only)
 See the tracking issue [[https://github.com/NixOS/nix/issues/2033][nix#2033]]
 #+begin_src shell
 # Put this in your .bashrc or the like
@@ -106,7 +112,7 @@ git clone https://github.com/ja0nz/sysconf
 ** Link to repo -> home.nix
 #+begin_src shell
 rm ~/.config/nixpkgs/home.nix # remove factory home.nix
-ln -s ~/sysconf/path/to/home.nix ~/.config/nixpkgs/home.nix
+ln -s ~/sysconf/nix/Arch_Linux/home.nix ~/.config/nixpkgs/home.nix # Adapt path url
 #+end_src
 
 ** Switch to a new home generation
@@ -115,5 +121,5 @@ home-manager switch
 #+end_src
 
 * Further notice
-All modules inside [[file:~/sysconf/_home-manager/][./_home-manager]] have a throughly documentation. Some of them require (impure) settings upfront!
+All modules inside [[file:../../_home-manager/][./_home-manager]] have a throughly documentation. Some of them require (impure) settings upfront!
 Note that I use nix mostly on quick'n'dirty VMs. While most of the settings are battle tested inside my running nixOS machine they may fail inside an elaborated nix settings. You may find out.
