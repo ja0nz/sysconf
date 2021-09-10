@@ -24,7 +24,7 @@ This repository is the continuos pathway reaching the goal:
   - [[#i-want-to-poke-around-with-nix-in-a-virtualboxqemu-vm][I want to poke around with nix in a VirtualBox/QEMU VM]]
   - [[#i-have-a-running-linux-machine-and-want-to-manage-my-packages-with-nix][I have a running Linux machine and want to manage my packages with nix]]
   - [[#i-already-have-a-machine-running-windows-and-want-dual-boot-nixos-alongside][I already have a machine running Windows and want dual boot nixOS alongside]]
-  - [[#i-have-just-want-a-nixos-machine][I have just want a NixOS machine]]
+  - [[#i-just-want-a-nixos-machine][I just want a NixOS machine]]
 
 * A short list of ingredients
 ** [[file:docs/][./docs]]
@@ -48,7 +48,7 @@ Fine, get yourself a running Linux VM and setup nix [[file:nix/Arch_Linux/README
 Same for you, setup nix (and home manager) [[file:nix/Arch_Linux/README.org][described in this README]].
 ** I already have a machine running Windows and want dual boot nixOS alongside
 Puh, long story: First you have to [[file:docs/multiboot-btrfs-partitioning.org][push Windows aside a bit]] then you need to [[file:docs/nixos-installation.org][install the barebone nixOS]] sugared with the opinionated [[file:nixOS/ThinkPad_X1_Nano_Gen1/README.org][home manager distro]] if you want to go full scale.
-** I have just want a NixOS machine
+** I just want a NixOS machine
 - [X] [[file:docs/multiboot-btrfs-partitioning.org][Good partition layout]]
 - [ ] [[file:docs/nixos-installation.org][nixOS in place]]
 - [ ] [[file:nixOS/ThinkPad_X1_Nano_Gen1/README.org][home manager distro]]
