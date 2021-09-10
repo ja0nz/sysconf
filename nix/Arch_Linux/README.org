@@ -19,8 +19,7 @@ This manual will probably work with other *nix distro (and even MacOS)! But as I
   - [[#clonedownload-this-repo][Clone/Download this repo]]
   - [[#link-to-repo---homenix][Link to repo -> home.nix]]
   - [[#switch-to-a-new-home-generation][Switch to a new home generation]]
-- [[#caveats][Caveats]]
-  - [[#fonts-not-installed-by-home-manager][Fonts! Not installed by home-manager]]
+- [[#further-notice][Further notice]]
 
 * Nix Installation
 ** Single User installation
@@ -115,6 +114,6 @@ ln -s ~/sysconf/path/to/home.nix ~/.config/nixpkgs/home.nix
 home-manager switch
 #+end_src
 
-
-* Caveats
-** Fonts! Not installed by home-manager
+* Further notice
+All modules inside [[file:~/sysconf/_home-manager/][./_home-manager]] have a throughly documentation. Some of them require (impure) settings upfront!
+Note that I use nix mostly on quick'n'dirty VMs. While most of the settings are battle tested inside my running nixOS machine they may fail inside an elaborated nix settings. You may find out.
