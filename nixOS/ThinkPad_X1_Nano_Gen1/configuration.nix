@@ -66,7 +66,7 @@ with lib; {
     services = {
       upower.enable = true;
       fstrim.enable = true;
-      geoclue2.enable = true;
+      #geoclue2.enable = true;
       blueman.enable = true;
       tlp.enable = true;
       logind.lidSwitch = "ignore";
