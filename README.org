@@ -21,11 +21,10 @@ This repository is the continuos pathway reaching the goal:
   - [[#nixos][./nixOS]]
   - [[#nix][./nix]]
 - [[#where-to-start][Where to start?]]
-  - [[#i-want-to-run-nixos-in-a-virtualbox-et-cetera][I want to run NixOS in a VirtualBox (et cetera)]]
-  - [[#i-have-a-running-linux-machine-and-want-to-manage-my-packages-with-nix][I have a running Linux machine and want to manage my packages with Nix]]
-  - [[#i-already-have-a-machine-running-windows-and-want-dual-boot-nixos-alongside][I already have a machine running Windows and want dual boot NixOS alongside]]
+  - [[#i-want-to-poke-around-with-nix-in-a-virtualboxqemu-vm][I want to poke around with nix in a VirtualBox/QEMU VM]]
+  - [[#i-have-a-running-linux-machine-and-want-to-manage-my-packages-with-nix][I have a running Linux machine and want to manage my packages with nix]]
+  - [[#i-already-have-a-machine-running-windows-and-want-dual-boot-nixos-alongside][I already have a machine running Windows and want dual boot nixOS alongside]]
   - [[#i-have-just-want-a-nixos-machine][I have just want a NixOS machine]]
-- [[#used-filetags][Used FILETAGS]]
 
 * A short list of ingredients
 ** [[file:docs/][./docs]]
@@ -43,35 +42,13 @@ This folder contains bundled home manager packages to be consumed by any system 
 
 * Where to start?
 This depends highly on your use case. It first may be a good idea to look around make yourself comfortable
-** I want to run NixOS in a VirtualBox (et cetera)
-
-** I have a running Linux machine and want to manage my packages with Nix
-** I already have a machine running Windows and want dual boot NixOS alongside
+** I want to poke around with nix in a VirtualBox/QEMU VM
+Fine, get yourself a running Linux VM and setup nix [[file:nix/Arch_Linux/README.org][described in this README]].
+** I have a running Linux machine and want to manage my packages with nix
+Same for you, setup nix (and home manager) [[file:nix/Arch_Linux/README.org][described in this README]].
+** I already have a machine running Windows and want dual boot nixOS alongside
+Puh, long story: First you have to [[file:docs/multiboot-btrfs-partitioning.org][push Windows aside a bit]] then you need to [[file:docs/nixos-installation.org][install the barebone nixOS]] sugared with the opinionated [[file:nixOS/ThinkPad_X1_Nano_Gen1/README.org][home manager distro]] if you want to go full scale.
 ** I have just want a NixOS machine
-
-* Used FILETAGS
-alarcitty -> :shell:ui:sway:
-blueman -> :ui:sway:
-direnv -> :development:
-emails -> :user:
-exa -> :navigation:
-fish -> :shell:development:
-gammastep -> :ui:sway:
-git -> :development:
-gpg -> :encrypt:auth:ssh:
-gtk -> :ui:
-lorri -> :development:
-mako -> :ui:sway:
-ssh -> :shell:
-systemd -> :user:
-udiskie -> :hardware:
-xdg -> :ui:
-
-brave -> :program:
-emacs -> :program:
-sizzy -> :development:
-sway -> :sway:
-waybar -> :sway:
-zathura -> :program:
-
-overlays -> :user:sway:
+- [X] [[file:docs/multiboot-btrfs-partitioning.org][Good partition layout]]
+- [ ] [[file:docs/nixos-installation.org][nixOS in place]]
+- [ ] [[file:nixOS/ThinkPad_X1_Nano_Gen1/README.org][home manager distro]]
