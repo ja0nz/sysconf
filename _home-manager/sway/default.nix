@@ -30,7 +30,7 @@ in {
     jq # A lightweight and flexible command-line JSON processor
     slurp # Select a region in a Wayland compositor
     swaylock-effects # Screen locker for wayland
-    pulsemixer # Cli and curses mixer for pulseaudio
+    pamixer # Pulseaudio command line mixer
     hicolor-icon-theme # Default fallback theme used by implementations of the icon theme specification
     capitaine-cursors # An x-cursor theme inspired by macOS and based on KDE Breeze
 
@@ -121,19 +121,15 @@ in {
         "XF86MonBrightnessUp" = ''exec "brillo -A 1"'';
         "XF86MonBrightnessDown" = ''exec "brillo -U 1"'';
 
-        # TODO --set-default-sink once merged
-        # https://github.com/GeorgeFilipkin/pulsemixer/issues/64
-        "XF86AudioMute" = ''exec "pulsemixer --toggle-mute"'';
-        "XF86AudioLowerVolume" = ''exec "pulsemixer --change-volume -5"'';
-        "XF86AudioRaiseVolume" = ''exec "pulsemixer --change-volume +5"'';
+        "XF86AudioMute" = ''exec "pamixer --toggle-mute"'';
+        "XF86AudioLowerVolume" = ''exec "pamixer --decrease 5"'';
+        "XF86AudioRaiseVolume" = ''exec "pamixer --increase 5"'';
         # "XF86AudioPlay" = ''exec "playerctl play"'';
         # "XF86AudioPause" = ''exec "playerctl pause"'';
         # "XF86AudioNext" = ''exec "playerctl next"'';
         # "XF86AudioPrev" = ''exec "playerctl previous"'';
 
-        # TODO --set-default-source once merged
-        # https://github.com/GeorgeFilipkin/pulsemixer/issues/64
-        "XF86AudioMicMute" = ''exec "pulsemixer --id source-5 --toggle-mute"'';
+        "XF86AudioMicMute" = ''exec "pamixer --default-source --toggle-mute"'';
         "XF86Display" = ''exec "swaymsg 'output DP-4 toggle'"'';
         "XF86WLAN" = ''
           exec "nmcli networking connectivity | \
