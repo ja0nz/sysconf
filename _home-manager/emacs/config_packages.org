@@ -233,7 +233,6 @@ Backup of the Doom Emacs Capture templates for future reference
 ;; Org Roam Settings
 (setq +org-roam-open-buffer-on-find-file nil
       org-roam-directory org-directory
-      org-roam-completion-everywhere nil
       org-roam-capture-templates
       '(("d" "default" plain
          "%?"
@@ -241,6 +240,9 @@ Backup of the Doom Emacs Capture templates for future reference
          (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                     "#+title: ${title}\n#+CREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+REVISION: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+STARTUP: fold\n")
          :unnarrowed t)))
+
+(after! org-roam
+  (setq org-roam-completion-everywhere nil))
 
 (defun org_roam__bump_revision_date ()
   "Retriving REVISION and replace it naively with current time stamp."
