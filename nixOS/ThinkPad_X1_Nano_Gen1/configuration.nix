@@ -59,7 +59,13 @@ with lib; {
         enable = true;
         package = pkgs.bluez; # pkgs.bluezFull;
       };
-      opengl.enable = true;
+      opengl = {
+        enable = true;
+        extraPackages = with pkgs;
+          [
+            intel-media-driver # LIBVA_DRIVER_NAME=iHD
+          ];
+      };
       brillo.enable = true;
     };
 
