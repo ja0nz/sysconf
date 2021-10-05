@@ -89,10 +89,11 @@ Here are some additional functions/macros that could help you configure Doom:
 #+begin_src emacs-lisp
 ;; Org Mode - Base Settings
 (setq org-directory "~/Dropbox/org/"
-      org-global-properties '(("Effort_ALL". "0:25 0:50 1:15 1:40 2:05 2:55 3:45 4:35 5:25 6:15 7:05"))
+      org-global-properties '(("Effort_ALL" . "0:05 0:10 0:25 0:50 1:15 1:40 2:05 2:55 3:45 4:35 5:25 6:15 7:05"))
       org-agenda-files
       (append
        (list (concat org-directory "_tags.org")
+             (concat org-directory "_stage.org")
              (concat org-directory "_habits.org"))
        (directory-files
         org-directory t
@@ -119,6 +120,29 @@ Here are some additional functions/macros that could help you configure Doom:
   (org-agenda arg "a"))
 
 (map! :leader :prefix "o" :map global-map :desc "Open Org Agenda Week" "w" #'org-agenda-week)
+
+;; Icons in agenda view
+(cl-defstruct caticon
+  category
+  icon)
+
+;; https://github.com/domtronn/all-the-icons.el
+;; https://faicons.com/
+(setq caticons (list
+  (make-caticon :category "italian" :icon "language")
+  (make-caticon :category "spanish" :icon "language")
+  (make-caticon :category "create" :icon "code")
+  (make-caticon :category "docs" :icon "book")
+  (make-caticon :category "debug" :icon "bug")
+  (make-caticon :category "slack" :icon "cog")
+  (make-caticon :category "debug" :icon "bug")
+  (make-caticon :category "fun" :icon "coffee")
+  (make-caticon :category "off" :icon "power-off")
+))
+
+(customize-set-value
+    'org-agenda-category-icon-alist
+    (mapcar (lambda (x) (list (caticon-category x) (list (all-the-icons-faicon (caticon-icon x) :height 1)) nil nil)) caticons))
 #+end_src
 ** Org habit
 #+begin_src emacs-lisp
@@ -133,7 +157,7 @@ Here are some additional functions/macros that could help you configure Doom:
         '((nil :maxlevel . 1)
           (org-agenda-files :maxlevel . 1)
           ("~/Dropbox/org/_archive.org" :maxlevel . 1)
-          ("~/Dropbox/org/_kanban.org" :maxlevel . 1))))
+          ("~/Dropbox/org/_stage.org" :maxlevel . 1))))
 #+end_src
 ** Org Capture
 I capture every activity on my laptop by (broad) category. May change over time. Currently, there are following activities:
@@ -146,8 +170,8 @@ I capture every activity on my laptop by (broad) category. May change over time.
 ;; Org Capture Templates
 (after! org-capture
   (setq org-capture-templates
-         '(("p" "Blog > Post" entry (file+headline "~/data/git/ja.nz/README.org" "Posts") "* TODO %^{title}\nSCHEDULED: %t%^{export_hugo_bundle}p%^{export_file_name}p\n#+begin_description\n%?\n#+end_description\n** scratchpad :noexport:\n" :prepend t :jump-to-captured t)
-           ("x" "Journal > Todo" entry (function org-journal-open-current-journal-file) "* TODO %^{title}\nSCHEDULED: %T%^{CATEGORY}p%^{Effort}p\n%?" :jump-to-captured t))))
+         '(("p" "Blog Post" entry (file+headline "~/data/git/ja.nz/README.org" "Posts") "* TODO %^{title}\nSCHEDULED: %t%^{export_hugo_bundle}p%^{export_file_name}p\n#+begin_description\n%?\n#+end_description\n** scratchpad :noexport:\n" :prepend t :jump-to-captured t)
+           ("x" "Instant Todo" entry (function org-journal-open-current-journal-file) "* TODO %^{title}\nSCHEDULED: %T%^{CATEGORY}p%^{Effort}p\n%?" :jump-to-captured t))))
 #+end_src
 *** Backup (untangled)
 Backup of the Doom Emacs Capture templates for future reference
@@ -185,13 +209,13 @@ Backup of the Doom Emacs Capture templates for future reference
       org-journal-date-format "W%V_%Y-%m-%d"
       org-journal-time-prefix "* "
       org-journal-file-format "W%V_%Y-%m-%d.org"
-      org-journal-file-header "#+ref: file:_kanban.org\n"
+      org-journal-file-header "#+ref: file:_stage.org\n"
       ;; But #+title tag back to first line
       org-journal-after-header-create-hook (lambda () (transpose-lines 1))
       ;; Automatic org agenda integration
       org-journal-after-entry-create-hook
       (lambda () (if (not (file-exists-p (buffer-file-name))) (org-agenda-file-to-front t))))
-;;org-journal-file-header "#+title: W%V_%Y-%m-%d\n#+roam_key: file:_kanban.org\n"
+;;org-journal-file-header "#+title: W%V_%Y-%m-%d\n#+roam_key: file:_stage.org\n"
 ;;org-journal-skip-carryover-drawers (list "LOGBOOK")
 
 
@@ -312,7 +336,6 @@ Backup of the Doom Emacs Capture templates for future reference
       org-pomodoro-long-break-sound " *org-pomodoro* - 🍖LONG BREAK FINISHED🍖"
       org-pomodoro-ticking-sound " *org-pomodoro* - 🥁ticktack🥁")
 #+end_src
-
 ** Org table copy cell :hack:
 #+begin_src emacs-lisp
 (defun org-table-yank-cell ()
