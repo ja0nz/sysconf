@@ -32,9 +32,11 @@
     sha256 = "0dvf8f171g8v2f1vp723w9x8mcajdlz7z6mw0plq0jqs11qajhd7";
   }));
 
-  myWaylandOverlay = (import (builtins.fetchTarball {
-    url =
-      "https://github.com/colemickens/nixpkgs-wayland/archive/42e07dc73fc569322da41cf980bb103fa8d6880c.tar.gz";
-    sha256 = "08518x492qkld6rqi95bxp3ryi5zrzbla9yhwdw8ga7b5skbsh79";
-  }));
+  myWaylandOverlay = (import "${
+      builtins.fetchTarball {
+        url =
+          "https://github.com/colemickens/nixpkgs-wayland/archive/42e07dc73fc569322da41cf980bb103fa8d6880c.tar.gz";
+        sha256 = "08518x492qkld6rqi95bxp3ryi5zrzbla9yhwdw8ga7b5skbsh79";
+      }
+    }/overlay.nix");
 }
