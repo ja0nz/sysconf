@@ -44,6 +44,10 @@ Here are some additional functions/macros that could help you configure Doom:
 (map! :map evil-motion-state-map
       :prefix "g"
       "b" #'evil-jump-backward)
+
+;; Set chromium as browser
+;; Normally the default browser is fine, but with brave/chromium on the same machine things getting tricky
+(setq browse-url-browser-function 'browse-url-chromium)
 #+end_src
 
 ** Theming, Fonts
