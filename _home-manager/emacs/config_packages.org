@@ -95,9 +95,7 @@ Here are some additional functions/macros that could help you configure Doom:
        (list (concat org-directory "_tags.org")
              (concat org-directory "_stage.org")
              (concat org-directory "_habits.org"))
-       (directory-files
-        org-directory t
-        (concat "^W" (format-time-string "%V"))))
+       (directory-files org-directory t (format-time-string "^W%V")))
       org-agenda-bulk-custom-functions
       '((?m (lambda () (call-interactively 'org-agenda-date-later-minutes)))
         (?h (lambda () (call-interactively 'org-agenda-date-later-hours))))
@@ -217,14 +215,46 @@ Backup of the Doom Emacs Capture templates for future reference
       (lambda () (if (not (file-exists-p (buffer-file-name))) (org-agenda-file-to-front t))))
 ;;org-journal-file-header "#+title: W%V_%Y-%m-%d\n#+roam_key: file:_stage.org\n"
 ;;org-journal-skip-carryover-drawers (list "LOGBOOK")
+#+end_src
 
+*** Org Journal Keymap
+#+begin_src emacs-lisp
+;; I need the org mode bindings
+(after! org-journal
+  (map! :localleader
+        (:map org-journal-mode-map
+         (:prefix ("c" . "clock")
+          "c" #'org-clock-cancel
+          "d" #'org-clock-mark-default-task
+          "e" #'org-clock-modify-effort-estimate
+          "E" #'org-set-effort
+          "g" #'org-clock-goto
+          "G" (cmd! (org-clock-goto 'select))
+          "l" #'+org/toggle-last-clock
+          "i" #'org-clock-in
+          "I" #'org-clock-in-last
+          "o" #'org-clock-out
+          "r" #'org-resolve-clocks
+          "R" #'org-clock-report
+          "t" #'org-evaluate-time-range
+          "=" #'org-clock-timestamps-up
+          "-" #'org-clock-timestamps-down)
+         (:prefix ("d" . "date/deadline")
+          "d" #'org-deadline
+          "s" #'org-schedule
+          "t" #'org-time-stamp
+          "T" #'org-time-stamp-inactive)
+         (:prefix ("p" . "priority")
+          "d" #'org-priority-down
+          "p" #'org-priority
+          "u" #'org-priority-up)
+          "n" #'org-store-link)))
 
 (map! :leader :prefix "r"
         (:map org-mode-map
-         :desc "Org Set Property" "p" #'org-set-property
-         :desc "Org Set Effort" "e" #'org-set-effort
-         :desc "Org Set Tags" "t" #'org-set-tags-command
-         :desc "Org Agenda File To Front" "a" #'org-agenda-file-to-front)
+         :desc "Org Agenda File To Front" "f" #'org-agenda-file-to-front)
+         :desc "Org Journal Previous" "a" #'org-journal-previous-entry
+         :desc "Org Journal Next" "e" #'org-journal-next-entry
         (:map global-map
          :desc "Org Journal New Entry" "n" #'org-journal-new-entry
          :desc "Org Journal New Scheduled Entry" "s" #'org-journal-new-scheduled-entry
@@ -321,6 +351,10 @@ Backup of the Doom Emacs Capture templates for future reference
 ;;          ("M-s-t o" . org-clock-out)
 ;;          ("M-s-t u" . org-update-all-dblocks)))
 #+end_src
+** Org clock export to csv
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+(package! org-clock-csv)
+#+end_src
 ** Org pomodoro
 #+begin_src emacs-lisp
 (after! org-pomodoro
@@ -338,13 +372,23 @@ Backup of the Doom Emacs Capture templates for future reference
 #+end_src
 ** Org table copy cell :hack:
 #+begin_src emacs-lisp
-(defun org-table-yank-cell ()
+(defun org/org-table-yank-cell ()
   "Copy cell value and trim surrounding whitepaces."
   (interactive)
   (when (org-at-table-p)
     (kill-new
       (string-trim
         (substring-no-properties(org-table-get-field))))))
+#+end_src
+** Org purge logbook drawer :hack:
+If the habits.org file gets too big it slows down emacs.
+This function will clean all the logbook entries.
+#+begin_src emacs-lisp
+(defun org/purge-logbook-drawer ()
+  (interactive)
+  (goto-line 1)
+  (delete-matching-lines ":LOGBOOK:\\(\n\\|.\\)*?:END:")
+  (pop-global-mark))
 #+end_src
 
 * MU4E
