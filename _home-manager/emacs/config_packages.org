@@ -1,5 +1,5 @@
 #+title: Ja0nz Emacs Configuration
-#+STARTUP: fold
+#+STARTUP: overview
 #+PROPERTY: header-args:emacs-lisp :tangle ~/.doom.d/config.el :mkdirp yes
 
 * File Headers
@@ -210,7 +210,7 @@ Backup of the Doom Emacs Capture templates for future reference
       org-journal-date-format "W%V_%Y-%m-%d"
       org-journal-time-prefix "* "
       org-journal-file-format "W%V_%Y-%m-%d.org"
-      org-journal-file-header "#+startup: overview\n"
+      org-journal-file-header "#+STARTUP: overview\n"
       ;; But #+title tag back to first line
       org-journal-after-header-create-hook (lambda () (transpose-lines 1))
       ;; Automatic org agenda integration
@@ -288,7 +288,7 @@ Backup of the Doom Emacs Capture templates for future reference
          "%?"
          :if-new
          (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                    "#+title: ${title}\n#+CREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+REVISION: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+STARTUP: fold\n")
+                    "#+title: ${title}\n#+CREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+REVISION: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+STARTUP: overview\n")
          :unnarrowed t)))
 
 (after! org-roam
@@ -332,8 +332,18 @@ Backup of the Doom Emacs Capture templates for future reference
 #+end_src
 
 #+begin_src emacs-lisp
+(defun org/insert-clock-entry ()
+  (interactive)
+  (insert "CLOCK: ")
+  (org-time-stamp-inactive)
+  (insert "--")
+  ;; Inserts the current time by default.
+  (let ((current-prefix-arg '(4))) (call-interactively 'org-time-stamp-inactive))
+  (org-ctrl-c-ctrl-c))
+
 (map! :map org-mode-map :localleader :prefix "c"
       :desc "Org MRU clock" "m" #'org-mru-clock-in
+      :desc "Append manual clock entry" "a" #'org/insert-clock-entry
       :desc "Org Update All DBlocks" "u" #'org-update-all-dblocks)
 
 ;; (use-package! org-mru-clock
