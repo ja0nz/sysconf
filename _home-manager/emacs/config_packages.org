@@ -87,14 +87,17 @@ Here are some additional functions/macros that could help you configure Doom:
 * Org
 ** Base Settings
 #+begin_src emacs-lisp
-;; Org Mode - Base Settings
 (setq org-directory "~/Dropbox/org/"
-      org-global-properties '(("Effort_ALL" . "0:05 0:10 0:25 0:50 1:15 1:40 2:05 2:55 3:45 4:35 5:25 6:15 7:05"))
+      _tagsorg (concat org-directory "_tags.org")
+      _stageorg (concat org-directory "_stage.org")
+      _archiveorg (concat org-directory "_archive.org")
+      _habitsorg (concat org-directory "_habits.org"))
+
+;; Org Mode - Base Settings
+(setq org-global-properties '(("Effort_ALL" . "0:05 0:10 0:25 0:50 1:15 1:40 2:05 2:55 3:45 4:35 5:25 6:15 7:05"))
       org-agenda-files
       (append
-       (list (concat org-directory "_tags.org")
-             (concat org-directory "_stage.org")
-             (concat org-directory "_habits.org"))
+       (list _tagsorg _stageorg _habitsorg)
        (directory-files org-directory t (format-time-string "^W%V")))
       org-agenda-bulk-custom-functions
       '((?m (lambda () (call-interactively 'org-agenda-date-later-minutes)))
@@ -152,10 +155,10 @@ Here are some additional functions/macros that could help you configure Doom:
 ;; Org Refile Targets
 (after! org-refile
   (setq org-refile-targets
-        '((nil :maxlevel . 1)
+        '((nil :maxlevel . 1) ; Same buffer
           (org-agenda-files :maxlevel . 1)
-          ("~/Dropbox/org/_archive.org" :maxlevel . 1)
-          ("~/Dropbox/org/_stage.org" :maxlevel . 1))))
+          (_archiveorg :maxlevel . 1)
+          (_stageorg :maxlevel . 1))))
 #+end_src
 ** Org Capture
 I capture every activity on my laptop by (broad) category. May change over time. Currently, there are following activities:
@@ -207,7 +210,7 @@ Backup of the Doom Emacs Capture templates for future reference
       org-journal-date-format "W%V_%Y-%m-%d"
       org-journal-time-prefix "* "
       org-journal-file-format "W%V_%Y-%m-%d.org"
-      org-journal-file-header "#+ref: file:_stage.org\n"
+      org-journal-file-header "#+startup: overview\n"
       ;; But #+title tag back to first line
       org-journal-after-header-create-hook (lambda () (transpose-lines 1))
       ;; Automatic org agenda integration
@@ -258,22 +261,11 @@ Backup of the Doom Emacs Capture templates for future reference
         (:map global-map
          :desc "Org Journal New Entry" "n" #'org-journal-new-entry
          :desc "Org Journal New Scheduled Entry" "s" #'org-journal-new-scheduled-entry
-         :desc "Org Journal Open Current" "r" #'org-journal-open-current-journal-file))
-;; (use-package! org-journal
-;;   :bind (:map org-mode-map
-;;          ("M-s-n p" . org-set-property) ;; CATEGORY
-;;          ("M-s-n e" . org-set-effort) ;; Effort
-;;          ("M-s-n t" . org-set-tags-command) ;; Tag
-;;          ("M-s-n d" . org-update-all-dblocks) ;; Dblock
-;;          ("M-s-n f" . export-clocktable-csv) ;; Export Clock to csv
-;;          ("M-s-n a" . org-agenda-file-to-front) ;; add current file to agenda files
-;;          :map global-map
-;;          ("M-s-n n" . org-journal-new-entry) ;; Entry
-;;          ("M-s-n r" . org-journal-open-current-journal-file) ;; Current file
-;;          ("M-s-n s" . org-journal-new-scheduled-entry))) ;; Scheduled
+         :desc "Org Journal Open Current" "r" #'org-journal-open-current-journal-file
+         :desc "Org Journal Stage" "t" #'(lambda () (interactive) (find-file _stageorg))))
 #+end_src
-*** Export Clocktable Function
-#+begin_src emacs-lisp
+*** *deprecated* Custom Export Clocktable Function
+#+begin_src
 (defun export-clocktable-csv (&optional week)
   "Export current week (no prefix argument) or weeks in the "
   (interactive "P")
@@ -442,12 +434,6 @@ This function will clean all the logbook entries.
 (after! mu4e
   (add-to-list 'mu4e-headers-actions '("org-contact-add" . mu4e-action-add-org-contact) t)
   (add-to-list 'mu4e-view-actions '("org-contact-add" . mu4e-action-add-org-contact) t))
-#+end_src
-* Magit *deprecated* -> SPC g g
-#+begin_src
-(use-package! magit
-  :bind (:map global-map
-         ("M-s-m m" . magit-status)))
 #+end_src
 * Calendar
 #+begin_src emacs-lisp
