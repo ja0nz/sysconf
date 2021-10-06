@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: logbook drawer
+# key: logbook
+# expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region t))
+# --
+:LOGBOOK:
+$0:END:
