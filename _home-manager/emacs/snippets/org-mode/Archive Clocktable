@@ -4,6 +4,20 @@
 # --
 #+BEGIN: clocktable :scope agenda :compact t :narrow 60! :fileskip0 t :properties ("CATEGORY" "ALLTAGS" "Effort") :block `(format-time-string "%Y-W%V")`
 #+begin_src emacs-lisp
-(org-dblock-update)$0
+;; Export all
+(let* ((W `(format-time-string "\"W%V\"")`)
+       (Y-W (concat `(format-time-string "\"%Y-\"")` W))
+       (org-agenda-files
+        (cons _habitsorg
+         (directory-files org-directory t (concat "^" W)))))
+  (org-clock-csv-to-file (concat org-directory "csv/" Y-W ".csv"))
+  (org-dynamic-block-insert-dblock "clocktable"))
+
+;; Flush _habits file
+(progn
+ (find-file _habitsorg)
+ (flush-lines ":LOGBOOK:\\\\(\n\\\|.\\\\)*?:END:" 1 100000 t)
+ (save-buffer)
+ (kill-buffer))$0
 #+end_src
 #+END:
