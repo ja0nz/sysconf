@@ -38,7 +38,8 @@ Here are some additional functions/macros that could help you configure Doom:
 (define-key evil-normal-state-map (kbd "s") 'evil-avy-goto-char-timer)
 (define-key evil-normal-state-map (kbd "S") 'avy-goto-char)
 
-(setq custom-file nil)
+;; No custom file to prevent emacs from buffering agenda files
+(setq custom-file "/dev/null")
 
 ;; Antagonist for evil-goto-definition -> g d; jump back with -> g b
 (map! :map evil-motion-state-map
@@ -130,21 +131,26 @@ Here are some additional functions/macros that could help you configure Doom:
 ;; https://github.com/domtronn/all-the-icons.el
 ;; https://faicons.com/
 (setq caticons (list
+  ;; Leisure
   (make-caticon :category "italian" :icon "language")
   (make-caticon :category "spanish" :icon "language")
-  (make-caticon :category "create" :icon "code")
-  (make-caticon :category "docs" :icon "book")
-  (make-caticon :category "debug" :icon "bug")
-  (make-caticon :category "slack" :icon "cog")
-  (make-caticon :category "debug" :icon "bug")
-  (make-caticon :category "fun" :icon "coffee")
-  (make-caticon :category "off" :icon "power-off")
+  (make-caticon :category "portuge" :icon "language")
+  ;; ON -> netflix, hackernews, zeit.de (non work related)
+  (make-caticon :category "ON" :icon "toggle-on")
+  ;; OFF -> jog, yoga, kite, bike, hike
+  (make-caticon :category "OFF" :icon "toggle-off")
+  ;; Work
+  (make-caticon :category "create" :icon "code") ;; conceptual, literally
+  (make-caticon :category "docs" :icon "book") ;; Capture, reword, restruct
+  (make-caticon :category "slack" :icon "cog") ;; Planning, brainstorm
+  (make-caticon :category "debug" :icon "bug") ;; Rework, update
 ))
 
 (customize-set-value
     'org-agenda-category-icon-alist
     (mapcar (lambda (x) (list (caticon-category x) (list (all-the-icons-faicon (caticon-icon x) :height 1)) nil nil)) caticons))
 #+end_src
+
 ** Org habit
 #+begin_src emacs-lisp
 (after! org
@@ -481,7 +487,12 @@ This function will clean all the logbook entries.
 (setq xref-js2-search-program 'rg)
 #+end_src
 
-* Ascii-art-to-unicode
+* Artist mode
+#+begin_src emacs-lisp
+(add-hook! artist-mode
+  (evil-emacs-state 1))
+#+end_src
+** Ascii-art-to-unicode
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
 (package! ascii-art-to-unicode)
 #+end_src

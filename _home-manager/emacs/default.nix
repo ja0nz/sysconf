@@ -31,6 +31,12 @@
 
     # Needed by doom emacs
     html-tidy # A HTML validator and `tidier'
+
+    # Artist Mode dependency
+    figlet # Program for making large letters out of ordinary text
+
+    # Org roam dependency
+    clang # A C language family frontend for LLVM (wrapper script)
   ];
 
   /* config_packages.org -> ~/.doom.d/config.el & ~/.doom.d/packages.el
