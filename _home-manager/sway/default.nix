@@ -112,10 +112,9 @@ in {
         "${modifier}+k" = "exec ${./swaylock}";
         "${modifier}+Ctrl+k" = ''exec "${./swaylock} && systemctl suspend"'';
 
-        "${modifier}+b" = ''exec "playerctl play-pause"'';
-        "${modifier}+Ctrl+b" = ''exec "playerctl stop"'';
-        "${modifier}+m" = ''exec "playerctl next"'';
-        "${modifier}+Ctrl+m" = ''exec "playerctl previous"'';
+        "${modifier}+m" = ''exec "playerctl previous"'';
+        "${modifier}+comma" = ''exec "playerctl play-pause"'';
+        "${modifier}+period" = ''exec "playerctl next"'';
 
         "Print" = "exec ${./take_screenshot}";
         "Ctrl+Print" = "exec ${./take_screenshot} full";
