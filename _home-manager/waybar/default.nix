@@ -6,6 +6,7 @@
     - pavucontrol -> launch pulseaudio control
     - networkmanager -> launch network control
     - brave browser -> launch google calendar
+    - pamixer -> mute audio
     - playerctl -> player control (for spotify, brave browser, ctc)
     - spotify -> the player itself
 */
@@ -76,7 +77,7 @@
             default = [ "" "" ];
           };
           scroll-step = 1;
-          on-click = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
+          on-click = "pamixer --toggle-mute";
           on-click-right = "pavucontrol";
         };
         "sway/window" = { max-length = 70; };
