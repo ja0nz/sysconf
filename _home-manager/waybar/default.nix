@@ -84,21 +84,15 @@
           format = "{}";
           max-length = 50;
         };
-        # Waybar-mpris taken from
-        # https://git.hrfee.pw/hrfee/waybar-mpris
-        "custom/waybar-mpris" = {
-          # format = "📻 {}";
+        "custom/waybar-mpris" = let
+          fmpris = ''
+            {"class":"{{ status }}", "alt":"{{ status }}", "text":"{{ emoji(status) }} {{ artist }} - {{ title }}", "tooltip":"{{ markup_escape(artist) }} - {{ markup_escape(title) }}\n({{ playerName }})"}'';
+        in {
           return-type = "json";
-          exec = "${./waybar-mpris} --play ▶ --pause ⏸ --position --autofocus";
-          on-click = "${./waybar-mpris} --send toggle";
-          # This option will switch between players on right click.
-          on-click-right = "${./waybar-mpris} --send player-next";
-          ## The options below will switch the selected player on scroll
-          #on-scroll-up = "waybar-mpris --send player-next";
-          #on-scroll-down = "waybar-mpris --send player-prev";
-          ## The options below will go to next/previous track on scroll
-          #on-scroll-up = "waybar-mpris --send next";
-          #on-scroll-down = "waybar-mpris --send prev";
+          exec = "${./playerctl.sh} 2> /dev/null";
+          on-click = "playerctl previous";
+          on-click-middle = "playerctl play-pause";
+          on-click-right = "playerctl next";
           escape = true;
           max-length = 40;
         };
