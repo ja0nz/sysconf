@@ -26,17 +26,27 @@
     };
   };
 
+  swaylock-effectsOverlay = self: super: {
+    swaylock-effects = super.swaylock-effects.overrideAttrs (attr: {
+      src = builtins.fetchTarball {
+        url =
+          "https://github.com/mortie/swaylock-effects/archive/a8fc557b86e70f2f7a30ca9ff9b3124f89e7f204.tar.gz";
+        sha256 = "0f9571blnn7lg317js1j1spc5smz69i5aw6zkhskkm5m633rrpqq";
+      };
+    });
+  };
+
   nixCommunity = (import (builtins.fetchTarball {
     url =
-      "https://github.com/nix-community/emacs-overlay/archive/4afeb3a259dc19ff5a001e598dcd94885d439d24.tar.gz";
-    sha256 = "0ni19j25xcdfnhr94rvlsvaabpb7sjc33f9iasqnrn7g2fvvzbhh";
+      "https://github.com/nix-community/emacs-overlay/archive/bd4015e47bec7c53977f7db377d204dcb593c43d.tar.gz";
+    sha256 = "10nvdrzplpwqwa4z5c5kg2a6rwpna1x238sas2apdr4snvn7nf2l";
   }));
 
   myWaylandOverlay = (import "${
       builtins.fetchTarball {
         url =
-          "https://github.com/colemickens/nixpkgs-wayland/archive/48cd3698e3dee50c8ff13602a8ab13b7f65d9051.tar.gz";
-        sha256 = "0xlpiv55qh4jj7c0sf62y3fi60b6wf48iwywqh495f55b1q879g0";
+          "https://github.com/colemickens/nixpkgs-wayland/archive/04b7b02f715e8cd221cea20542ce65a418ce4ea0.tar.gz";
+        sha256 = "1r4pqhwmyn571w3sj7rc88gyc0h6ac519cjf6ma28r481idh7hkk";
       }
     }/overlay.nix");
 }
