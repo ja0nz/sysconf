@@ -24,6 +24,8 @@ Init.el
 (when noninteractive
   (add-to-list 'doom-env-whitelist "^SSH_"))
 
+(setq byte-compile-warnings '(cl-functions))
+
 (doom! :input
        ;;chinese
        ;;japanese
