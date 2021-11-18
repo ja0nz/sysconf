@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Twind Hiccup class snippet
+# key: twind
+# condition: t
+# --
+{ class: tw\`$0\` },

@@ -16,7 +16,7 @@
 ;; Flush _habits file
 (progn
  (find-file _habitsorg)
- (flush-lines ":LOGBOOK:\\\\(\n\\\|.\\\\)*?:END:" 1 100000 t)
+ (flush-lines "CLOCK:" 1 100000)
  (save-buffer)
  (kill-buffer))$0
 #+end_src
