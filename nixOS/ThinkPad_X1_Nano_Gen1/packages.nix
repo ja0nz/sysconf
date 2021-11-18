@@ -94,6 +94,7 @@ in {
 
     # --- Programming --
     nodejs # Some globals depend on this (unfortunately)
+    yarn # Fast, reliable, and secure dependency management for javascript
     niv # Easy dependency management for Nix projects -> good fit with lorri & direnv
   ];
 }
