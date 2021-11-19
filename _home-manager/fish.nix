@@ -21,6 +21,7 @@
     shellAliases = { # TODO Adapt aliases to your needs
       groups = "id (whoami)";
       rg = "rg --hidden --glob '!.git'";
+      tree = "tree -a -I 'node_modules|.git|.yarn'";
       cat = "bat";
       vim = "nvim";
       nix-stray-roots =
@@ -46,8 +47,11 @@
   home.sessionVariables = {
     EDITOR = "emacsclient -c";
     BROWSER = "chromium";
-    #PATH = "$HOME/.yarn/bin:$PATH"; # Impure but harmless!
   };
+
+  home.sessionPath = [
+    # "$HOME/.yarn/bin"
+  ];
 
   home.packages = with pkgs;
     [
