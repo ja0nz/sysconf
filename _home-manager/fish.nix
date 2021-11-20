@@ -27,7 +27,9 @@
       nix-stray-roots =
         "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/w+-system|{memory)'";
     };
-    promptInit = "\n any-nix-shell fish --info-right | source\n";
+    interactiveShellInit = ''
+      any-nix-shell fish --info-right | source
+    '';
 
     # Adding 'z' -> https://github.com/jethrokuan/z
     plugins = [{
