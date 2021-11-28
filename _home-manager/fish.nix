@@ -8,6 +8,15 @@
 { pkgs, ... }:
 
 {
+  home.sessionVariables = {
+    EDITOR = "emacsclient -c";
+    BROWSER = "chromium";
+  };
+
+  home.sessionPath = [
+    # "$HOME/.yarn/bin"
+  ];
+
   programs.fish = {
     enable = true;
     loginShellInit = ''
@@ -28,7 +37,7 @@
         "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/w+-system|{memory)'";
     };
     interactiveShellInit = ''
-      any-nix-shell fish --info-right | source
+      # any-nix-shell fish --info-right | source
       zoxide init fish | source
       starship init fish | source
     '';
@@ -48,19 +57,10 @@
   # Enabled bat which is a sane 'cat' replacement
   programs.bat.enable = true;
 
-  home.sessionVariables = {
-    EDITOR = "emacsclient -c";
-    BROWSER = "chromium";
-  };
-
-  home.sessionPath = [
-    # "$HOME/.yarn/bin"
-  ];
-
-  home.packages = with pkgs;
-    [
-      any-nix-shell # fish and zsh support for nix-shell
-    ];
+  # home.packages = with pkgs;
+  #   [
+  #     any-nix-shell # fish and zsh support for nix-shell
+  #   ];
 
   # Setting a fish theme
   # Currently -> https://github.com/wyqydsyq/emoji-powerline
