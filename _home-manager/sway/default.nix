@@ -20,7 +20,14 @@
 */
 { lib, config, pkgs, ... }:
 
-let modifier = "Mod4";
+let
+  modifier = "Mod4";
+  chrome-flags = [
+    "--enable-features=UseOzonePlatform"
+    "--ozone-platform=wayland"
+    "--extension-mime-request-handling=always-prompt-for-install"
+    "--scroll-tabs=never"
+  ];
 in {
 
   # Packages
@@ -106,8 +113,9 @@ in {
         "${modifier}+h" = "layout toggle splith tabbed";
         "${modifier}+Ctrl+d" = "exec networkmanager_dmenu";
         "${modifier}+Ctrl+n" = ''exec "emacsclient -c"'';
+
         "${modifier}+Ctrl+r" =
-          "exec chromium --enable-features=UseOzonePlatform --ozone-platform=wayland";
+          "exec chromium ${builtins.concatStringsSep " " chrome-flags}";
         "${modifier}+Ctrl+t" = "exec caja";
         "${modifier}+k" = "exec ${./swaylock}";
         "${modifier}+Ctrl+k" = ''exec "${./swaylock} && systemctl suspend"'';
