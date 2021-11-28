@@ -45,8 +45,8 @@
   myWaylandOverlay = (import "${
       builtins.fetchTarball {
         url =
-          "https://github.com/colemickens/nixpkgs-wayland/archive/04b7b02f715e8cd221cea20542ce65a418ce4ea0.tar.gz";
-        sha256 = "1r4pqhwmyn571w3sj7rc88gyc0h6ac519cjf6ma28r481idh7hkk";
+          "https://github.com/colemickens/nixpkgs-wayland/archive/cb1b04357950f55b36a3d7c546e6af7e65fcd5d6.tar.gz";
+        sha256 = "0hnq8x5jqjqr4ccywpwkz6vdhbd2g2qw7mw5qwzrynbxl963vd4j";
       }
     }/overlay.nix");
 }
