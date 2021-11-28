@@ -15,6 +15,7 @@ in {
     # -- GUI --
     /sway
     /waybar
+    /kanshi.nix
     /mako.nix
     /gammastep.nix
     /alacritty.nix
@@ -22,6 +23,9 @@ in {
     /gtk.nix
     # -- SHELL --
     /fish.nix
+    #/nushell.nix
+    /zoxide.nix
+    /starship.nix
     /exa.nix
     /lorri.nix
     /direnv.nix

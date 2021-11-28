@@ -180,11 +180,12 @@ in {
       output = {
         "*" = { bg = ''"${./background-image-secondary.png}" fill''; };
         "eDP-1" = {
-          pos = "0,0";
-          # TODO I case of small rendering you may raise the scale
-          scale = "1.4";
-          res = "2160x1350";
           bg = ''"${./background-image-primary.png}" fill'';
+          # TODO Left following for future refercence:
+          # I use kanshi meanwhile but without you may set the values here
+          # pos = "0,0";
+          # scale = "1.4";
+          # res = "2160x1350";
         };
       };
     };
