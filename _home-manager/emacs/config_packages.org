@@ -500,6 +500,7 @@ This function will clean all the logbook entries.
 ** Config
 #+begin_src emacs-lisp
 (setq web-mode-markup-indent-offset 2)
+(setq-hook! 'web-mode-hook +format-with :none)
 #+end_src
 
 ** Web Mode :hack:
@@ -523,4 +524,12 @@ to get it working.
          (message "no web-mode-engine settled")
          (web-mode-set-engine "none"))))))
 (add-hook 'web-mode-hook  'hack-web-mode-hook nil nil)
+#+end_src
+* Tailwind CSS
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+;;(package! lsp-tailwindcss :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
+#+end_src
+
+#+begin_src emacs-lisp
+;;(use-package! lsp-tailwindcss)
 #+end_src
