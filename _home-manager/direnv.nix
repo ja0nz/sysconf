@@ -1,5 +1,5 @@
 /* #+TITLE: Direnv - scoped environment variables
-   #+FILETAGS: :development:
+   #+FILETAGS: :shell:development:
 */
 { ... }:
 

@@ -115,7 +115,7 @@ in {
         "${modifier}+Ctrl+n" = ''exec "emacsclient -c"'';
 
         "${modifier}+Ctrl+r" =
-          "exec chromium ${builtins.concatStringsSep " " chrome-flags}";
+          "exec chromium ${lib.concatStringsSep " " chrome-flags}";
         "${modifier}+Ctrl+t" = "exec caja";
         "${modifier}+k" = "exec ${./swaylock}";
         "${modifier}+Ctrl+k" = ''exec "${./swaylock} && systemctl suspend"'';
