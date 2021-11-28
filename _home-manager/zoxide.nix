@@ -7,6 +7,6 @@
   programs.zoxide = {
     enable = true;
     enableFishIntegration = true;
-    options = [ ];
+    options = [ "--cmd cd" ]; # TODO May not work on Nushell / POSIX shells
   };
 }
