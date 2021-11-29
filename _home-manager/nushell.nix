@@ -2,7 +2,8 @@
    #+FILETAGS: :shell:development:
 
    --CURRENTLY ON HOLD--
-   Does not play super nice with nix-shell
+   Currently, 01.12.2021, does not play with (nix-)direnv
+   https://github.com/nushell/nushell/issues/2549
 
    * Optional configuration
     Some aliases are preset. This is of course a non breaking setting.
