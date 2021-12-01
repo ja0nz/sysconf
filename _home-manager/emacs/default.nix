@@ -46,6 +46,7 @@
     emacs --batch --eval "(require 'org)" --eval '(progn
       (org-babel-tangle-file "${./config_packages.org}")
       (org-babel-tangle-file "${./init.org}")
+      (org-babel-tangle-file "${./org-agenda-categories.org}")
       )'
   '';
 }

@@ -1,0 +1,63 @@
+#+title: Custom Org agenda icons
+#+STARTUP: overview
+#+PROPERTY: header-args:emacs-lisp :tangle ~/.doom.d/org-agenda-categories.el :mkdirp yes
+
+#+begin_src emacs-lisp
+;;; org-agenda-categories.el --- Description -*- lexical-binding: t; -*-
+;;
+;; Copyright (C) 2021 Ja0nz
+;;
+;; Author: Ja0nz <https://github.com/me>
+;; Maintainer: Ja0nz <mail@ja.nz>
+;; Created: Dezember 01, 2021
+;; Modified: Dezember 01, 2021
+;; Version: 0.0.1
+;; Package-Requires: ((emacs "24.3"))
+;;
+;; This file is not part of GNU Emacs.
+;;
+;;; Commentary:
+;;
+;;  Description
+;;
+;;; Code:
+
+(require 'all-the-icons)
+(eval-when-compile
+  (require 'cl-lib))
+
+(cl-defstruct org-agenda-categories--caticon
+  category
+  icon)
+
+(defvar org-agenda-categories/caticons)
+
+(setq org-agenda-categories/caticons
+  (cl-flet ((icon #'make-org-agenda-categories--caticon))
+    (list
+     ;; Leisure
+     (icon :category "italian" :icon "language")
+     (icon :category "spanish" :icon "language")
+     (icon :category "portuge" :icon "language")
+     ;; ON -> netflix, hackernews, zeit.de (non work related)
+     (icon :category "ON" :icon "toggle-on")
+     ;; OFF -> jog, yoga, kite, bike, hike
+     (icon :category "OFF" :icon "toggle-off")
+     ;; Work
+     (icon :category "create" :icon "code") ;; conceptual, literally
+     (icon :category "docs" :icon "book") ;; Capture, reword, restruct
+     (icon :category "slack" :icon "cog") ;; Planning, brainstorm
+     (icon :category "debug" :icon "bug")))) ;; Rework, update
+
+(customize-set-value
+    'org-agenda-category-icon-alist
+    (cl-flet ((icons (lambda (x) (all-the-icons-faicon (org-agenda-categories--caticon-icon x) :height 1))))
+      (mapcar
+       (lambda (x) (list (org-agenda-categories--caticon-category x)
+                    (list (icons x))
+                    nil nil))
+       org-agenda-categories/caticons)))
+
+(provide 'org-agenda-categories)
+;;; org-agenda-categories.el ends here
+#+end_src
