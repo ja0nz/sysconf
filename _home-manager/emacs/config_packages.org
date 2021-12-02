@@ -229,7 +229,7 @@ Backup of the Doom Emacs Capture templates for future reference
 ;;org-journal-skip-carryover-drawers (list "LOGBOOK")
 #+end_src
 
-*** Org Journal Keymap
+*** Org Journal Keymap -> SPC r
 #+begin_src emacs-lisp
 ;; I need the org mode bindings
 (after! org-journal
@@ -535,4 +535,16 @@ to get it working.
 
 #+begin_src emacs-lisp
 ;;(use-package! lsp-tailwindcss)
+#+end_src
+* Undo tree keybindings -> SPC d
+https://elpa.gnu.org/packages/undo-tree.html
+#+begin_src emacs-lisp
+(map! :leader :prefix "d"
+        (:map global-map
+         :desc "better undo-tree-visualize" "d" #'undo-tree-visualize
+         :desc "undo" "u" #'undo-tree-undo
+         :desc "redo" "r" #'undo-tree-redo
+         :desc "save buffer state to register" "S" #'undo-tree-save-state-to-register
+         :desc "restore buffer state from register" "R" #'undo-tree-restore-state-from-register
+         :desc "undo tree switch branch" "s" #'undo-tree-switch-branch))
 #+end_src
