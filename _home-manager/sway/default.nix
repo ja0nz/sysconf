@@ -144,7 +144,7 @@ in {
           exec "nmcli networking connectivity | \
                     grep -q none && nmcli networking on || nmcli networking off"'';
         "XF86Favorites" = ''
-          exec "emacsclient --eval '(save-some-buffers t)' 2>/dev/null & shutdown -h now"'';
+          exec "emacsclient --eval '(save-some-buffers t)' 2>/dev/null; shutdown -h now"'';
       };
       window = {
         border = 2;
