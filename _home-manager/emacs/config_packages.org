@@ -35,8 +35,10 @@ Here are some additional functions/macros that could help you configure Doom:
 
 ;; No evil snipe mode if there is avy!
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
-(define-key evil-normal-state-map (kbd "s") 'evil-avy-goto-char-timer)
-(define-key evil-normal-state-map (kbd "S") 'avy-goto-char)
+(map! :n "s" #'evil-avy-goto-char-timer)
+(map! :n "S" #'avy-goto-char)
+;;(define-key evil-normal-state-map (kbd "s") 'evil-avy-goto-char-timer)
+;;(define-key evil-normal-state-map (kbd "S") 'avy-goto-char)
 
 ;; No custom file to prevent emacs from buffering agenda files
 (setq custom-file "/dev/null")
@@ -110,6 +112,11 @@ Here are some additional functions/macros that could help you configure Doom:
       org-support-shift-select 'always
       org-goto-interface 'outline-path-completion
       org-startup-with-inline-images t)
+
+;; Fancy priorities
+(after! org-fancy-priorities
+  (setq
+   org-fancy-priorities-list '("🅰" "🅱" "🅾")))
 #+end_src
 ** Org agenda
 #+begin_src emacs-lisp
@@ -538,13 +545,17 @@ to get it working.
 #+end_src
 * Undo tree keybindings -> SPC d
 https://elpa.gnu.org/packages/undo-tree.html
+
+Missing argument: undo-tree-switch-branch
+I could not find any use from it because going over undo-tree-visualize anyway
+
 #+begin_src emacs-lisp
 (map! :leader :prefix "d"
         (:map global-map
          :desc "better undo-tree-visualize" "d" #'undo-tree-visualize
-         :desc "undo" "u" #'undo-tree-undo
-         :desc "redo" "r" #'undo-tree-redo
-         :desc "save buffer state to register" "S" #'undo-tree-save-state-to-register
-         :desc "restore buffer state from register" "R" #'undo-tree-restore-state-from-register
-         :desc "undo tree switch branch" "s" #'undo-tree-switch-branch))
+         :desc "save buffer state to register" "s" #'undo-tree-save-state-to-register
+         :desc "restore buffer state from register" "r" #'undo-tree-restore-state-from-register))
+
+(map! :nie "C-r" #'undo-tree-undo)
+(map! :nie "C-M-r" #'undo-tree-redo)
 #+end_src
