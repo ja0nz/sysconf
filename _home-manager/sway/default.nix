@@ -112,13 +112,13 @@ in {
 
         # Mover -> MIDDLE ROW
         "${modifier}+n" = "focus left";
-        "${modifier}+Ctrl+n" = "move left";
-        "${modifier}+Shift+n" = "focus output left";
+        "${modifier}+Ctrl+n" = "focus output left";
+        "${modifier}+Shift+n" = "move left";
         "${modifier}+Ctrl+Shift+n" = "move workspace to output left";
 
         "${modifier}+t" = "focus right";
-        "${modifier}+Ctrl+t" = "move right";
-        "${modifier}+Shift+t" = "focus output right";
+        "${modifier}+Ctrl+t" = "focus output right";
+        "${modifier}+Shift+t" = "move right";
         "${modifier}+Ctrl+Shift+t" = "move workspace to output right";
 
         # BOTTOM ROW
