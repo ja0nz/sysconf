@@ -278,7 +278,7 @@ Backup of the Doom Emacs Capture templates for future reference
          :desc "Org Journal New Entry" "n" #'org-journal-new-entry
          :desc "Org Journal New Scheduled Entry" "s" #'org-journal-new-scheduled-entry
          :desc "Org Journal Open Current" "r" #'org-journal-open-current-journal-file
-         :desc "Org Journal Stage" "t" #'(lambda () (interactive) (find-file _stageorg))))
+         :desc "Org Journal Stage" "h" #'(lambda () (interactive) (find-file _stageorg))))
 #+end_src
 *** *deprecated* Custom Export Clocktable Function
 #+begin_src
@@ -337,7 +337,8 @@ Backup of the Doom Emacs Capture templates for future reference
 (map! :leader :prefix "r"
         (:map org-mode-map
          :desc "Org Roam Node Insert" "i" #'org-roam-node-insert
-         :desc "Org Roam Buffer Toggle" "b" #'org-roam-buffer-toggle)
+         :desc "Org Roam Buffer Toggle" "b" #'org-roam-buffer-toggle
+         :desc "Org roam Column Toggle" "t" #'org-table-toggle-column-width)
         (:map global-map
          :desc "Org Roam Goto Node" "g" #'org-roam-node-find
          :desc "Org Roam Capture" "c" #'org-roam-capture))
