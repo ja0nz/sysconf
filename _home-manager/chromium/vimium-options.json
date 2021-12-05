@@ -13,7 +13,7 @@
   "filterLinkHints": false,
   "waitForEnterForFilteredHints": true,
   "hideHud": false,
-  "keyMappings": "map r Vomnibar.activate\nmap R Vomnibar.activateInNewTab\nmap <a-r> Vomnibar.activateTabSelection\n\nmap t scrollDown\nmap T scrollPageDown\nmap <a-t> nextTab\n\nmap n scrollUp\nmap N scrollPageUp\nmap <a-n> previousTab\n\nmap q restoreTab\nmap <a-q> removeTab\n\nmap c reload\nmap s performFind\nmap S performBackwardsFind\n\nmap g LinkHints.activateMode\nmap G LinkHints.activateModeToOpenInNewTab\nmap h goBack\nmap f goForward",
+  "keyMappings": "map r Vomnibar.activate\nmap R Vomnibar.activateInNewTab\nmap <a-r> Vomnibar.activateTabSelection\n\nmap n scrollUp\nmap N scrollPageUp\nmap <a-n> previousTab\nmap <a-c-n> moveTabLeft\n\nmap t scrollDown\nmap T scrollPageDown\nmap <a-t> nextTab\nmap <a-c-t> moveTabRight\n\nmap q restoreTab\nmap <a-q> removeTab\n\nmap c reload\nmap s performFind\nmap S performBackwardsFind\n\nmap g LinkHints.activateMode\nmap G LinkHints.activateModeToOpenInNewTab\nmap h goBack\nmap f goForward",
   "linkHintCharacters": "sadfjklewcmpgh",
   "linkHintNumbers": "0123456789",
   "newTabUrl": "about:newtab",
