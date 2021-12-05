@@ -34,6 +34,7 @@ in {
   # Packages
   home.packages = with pkgs; [
     wldash
+    kanshi # Dynamic display configuration tool
     wl-clipboard # Command-line copy/paste utilities for Wayland
     grim # Grab images from a Wayland compositor
     jq # A lightweight and flexible command-line JSON processor
@@ -108,22 +109,40 @@ in {
       #workspaceAutoBackAndForth = true;
       inherit modifier;
       keybindings = lib.mkOptionDefault {
-        "${modifier}+q" = "kill";
-        "${modifier}+g" = "floating toggle";
-        "${modifier}+space" = "workspace back_and_forth";
-        "${modifier}+h" = "layout toggle splith tabbed";
-        "${modifier}+Ctrl+d" = "exec networkmanager_dmenu";
-        "${modifier}+Ctrl+n" = ''exec "emacsclient -c"'';
 
-        "${modifier}+Ctrl+r" =
-          "exec chromium ${lib.concatStringsSep " " chrome-flags}";
-        "${modifier}+Ctrl+t" = "exec caja";
+        # Mover -> MIDDLE ROW
+        "${modifier}+n" = "focus left";
+        "${modifier}+Ctrl+n" = "move left";
+        "${modifier}+Shift+n" = "focus output left";
+        "${modifier}+Ctrl+Shift+n" = "move workspace to output left";
+
+        "${modifier}+t" = "focus right";
+        "${modifier}+Ctrl+t" = "move right";
+        "${modifier}+Shift+t" = "focus output right";
+        "${modifier}+Ctrl+Shift+t" = "move workspace to output right";
+
+        # BOTTOM ROW
+        "${modifier}+space" = "workspace back_and_forth";
+
+        # Other sway -> TOP ROW
         "${modifier}+k" = "exec ${./swaylock}";
         "${modifier}+Ctrl+k" = ''exec "${./swaylock} && systemctl suspend"'';
+        "${modifier}+h" = "layout toggle splith tabbed";
+        "${modifier}+g" = "floating toggle";
+        "${modifier}+q" = "kill";
 
+        # Player -> BOTTOM ROW
         "${modifier}+m" = ''exec "playerctl previous"'';
         "${modifier}+comma" = ''exec "playerctl play-pause"'';
         "${modifier}+period" = ''exec "playerctl next"'';
+
+        # Launcher
+        "${modifier}+x" = ''exec "emacsclient -c"'';
+        "${modifier}+v" =
+          "exec chromium ${lib.concatStringsSep " " chrome-flags}";
+        "${modifier}+l" = "exec caja";
+        #"${modifier}+d" = "exec wldash"; -> by system
+        "${modifier}+Ctrl+d" = "exec networkmanager_dmenu";
 
         "Print" = "exec ${./take_screenshot}";
         "Ctrl+Print" = "exec ${./take_screenshot} full";
