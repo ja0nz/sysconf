@@ -25,13 +25,14 @@ in {
       "peteler.family" = {
         host = "pf"; # Just a abbrevation ~ssh pf~
         hostname = "peteler.family";
+        port = 32347;
         user = "root";
         identitiesOnly = true;
         identityFile = "${_secret}/ssh/ssh-peteler-family";
       };
       "git.peteler.family" = {
         user = "git";
-        port = 2222;
+        port = 18268;
         checkHostIP = false;
       };
       "github.com" = { user = "git"; };
