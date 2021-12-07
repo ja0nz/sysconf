@@ -12,6 +12,9 @@ in {
     /emacs
     /zathura
     /chromium
+    # -- Services --
+    /dropbox.nix
+    /nextcloud.nix
     # -- GUI --
     /sway
     /waybar
@@ -51,9 +54,6 @@ in {
     networkmanagerapplet # NetworkManager control applet for GNOME
     neovim # Vim text editor fork focused on extensibility and agility
     brave # Privacy-oriented browser for Desktop and Laptop computers
-
-    # -- Online services --
-    dropbox-cli # Command line client for the dropbox daemon
 
     # -- System information --
     neofetch # A fast, highly customizable system info script
