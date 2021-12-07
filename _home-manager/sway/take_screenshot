@@ -1,6 +1,6 @@
 #!/bin/sh
 
-filestart="$HOME/Pictures/screenshot_"
+filestart="$HOME/tmp/screenshot_"
 ts=$(date +'%Y-%m-%d-%H:%M:%S')
 
 fname="$filestart$ts.png"
