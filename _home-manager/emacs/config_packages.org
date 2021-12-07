@@ -72,6 +72,15 @@ Here are some additional functions/macros that could help you configure Doom:
   '(font-lock-comment-face :slant italic)
   '(font-lock-keyword-face :slant italic))
 #+end_src
+* Custom set variables
+Just a dump for some used (project) variables
+#+begin_src emacs-lisp
+(custom-set-variables
+ '(safe-local-variable-values
+   '(
+      (lsp-css-lint-unknown-at-rules . "ignore")
+     )))
+#+end_src
 * Yas Snippets
 #+begin_src emacs-lisp
 (setq +snippets-dir "~/sysconf/_home-manager/emacs/snippets")
