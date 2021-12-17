@@ -62,9 +62,9 @@ Here are some additional functions/macros that could help you configure Doom:
 (setq display-line-numbers-type t)
 
 ;; Fonts settings
-(setq doom-font (font-spec :family "JetBrains Mono" :size 15)
-      doom-variable-pitch-font (font-spec :family "Noto Sans" :size 15)
-      doom-big-font (font-spec :family "JetBrains Mono" :size 24))
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15)
+      doom-variable-pitch-font (font-spec :family "Arimo Nerd Font" :size 15)
+      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 24))
 (after! doom-themes
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t))

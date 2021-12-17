@@ -82,7 +82,6 @@
 *** Alarcitty
     File: [[file:_home-manager/alacritty.nix][alacritty.nix]]
     The terminal emulator
-    *JetBrains Mono* (or any other monofont) must be installed!
 *** XDG
     File: [[file:_home-manager/xdg.nix][xdg.nix]]
     Setting XDG MIME default apps.

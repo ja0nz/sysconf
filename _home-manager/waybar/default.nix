@@ -34,10 +34,10 @@
       modules = {
         tray = { spacing = 10; };
         clock = {
-          format = "{:%a %d %b | %H:%M | W%V}";
-          tooltip-format = "{:%Y-%m-%d | %H:%M | W%V}";
+          format = "{:%a %d %b | W%V | %H:%M}";
+          tooltip-format = "{:%Y-%m-%d | W%V | %H:%M}";
           format-alt = "{:%Y-%m-%d}";
-          on-click-right = "brave calendar.google.com";
+          on-click-right = "xdg-open https://calendar.google.com";
         };
         cpu = { format = "<b>CPU</b>: {usage}%"; };
         backlight = {
@@ -56,25 +56,33 @@
           format-icons = [ "" "" "" "" "" ];
         };
         network = {
-          format-wifi = "{essid} | {signalStrength}%";
-          format-ethernet = "{ipaddr} 🔌";
+          format-icons = {
+            wifi = "";
+            ethernet = "";
+            disconnected = "睊";
+          };
+          format-wifi = "{essid} | {signalStrength}% {icon}";
+          format-ethernet = "{ipaddr} {icon}";
+          format-disconnected = "⚠ {icon}";
           tooltip-format-ethernet = "{ifname}: {ipaddr}/{cidr}";
           on-click-right = "nm-connection-editor";
-          format-disconnected = "Disconnected ⚠";
           max-length = 40;
         };
         pulseaudio = {
           format = "{volume}% {icon}";
           format-bluetooth = "{volume}% {icon}";
-          format-muted = "";
+          format-muted = "ﱝ";
           format-icons = {
-            headphones = "";
-            handsfree = "🎙";
-            headset = "";
-            phone = "";
-            portable = "";
-            car = "";
-            default = [ "" "" ];
+            headphone = "";
+            hands-free = "";
+            headset = "";
+            speaker = "蓼";
+            hdmi = "﴿";
+            hifi = "";
+            phone = "";
+            portable = "";
+            car = "";
+            default = [ "奄" "奔" "墳" ];
           };
           scroll-step = 1;
           on-click = "pamixer --toggle-mute";
@@ -98,9 +106,9 @@
           max-length = 40;
         };
         "custom/root" = {
-          format = "{} 🖴";
+          format = "{} ";
           interval = 60;
-          exec = "df -h | gawk '$6 == \"/\" {print $3 \"/\" $2}'";
+          exec = "df -h | gawk '$6 == \" | \" {print $3 \"/\" $2}'";
         };
       };
     }];

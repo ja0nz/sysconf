@@ -24,19 +24,21 @@ with lib; {
 
   config = {
     # TODO Set your values
+    # Consult: https://www.nerdfonts.com/font-downloads
+    # nixpkgs: https://github.com/NixOS/nixpkgs/blob/master/pkgs/data/fonts/nerdfonts/shas.nix
     _repoRoot = /home/me/sysconf;
     _configInUse = ../ThinkPad_X1_Nano_Gen1;
     _monoFont = {
-      name = "JetBrains Mono";
-      pkg = pkgs.jetbrains-mono;
+      name = "JetBrainsMono Nerd Font";
+      pkg = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
     };
     _sansFont = {
-      name = "Noto Sans";
-      pkg = pkgs.noto-fonts;
+      name = "Arimo Nerd Font";
+      pkg = pkgs.nerdfonts.override { fonts = [ "Arimo" ]; };
     };
     _serifFont = {
-      name = "DeJaVu Serif";
-      pkg = pkgs.dejavu_fonts;
+      name = "Tinos Nerd Font";
+      pkg = pkgs.nerdfonts.override { fonts = [ "Tinos" ]; };
     };
 
     networking = {
