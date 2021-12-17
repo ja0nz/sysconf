@@ -74,7 +74,7 @@
         pulseaudio = {
           format = "{volume}% {icon}";
           format-bluetooth = "{volume}% {icon}";
-          format-muted = "ﱝ %00";
+          format-muted = "ﱝ %0";
           format-icons = {
             headphone = "";
             hands-free = "";
