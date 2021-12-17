@@ -2,6 +2,9 @@
    #+FILETAGS: :sway:
 
    * Optional configuration
+    All possible config settings:
+    https://github.com/Alexays/Waybar/blob/master/resources/config
+
     Some waybar areas expect certain programs. This is a nonbreaking issue.
     - pavucontrol -> launch pulseaudio control
     - networkmanager -> launch network control
@@ -45,7 +48,7 @@
         };
         backlight = {
           format = "{percent}% {icon}";
-          format-icons = [ "" ];
+          format-icons = [ "" "" "" "" "" "" "" ];
           on-scroll-up = "brillo -A 0.5";
           on-scroll-down = "brillo -U 0.5";
         };
@@ -56,7 +59,10 @@
             critical = 15;
           };
           format = "{capacity}% {icon}";
-          format-icons = [ "" "" "" "" "" ];
+          format-charging = "{capacity}% ";
+          format-plugged = "{capacity}% ﮣ";
+          format-full = "";
+          format-icons = [ "" "" "" "" "" "" "" "" "" "" ];
         };
         network = {
           format-icons = {
@@ -96,10 +102,7 @@
           format = "{}";
           max-length = 50;
         };
-        "custom/waybar-mpris" = let
-          fmpris = ''
-            {"class":"{{ status }}", "alt":"{{ status }}", "text":"{{ emoji(status) }} {{ artist }} - {{ title }}", "tooltip":"{{ markup_escape(artist) }} - {{ markup_escape(title) }}\n({{ playerName }})"}'';
-        in {
+        "custom/waybar-mpris" = {
           return-type = "json";
           exec = "${./playerctl.sh} 2> /dev/null";
           on-click = "playerctl previous";
