@@ -14,7 +14,6 @@ in {
     /chromium
     # -- Services --
     /dropbox.nix
-    /nextcloud.nix
     # -- GUI --
     /sway
     /waybar
