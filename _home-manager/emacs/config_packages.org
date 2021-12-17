@@ -37,6 +37,7 @@ Here are some additional functions/macros that could help you configure Doom:
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
 (map! :n "s" #'evil-avy-goto-char-timer)
 (map! :n "S" #'avy-goto-char)
+(setq avy-all-windows t)
 ;;(define-key evil-normal-state-map (kbd "s") 'evil-avy-goto-char-timer)
 ;;(define-key evil-normal-state-map (kbd "S") 'avy-goto-char)
 
@@ -46,7 +47,13 @@ Here are some additional functions/macros that could help you configure Doom:
 ;; Antagonist for evil-goto-definition -> g d; jump back with -> g b
 (map! :map evil-motion-state-map
       :prefix "g"
-      "b" #'evil-jump-backward)
+      "b" #'evil-jump-backward
+      "B" #'avy-pop-mark)
+
+;; Fast left/right window switcher
+(map! :nie "M-n" #'windmove-left)
+(map! :nie "M-t" #'windmove-right)
+(map! :nie "M-SPC" #'ace-window)
 
 ;; Set chromium as browser
 ;; Normally the default browser is fine, but with brave/chromium on the same machine things getting tricky
@@ -132,7 +139,14 @@ Just a dump for some used (project) variables
 ;; Custom org agenda shortcut
 (defun org-agenda-week (&optional arg)
   (interactive "P")
-  (org-agenda arg "a"))
+  (when (= (length (window-list)) 1)
+    (if (= 0 (car (window-edges)))
+          (split-window-right)
+          (split-window-left)))
+  (let ((org-agenda-window-setup 'other-window)
+        (current (buffer-name)))
+    (org-agenda arg "a")
+    (switch-to-buffer-other-window current)))
 
 (map! :leader :prefix "o" :map global-map :desc "Open Org Agenda Week" "w" #'org-agenda-week)
 #+end_src
@@ -227,7 +241,7 @@ Backup of the Doom Emacs Capture templates for future reference
  ("on" "Project notes" entry #'+org-capture-central-project-notes-file "* %U %?\n %i\n %a" :heading "Notes" :prepend t)
  ("oc" "Project changelog" entry #'+org-capture-central-project-changelog-file "* %U %?\n %i\n %a" :heading "Changelog" :prepend t))
 #+end_src
-** Org Journal
+** Org Journal -> SPC r
 #+begin_src emacs-lisp
 ;; Org Journal Settings
 (setq org-journal-dir org-directory
@@ -303,7 +317,7 @@ Backup of the Doom Emacs Capture templates for future reference
          (org-agenda-files (directory-files org-directory t (concat "^W" time-string))))
     (call-interactively #'org-clock-csv-to-file)))
 #+end_src
-** Org Roam
+** Org Roam -> SPC r
 #+begin_src emacs-lisp
 ;; Org Roam Settings
 (setq +org-roam-open-buffer-on-find-file nil
@@ -490,6 +504,124 @@ This function will clean all the logbook entries.
         :desc "Launch terminal here" "t" #'terminal-here-launch
         :desc "Launch terminal ROOT" "T" #'terminal-here-project-launch))
 #+end_src
+* Avy Actions
+Based on the article:
+https://karthinks.com/software/avy-can-do-anything/
+
+Pomodoro clock in -> c
+#+begin_src emacs-lisp
+(defun avy-action-org-pomodoro (pt)
+  (save-excursion
+    (goto-char pt)
+    (org-pomodoro))
+  (select-window
+   (cdr
+    (ring-ref avy-ring 0)))
+  t)
+
+(after! avy
+  (setf (alist-get ?c avy-dispatch-alist) 'avy-action-org-pomodoro))
+#+end_src
+
+Kill text -> k K
+#+begin_src emacs-lisp
+;; Kill text
+(defun avy-action-kill-whole-line (pt)
+  (save-excursion
+    (goto-char pt)
+    (kill-whole-line))
+  (select-window
+   (cdr
+    (ring-ref avy-ring 0)))
+  t)
+
+(after! avy
+  (setf (alist-get ?k avy-dispatch-alist) 'avy-action-kill-stay
+        (alist-get ?K avy-dispatch-alist) 'avy-action-kill-whole-line))
+#+end_src
+
+Copy text (remain in register) -> w W
+Yank text (paste immediately) -> y Y | ALTERSBUFFER
+#+begin_src emacs-lisp
+;; Copy text (remain in register)
+(defun avy-action-copy-whole-line (pt)
+  (save-excursion
+    (goto-char pt)
+    (cl-destructuring-bind (start . end)
+        (bounds-of-thing-at-point 'line)
+      (copy-region-as-kill start end)))
+  (select-window
+   (cdr
+    (ring-ref avy-ring 0)))
+  t)
+
+(after! avy
+  (setf (alist-get ?w avy-dispatch-alist) 'avy-action-copy
+        (alist-get ?W avy-dispatch-alist) 'avy-action-copy-whole-line))
+
+;; Yank text (paste immediately)
+(defun avy-action-yank-whole-line (pt)
+  (avy-action-copy-whole-line pt)
+  (save-excursion (yank))
+  t)
+
+(after! avy
+  (setf (alist-get ?y avy-dispatch-alist) 'avy-action-yank
+        (alist-get ?Y avy-dispatch-alist) 'avy-action-yank-whole-line))
+#+end_src
+
+Teleport -> t T
+#+begin_src emacs-lisp
+;; Transpose/Move text
+(defun avy-action-teleport-whole-line (pt)
+  (avy-action-kill-whole-line pt)
+  (save-excursion (yank)) t)
+
+(after! avy
+  (setf (alist-get ?t avy-dispatch-alist) 'avy-action-teleport
+        (alist-get ?T avy-dispatch-alist) 'avy-action-teleport-whole-line))
+ #+end_src
+
+_ Mark to char -> M
+#+begin_src emacs-lisp
+(defun avy-action-mark-to-char (pt)
+  (activate-mark)
+  (goto-char pt))
+
+(after! avy
+  (setf (alist-get ?M  avy-dispatch-alist) 'avy-action-mark-to-char))
+#+end_src
+
+Flyspell -> ;
+#+begin_src emacs-lisp
+;; Flyspell words
+(defun avy-action-flyspell (pt)
+  (save-excursion
+    (goto-char pt)
+    (when (require 'flyspell nil t)
+      (flyspell-auto-correct-word)))
+  (select-window
+   (cdr (ring-ref avy-ring 0)))
+  t)
+
+;; Bind to semicolon (flyspell uses C-;)
+(after! avy
+  (setf (alist-get ?\; avy-dispatch-alist) 'avy-action-flyspell))
+#+end_src
+
+Embark -> .
+#+begin_src emacs-lisp
+(defun avy-action-embark (pt)
+  (unwind-protect
+      (save-excursion
+        (goto-char pt)
+        (embark-act))
+    (select-window
+     (cdr (ring-ref avy-ring 0))))
+  t)
+(after! avy
+  (setf (alist-get ?. avy-dispatch-alist) 'avy-action-embark))
+#+end_src
 
 * Envrc global mode
 #+begin_src emacs-lisp
@@ -505,6 +637,7 @@ This function will clean all the logbook entries.
 #+begin_src emacs-lisp
 ;;https://github.com/js-emacs/xref-js2
 (setq xref-js2-search-program 'rg)
+(setq js-indent-level 2)
 #+end_src
 
 * Artist mode
