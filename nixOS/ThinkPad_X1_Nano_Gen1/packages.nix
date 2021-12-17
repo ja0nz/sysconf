@@ -29,6 +29,7 @@ in {
     /zoxide.nix
     /starship.nix
     /exa.nix
+    /fzf.nix
     /lorri.nix
     /direnv.nix
     /git.nix
@@ -40,6 +41,9 @@ in {
     /blueman.nix
     /udiskie.nix
   ];
+
+  # Is a sane 'cat' replacement
+  programs.bat.enable = true;
 
   home.packages = with pkgs; [
     # -- Programs --
@@ -56,21 +60,23 @@ in {
 
     # -- System information --
     neofetch # A fast, highly customizable system info script
+    du-dust # du + rust = dust. Like du but more intuitive [RUST]
     inxi # A full featured CLI system information tool
 
     # -- Find and discover --
     tree # Command to produce a depth indented directory listing
-    fzf # A command-line fuzzy finder written
-    ripgrep # A utility that combines the usability of The Silver Searcher
-    fd # A simple, fast and user-friendly alternative to find
+    ripgrep # A utility that combines the usability of The Silver Searcher [RUST]
+    fd # A simple, fast and user-friendly alternative to find [RUST]
 
     # -- Process management --
     htop # An interactive process viewer for Linux
-    psmisc # A set of small useful utilities that use the proc filesystem - pstree
+    procs # A modern replacement for ps written in [RUST]
+    bottom # A cross-platform graphical process/system monitor with a customizable interface [RUST]
 
     # -- Networking --
     dmenu # A generic, highly customizable, menu for the X Window System
     networkmanager_dmenu # Small script to manage NetworkManager connections with dmenu
+    bandwhich # A CLI utility for displaying current network utilization [RUST]
     httpie # A command line HTTP client whose goal is to make CLI human-friendly
     wget # Tool for retrieving files using HTTP, HTTPS, and FTP
     curl # A command line tool for transferring files with URL syntax
@@ -87,6 +93,9 @@ in {
     cryptsetup # LUKS for dm-crypt
 
     # -- Command Line Utilities --
+    sd # Intuitive find & replace CLI (sed alternative) [RUST]
+    hyperfine # Command-line benchmarking tool [RUST]
+    tealdeer # A very fast implementation of tldr in [RUST]
     calc # C-style arbitrary precision calculator
     rlwrap # Readline wrapper for console programs
 
@@ -99,5 +108,7 @@ in {
     nodejs # Some globals depend on this
     python3 # Some globals depend on this
     niv # Easy dependency management for Nix projects -> good fit with lorri & direnv
+    grex # A command-line tool for generating regular expressions from user-provided test cases [RUST]
+    tokei # A program that allows you to count your code [RUST]
   ];
 }

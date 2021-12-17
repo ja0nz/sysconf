@@ -39,7 +39,10 @@
           format-alt = "{:%Y-%m-%d}";
           on-click-right = "xdg-open https://calendar.google.com";
         };
-        cpu = { format = "<b>CPU</b>: {usage}%"; };
+        cpu = {
+          format = "<b>CPU</b>: {usage}%";
+          on-click-right = "alacritty -e btm";
+        };
         backlight = {
           format = "{percent}% {icon}";
           format-icons = [ "" ];
@@ -71,7 +74,7 @@
         pulseaudio = {
           format = "{volume}% {icon}";
           format-bluetooth = "{volume}% {icon}";
-          format-muted = "ﱝ";
+          format-muted = "ﱝ %00";
           format-icons = {
             headphone = "";
             hands-free = "";
@@ -108,7 +111,7 @@
         "custom/root" = {
           format = "{} ";
           interval = 60;
-          exec = "df -h | gawk '$6 == \" | \" {print $3 \"/\" $2}'";
+          exec = "df -h | gawk '$6 == \"/\" {print $3 \" | \" $2}'";
         };
       };
     }];
