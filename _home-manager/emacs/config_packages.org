@@ -508,7 +508,7 @@ This function will clean all the logbook entries.
 Based on the article:
 https://karthinks.com/software/avy-can-do-anything/
 
-Pomodoro clock in -> c
+Pomodoro clock in -> t
 #+begin_src emacs-lisp
 (defun avy-action-org-pomodoro (pt)
   (save-excursion
@@ -520,7 +520,7 @@ Pomodoro clock in -> c
   t)
 
 (after! avy
-  (setf (alist-get ?c avy-dispatch-alist) 'avy-action-org-pomodoro))
+  (setf (alist-get ?t avy-dispatch-alist) 'avy-action-org-pomodoro))
 #+end_src
 
 Kill text -> k K
@@ -540,7 +540,7 @@ Kill text -> k K
         (alist-get ?K avy-dispatch-alist) 'avy-action-kill-whole-line))
 #+end_src
 
-Copy text (remain in register) -> w W
+Copy text (remain in register) -> c C
 Yank text (paste immediately) -> y Y | ALTERSBUFFER
 #+begin_src emacs-lisp
 ;; Copy text (remain in register)
@@ -556,8 +556,8 @@ Yank text (paste immediately) -> y Y | ALTERSBUFFER
   t)
 
 (after! avy
-  (setf (alist-get ?w avy-dispatch-alist) 'avy-action-copy
-        (alist-get ?W avy-dispatch-alist) 'avy-action-copy-whole-line))
+  (setf (alist-get ?c avy-dispatch-alist) 'avy-action-copy
+        (alist-get ?C avy-dispatch-alist) 'avy-action-copy-whole-line))
 
 ;; Yank text (paste immediately)
 (defun avy-action-yank-whole-line (pt)
@@ -570,7 +570,7 @@ Yank text (paste immediately) -> y Y | ALTERSBUFFER
         (alist-get ?Y avy-dispatch-alist) 'avy-action-yank-whole-line))
 #+end_src
 
-Teleport -> t T
+Teleport/Grab -> g G
 #+begin_src emacs-lisp
 ;; Transpose/Move text
 (defun avy-action-teleport-whole-line (pt)
@@ -578,8 +578,8 @@ Teleport -> t T
   (save-excursion (yank)) t)
 
 (after! avy
-  (setf (alist-get ?t avy-dispatch-alist) 'avy-action-teleport
-        (alist-get ?T avy-dispatch-alist) 'avy-action-teleport-whole-line))
+  (setf (alist-get ?g avy-dispatch-alist) 'avy-action-teleport
+        (alist-get ?G avy-dispatch-alist) 'avy-action-teleport-whole-line))
  #+end_src
 
 _ Mark to char -> M
