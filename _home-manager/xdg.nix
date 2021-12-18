@@ -16,6 +16,8 @@
     defaultApplications = {
       "application/pdf" = [ "org.pwmt.zathura.desktop" ];
       "text/html" = [ "chromium-browser.desktop" ];
+      "x-scheme-handler/https" = [ "chromium-browser.desktop" ];
+      "x-scheme-handler/http" = [ "chromium-browser.desktop" ];
       "image/png" = [ "eom.desktop " ];
       "image/jpeg" = [ "eom.desktop" ];
     };

@@ -51,7 +51,7 @@
       du = "dust";
       ps = "procs";
       sed = "sd";
-      banwhich = "sudo bandwhich";
+      network = "sudo bandwhich";
       # ls = "exa"; -> set by exa
     };
     interactiveShellInit = ''

@@ -13,6 +13,17 @@ in {
   programs.alacritty = {
     enable = true;
     settings = {
+      # TODO Left here for reference on how to assign custom behavior to alacritty. For the normal "open-URL-on-click" alacritty works just fine.
+      # See docs: https://github.com/alacritty/alacritty/blob/2538c87d3e8f67c1a7c4ef634bcd09a0c77b9879/alacritty.yml#L458
+      # hints = {
+      #   enabled = [{
+      #     regex = ''
+      #       (ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-\u009F<>"\\s{-}\\^⟨⟩`]+'';
+      #     command = "chromium";
+      #     post_processing = true;
+      #     mouse = { enabled = true; };
+      #   }];
+      # };
       font = {
         normal = {
           family = fontfamily;
