@@ -14,6 +14,7 @@ in {
     /chromium
     # -- Services --
     /dropbox.nix
+    /syncthing.nix
     # -- GUI --
     /sway
     /waybar
