@@ -4,3 +4,4 @@
 _secret/ssh/known_hosts
 _secret/ssh/ssh-peteler-family
 _secret/ssh/ssh-peteler-family-cert.pub
+_secret/ssh/ec2-peteler-family.pem
