@@ -1,4 +1,4 @@
-/* #+TITLE: Fish - a friendly interactive shell w/ bat
+/* #+TITLE: Fish - a friendly interactive shell
    #+FILETAGS: :shell:development:
 
    * Mandatory configuration
@@ -14,7 +14,7 @@
 {
   home.sessionVariables = {
     EDITOR = "emacsclient -c";
-    BROWSER = "chromium";
+    # BROWSER = "chromium"; <-- set in mimeapps.list instead
   };
 
   home.sessionPath = [
@@ -31,7 +31,18 @@
         end
       end
     '';
-    shellAliases = { # TODO Adapt aliases to your needs
+    shellAliases = {
+      # --- TODO Special sysconf/nixOS related commands
+      "nixos:updateALL" = ''
+        cd ~/sysconf && rg fetchTarball -l | xargs -I@ update-nix-fetchgit @ \
+        sudo nix-channel --update'';
+      "nixos:switch" = "sudo nixos-rebuild switch";
+      "nixos:boot" = "sudo nixos-rebuild boot";
+      "nixos:clean" = "sudo nix-collect-garbage -d";
+      nix-stray-roots =
+        "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/w+-system|{memory)'";
+      # --- TODO General purpose
+      vim = "nvim";
       groups = "id (whoami)";
       rg = "rg --hidden --glob '!.git'";
       tree = "tree -a -I 'node_modules|.git|.yarn'";
@@ -40,10 +51,8 @@
       du = "dust";
       ps = "procs";
       sed = "sd";
+      banwhich = "sudo bandwhich";
       # ls = "exa"; -> set by exa
-      vim = "nvim";
-      nix-stray-roots =
-        "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/w+-system|{memory)'";
     };
     interactiveShellInit = ''
       any-nix-shell fish | source

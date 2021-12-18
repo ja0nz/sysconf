@@ -8,16 +8,6 @@
 { ... }:
 
 {
-  xdg.desktopEntries = {
-    chromium = {
-      name = "Chromium";
-      genericName = "Web Browser";
-      exec = "chromium %U";
-      terminal = false;
-      categories = [ "Application" "Network" "WebBrowser" ];
-      mimeType = [ "text/html" "text/xml" ];
-    };
-  };
   xdg.mime.enable = true;
   xdg.configFile."mimeapps.list".force = true;
   xdg.mimeApps = {
@@ -25,7 +15,7 @@
     associations = { added = { "image/png" = "eom.desktop"; }; };
     defaultApplications = {
       "application/pdf" = [ "org.pwmt.zathura.desktop" ];
-      "text/html" = [ "chromium.desktop" ];
+      "text/html" = [ "chromium-browser.desktop" ];
       "image/png" = [ "eom.desktop " ];
       "image/jpeg" = [ "eom.desktop" ];
     };
