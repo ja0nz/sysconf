@@ -42,17 +42,23 @@
       nix-stray-roots =
         "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/w+-system|{memory)'";
       # --- TODO General purpose
-      vim = "nvim";
-      groups = "id (whoami)";
-      rg = "rg --hidden --glob '!.git'";
-      tree = "tree -a -I 'node_modules|.git|.yarn'";
       cat = "bat";
-      find = "fd";
-      du = "dust";
-      ps = "procs";
-      sed = "sd";
-      network = "sudo bandwhich";
-      # ls = "exa"; -> set by exa
+      curl = "curlie"; # net
+      cut = "choose"; # select
+      df = "duf"; # disk free
+      dig = "dog"; # DNS lookup
+      du = "dust"; # file space usage
+      find = "fd"; # find
+      groups = "id (whoami)";
+      http = "xh"; # net
+      network = "sudo bandwhich"; # net
+      # ping = "gping"; # TODO ONHOLD nixos
+      ps = "procs"; # process status
+      rg = "rg --hidden --glob '!.git'"; # find
+      sed = "sd"; # select
+      tree = "fd | as-tree"; # find
+      vim = "nvim";
+      # ls, ll, la, lt, lla -> set by lsd
     };
     interactiveShellInit = ''
       any-nix-shell fish | source

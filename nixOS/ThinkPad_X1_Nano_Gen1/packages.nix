@@ -26,10 +26,12 @@ in {
     /gtk.nix
     # -- SHELL --
     /fish.nix
+    /mcfly.nix
     #/nushell.nix
     /zoxide.nix
     /starship.nix
-    /exa.nix
+    #/exa.nix
+    /lsd.nix
     /fzf.nix
     /lorri.nix
     /direnv.nix
@@ -62,12 +64,13 @@ in {
     # -- System information --
     neofetch # A fast, highly customizable system info script
     du-dust # du + rust = dust. Like du but more intuitive [RUST]
+    duf # Disk Usage/Free Utility [GO]
     inxi # A full featured CLI system information tool
 
     # -- Find and discover --
-    tree # Command to produce a depth indented directory listing
     ripgrep # A utility that combines the usability of The Silver Searcher [RUST]
     fd # A simple, fast and user-friendly alternative to find [RUST]
+    as-tree # Print a list of paths as a tree of paths [RUST]
 
     # -- Process management --
     htop # An interactive process viewer for Linux
@@ -75,10 +78,13 @@ in {
     bottom # A cross-platform graphical process/system monitor with a customizable interface [RUST]
 
     # -- Networking --
+    gping # Ping, but with a graph [RUST]
+    curlie # Frontend to curl that adds the ease of use of httpie [GO]
+    bandwhich # A CLI utility for displaying current network utilization [RUST]
+    xh # HTTPie; Friendly and fast tool for sending HTTP requests [RUST]
+    dogdns # A user-friendly command-line DNS client. dig on steroids [RUST]
     dmenu # A generic, highly customizable, menu for the X Window System
     networkmanager_dmenu # Small script to manage NetworkManager connections with dmenu
-    bandwhich # A CLI utility for displaying current network utilization [RUST]
-    httpie # A command line HTTP client whose goal is to make CLI human-friendly
     wget # Tool for retrieving files using HTTP, HTTPS, and FTP
     curl # A command line tool for transferring files with URL syntax
 
@@ -94,6 +100,7 @@ in {
     cryptsetup # LUKS for dm-crypt
 
     # -- Command Line Utilities --
+    choose # A human-friendly and fast alternative to cut and (sometimes) awk [RUST]
     sd # Intuitive find & replace CLI (sed alternative) [RUST]
     hyperfine # Command-line benchmarking tool [RUST]
     tealdeer # A very fast implementation of tldr in [RUST]
