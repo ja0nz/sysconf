@@ -27,7 +27,7 @@ in {
     # -- SHELL --
     /fish.nix
     /mcfly.nix
-    #/nushell.nix
+    # /nushell.nix
     /zoxide.nix
     /starship.nix
     #/exa.nix

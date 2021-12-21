@@ -52,7 +52,7 @@
       groups = "id (whoami)";
       http = "xh"; # net
       network = "sudo bandwhich"; # net
-      # ping = "gping"; # TODO ONHOLD nixos
+      ping = "gping";
       ps = "procs"; # process status
       rg = "rg --hidden --glob '!.git'"; # find
       sed = "sd"; # select
