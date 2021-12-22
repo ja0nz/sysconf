@@ -44,7 +44,6 @@
       # --- TODO General purpose
       cat = "bat";
       curl = "curlie"; # net
-      cut = "choose"; # select
       df = "duf"; # disk free
       dig = "dog"; # DNS lookup
       du = "dust"; # file space usage
@@ -64,6 +63,9 @@
       any-nix-shell fish | source
       zoxide init fish | source
       starship init fish | source
+      # Bind mcfly interactively
+      bind \cr __mcfly-history-widget
+      bind \er fzf-history-widget
     '';
   };
 
