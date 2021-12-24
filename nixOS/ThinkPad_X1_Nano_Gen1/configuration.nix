@@ -74,13 +74,20 @@ with lib; {
     services = {
       upower.enable = true;
       fstrim.enable = true;
-      #geoclue2.enable = true;
+      #geoclue2.enable = true; <- Went with manual location settings, no need for a geo service
       blueman.enable = true;
       tlp.enable = true;
       logind.lidSwitch = "ignore";
       # Udev laptop killswitch
       udev.extraRules = ''
         ACTION=="remove", SUBSYSTEM=="block", ENV{ID_SERIAL_SHORT}=="0116007138600721", RUN+="${pkgs.systemd}/bin/shutdown -h now"
+
+        # TODO Battery saving rules - x < 70 && x > 65
+        # Double check if /sys/class/power_supply/BAT0/<filename> exists!
+        KERNEL=="BAT0", SUBSYSTEM=="power_supply", ATTR{charge_start_threshold}="65"
+        KERNEL=="BAT0", SUBSYSTEM=="power_supply", ATTR{charge_control_start_threshold}="65"
+        KERNEL=="BAT0", SUBSYSTEM=="power_supply", ATTR{charge_end_threshold}="70"
+        KERNEL=="BAT0", SUBSYSTEM=="power_supply", ATTR{charge_control_end_threshold}="70"
       '';
     };
 
