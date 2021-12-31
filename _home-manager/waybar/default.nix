@@ -61,7 +61,7 @@
           format = "{capacity}% {icon}";
           format-charging = "{capacity}% ";
           format-plugged = "{capacity}% ﮣ";
-          format-full = "";
+          # format-full = "";
           format-icons = [ "" "" "" "" "" "" "" "" "" "" ];
         };
         network = {
