@@ -94,6 +94,11 @@ with lib; {
     # Related to sway, no other way to set in home-manager!
     security.pam.services.swaylock = { };
 
+    # Displays keys being pressed on a Wayland session
+    # Good for demoing stuff
+    # Requires SETUID
+    programs.wshowkeys.enable = true;
+
     #    services.gvfs.enable = true;
     #    programs.adb.enable = true;
 
