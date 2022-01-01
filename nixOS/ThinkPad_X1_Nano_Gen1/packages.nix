@@ -60,6 +60,8 @@ in {
     networkmanagerapplet # NetworkManager control applet for GNOME
     neovim # Vim text editor fork focused on extensibility and agility
     brave # Privacy-oriented browser for Desktop and Laptop computers
+    wofi-emoji # Emoji picker
+    wofi # ^
 
     # -- System information --
     neofetch # A fast, highly customizable system info script

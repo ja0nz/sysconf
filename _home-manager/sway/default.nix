@@ -12,6 +12,7 @@
     - caja -> as key combination
     - chromium browser -> as key combination
     - networkmanager_dmenu -> as key combination
+    - wofi && wofi-emoji -> as key combination
     - dropbox -> as service on start
     - emacs -> as key combination
     - pamixer -> as key combination
@@ -146,8 +147,6 @@ in {
 
         "Print" = "exec ${./take_screenshot}";
         "Ctrl+Print" = "exec ${./take_screenshot} full";
-        "XF86MonBrightnessUp" = ''exec "brillo -A 1"'';
-        "XF86MonBrightnessDown" = ''exec "brillo -U 1"'';
 
         "XF86AudioMute" = ''exec "pamixer --toggle-mute"'';
         "XF86AudioLowerVolume" = ''exec "pamixer --decrease 5"'';
@@ -156,12 +155,18 @@ in {
         # "XF86AudioPause" = ''exec "playerctl pause"'';
         # "XF86AudioNext" = ''exec "playerctl next"'';
         # "XF86AudioPrev" = ''exec "playerctl previous"'';
-
         "XF86AudioMicMute" = ''exec "pamixer --default-source --toggle-mute"'';
+
+        "XF86MonBrightnessDown" = ''exec "brillo -U 1"'';
+        "XF86MonBrightnessUp" = ''exec "brillo -A 1"'';
         "XF86Display" = ''exec "swaymsg 'output DP-4 toggle'"'';
         "XF86WLAN" = ''
           exec "nmcli networking connectivity | \
                     grep -q none && nmcli networking on || nmcli networking off"'';
+
+        "XF86NotificationCenter" = ''exec "wofi-emoji"'';
+        #"XF86PickupPhone" = "";
+        #"XF86HangupPhone" = "";
         "XF86Favorites" = ''
           exec "emacsclient --eval '(save-some-buffers t)' 2>/dev/null; shutdown -h now"'';
       };
