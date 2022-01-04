@@ -24,7 +24,6 @@
 let
   modifier = "Mod4";
   chrome-flags = [
-    "--enable-features=UseOzonePlatform"
     "--ozone-platform=wayland"
     "--extension-mime-request-handling=always-prompt-for-install"
     "--scroll-tabs=never"
