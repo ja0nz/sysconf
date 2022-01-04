@@ -145,14 +145,15 @@ Just a dump for some used (project) variables
 ;; Custom org agenda shortcut
 (defun org-agenda-week (&optional arg)
   (interactive "P")
-  (when (= (length (window-list)) 1)
-    (if (= 0 (car (window-edges)))
-          (split-window-right)
-          (split-window-left)))
-  (let ((org-agenda-window-setup 'other-window)
-        (current (buffer-name)))
-    (org-agenda arg "a")
-    (switch-to-buffer-other-window current)))
+  (org-agenda arg "a"))
+;;   (when (= (length (window-list)) 1)
+;;     (if (= 0 (car (window-edges)))
+;;         (split-window-right)
+;;         (split-window-left)))
+;;   (let ((org-agenda-window-setup 'other-window)
+;;         (current (buffer-name)))
+;;     (org-agenda arg "a")
+;;     (switch-to-buffer-other-window current)))
 
 (map! :leader :prefix "o" :map global-map :desc "Open Org Agenda Week" "w" #'org-agenda-week)
 #+end_src
@@ -168,9 +169,7 @@ Just a dump for some used (project) variables
   (cl-flet ((icon #'make-agendaIcons))
     (list
      ;; Leisure
-     (icon :category "italian" :icon "language")
-     (icon :category "spanish" :icon "language")
-     (icon :category "portuge" :icon "language")
+     (icon :category "lang" :icon "language")
      ;; ON -> netflix, hackernews, zeit.de (non work related)
      (icon :category "ON" :icon "toggle-on")
      ;; OFF -> jog, yoga, kite, bike, hike
