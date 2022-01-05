@@ -273,8 +273,11 @@ Backup of the Doom Emacs Capture templates for future reference
 
 *** Org Journal Keymap -> SPC r
 #+begin_src emacs-lisp
-;; I need the org mode bindings
 (after! org-journal
+  (map! :map org-journal-mode-map "C-M-n" #'org-journal-previous-entry)
+  (map! :map org-journal-mode-map "C-M-t" #'org-journal-next-entry)
+  ;; I want org-mode bindings instead of org-journal bindings
+  ;; Overwriting SPC c, d, p
   (map! :localleader
         (:map org-journal-mode-map
          (:prefix ("c" . "clock")
@@ -416,13 +419,12 @@ Backup of the Doom Emacs Capture templates for future reference
 
 (setq org-pomodoro-start-sound-p t
       org-pomodoro-killed-sound-p t
-      org-pomodoro-start-sound " *org-pomodoro* - ⏱START⏱"
-      org-pomodoro-finished-sound " *org-pomodoro* - 🏃FINISH🏃"
-      org-pomodoro-overtime-sound " *org-pomodoro* - ⏰OVERTIME⏰"
-      org-pomodoro-killed-sound " *org-pomodoro* - 💀KILLED💀"
-      org-pomodoro-short-break-sound " *org-pomodoro* - 🍰SHORT BREAK FINISHED🍰"
-      org-pomodoro-long-break-sound " *org-pomodoro* - 🍖LONG BREAK FINISHED🍖"
-      org-pomodoro-ticking-sound " *org-pomodoro* - 🥁ticktack🥁")
+      org-pomodoro-start-sound "GO⏰"
+      org-pomodoro-finished-sound "FINISH🏁"
+      org-pomodoro-overtime-sound "OVERTIME😵"
+      org-pomodoro-killed-sound "KILLED💀"
+      org-pomodoro-short-break-sound "SHORTBREAK☕ FINISHED🏁"
+      org-pomodoro-long-break-sound "LONGBREAK😴 FINISHED🏁")
 #+end_src
 ** Org table copy cell :hack:
 #+begin_src emacs-lisp
