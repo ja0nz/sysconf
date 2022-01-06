@@ -15,6 +15,8 @@
     enable = true;
     package = pkgs.ungoogled-chromium;
     extensions = [
+      # TODO <2022-01-06 Do> Language Reactor on hold because google sign in is not working
+      # { id = "hoombieeljmmljlkjmnheibnpciblicm"; }
       {
         id = "ocaahdebbfolfmndjeplogmgcagdmblk"; # chromium-web-store
         updateUrl =
@@ -23,11 +25,10 @@
       { id = "nngceckbapebfimnlniiiahkandclblb"; } # Bitwarden
       { id = "fihnjjcciajhdojfnbdddfaoknhalnja"; } # I don't care about cookies
       { id = "cdockenadnadldjbbgcallicgledbeoc"; } # VisBug
-      {
-        id = "dbepggeogbaibhgnhhndojpepiihcmeb";
-      } # Vimium
-      # TODO Language Reactor on hold because google sign in is not working
-      # { id = "hoombieeljmmljlkjmnheibnpciblicm"; }
+      { id = "dbepggeogbaibhgnhhndojpepiihcmeb"; } # Vimium
+      { id = "hecfkgekabkkhiidlinmifelhdooeool"; } # Fraidycay
+      { id = "aapbdbdomjkkjkaonfhkkikfgjllcleb"; } # Google Translate
     ];
   };
 }
+
