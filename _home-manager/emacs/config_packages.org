@@ -447,6 +447,41 @@ This function will clean all the logbook entries.
   (pop-global-mark))
 #+end_src
 
+** Org babel execute graph-easy :hack:
+#+begin_example
+\#+BEGIN_SRC graph-easy
+strict digraph {
+    a [shape="ellipse" style="filled" fillcolor="#1f77b4"]
+    b [shape="polygon" style="filled" fillcolor="#ff7f0e"]
+    a -> b [fillcolor="#a6cee3" color="#1f78b4"]
+}
+\#+END_SRC
+#+end_example
+- cmdline
+  - according to easy-graph. Default: --as=ascii
+  - useful: --as=boxart|svg|graphml
+- file
+  - outfile. Default: /dev/stdout
+  - outputformat is inferred from file extension (if not overwritten manually with --as=_)
+
+#+begin_src emacs-lisp
+(defun org-babel-execute:graph-easy (body params)
+  "Execute a block of dot code with org-babel:graph-easy."
+  (let* ((out-file (or (cdr (assq :file params)) "/dev/stdout"))
+        (in-file (org-babel-temp-file "tmp" ".dot"))
+        (cmdline (or (cdr (assq :cmdline params))
+                     (if-let ((ext (file-name-extension out-file)))
+                         (format "--as=%s" ext)
+                         (format "--as=%s" "ascii"))))
+        (cmd (or (cdr (assq :cmd params)) "graph-easy")))
+    (with-temp-file in-file
+      (insert body))
+    (org-babel-eval
+     (concat cmd
+        " --input=" (org-babel-process-file-name in-file)
+        " " cmdline
+        " --output=" (org-babel-process-file-name out-file)) "")))
+#+end_src
 * MU4E
 [[ https://github.com/hlissner/doom-emacs/blob/develop/modules/email/mu4e/README.org][Doom Emacs MU4E]]
 #+begin_src emacs-lisp

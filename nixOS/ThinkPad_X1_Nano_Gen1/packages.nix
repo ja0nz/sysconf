@@ -112,6 +112,7 @@ in {
     # -- File Generators --
     pandoc # Conversion betrween markup formats
     graphviz # Graph visualization tools
+    graph-easy # Render/convert graphs in/from various formats
     ditaa # Convert ascii art diagrams into proper bitmap graphics
 
     # --- Programming --
