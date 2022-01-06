@@ -8,7 +8,7 @@
 
 let
   pname = "sizzy";
-  version = "57.6.0"; # TODO Adjust version number
+  version = "57.10.0"; # TODO Adjust version number
   name = "${pname}-${version}";
   src = ./. + "/Sizzy-${version}.AppImage";
   appimageContents = appimageTools.extractType2 { inherit name src; };
