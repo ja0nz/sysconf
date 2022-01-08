@@ -88,7 +88,11 @@ Just a dump for some used (project) variables
 (custom-set-variables
  '(safe-local-variable-values
    '(
+      ;; bow ox-hugo to work with non hugo environments
+      (org-hugo-external-file-extensions-allowed-for-copying . nil)
+      ;; @include is a SASS feature
       (lsp-css-lint-unknown-at-rules . "ignore")
+      ;; need in some language learning buffers where the tables get huuuuuge
       (eval progn
            (visual-line-mode -1)
            (undo-tree-mode -1))
