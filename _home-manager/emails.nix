@@ -20,24 +20,25 @@ in {
   accounts.email = {
     maildirBasePath = maildir;
     accounts = {
-      "mail@ja.nz" = {
-        primary = true;
-        flavor = "plain";
-        address = mailjanz;
-        userName = mailjanz;
-        realName = "Ja0nz";
-        passwordCommand = passwordcmd + "${config._secret}/mbsync_janz.gpg";
-        mbsync = {
-          enable = true;
-          create = "maildir";
-          expunge = "both";
-        };
-        imap = {
-          host = "imap.purelymail.com";
-          tls.enable = true;
-        };
-      };
+      # "mail@ja.nz" = {
+      #   primary = true;
+      #   flavor = "plain";
+      #   address = mailjanz;
+      #   userName = mailjanz;
+      #   realName = "Ja0nz";
+      #   passwordCommand = passwordcmd + "${config._secret}/mbsync_janz.gpg";
+      #   mbsync = {
+      #     enable = true;
+      #     create = "maildir";
+      #     expunge = "both";
+      #   };
+      #   imap = {
+      #     host = "imap.purelymail.com";
+      #     tls.enable = true;
+      #   };
+      # };
       "jan.peteler@gmail.com" = {
+        primary = true;
         flavor = "gmail.com";
         address = janpetelergmailcom;
         userName = janpetelergmailcom;
@@ -50,33 +51,33 @@ in {
             inbox = {
               farPattern = "INBOX";
               nearPattern = "INBOX";
-              extraConfig = { Expunge = "Both"; };
+              extraConfig = { Expunge = "both"; };
             };
             trash = {
               farPattern = "[Gmail]/Bin";
               nearPattern = "Trash";
-              extraConfig = { Create = "Slave"; };
+              extraConfig = { Create = "near"; };
             };
             drafts = {
               farPattern = "[Gmail]/Drafts";
               nearPattern = "Drafts";
               extraConfig = {
-                Create = "Slave";
-                Expunge = "Both";
+                Create = "near";
+                Expunge = "both";
               };
             };
             sent = {
               farPattern = "[Gmail]/Sent Mail";
               nearPattern = "Sent";
-              extraConfig = { Create = "Slave"; };
+              extraConfig = { Create = "near"; };
             };
             archive = {
               farPattern = "[Gmail]/All Mail";
               nearPattern = "Archive";
               extraConfig = {
-                Create = "Slave";
-                Sync = "Push";
-                Expunge = "Both";
+                Create = "near";
+                Sync = "push";
+                Expunge = "both";
               };
             };
           };
@@ -105,10 +106,14 @@ in {
   */
   home.activation.muInit = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     # For single user:
-    # mu info | grep ${mailjanz} || mu init --maildir ${maildir} --my-address=${mailjanz}
+    mu info | grep ${janpetelergmailcom} || mu init --maildir ${maildir} --my-address=${janpetelergmailcom}
+
     # For multiple users:
-    mu info | grep ${mailjanz} && mu info | grep ${janpetelergmailcom} \
-       || mu init --maildir ${maildir} --my-address=${mailjanz} --my-address=${janpetelergmailcom}
+    # mu info | grep ${mailjanz} && mu info | grep ${janpetelergmailcom} || \
+    #   mu init --maildir ${maildir} \
+    #     --my-address=${mailjanz} \
+    #     --my-address=${janpetelergmailcom}
+
     mu index
     mkdir -p ${maildir}/.attachments
   '';

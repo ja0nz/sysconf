@@ -322,7 +322,7 @@ Backup of the Doom Emacs Capture templates for future reference
          :desc "Org Journal Open Current" "r" #'org-journal-open-current-journal-file
          :desc "Org Journal Stage" "h" #'(lambda () (interactive) (find-file _stageorg))))
 #+end_src
-*** *deprecated* Custom Export Clocktable Function
+*** Custom Export Clocktable Function :deprecated:
 #+begin_src
 (defun export-clocktable-csv (&optional week)
   "Export current week (no prefix argument) or weeks in the "
@@ -501,8 +501,9 @@ strict digraph {
       message-citation-line-function 'message-insert-formatted-citation-line)
 #+end_src
 
-** mail@ja.nz
-#+begin_src emacs-lisp
+** mail@ja.nz :deprecated:
+Handled by gmail now
+#+begin_src
 (set-email-account! "mail@ja.nz"
                     '((user-mail-address . "mail@ja.nz")
                       (user-full-name . "Ja0nz")
