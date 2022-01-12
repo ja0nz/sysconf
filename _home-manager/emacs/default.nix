@@ -23,9 +23,13 @@
 
   home.packages = with pkgs; [
     # Dictionaries
-    aspell # Spell checker for many languages
-    aspellDicts.en # Aspell dictionary for English
-    aspellDicts.de # Aspell dictionary for German
+    hunspell # Spell checker for many languages
+
+    hunspellDicts.en_US # dictionary for English
+    hunspellDicts.de_DE # dictionary for German
+    hunspellDicts.it_IT # dictionary for Italian
+    hunspellDicts.es_ES # dictionary for Spanish
+    hunspellDicts.fr-moderne # dictionary for French
 
     # Database for org-roam
     sqlite # A self-contained, serverless, zero-configuration SQL db engine

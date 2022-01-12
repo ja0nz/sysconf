@@ -88,14 +88,12 @@ Just a dump for some used (project) variables
 (custom-set-variables
  '(safe-local-variable-values
    '(
+      ;; set buffer local
+      (ispell-local-dictionary . #'stringp)
       ;; bow ox-hugo to work with non hugo environments
       (org-hugo-external-file-extensions-allowed-for-copying . nil)
       ;; @include is a SASS feature
       (lsp-css-lint-unknown-at-rules . "ignore")
-      ;; need in some language learning buffers where the tables get huuuuuge
-      (eval progn
-           (visual-line-mode -1)
-           (undo-tree-mode -1))
      )))
 #+end_src
 * Yas Snippets
@@ -429,6 +427,16 @@ Backup of the Doom Emacs Capture templates for future reference
       org-pomodoro-killed-sound "KILLED💀"
       org-pomodoro-short-break-sound "SHORTBREAK☕ FINISHED🏁"
       org-pomodoro-long-break-sound "LONGBREAK😴 FINISHED🏁")
+#+end_src
+** Org hunspell
+#+begin_src emacs-lisp
+(add-hook! org-mode
+  (after! ispell
+    (ispell-set-spellchecker-params)
+    (ispell-hunspell-add-multi-dic "it_IT,en_US")
+    (ispell-hunspell-add-multi-dic "fr_FR,en_US")
+    (ispell-hunspell-add-multi-dic "es_ES,en_US")
+))
 #+end_src
 ** Org table copy cell :hack:
 #+begin_src emacs-lisp
