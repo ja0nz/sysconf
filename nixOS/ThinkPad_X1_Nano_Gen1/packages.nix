@@ -97,6 +97,7 @@ in {
 
     # -- Sound and light management --
     playerctl # Command-line utility for controlling media players that implement MPRIS
+    alsa-utils # ALSA, the Advanced Linux Sound Architecture utils
 
     # -- Security --
     cryptsetup # LUKS for dm-crypt

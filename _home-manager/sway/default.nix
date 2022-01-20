@@ -180,7 +180,8 @@ in {
           always = true;
         }
         {
-          command = "systemctl --user restart waybar";
+          # TODO A bit of a hack to make ALSA "Auto-Mute" disabled
+          command = "amixer -c 0 sset 'Auto-Mute Mode' Disabled --quiet";
           always = true;
         }
       ];
