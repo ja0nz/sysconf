@@ -450,7 +450,7 @@ Backup of the Doom Emacs Capture templates for future reference
       (string-trim
         (substring-no-properties(org-table-get-field))))))
 #+end_src
-** Org purge logbook drawer :hack:
+** Org purge drawers :hack:
 If the habits.org file gets too big it slows down emacs.
 This function will clean all the logbook entries.
 #+begin_src emacs-lisp
