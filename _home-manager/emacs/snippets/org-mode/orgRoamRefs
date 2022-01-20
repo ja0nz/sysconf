@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: Org Roam Refs
-# key: roamr
-# --
-:ROAM_REFS: $0
