@@ -97,6 +97,7 @@ in {
 
     # -- Sound and light management --
     playerctl # Command-line utility for controlling media players that implement MPRIS
+    pulseaudio # Sound server for POSIX and Win32 systems
     alsa-utils # ALSA, the Advanced Linux Sound Architecture utils
 
     # -- Security --

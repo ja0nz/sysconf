@@ -95,7 +95,8 @@
             default = [ "奄" "奔" "墳" ];
           };
           scroll-step = 1;
-          on-click = "pamixer --toggle-mute";
+          on-click = "${./switch-audio-port.sh} 2> /dev/null";
+          on-click-middle = "pamixer --toggle-mute";
           on-click-right = "pavucontrol";
         };
         "sway/window" = { max-length = 70; };
