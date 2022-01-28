@@ -66,7 +66,7 @@ Here are some additional functions/macros that could help you configure Doom:
 ** Theming, Fonts
 #+begin_src emacs-lisp
 ;; There are two ways to load a theme. Both assume the theme is installed and available. You can either set `doom-theme' or manually load a theme with the `load-theme' function. This is the default:
-(setq doom-theme 'doom-laserwave)
+(setq doom-theme 'doom-dracula)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
@@ -417,7 +417,8 @@ Backup of the Doom Emacs Capture templates for future reference
 ** Org pomodoro
 #+begin_src emacs-lisp
 (after! org-pomodoro
-  (setq org-pomodoro-audio-player (executable-find "notify-send")))
+  (setq org-pomodoro-audio-player nil))
+  ;; (setq org-pomodoro-audio-player (executable-find "notify-send")))
 
 (setq org-pomodoro-start-sound-p t
       org-pomodoro-killed-sound-p t
