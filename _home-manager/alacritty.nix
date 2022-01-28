@@ -71,7 +71,7 @@ in {
           white = "#e6e6e6";
         };
       };
-      background_opacity = 0.9;
+      window.opacity = 0.9;
     };
   };
 }
