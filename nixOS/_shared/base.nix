@@ -32,8 +32,8 @@
         keep-derivations = true
         # experimental-features = nix-command flakes
       '';
-      autoOptimiseStore = true;
-      trustedUsers = [ "@wheel" ];
+      settings.auto-optimise-store = true;
+      settings.trusted-users = [ "@wheel" ];
     };
   };
 }

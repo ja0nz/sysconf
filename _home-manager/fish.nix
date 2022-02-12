@@ -34,8 +34,10 @@
     shellAliases = {
       # --- TODO Special sysconf/nixOS related commands
       "nixos:updateALL" = ''
-        cd ~/sysconf && rg fetchTarball -l | xargs -I@ update-nix-fetchgit @ \
-        sudo nix-channel --update'';
+        cd ~/sysconf;
+        rg fetchTarball -l | xargs -I@ update-nix-fetchgit @;
+        sudo nix-channel --update
+      '';
       "nixos:switch" = "sudo nixos-rebuild switch";
       "nixos:boot" = "sudo nixos-rebuild boot";
       "nixos:clean" = "sudo nix-collect-garbage -d";
