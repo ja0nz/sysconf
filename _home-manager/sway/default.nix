@@ -28,6 +28,9 @@ let
     "--extension-mime-request-handling=always-prompt-for-install"
     "--scroll-tabs=never"
     "--hide-crashed-bubble"
+    "--show-avatar-button=never"
+    "--hide-tab-close-buttons"
+    "--enable-features=EnableTabMuting"
   ];
 in {
 

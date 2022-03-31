@@ -2,10 +2,6 @@
   "settingsVersion": "1.67",
   "exclusionRules": [
     {
-      "pattern": "https?://mail.google.com/*",
-      "passKeys": ""
-    },
-    {
       "pattern": "https?://excalidraw.com/*",
       "passKeys": ""
     }
