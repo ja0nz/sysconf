@@ -116,6 +116,7 @@ in {
     graphviz # Graph visualization tools
     graph-easy # Render/convert graphs in/from various formats
     ditaa # Convert ascii art diagrams into proper bitmap graphics
+    unzip # An extraction utility for archives compressed in .zip format
 
     # --- Programming --
     nodejs # Some globals depend on this
