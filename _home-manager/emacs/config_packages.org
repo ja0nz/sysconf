@@ -94,11 +94,19 @@ Just a dump for some used (project) variables
       (org-hugo-external-file-extensions-allowed-for-copying . nil)
       ;; @include is a SASS feature
       (lsp-css-lint-unknown-at-rules . "ignore")
+      ;; exports backend HACK
+      (org-export-current-backend . t)
      )))
 #+end_src
 * Yas Snippets
 #+begin_src emacs-lisp
 (setq +snippets-dir "~/sysconf/_home-manager/emacs/snippets")
+#+end_src
+* LSP
+#+begin_src emacs-lisp
+;; Ignoring output (spago compilation target)
+(after! lsp-mode
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\output\\'"))
 #+end_src
 * Consult
 #+begin_src emacs-lisp
