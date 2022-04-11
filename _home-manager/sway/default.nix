@@ -30,7 +30,8 @@ let
     "--hide-crashed-bubble"
     "--show-avatar-button=never"
     "--hide-tab-close-buttons"
-    "--enable-features=EnableTabMuting"
+    # chrome://flags
+    "--enable-features='EnableTabMuting,WebRTCPipeWireCapturer,VaapiVideoDecoder,VaapiVideoEncoder'"
   ];
 in {
 

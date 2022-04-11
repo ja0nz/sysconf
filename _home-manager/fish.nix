@@ -13,6 +13,7 @@
 
 {
   home.sessionVariables = {
+    LIBVA_DRIVER_NAME = "iHD";
     EDITOR = "emacsclient -c";
     # BROWSER = "chromium"; <-- set in mimeapps.list instead
   };
