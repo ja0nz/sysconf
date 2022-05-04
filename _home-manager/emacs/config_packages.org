@@ -88,9 +88,12 @@ Just a dump for some used (project) variables
 (custom-set-variables
  '(safe-local-variable-values
    '(
+      ;; import org agenda files on demand
+      (eval . (org-agenda-file-to-front))
       ;; set buffer local
       (ispell-local-dictionary . #'stringp)
       ;; bow ox-hugo to work with non hugo environments
+      ;; https://github.com/kaushalmodi/ox-hugo
       (org-hugo-external-file-extensions-allowed-for-copying . nil)
       ;; @include is a SASS feature
       (lsp-css-lint-unknown-at-rules . "ignore")
@@ -316,15 +319,14 @@ Backup of the Doom Emacs Capture templates for future reference
           "p" #'org-priority
           "u" #'org-priority-up)
           "n" #'org-store-link)))
-
 (map! :leader :prefix "r"
         (:map org-mode-map
          :desc "Org Agenda File To Front" "f" #'org-agenda-file-to-front)
-         :desc "Org Journal Previous" "a" #'org-journal-previous-entry
-         :desc "Org Journal Next" "e" #'org-journal-next-entry
+         :desc "Org Journal Previous" "n" #'org-journal-previous-entry
+         :desc "Org Journal Next" "t" #'org-journal-next-entry
         (:map global-map
-         :desc "Org Journal New Entry" "n" #'org-journal-new-entry
-         :desc "Org Journal New Scheduled Entry" "s" #'org-journal-new-scheduled-entry
+         :desc "Org Journal New Entry" "s" #'org-journal-new-entry
+         :desc "Org Journal New Scheduled Entry" "S" #'org-journal-new-scheduled-entry
          :desc "Org Journal Open Current" "r" #'org-journal-open-current-journal-file
          :desc "Org Journal Stage" "h" #'(lambda () (interactive) (find-file _stageorg))))
 #+end_src
@@ -385,8 +387,8 @@ Backup of the Doom Emacs Capture templates for future reference
 (map! :leader :prefix "r"
         (:map org-mode-map
          :desc "Org Roam Node Insert" "i" #'org-roam-node-insert
-         :desc "Org Roam Buffer Toggle" "b" #'org-roam-buffer-toggle
-         :desc "Org Table Column Toggle" "t" #'org-table-toggle-column-width)
+         ;;:desc "Org Table Column Toggle" "t" #'org-table-toggle-column-width)
+         :desc "Org Roam Buffer Toggle" "b" #'org-roam-buffer-toggle)
         (:map global-map
          :desc "Org Roam Goto Node" "g" #'org-roam-node-find
          :desc "Org Roam Capture" "c" #'org-roam-capture))
