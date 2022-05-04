@@ -9,7 +9,7 @@
   "filterLinkHints": false,
   "waitForEnterForFilteredHints": true,
   "hideHud": false,
-  "keyMappings": "map r Vomnibar.activate\nmap R Vomnibar.activateInNewTab\nmap <a-r> Vomnibar.activateTabSelection\n\nmap n scrollUp\nmap N scrollPageUp\nmap <a-n> previousTab\nmap <a-N> moveTabLeft\nmap <a-c-n> firstTab\n\n\nmap t scrollDown\nmap T scrollPageDown\nmap <a-t> nextTab\nmap <a-T> moveTabRight\nmap <a-c-t> lastTab\n\nmap q restoreTab\nmap <a-q> removeTab\nmap <a-c-q> closeOtherTabs\n\nmap c reload\nmap s performFind\nmap S performBackwardsFind\n\nmap g LinkHints.activateMode\nmap G LinkHints.activateModeToOpenInNewTab\nmap h goBack\nmap f goForward",
+  "keyMappings": "map r Vomnibar.activate\nmap R Vomnibar.activateInNewTab\nmap <c-r> Vomnibar.activateBookmarks\nmap <c-R> Vomnibar.activateBookmarksInNewTab\nmap <a-r> Vomnibar.activateTabSelection\nmap , Vomnibar.activateEditUrl\nmap – Vomnibar.activateEditUrlInNewTab\n\nmap n scrollUp\nmap N scrollPageUp\nmap <a-n> previousTab\nmap <a-N> moveTabLeft\nmap <a-c-n> firstTab\n\n\nmap t scrollDown\nmap T scrollPageDown\nmap <a-t> nextTab\nmap <a-T> moveTabRight\nmap <a-c-t> lastTab\n\nmap q restoreTab\nmap <a-q> removeTab\nmap <a-c-q> closeOtherTabs\n\nmap c reload\nmap s performFind\nmap S performBackwardsFind\n\nmap g LinkHints.activateMode\nmap G LinkHints.activateModeToOpenInNewTab\nmap h goBack\nmap f goForward",
   "linkHintCharacters": "sadfjklewcmpgh",
   "linkHintNumbers": "0123456789",
   "newTabUrl": "about:newtab",
