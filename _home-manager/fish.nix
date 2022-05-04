@@ -34,11 +34,7 @@
     '';
     shellAliases = {
       # --- TODO Special sysconf/nixOS related commands
-      "nixos:updateALL" = ''
-        cd ~/sysconf;
-        rg fetchTarball -l | xargs -I@ update-nix-fetchgit @;
-        sudo nix-channel --update;
-      '';
+      "nixos:updateALL" = "sudo nix-channel --update; cd ~/sysconf && rg fetchTarball -l | xargs -I@ direnv exec . update-nix-fetchgit @";
       "nixos:switch" = "sudo nixos-rebuild switch";
       "nixos:boot" = "sudo nixos-rebuild boot";
       "nixos:clean" = "sudo nix-collect-garbage -d";
@@ -61,7 +57,19 @@
       vim = "nvim";
       # ls, ll, la, lt, lla -> set by lsd
     };
-    functions = { tree = "fd . $argv | as-tree"; };
+    functions = {
+      tree = "fd . $argv | as-tree";
+      bind_enter = ''
+        set -l lastline $history[1]
+        set -l cmdline (commandline)
+        if test -z (string trim "$cmdline")
+            commandline -r $lastline
+            commandline -f execute
+        else
+            commandline -f execute
+        end
+      '';
+    };
     interactiveShellInit = ''
       any-nix-shell fish | source
       zoxide init fish | source
@@ -69,6 +77,7 @@
       # Bind mcfly interactively
       bind \cr __mcfly-history-widget
       bind \er fzf-history-widget
+      bind \r bind_enter
     '';
   };
 

@@ -32,6 +32,7 @@ let
     "--hide-tab-close-buttons"
     # chrome://flags
     "--enable-features='EnableTabMuting,WebRTCPipeWireCapturer,VaapiVideoDecoder,VaapiVideoEncoder'"
+    "--disable-features='SidePanel'"
   ];
 in {
 
