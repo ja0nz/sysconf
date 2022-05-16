@@ -109,7 +109,9 @@ Just a dump for some used (project) variables
 #+begin_src emacs-lisp
 ;; Ignoring output (spago compilation target)
 (after! lsp-mode
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\output\\'"))
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\output\\'")
+  (setq lsp-css-lint-unknown-at-rules "ignore")
+)
 #+end_src
 * Consult
 #+begin_src emacs-lisp
