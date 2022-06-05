@@ -26,9 +26,9 @@ Here are some additional functions/macros that could help you configure Doom:
 (setq user-full-name "Ja0nz"
       user-mail-address "mail@ja.nz")
 
-;; Use nr instead of jk - Neo2 Keyboard layout
+;; Use aa instead of jk - Neo2 Keyboard layout
 (use-package! evil-escape
-  :init (setq evil-escape-key-sequence "nr"))
+  :init (setq evil-escape-key-sequence "aa"))
 
 ;; Use primary selection instead of clipboard
 (setq select-enable-primary t)
@@ -447,10 +447,10 @@ Backup of the Doom Emacs Capture templates for future reference
   (after! ispell
     (ispell-set-spellchecker-params)
     (ispell-hunspell-add-multi-dic "it_IT,en_US")
-    (ispell-hunspell-add-multi-dic "pt_BR,en_US")
     (ispell-hunspell-add-multi-dic "tr_TR,en_US")
-    (ispell-hunspell-add-multi-dic "fr_FR,en_US")
-    (ispell-hunspell-add-multi-dic "es_ES,en_US")
+    ;;(ispell-hunspell-add-multi-dic "pt_BR,en_US")
+    ;;(ispell-hunspell-add-multi-dic "fr_FR,en_US")
+    ;;(ispell-hunspell-add-multi-dic "es_ES,en_US")
 ))
 #+end_src
 ** Org table copy cell :hack:
