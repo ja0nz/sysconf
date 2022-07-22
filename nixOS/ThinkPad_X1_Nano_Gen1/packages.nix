@@ -51,10 +51,13 @@ in {
   home.packages = with pkgs; [
     # -- Programs --
     (callPackage sizzy { }) # The browser for Developers & Designers
-    (mate.caja-with-extensions.override {
-      extensions = [ mate.caja-extensions mate.caja-dropbox ];
-    })
-    mate.eom # An image viewing and cataloging program for the MATE desktop
+    # INFO: no wayland support for MATE yet (as of 2022)...
+    # (mate.caja-with-extensions.override {
+    #   extensions = [ mate.caja-extensions mate.caja-dropbox ];
+    # })
+    # mate.eom # An image viewing and cataloging program for the MATE desktop
+    cinnamon.nemo # File browser for Cinnamon
+    cinnamon.pix # A generic image viewer from Linux Mint
     okular # KDE document viewer
     pavucontrol # PulseAudio Volume Control
     networkmanagerapplet # NetworkManager control applet for GNOME

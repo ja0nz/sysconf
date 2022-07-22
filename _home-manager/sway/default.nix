@@ -9,7 +9,7 @@
 
    * Optional configuration / packages (not imported here)
     - brillo -> as key combination
-    - caja -> as key combination
+    - nemo -> as key combination
     - chromium browser -> as key combination
     - networkmanager_dmenu -> as key combination
     - wofi && wofi-emoji -> as key combination
@@ -39,6 +39,7 @@ in {
   # Packages
   home.packages = with pkgs; [
     wldash
+    autotiling # Script for sway and i3 to automatically switch the horizontal / vertical window split orientation
     kanshi # Dynamic display configuration tool
     wl-clipboard # Command-line copy/paste utilities for Wayland
     grim # Grab images from a Wayland compositor
@@ -145,7 +146,7 @@ in {
         "${modifier}+x" = ''exec "emacsclient -c"'';
         "${modifier}+v" =
           "exec chromium ${lib.concatStringsSep " " chrome-flags}";
-        "${modifier}+l" = "exec caja";
+        "${modifier}+l" = "exec nemo";
         #"${modifier}+d" = "exec wldash"; -> by system
         "${modifier}+Ctrl+d" = "exec networkmanager_dmenu";
 
@@ -188,6 +189,10 @@ in {
           command = "systemctl --user restart waybar";
           always = true;
         }
+        {
+          command = "autotiling";
+          always = true;
+        }
       ];
       # TODO Set your input devices
       # swaymsg -t get_inputs
@@ -199,7 +204,7 @@ in {
           accel_profile = "adaptive";
           pointer_accel = "-0.6";
         };
-        "*" = {
+        "type:keyboard" = {
           xkb_layout = "de,de";
           xkb_variant = "neo,";
           xkb_options = "grp:rctrl_rshift_toggle";

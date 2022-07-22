@@ -12,14 +12,14 @@
   xdg.configFile."mimeapps.list".force = true;
   xdg.mimeApps = {
     enable = true;
-    associations = { added = { "image/png" = "eom.desktop"; }; };
+    associations = { added = { "image/png" = "pix.desktop"; }; };
     defaultApplications = {
       "application/pdf" = [ "org.pwmt.zathura.desktop" ];
       "text/html" = [ "chromium-browser.desktop" ];
       "x-scheme-handler/https" = [ "chromium-browser.desktop" ];
       "x-scheme-handler/http" = [ "chromium-browser.desktop" ];
-      "image/png" = [ "eom.desktop " ];
-      "image/jpeg" = [ "eom.desktop" ];
+      "image/png" = [ "pix.desktop " ];
+      "image/jpeg" = [ "pix.desktop" ];
     };
   };
 }
