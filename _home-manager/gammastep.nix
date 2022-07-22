@@ -1,8 +1,8 @@
-/* #+TITLE: Gammastep - adjust the screen color temperature
+/* #+TITLE: Gammastep/wlsunset - adjust the screen color temperature
    #+FILETAGS: :ui:sway:
 
    * Mandatory configuration
-    ** Automatic geolocation
+    ** Automatic geolocation (gammastep)
       Geoclue2 must be enabled to retrieve the position which
       is used to calculate the screen temperature.
 
@@ -15,12 +15,18 @@
 { ... }:
 
 {
-  services.gammastep = {
+  # services.gammastep = {
+  #   enable = true;
+  #   provider = "manual"; # "geoclue2"
+  #   tray = true;
+  #   # TODO Set your location
+  #   latitude = 49.8;
+  #   longitude = 9.9;
+  # };
+  services.wlsunset = {
     enable = true;
-    provider = "manual"; # "geoclue2"
     # TODO Set your location
-    latitude = 49.788357;
-    longitude = 9.930146;
-    tray = true;
+    latitude = "49.8";
+    longitude = "9.9";
   };
 }
