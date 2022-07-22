@@ -26,9 +26,9 @@ Here are some additional functions/macros that could help you configure Doom:
 (setq user-full-name "Ja0nz"
       user-mail-address "mail@ja.nz")
 
-;; Use aa instead of jk - Neo2 Keyboard layout
+;; Use ii instead of jk - Neo2 Keyboard layout
 (use-package! evil-escape
-  :init (setq evil-escape-key-sequence "aa"))
+  :init (setq evil-escape-key-sequence "ii"))
 
 ;; Use primary selection instead of clipboard
 (setq select-enable-primary t)
@@ -272,13 +272,14 @@ Backup of the Doom Emacs Capture templates for future reference
 #+begin_src emacs-lisp
 ;; Org Journal Settings
 (setq org-journal-dir org-directory
-      org-journal-date-prefix "#+title: "
-      org-journal-date-format "W%V_%Y-%m-%d"
-      org-journal-time-prefix "* "
+      org-journal-file-type 'weekly
+      ;; org-journal-date-prefix "#+title: "
+      ;; org-journal-date-format "W%V_%Y-%m-%d"
+      ;; org-journal-time-prefix "* "
       org-journal-file-format "W%V_%Y-%m-%d.org"
       org-journal-file-header "#+STARTUP: overview\n"
       ;; But #+title tag back to first line
-      org-journal-after-header-create-hook (lambda () (transpose-lines 1))
+      ;; org-journal-after-header-create-hook (lambda () (transpose-lines 1))
       ;; Automatic org agenda integration
       org-journal-after-entry-create-hook
       (lambda () (if (not (file-exists-p (buffer-file-name))) (org-agenda-file-to-front t))))
