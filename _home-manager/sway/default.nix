@@ -27,12 +27,14 @@ let
     "--ozone-platform=wayland"
     "--extension-mime-request-handling=always-prompt-for-install"
     "--scroll-tabs=never"
-    "--hide-crashed-bubble"
+    "--force-punycode-hostnames"
     "--show-avatar-button=never"
+    "--hide-crashed-bubble"
     "--hide-tab-close-buttons"
+    "--hide-sidepanel-button"
+    "--hide-extensions-menu"
     # chrome://flags
-    "--enable-features='EnableTabMuting,WebRTCPipeWireCapturer,VaapiVideoDecoder,VaapiVideoEncoder'"
-    "--disable-features='SidePanel'"
+    "--enable-features='EnableTabMuting,WebRTCPipeWireCapturer'" # VaapiVideoDecoder,VaapiVideoEncoder'"
   ];
 in {
 
