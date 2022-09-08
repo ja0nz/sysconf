@@ -36,7 +36,7 @@ Here are some additional functions/macros that could help you configure Doom:
 ;; No evil snipe mode if there is avy!
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
 (map! :n "s" #'evil-avy-goto-char-timer)
-(map! :n "S" #'avy-goto-char)
+(map! :n "S" #'evil-avy-goto-char)
 (setq avy-all-windows t)
 ;;(define-key evil-normal-state-map (kbd "s") 'evil-avy-goto-char-timer)
 ;;(define-key evil-normal-state-map (kbd "S") 'avy-goto-char)
@@ -277,7 +277,7 @@ Backup of the Doom Emacs Capture templates for future reference
       ;; org-journal-date-format "W%V_%Y-%m-%d"
       ;; org-journal-time-prefix "* "
       org-journal-file-format "W%V_%Y-%m-%d.org"
-      org-journal-file-header "#+STARTUP: overview\n"
+      org-journal-file-header "-*- ispell-local-dictionary: \"de_DE,en_US\" -*-\n#+STARTUP: overview\n"
       ;; But #+title tag back to first line
       ;; org-journal-after-header-create-hook (lambda () (transpose-lines 1))
       ;; Automatic org agenda integration
@@ -441,6 +441,15 @@ Backup of the Doom Emacs Capture templates for future reference
       org-pomodoro-killed-sound "KILLED💀"
       org-pomodoro-short-break-sound "SHORTBREAK☕ FINISHED🏁"
       org-pomodoro-long-break-sound "LONGBREAK😴 FINISHED🏁")
+(defun this/org-pomodoro-restart ()
+  (interactive)
+  (let ((use-dialog-box nil))
+  (when (y-or-n-p "Start a new pomodoro?")
+    (save-window-excursion
+      (org-clock-goto)
+      (org-pomodoro)))))
+
+(add-hook! org-pomodoro-break-finished #'this/org-pomodoro-restart)
 #+end_src
 ** Org hunspell
 #+begin_src emacs-lisp
@@ -449,10 +458,40 @@ Backup of the Doom Emacs Capture templates for future reference
     (ispell-set-spellchecker-params)
     (ispell-hunspell-add-multi-dic "it_IT,en_US")
     (ispell-hunspell-add-multi-dic "tr_TR,en_US")
+    (ispell-hunspell-add-multi-dic "de_DE,en_US")
     ;;(ispell-hunspell-add-multi-dic "pt_BR,en_US")
     ;;(ispell-hunspell-add-multi-dic "fr_FR,en_US")
     ;;(ispell-hunspell-add-multi-dic "es_ES,en_US")
 ))
+#+end_src
+** Org FC
+From own fork! https://github.com/ja0nz/org-fc
+
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+(package! org-fc
+  :recipe
+  (:host github :repo "ja0nz/org-fc"
+   :files (:defaults "awk" "demo.org")))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! org-fc
+  :custom (org-fc-directories '("~/Dropbox/org/"))
+  :config
+  ;; Hack: https://www.leonrische.me/fc/use_with_evil-mode.html
+  (evil-define-minor-mode-key '(normal insert emacs) 'org-fc-review-flip-mode
+    (kbd "n") 'org-fc-review-flip
+    (kbd "s") 'org-fc-review-suspend-card
+    (kbd "q") 'org-fc-review-quit)
+
+  (evil-define-minor-mode-key '(normal insert emacs) 'org-fc-review-rate-mode
+    (kbd "u") 'org-fc-review-rate-again
+    (kbd "i") 'org-fc-review-rate-hard
+    (kbd "a") 'org-fc-review-rate-good
+    (kbd "e") 'org-fc-review-rate-easy
+    (kbd "s") 'org-fc-review-suspend-card
+    (kbd "q") 'org-fc-review-quit)
+)
 #+end_src
 ** Org table copy cell :hack:
 #+begin_src emacs-lisp
@@ -574,7 +613,23 @@ Handled by gmail now
 #+end_src
 
 #+begin_src emacs-lisp
-(setq terminal-here-linux-terminal-command '("alacritty"))
+(use-package! org-fc :custom
+  (org-fc-directories '("~/Dropbox/org/"))
+  :bind (:map org)
+)
+
+(evil-define-minor-mode-key '(normal insert emacs) 'org-fc-review-flip-mode
+  (kbd "n") 'org-fc-review-flip
+  (kbd "s") 'org-fc-review-suspend-card
+  (kbd "q") 'org-fc-review-quit)
+
+(evil-define-minor-mode-key '(normal insert emacs) 'org-fc-review-rate-mode
+  (kbd "a") 'org-fc-review-rate-again
+  (kbd "h") 'org-fc-review-rate-hard
+  (kbd "g") 'org-fc-review-rate-good
+  (kbd "e") 'org-fc-review-rate-easy
+  (kbd "s") 'org-fc-review-suspend-card
+  (kbd "q") 'org-fc-review-quit)
 (use-package! terminal-here
   :init
   (map! :leader
