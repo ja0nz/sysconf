@@ -11,6 +11,7 @@
 { pkgs, ... }:
 
 {
+  nixpkgs.config.chromium.enableWideVine = true;
   programs.chromium = {
     enable = true;
     package = pkgs.ungoogled-chromium;
@@ -28,6 +29,7 @@
       { id = "dbepggeogbaibhgnhhndojpepiihcmeb"; } # Vimium
       { id = "hecfkgekabkkhiidlinmifelhdooeool"; } # Fraidycay
       { id = "aapbdbdomjkkjkaonfhkkikfgjllcleb"; } # Google Translate
+      { id = "hoombieeljmmljlkjmnheibnpciblicm"; } # Language Reactor
     ];
   };
 }

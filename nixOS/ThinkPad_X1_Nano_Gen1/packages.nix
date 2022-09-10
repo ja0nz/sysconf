@@ -62,7 +62,7 @@ in {
     pavucontrol # PulseAudio Volume Control
     networkmanagerapplet # NetworkManager control applet for GNOME
     neovim # Vim text editor fork focused on extensibility and agility
-    brave # Privacy-oriented browser for Desktop and Laptop computers
+    # brave # Privacy-oriented browser for Desktop and Laptop computers
     wofi-emoji # Emoji picker
     wofi # ^
 
