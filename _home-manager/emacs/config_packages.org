@@ -350,34 +350,41 @@ Backup of the Doom Emacs Capture templates for future reference
 ** Org Roam -> SPC r
 #+begin_src emacs-lisp
 ;; Org Roam Settings
-(setq +org-roam-open-buffer-on-find-file nil
-      org-roam-directory org-directory
-      org-roam-capture-templates
-      '(("d" "default" plain
-         "%?"
-         :if-new
-         (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                    "#+title: ${title}\n#+CREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+REVISION: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+STARTUP: overview\n")
-         :unnarrowed t)))
-
-(after! org-roam
-  (setq org-roam-completion-everywhere nil))
-
-(defun org_roam__bump_revision_date ()
+(defun this/org_roam__bump_revision_date ()
   "Retriving REVISION and replace it naively with current time stamp."
-  (when (string-match-p "^[0-9]\\{14\\}-" (file-name-base))
+  (when (cond ((eq major-mode 'org-mode))
+              ((string-match-p "^[0-9]\\{14\\}-" (file-name-base))))
     (let ((lastrev (car (cdr (car (org-collect-keywords '("REVISION"))))))
           (today (format-time-string (org-time-stamp-format))))
       (cond ((not lastrev) nil)
             ((not (string= lastrev today))
-             (progn (push-mark)
-                    (re-search-backward "REVISION" nil 1)
-                    (if (re-search-forward lastrev nil 1)
-                        (replace-match today))
-                    (pop-global-mark)))))))
+             (save-excursion
+               (re-search-backward "REVISION" nil 1)
+               (when (re-search-forward lastrev nil 1)
+                 (replace-match today))))))))
 
-(add-hook! org-mode
-  (add-hook 'after-save-hook #'org_roam__bump_revision_date))
+(use-package! org-roam
+  :custom
+  (org-roam-directory org-directory)
+  (org-roam-capture-templates
+   '(("d" "default" plain
+      "%?"
+      :if-new
+      (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                 "#+title: ${title}\n#+CREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+REVISION: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+STARTUP: overview\n")
+      :unnarrowed t)))
+  :config
+  (setq org-roam-completion-everywhere nil)
+  (add-hook! 'after-save-hook #'this/org_roam__bump_revision_date)
+  (map! :leader :prefix "r"
+        (:map org-mode-map
+         :desc "Org Roam Node Insert" "i" #'org-roam-node-insert
+         ;;:desc "Org Table Column Toggle" "t" #'org-table-toggle-column-width)
+         :desc "Org Roam Buffer Toggle" "b" #'org-roam-buffer-toggle)
+        (:map global-map
+         :desc "Org Roam Goto Node" "g" #'org-roam-node-find
+         :desc "Org Roam Capture" "c" #'org-roam-capture))
+  )
 
 ;; (use-package! org-roam
 ;;   :bind (:map org-mode-map
@@ -387,14 +394,6 @@ Backup of the Doom Emacs Capture templates for future reference
 ;;          ("M-s-s f" . org-roam-node-find) ;; quickly find
 ;;          ("M-s-s c" . org-roam-capture))) ;; capture information
 
-(map! :leader :prefix "r"
-        (:map org-mode-map
-         :desc "Org Roam Node Insert" "i" #'org-roam-node-insert
-         ;;:desc "Org Table Column Toggle" "t" #'org-table-toggle-column-width)
-         :desc "Org Roam Buffer Toggle" "b" #'org-roam-buffer-toggle)
-        (:map global-map
-         :desc "Org Roam Goto Node" "g" #'org-roam-node-find
-         :desc "Org Roam Capture" "c" #'org-roam-capture))
 #+end_src
 ** Org MRU Clock
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
@@ -429,27 +428,28 @@ Backup of the Doom Emacs Capture templates for future reference
 #+end_src
 ** Org pomodoro
 #+begin_src emacs-lisp
-(after! org-pomodoro
-  (setq org-pomodoro-audio-player nil))
-  ;; (setq org-pomodoro-audio-player (executable-find "notify-send")))
-
-(setq org-pomodoro-start-sound-p t
-      org-pomodoro-killed-sound-p t
-      org-pomodoro-start-sound "GO⏰"
-      org-pomodoro-finished-sound "FINISH🏁"
-      org-pomodoro-overtime-sound "OVERTIME😵"
-      org-pomodoro-killed-sound "KILLED💀"
-      org-pomodoro-short-break-sound "SHORTBREAK☕ FINISHED🏁"
-      org-pomodoro-long-break-sound "LONGBREAK😴 FINISHED🏁")
 (defun this/org-pomodoro-restart ()
   (interactive)
   (let ((use-dialog-box nil))
-  (when (y-or-n-p "Start a new pomodoro?")
-    (save-window-excursion
-      (org-clock-goto)
-      (org-pomodoro)))))
+   (when (y-or-n-p "Start a new pomodoro?")
+     (save-window-excursion
+       (org-clock-goto)
+       (org-pomodoro)))))
 
-(add-hook! org-pomodoro-break-finished #'this/org-pomodoro-restart)
+(use-package! org-pomodoro
+  :custom
+    (org-pomodoro-start-sound-p t)
+    (org-pomodoro-killed-sound-p t)
+    (org-pomodoro-start-sound "GO⏰")
+    (org-pomodoro-finished-sound "FINISH🏁")
+    (org-pomodoro-overtime-sound "OVERTIME😵")
+    (org-pomodoro-killed-sound "KILLED💀")
+    (org-pomodoro-short-break-sound "SHORTBREAK☕ FINISHED🏁")
+    (org-pomodoro-long-break-sound "LONGBREAK😴 FINISHED🏁")
+  :config
+    (setq org-pomodoro-audio-player nil)
+    (add-hook! org-pomodoro-break-finished #'this/org-pomodoro-restart)
+)
 #+end_src
 ** Org hunspell
 #+begin_src emacs-lisp
@@ -491,7 +491,17 @@ From own fork! https://github.com/ja0nz/org-fc
     (kbd "e") 'org-fc-review-rate-easy
     (kbd "s") 'org-fc-review-suspend-card
     (kbd "q") 'org-fc-review-quit)
-)
+
+    ;;(map! :localleader :map org-mode-map "f" nil)
+    (map! :leader :prefix "o" :map global-map :desc "Learn dashboard (org-fc)" "l" #'org-fc-dashboard)
+    (map! :leader
+      :prefix ("l" . "org-fc")
+      "c" #'org-fc-type-cloze-init
+      "d" #'org-fc-type-double-init
+      "e" #'org-fc-review-edit
+      "r" #'org-fc-review-buffer
+      "R" #'org-fc-review-resume
+      "n" #'org-fc-type-normal-init ))
 #+end_src
 ** Org table copy cell :hack:
 #+begin_src emacs-lisp
@@ -513,6 +523,17 @@ This function will clean all the logbook entries.
   (delete-matching-lines ":LOGBOOK:\\(\n\\|.\\)*?:END:")
   (pop-global-mark))
 #+end_src
+
+** Org goto end of subtree :hack:
+#+begin_src emacs-lisp
+(defun goto-last-heading ()
+  "Goto to the end of a subtree at point or for ELEMENT heading."
+  (interactive)
+  (org-end-of-subtree))
+(map! :map evil-normal-state-map "g ." #'goto-last-heading)
+#+end_src
+
+#+RESULTS:
 
 ** Org babel execute graph-easy :hack:
 #+begin_example

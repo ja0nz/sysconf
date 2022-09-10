@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: italy flag
-# expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region t))
-# --
-🇮🇹 $0
