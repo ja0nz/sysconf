@@ -274,10 +274,10 @@ Backup of the Doom Emacs Capture templates for future reference
 (setq org-journal-dir org-directory
       org-journal-file-type 'weekly
       ;; org-journal-date-prefix "#+title: "
-      ;; org-journal-date-format "W%V_%Y-%m-%d"
+      org-journal-date-format "%a, %x"
       ;; org-journal-time-prefix "* "
       org-journal-file-format "W%V_%Y-%m-%d.org"
-      org-journal-file-header "-*- ispell-local-dictionary: \"de_DE,en_US\" -*-\n#+STARTUP: overview\n"
+      org-journal-file-header "#+STARTUP: show2levels\n"
       ;; But #+title tag back to first line
       ;; org-journal-after-header-create-hook (lambda () (transpose-lines 1))
       ;; Automatic org agenda integration
@@ -497,6 +497,7 @@ From own fork! https://github.com/ja0nz/org-fc
     (map! :leader
       :prefix ("l" . "org-fc")
       "c" #'org-fc-type-cloze-init
+      "w" #'org-fc-cloze-dwim
       "d" #'org-fc-type-double-init
       "e" #'org-fc-review-edit
       "r" #'org-fc-review-buffer
