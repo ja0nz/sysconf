@@ -39,8 +39,8 @@
 
   emacsOverlay = (import (builtins.fetchTarball {
     url =
-      "https://github.com/nix-community/emacs-overlay/archive/463d805e875fc1ff1d15ae9c664e5aaf9b7618d3.tar.gz";
-    sha256 = "1m06dbal3riw2sr1dwq67k2s6cn03di1n735lwapv2bnwqnn9bwf";
+      "https://github.com/nix-community/emacs-overlay/archive/bee7e3986183f05242a0c40d246baf66439aae9e.tar.gz";
+    sha256 = "16k2g5ic786vcn4p325g8v33gh65glm696dy9ssy5pjnzc14fln6";
   }));
 
   waylandOverlay = (import "${
