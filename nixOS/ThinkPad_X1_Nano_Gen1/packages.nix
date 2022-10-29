@@ -95,7 +95,7 @@ in {
 
     # -- XDG MIME --
     file # A program that shows the type of files
-    xdg_utils # A set of command line tools that assist applications desktop integration
+    xdg-utils # A set of command line tools that assist applications desktop integration
     shared-mime-info # A database of common MIME types
 
     # -- Sound and light management --

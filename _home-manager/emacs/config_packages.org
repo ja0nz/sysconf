@@ -97,8 +97,8 @@ Just a dump for some used (project) variables
       (org-hugo-external-file-extensions-allowed-for-copying . nil)
       ;; @include is a SASS feature
       (lsp-css-lint-unknown-at-rules . "ignore")
-      ;; exports backend HACK
-      (org-export-current-backend . t)
+      ;; Language learning bench
+      (eval . (progn (org-babel-goto-named-src-block "bench") (org-babel-execute-src-block)))
      )))
 #+end_src
 * Yas Snippets
@@ -154,6 +154,9 @@ Just a dump for some used (project) variables
 (after! org-fancy-priorities
   (setq
    org-fancy-priorities-list '("🅰" "🅱" "🅾")))
+
+;; Org emphasize
+(map! :after org :map org-mode-map :localleader "f" #'org-emphasize)
 #+end_src
 ** Org agenda
 #+begin_src emacs-lisp
@@ -636,12 +639,28 @@ Handled by gmail now
 
 #+begin_src emacs-lisp
 (use-package! terminal-here
+  :config
+  (setq terminal-here-terminal-command 'alacritty)
   :init
   (map! :leader
         :prefix "o"
         :desc "Launch terminal here" "t" #'terminal-here-launch
         :desc "Launch terminal ROOT" "T" #'terminal-here-project-launch))
 #+end_src
+* Caddyfile mode
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+(package! caddyfile-mode)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! caddyfile-mode
+  :mode
+  (("Caddyfile\\'" . caddyfile-mode)
+   ("caddy\\.conf\\'" . caddyfile-mode)))
+#+end_src
+
+#+RESULTS:
+
 * Avy Actions
 Based on the article:
 https://karthinks.com/software/avy-can-do-anything/

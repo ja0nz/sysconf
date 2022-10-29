@@ -1,6 +1,9 @@
 /* #+TITLE: Udiskie - automounter for removeable media
    #+FILETAGS: :hardware:
 
+   * Mandatory configuration
+    You need to enable udisks2
+    nixOS: services.udisks2.enable = true;
    * Optional configuration
     You can configure a usb stick a *killswitch* device
     https://tech.michaelaltfield.net/2020/01/02/buskill-laptop-kill-cord-dead-man-switch/

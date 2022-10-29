@@ -72,6 +72,7 @@ with lib; {
     };
 
     services = {
+      udisks2.enable = true;
       upower.enable = true;
       fstrim.enable = true;
       #geoclue2.enable = true; <- Went with manual location settings, no need for a geo service

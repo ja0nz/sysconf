@@ -53,7 +53,7 @@
       ping = "gping";
       ps = "procs"; # process status
       rg = "rg --hidden --glob '!.git'"; # find
-      # sed = "sd"; # select
+      sed = "sd"; # select
       vim = "nvim";
       # ls, ll, la, lt, lla -> set by lsd
     };
