@@ -22,18 +22,21 @@ in {
     controlMaster = "auto";
     controlPersist = "15m";
     matchBlocks = {
-      "peteler.family" = {
+      petelerFamily = {
         host = "pf"; # Just a abbrevation ~ssh pf~
-        hostname = "peteler.family";
+        hostname = "knock-knock.peteler.family";
+        port = 50022;
+        user = "opc";
+        identitiesOnly = true;
+        identityFile = "${_secret}/ssh/peteler-family-client";
+      };
+      oldPetelerFamily = {
+        host = "opf"; # Just a abbrevation ~ssh pfo~
+        hostname = "192.168.178.24";
         port = 32347;
         user = "root";
         identitiesOnly = true;
         identityFile = "${_secret}/ssh/ssh-peteler-family";
-      };
-      "git.peteler.family" = {
-        user = "git";
-        port = 18268;
-        checkHostIP = false;
       };
       "github.com" = { user = "git"; };
     };

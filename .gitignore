@@ -4,3 +4,5 @@
 _secret/ssh/known_hosts
 _secret/ssh/ssh-peteler-family
 _secret/ssh/ssh-peteler-family-cert.pub
+_secret/ssh/peteler-family-client
+_secret/ssh/peteler-family-client-cert.pub
