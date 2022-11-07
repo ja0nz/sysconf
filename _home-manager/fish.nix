@@ -54,6 +54,7 @@
       ps = "procs"; # process status
       rg = "rg --hidden --glob '!.git'"; # find
       vim = "nvim";
+      lscert = "ssh-keygen -L -f";
       # ls, ll, la, lt, lla -> set by lsd
     };
     functions = {
