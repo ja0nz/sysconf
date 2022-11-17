@@ -2,6 +2,27 @@
 #+STARTUP: overview
 #+PROPERTY: header-args:emacs-lisp :tangle ~/.doom.d/config.el :mkdirp yes
 
+Here are some additional functions/macros that could help you configure Doom:
+- `load!' for loading external *.el files relative to this one
+- `use-package!' for configuring packages
+- `after!' for running code after a package has loaded
+- `add-load-path!' for adding directories to the `load-path', relative to this file. Emacs searches the `load-path' when you load packages with `require' or `use-package'.
+- `map!' for binding new keys
+
+* Mapping documentation
+a -> avy
+p -> projectile
+v -> magit
+** Org -> l
+q -> set tags
+o -> category
+t -> org-(t)odo
+c E -> (c)lock (e)ffort
+d s -> (d)ate (s)chedule
+d t/T -> (d)ate (t)imestamp
+s c -> (s)ubtree (c)lone
+s r -> (s)ubtree (r)efile
+
 * File Headers
 #+begin_src emacs-lisp
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
@@ -12,32 +33,102 @@
 ;;; $DOOMDIR/packages.el
 #+end_src
 
-* Base settings
-Here are some additional functions/macros that could help you configure Doom:
-- `load!' for loading external *.el files relative to this one
-- `use-package!' for configuring packages
-- `after!' for running code after a package has loaded
-- `add-load-path!' for adding directories to the `load-path', relative to this file. Emacs searches the `load-path' when you load packages with `require' or `use-package'.
-- `map!' for binding new keys
+* C-c rebinding :lib:
+-> taken from https://github.com/darkstego/rebinder.el
+#+begin_src emacs-lisp
+(defun rebinder-dynamic-binding (key &optional toggle)
+  "Act as KEY definition in the current context.
+This uses an extended menu item's capability of dynamically computing a
+definition.  This idea came from general.el.
+TOGGLE changes keymaps associated from Ctrl to regular key and vice versa"
+  `(menu-item
+     ,""
+     nil
+     :filter
+     (lambda (&optional _)
+        ,`(rebinder-key-binding ,key ,toggle))))
 
+
+;; should probably use let instead of double call to (car x)
+(defun rebinder-minor-mode-key-binding (key)
+  "Gets list of minor mode keybindings for KEY while ignoring the override map."
+  (let ((active-maps nil))
+     (mapc (lambda (x)
+                (when (and (symbolp (car x)) (symbol-value (car x)))
+                  (add-to-list 'active-maps  (lookup-key (cdr x) (kbd key)))))
+             minor-mode-map-alist )
+     (make-composed-keymap active-maps)))
+
+
+;; might need to do keymap inheretence to perserve priority
+(defun rebinder-key-binding (key &optional toggle)
+  "Get the keymap of associated KEY.
+If TOGGLE is non-nil then the Ctrl status of all bindings in the returned keymap
+will be changed."
+  (let ((map (make-composed-keymap (list (rebinder-minor-mode-key-binding key) (local-key-binding (kbd key)) (global-key-binding (kbd key))))))
+     (if toggle
+          (mapcar 'rebinder-toggle-ctrl map)
+        map)))
+
+(defun rebinder-toggle-ctrl (item)
+  "Return ITEM key with all Ctrl status of binding toggled."
+  (cond
+    ((and (listp item)
+          (not (listp (cdr item))))
+     (cons (rebinder-toggle-ctrl (car item)) (cdr item)))
+    ((listp item)
+     (mapcar 'rebinder-toggle-ctrl item))
+    ((event-basic-type item)
+     (let ((mods (event-modifiers item))
+           (key (event-basic-type item)))
+       (if (member 'control mods)
+           (event-convert-list (append (remove 'control mods) (list key)))
+         (event-convert-list (append (append mods '(control)) (list key))))))
+    (t item)))
+
+
+(defvar rebinder-mode-map (make-sparse-keymap))
+(defvar rebinder-link-mode)
+(defvar rebinder-mode)
+
+(defun rebinder-override ()
+  "Add modemap to override prefix into ‘minor-mode-overriding-map-alist’."
+  (interactive)
+  (add-to-list 'minor-mode-overriding-map-alist (cons 'rebinder-mode rebinder-mode-map)))
+(add-hook 'after-change-major-mode-hook 'rebinder-override)
+
+
+;; Remove overrides on mode exit
+(defun rebinder-update-override ()
+  "Update override mode to match linked mode."
+  (setq rebinder-mode (symbol-value rebinder-link-mode)))
+
+
+(defun rebinder-hook-to-mode (mode modehook)
+  "Link rebinder override map to associated MODE and MODEHOOK."
+  (setq rebinder-link-mode mode)
+  (add-hook modehook 'rebinder-update-override))
+#+end_src
+
+* Base settings
 ** Prelude
 #+begin_src emacs-lisp
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email clients, file templates and snippets.
 (setq user-full-name "Ja0nz"
-      user-mail-address "mail@ja.nz")
+      user-mail-address "mail@ja.Use")
 
-;; Use ii instead of jk - Neo2 Keyboard layout
-(use-package! evil-escape
-  :init (setq evil-escape-key-sequence "ii"))
+;; ii nz instead of jk - Neo2 Keyboard layout
+;;(use-package! evil-escape
+;; :init (setq evil-escape-key-sequence "ii"))
 
 ;; Use primary selection instead of clipboard
 (setq select-enable-primary t)
 
 ;; No evil snipe mode if there is avy!
-(remove-hook 'doom-first-input-hook #'evil-snipe-mode)
-(map! :n "s" #'evil-avy-goto-char-timer)
-(map! :n "S" #'evil-avy-goto-char)
-(setq avy-all-windows t)
+;;(remove-hook 'doom-first-input-hook #'evil-snipe-mode)
+;;(map! :n "s" #'evil-avy-goto-char-timer)
+;;(map! :n "S" #'evil-avy-goto-char)
+
 ;;(define-key evil-normal-state-map (kbd "s") 'evil-avy-goto-char-timer)
 ;;(define-key evil-normal-state-map (kbd "S") 'avy-goto-char)
 
@@ -45,15 +136,10 @@ Here are some additional functions/macros that could help you configure Doom:
 (setq custom-file "/dev/null")
 
 ;; Antagonist for evil-goto-definition -> g d; jump back with -> g b
-(map! :map evil-motion-state-map
-      :prefix "g"
-      "b" #'evil-jump-backward
-      "B" #'avy-pop-mark)
-
-;; Fast left/right window switcher
-(map! :nie "M-n" #'windmove-left)
-(map! :nie "M-t" #'windmove-right)
-(map! :nie "M-SPC" #'ace-window)
+;;(map! :map evil-motion-state-map
+;;      :prefix "g"
+;;      "b" #'evil-jump-backward
+;;      "B" #'avy-pop-mark)
 
 ;; Set chromium as browser
 ;; Normally the default browser is fine, but with brave/chromium on the same machine things getting tricky
@@ -62,8 +148,13 @@ Here are some additional functions/macros that could help you configure Doom:
 ;; Smother scrolling
 (setq pixel-scroll-precision-mode t)
 #+end_src
+** C-c -> M-SPC rebind
+#+begin_src emacs-lisp
+(define-key global-map (kbd "M-SPC") (rebinder-dynamic-binding "C-c"))
+(rebinder-hook-to-mode 't 'after-change-major-mode-hook)
+#+end_src
 
-** Theming, Fonts
+** Theming
 #+begin_src emacs-lisp
 ;; There are two ways to load a theme. Both assume the theme is installed and available. You can either set `doom-theme' or manually load a theme with the `load-theme' function. This is the default:
 (setq doom-theme 'doom-dracula)
@@ -82,7 +173,14 @@ Here are some additional functions/macros that could help you configure Doom:
   '(font-lock-comment-face :slant italic)
   '(font-lock-keyword-face :slant italic))
 #+end_src
-* Custom set variables
+
+** Left-right window switch
+#+begin_src emacs-lisp
+(map! :map global-map "M-n" #'windmove-left)
+(map! :map global-map "M-t" #'windmove-right)
+(map! :map global-map "M-r" #'ace-window)
+#+end_src
+** Custom set variables
 Just a dump for some used (project) variables
 #+begin_src emacs-lisp
 (custom-set-variables
@@ -101,30 +199,263 @@ Just a dump for some used (project) variables
       (eval . (progn (org-babel-goto-named-src-block "bench") (org-babel-execute-src-block)))
      )))
 #+end_src
-* Yas Snippets
+** Yas Snippet Directory
 #+begin_src emacs-lisp
 (setq +snippets-dir "~/sysconf/_home-manager/emacs/snippets")
 #+end_src
-* LSP
+** Calendar locale
 #+begin_src emacs-lisp
-;; Ignoring output (spago compilation target)
+(setq calendar-date-style "european"
+      calendar-week-start-day 1)
+#+end_src
+* LSP mode config
+- Ignoring spago *output* directory
+- Ignoring @rule commonly used in tailwind
+#+begin_src emacs-lisp
 (after! lsp-mode
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\output\\'")
   (setq lsp-css-lint-unknown-at-rules "ignore")
 )
 #+end_src
-* Consult
+** LSP TailwindCSS
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+(package! lsp-tailwindcss :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! lsp-tailwindcss)
+#+end_src
+
+* Consult -> M-SPC M-SPC; Search: s {g,a,l,p} :global:
 #+begin_src emacs-lisp
 (map! :leader
-      :desc "Quick Buffer/File Switcher" "SPC" #'consult-buffer)
+      :desc "Quick Buffer/File Switcher" "M-SPC" #'consult-buffer)
 
+;; Consult search buffer
 (map! :leader
       :prefix "s"
       :desc "Consult Org Goto Heading" "g" #'consult-org-heading
+      :desc "Consult Org Goto Heading" "l" #'consult-line
       :desc "Consult Org Agenda" "a" #'consult-org-agenda
-      :desc "Consult Ripgrep" "p" #'consult-ripgrep)
+      :desc "Consult Ripgrep" "r" #'consult-ripgrep)
 #+end_src
-* Org
+* Embark -> M-SPC SPC :global:
+https://karthinks.com/software/fifteen-ways-to-use-embark
+#+begin_src emacs-lisp
+(map! :leader :desc "Embark act" "SPC" #'embark-act)
+#+end_src
+
+* Avy -> M-SPC a :global:
+#+begin_src emacs-lisp
+(setq avy-all-windows t)
+(map! :leader
+      "a" nil
+      :prefix "a"
+      :desc "Char 1" "1" #'avy-goto-char
+      :desc "Char 2" "2" #'avy-goto-char-2
+      :desc "Word 1" "3" #'avy-goto-word-1
+      :desc "Timer" "t" #'avy-goto-char-timer
+      :desc "Line end" "l e" #'avy-goto-end-of-line
+      :desc "Line start" "l s" #'avy-goto-line)
+#+end_src
+** Avy Actions :global:
+https://karthinks.com/software/avy-can-do-anything/
+
+*** Avy repeat action; char-timer :lib:
+-> Only *avy-goto-char-timer*
+#+begin_src emacs-lisp
+(defun my/avy--read-candidates ()
+  (let ((re-builder #'regexp-quote)
+        break overlays regex)
+    (unwind-protect
+        (progn
+          (avy--make-backgrounds
+           (avy-window-list))
+          ;; Unhighlight
+          (dolist (ov overlays)
+            (delete-overlay ov))
+          (setq overlays nil)
+          ;; Highlight
+          (when (>= (length avy-text) 1)
+            (let ((case-fold-search
+                   (or avy-case-fold-search (string= avy-text (downcase avy-text))))
+                  found)
+              (avy-dowindows current-prefix-arg
+                (dolist (pair (avy--find-visible-regions
+                               (window-start)
+                               (window-end (selected-window) t)))
+                  (save-excursion
+                    (goto-char (car pair))
+                    (setq regex (funcall re-builder avy-text))
+                    (while (re-search-forward regex (cdr pair) t)
+                      (unless (not (avy--visible-p (1- (point))))
+                        (let* ((idx (if (= (length (match-data)) 4) 1 0))
+                               (ov (make-overlay
+                                    (match-beginning idx) (match-end idx))))
+                          (setq found t)
+                          (push ov overlays)
+                          (overlay-put
+                           ov 'window (selected-window))
+                          (overlay-put
+                           ov 'face 'avy-goto-char-timer-face)))))))
+              ;; No matches at all, so there's surely a typo in the input.
+              (unless found (beep))))
+          (nreverse (mapcar (lambda (ov)
+                              (cons (cons (overlay-start ov)
+                                          (overlay-end ov))
+                                    (overlay-get ov 'window)))
+                            overlays)))
+      (dolist (ov overlays)
+        (delete-overlay ov))
+      (avy--done))))
+
+(defun my/avy-repeat-action ()
+  (setq avy--old-cands (my/avy--read-candidates))
+  (avy-process avy--old-cands))
+#+end_src
+*** Org agenda todo -> d
+#+begin_src emacs-lisp
+(defun avy-action-org-agenda-done (pt)
+    (save-excursion
+      (goto-char pt)
+      (org-agenda-todo))
+    (select-window
+     (cdr (ring-ref avy-ring 0)))
+    (my/avy-repeat-action) t)
+
+(after! avy
+   (setf (alist-get ?D avy-dispatch-alist) 'avy-action-org-agenda-done))
+#+end_src
+
+*** Pomodoro clock in -> t
+#+begin_src emacs-lisp
+(defun avy-action-org-pomodoro (pt)
+  (save-excursion
+    (goto-char pt)
+    (org-pomodoro))
+  (select-window
+   (cdr (ring-ref avy-ring 0)))
+  t)
+
+(after! avy
+  (setf (alist-get ?t avy-dispatch-alist) 'avy-action-org-pomodoro))
+#+end_src
+
+*** Kill text selection or line -> k | K
+#+begin_src emacs-lisp
+;; Kill text
+(defun avy-action-kill-whole-line (pt)
+  (save-excursion
+    (goto-char pt)
+    (kill-whole-line))
+  (select-window
+   (cdr
+    (ring-ref avy-ring 0)))
+  t)
+
+(after! avy
+  (setf (alist-get ?k avy-dispatch-alist) 'avy-action-kill-stay
+        (alist-get ?K avy-dispatch-alist) 'avy-action-kill-whole-line))
+#+end_src
+
+*** Copy text selection or line -> c | C
+#+begin_src emacs-lisp
+(defun avy-action-copy-whole-line (pt)
+  (save-excursion
+    (goto-char pt)
+    (cl-destructuring-bind (start . end)
+        (bounds-of-thing-at-point 'line)
+      (copy-region-as-kill start end)))
+  (select-window
+   (cdr
+    (ring-ref avy-ring 0)))
+  t)
+
+(after! avy
+  (setf (alist-get ?c avy-dispatch-alist) 'avy-action-copy
+        (alist-get ?C avy-dispatch-alist) 'avy-action-copy-whole-line))
+#+end_src
+
+*** Yank text (paste immediately) selection or line -> y | Y
+#+begin_src emacs-lisp
+(defun avy-action-yank-whole-line (pt)
+  (avy-action-copy-whole-line pt)
+  (save-excursion (yank))
+  t)
+
+(after! avy
+  (setf (alist-get ?y avy-dispatch-alist) 'avy-action-yank
+        (alist-get ?Y avy-dispatch-alist) 'avy-action-yank-whole-line))
+#+end_src
+
+*** Teleport selection or line -> g | G
+#+begin_src emacs-lisp
+;; Transpose/Move text
+(defun avy-action-teleport-whole-line (pt)
+  (avy-action-kill-whole-line pt)
+  (save-excursion (yank)) t)
+
+(after! avy
+  (setf (alist-get ?g avy-dispatch-alist) 'avy-action-teleport
+        (alist-get ?G avy-dispatch-alist) 'avy-action-teleport-whole-line))
+ #+end_src
+
+*** Mark to char -> M
+#+begin_src emacs-lisp
+(defun avy-action-mark-to-char (pt)
+  (activate-mark)
+  (goto-char pt))
+
+(after! avy
+  (setf (alist-get ?M  avy-dispatch-alist) 'avy-action-mark-to-char))
+#+end_src
+
+*** Flyspell -> ;
+#+begin_src emacs-lisp
+;; Flyspell words
+(defun avy-action-flyspell (pt)
+  (save-excursion
+    (goto-char pt)
+    (when (require 'flyspell nil t)
+      (flyspell-auto-correct-word)))
+  (select-window
+   (cdr (ring-ref avy-ring 0)))
+  t)
+
+;; Bind to semicolon (flyspell uses C-;)
+(after! avy
+  (setf (alist-get ?\; avy-dispatch-alist) 'avy-action-flyspell))
+#+end_src
+
+*** Embark -> .
+#+begin_src emacs-lisp
+(defun avy-action-embark (pt)
+  (unwind-protect
+      (save-excursion
+        (goto-char pt)
+        (embark-act))
+    (select-window
+     (cdr (ring-ref avy-ring 0))))
+  t)
+(after! avy
+  (setf (alist-get ?. avy-dispatch-alist) 'avy-action-embark))
+#+end_src
+* Terminal Here -> M-SPC o {o,O} :global:
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+(package! terminal-here)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! terminal-here
+  :config
+  (setq terminal-here-terminal-command 'alacritty)
+  :init
+  (map! :leader
+        :prefix "o"
+        :desc "Launch terminal here" "t" #'terminal-here-launch
+        :desc "Launch terminal ROOT" "T" #'terminal-here-project-launch))
+#+end_src
+* Org :local:
 ** Base Settings
 #+begin_src emacs-lisp
 (setq org-directory "~/Dropbox/org/"
@@ -158,24 +489,7 @@ Just a dump for some used (project) variables
 ;; Org emphasize
 (map! :after org :map org-mode-map :localleader "f" #'org-emphasize)
 #+end_src
-** Org agenda
-#+begin_src emacs-lisp
-;; Custom org agenda shortcut
-(defun org-agenda-week (&optional arg)
-  (interactive "P")
-  (org-agenda arg "a"))
-;;   (when (= (length (window-list)) 1)
-;;     (if (= 0 (car (window-edges)))
-;;         (split-window-right)
-;;         (split-window-left)))
-;;   (let ((org-agenda-window-setup 'other-window)
-;;         (current (buffer-name)))
-;;     (org-agenda arg "a")
-;;     (switch-to-buffer-other-window current)))
-
-(map! :leader :prefix "o" :map global-map :desc "Open Org Agenda Week" "w" #'org-agenda-week)
-#+end_src
-*** Org agenda icons
+** Org agenda icons
 #+begin_src emacs-lisp
 (cl-defstruct agendaIcons
   category
@@ -212,7 +526,95 @@ Just a dump for some used (project) variables
                     (list (icons x))
                     nil nil)) agenda-icons/caticons)))
 #+end_src
+** Org Journal -> M-SPC j {n,N,c,s}
+#+begin_src emacs-lisp
+;; Org Journal Settings
+(setq org-journal-dir org-directory
+      org-journal-file-type 'weekly
+      ;; org-journal-date-prefix "#+title: "
+      org-journal-date-format "%a, %x"
+      ;; org-journal-time-prefix "* "
+      org-journal-file-format "W%V_%Y-%m-%d.org"
+      org-journal-file-header "#+STARTUP: show2levels\n"
+      ;; But #+title tag back to first line
+      ;; org-journal-after-header-create-hook (lambda () (transpose-lines 1))
+      ;; Automatic org agenda integration
+      org-journal-after-entry-create-hook
+      (lambda () (if (not (file-exists-p (buffer-file-name))) (org-agenda-file-to-front t))))
+;;org-journal-file-header "#+title: W%V_%Y-%m-%d\n#+roam_key: file:_stage.org\n"
+;;org-journal-skip-carryover-drawers (list "LOGBOOK")
+#+end_src
 
+*** Org Journal Keymap
+#+begin_src emacs-lisp
+(map! :map org-journal-mode-map "M-s-n" #'org-journal-previous-entry)
+(map! :map org-journal-mode-map "M-s-t" #'org-journal-next-entry)
+
+(map! :leader :prefix "j"
+        (:map org-journal-mode-map
+         :desc "Org Agenda File To Front" "f" #'org-agenda-file-to-front)
+        (:map global-map
+         :desc "Org Journal New Entry" "n" #'org-journal-new-entry
+         :desc "Org Journal New Scheduled Entry" "N" #'org-journal-new-scheduled-entry
+         :desc "Org Journal Open Current" "c" #'org-journal-open-current-journal-file
+         :desc "Org Journal Stage" "s" #'(lambda () (interactive) (find-file _stageorg))))
+#+end_src
+*** Custom Export Clocktable Function :deprecated:
+#+begin_src
+(defun export-clocktable-csv (&optional week)
+  "Export current week (no prefix argument) or weeks in the "
+  (interactive "P")
+  (let* ((week (if week week 0))
+         (time-string (format-time-string "%V"))
+         (new-time-number (- (string-to-number time-string) week))
+         (new-time-string (number-to-string new-time-number))
+         (time-string (if (< new-time-number 10)
+                          (concat "0" new-time-string) new-time-string))
+         (org-agenda-files (directory-files org-directory t (concat "^W" time-string))))
+    (call-interactively #'org-clock-csv-to-file)))
+#+end_src
+** Org Roam -> M-SPC r {i,t,g,c}
+#+begin_src emacs-lisp
+;; Org Roam Settings
+(defun this/org_roam__bump_revision_date ()
+  "Retriving REVISION and replace it naively with current time stamp."
+  (when (cond ((eq major-mode 'org-mode))
+              ((string-match-p "^[0-9]\\{14\\}-" (file-name-base))))
+    (let ((lastrev (car (cdr (car (org-collect-keywords '("REVISION"))))))
+          (today (format-time-string (org-time-stamp-format))))
+      (cond ((not lastrev) nil)
+            ((not (string= lastrev today))
+             (save-excursion
+               (re-search-backward "REVISION" nil 1)
+               (when (re-search-forward lastrev nil 1)
+                 (replace-match today))))))))
+
+(use-package! org-roam
+  :custom
+  (org-roam-directory org-directory)
+  (org-roam-capture-templates
+   '(("d" "default" plain
+      "%?"
+      :if-new
+      (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                 "#+title: ${title}\n#+CREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+REVISION: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+STARTUP: overview\n")
+      :unnarrowed t)))
+  :config
+  (setq org-roam-completion-everywhere nil)
+  (add-hook! 'after-save-hook #'this/org_roam__bump_revision_date))
+  #+end_src
+
+*** Org Roam Keymap
+#+begin_src emacs-lisp
+(map! :leader :prefix "r"
+        (:map org-mode-map
+         :desc "Org Roam Node Insert" "i" #'org-roam-node-insert
+         ;;:desc "Org Table Column Toggle" "t" #'org-table-toggle-column-width)
+         :desc "Org Roam Buffer Toggle" "t" #'org-roam-buffer-toggle)
+        (:map global-map
+         :desc "Org Roam Goto Node" "g" #'org-roam-node-find
+         :desc "Org Roam Capture" "c" #'org-roam-capture))
+#+end_src
 ** Org habit
 #+begin_src emacs-lisp
 (after! org
@@ -270,133 +672,6 @@ Backup of the Doom Emacs Capture templates for future reference
  ("ot" "Project todo" entry #'+org-capture-central-project-todo-file "* TODO %?\n %i\n %a" :heading "Tasks" :prepend nil)
  ("on" "Project notes" entry #'+org-capture-central-project-notes-file "* %U %?\n %i\n %a" :heading "Notes" :prepend t)
  ("oc" "Project changelog" entry #'+org-capture-central-project-changelog-file "* %U %?\n %i\n %a" :heading "Changelog" :prepend t))
-#+end_src
-** Org Journal -> SPC r
-#+begin_src emacs-lisp
-;; Org Journal Settings
-(setq org-journal-dir org-directory
-      org-journal-file-type 'weekly
-      ;; org-journal-date-prefix "#+title: "
-      org-journal-date-format "%a, %x"
-      ;; org-journal-time-prefix "* "
-      org-journal-file-format "W%V_%Y-%m-%d.org"
-      org-journal-file-header "#+STARTUP: show2levels\n"
-      ;; But #+title tag back to first line
-      ;; org-journal-after-header-create-hook (lambda () (transpose-lines 1))
-      ;; Automatic org agenda integration
-      org-journal-after-entry-create-hook
-      (lambda () (if (not (file-exists-p (buffer-file-name))) (org-agenda-file-to-front t))))
-;;org-journal-file-header "#+title: W%V_%Y-%m-%d\n#+roam_key: file:_stage.org\n"
-;;org-journal-skip-carryover-drawers (list "LOGBOOK")
-#+end_src
-
-*** Org Journal Keymap -> SPC r
-#+begin_src emacs-lisp
-(after! org-journal
-  (map! :map org-journal-mode-map "C-M-n" #'org-journal-previous-entry)
-  (map! :map org-journal-mode-map "C-M-t" #'org-journal-next-entry)
-  ;; I want org-mode bindings instead of org-journal bindings
-  ;; Overwriting SPC c, d, p
-  (map! :localleader
-        (:map org-journal-mode-map
-         (:prefix ("c" . "clock")
-          "c" #'org-clock-cancel
-          "d" #'org-clock-mark-default-task
-          "e" #'org-clock-modify-effort-estimate
-          "E" #'org-set-effort
-          "g" #'org-clock-goto
-          "G" (cmd! (org-clock-goto 'select))
-          "l" #'+org/toggle-last-clock
-          "i" #'org-clock-in
-          "I" #'org-clock-in-last
-          "o" #'org-clock-out
-          "r" #'org-resolve-clocks
-          "R" #'org-clock-report
-          "t" #'org-evaluate-time-range
-          "=" #'org-clock-timestamps-up
-          "-" #'org-clock-timestamps-down)
-         (:prefix ("d" . "date/deadline")
-          "d" #'org-deadline
-          "s" #'org-schedule
-          "t" #'org-time-stamp
-          "T" #'org-time-stamp-inactive)
-         (:prefix ("p" . "priority")
-          "d" #'org-priority-down
-          "p" #'org-priority
-          "u" #'org-priority-up)
-          "n" #'org-store-link)))
-(map! :leader :prefix "r"
-        (:map org-mode-map
-         :desc "Org Agenda File To Front" "f" #'org-agenda-file-to-front)
-         :desc "Org Journal Previous" "n" #'org-journal-previous-entry
-         :desc "Org Journal Next" "t" #'org-journal-next-entry
-        (:map global-map
-         :desc "Org Journal New Entry" "s" #'org-journal-new-entry
-         :desc "Org Journal New Scheduled Entry" "S" #'org-journal-new-scheduled-entry
-         :desc "Org Journal Open Current" "r" #'org-journal-open-current-journal-file
-         :desc "Org Journal Stage" "h" #'(lambda () (interactive) (find-file _stageorg))))
-#+end_src
-*** Custom Export Clocktable Function :deprecated:
-#+begin_src
-(defun export-clocktable-csv (&optional week)
-  "Export current week (no prefix argument) or weeks in the "
-  (interactive "P")
-  (let* ((week (if week week 0))
-         (time-string (format-time-string "%V"))
-         (new-time-number (- (string-to-number time-string) week))
-         (new-time-string (number-to-string new-time-number))
-         (time-string (if (< new-time-number 10)
-                          (concat "0" new-time-string) new-time-string))
-         (org-agenda-files (directory-files org-directory t (concat "^W" time-string))))
-    (call-interactively #'org-clock-csv-to-file)))
-#+end_src
-** Org Roam -> SPC r
-#+begin_src emacs-lisp
-;; Org Roam Settings
-(defun this/org_roam__bump_revision_date ()
-  "Retriving REVISION and replace it naively with current time stamp."
-  (when (cond ((eq major-mode 'org-mode))
-              ((string-match-p "^[0-9]\\{14\\}-" (file-name-base))))
-    (let ((lastrev (car (cdr (car (org-collect-keywords '("REVISION"))))))
-          (today (format-time-string (org-time-stamp-format))))
-      (cond ((not lastrev) nil)
-            ((not (string= lastrev today))
-             (save-excursion
-               (re-search-backward "REVISION" nil 1)
-               (when (re-search-forward lastrev nil 1)
-                 (replace-match today))))))))
-
-(use-package! org-roam
-  :custom
-  (org-roam-directory org-directory)
-  (org-roam-capture-templates
-   '(("d" "default" plain
-      "%?"
-      :if-new
-      (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                 "#+title: ${title}\n#+CREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+REVISION: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+STARTUP: overview\n")
-      :unnarrowed t)))
-  :config
-  (setq org-roam-completion-everywhere nil)
-  (add-hook! 'after-save-hook #'this/org_roam__bump_revision_date)
-  (map! :leader :prefix "r"
-        (:map org-mode-map
-         :desc "Org Roam Node Insert" "i" #'org-roam-node-insert
-         ;;:desc "Org Table Column Toggle" "t" #'org-table-toggle-column-width)
-         :desc "Org Roam Buffer Toggle" "b" #'org-roam-buffer-toggle)
-        (:map global-map
-         :desc "Org Roam Goto Node" "g" #'org-roam-node-find
-         :desc "Org Roam Capture" "c" #'org-roam-capture))
-  )
-
-;; (use-package! org-roam
-;;   :bind (:map org-mode-map
-;;          ("M-s-s i" . org-roam-node-insert) ;; insert links in org documents
-;;          ("M-s-s b" . org-roam-buffer-toggle) ;; toggle backlinks overview
-;;          :map global-map
-;;          ("M-s-s f" . org-roam-node-find) ;; quickly find
-;;          ("M-s-s c" . org-roam-capture))) ;; capture information
-
 #+end_src
 ** Org MRU Clock
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
@@ -477,7 +752,7 @@ From own fork! https://github.com/ja0nz/org-fc
    :files (:defaults "awk" "demo.org")))
 #+end_src
 
-#+begin_src emacs-lisp
+#+begin_src
 (use-package! org-fc
   :custom (org-fc-directories '("~/Dropbox/org/"))
   :config
@@ -574,7 +849,34 @@ strict digraph {
         " " cmdline
         " --output=" (org-babel-process-file-name out-file)) "")))
 #+end_src
-* MU4E
+* JS/TS :local:
+#+begin_src emacs-lisp
+;;https://github.com/js-emacs/xref-js2
+(setq xref-js2-search-program 'rg)
+(setq js-indent-level 2)
+#+end_src
+
+* Caddyfile :local:
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+(package! caddyfile-mode)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! caddyfile-mode
+  :mode
+  (("Caddyfile\\'" . caddyfile-mode)
+   ("caddy\\.conf\\'" . caddyfile-mode)))
+#+end_src
+
+#+RESULTS:
+
+* aa2u artist mode to unicode :local:
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+(package! ascii-art-to-unicode)
+#+end_src
+
+
+* KILL MU4E
 [[ https://github.com/hlissner/doom-emacs/blob/develop/modules/email/mu4e/README.org][Doom Emacs MU4E]]
 #+begin_src emacs-lisp
 ;; Mu4e settings
@@ -627,188 +929,9 @@ Handled by gmail now
   (add-to-list 'mu4e-headers-actions '("org-contact-add" . mu4e-action-add-org-contact) t)
   (add-to-list 'mu4e-view-actions '("org-contact-add" . mu4e-action-add-org-contact) t))
 #+end_src
-* Calendar
-#+begin_src emacs-lisp
-(setq calendar-date-style "european"
-      calendar-week-start-day 1)
-#+end_src
-* Terminal Here
-#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
-(package! terminal-here)
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package! terminal-here
-  :config
-  (setq terminal-here-terminal-command 'alacritty)
-  :init
-  (map! :leader
-        :prefix "o"
-        :desc "Launch terminal here" "t" #'terminal-here-launch
-        :desc "Launch terminal ROOT" "T" #'terminal-here-project-launch))
-#+end_src
-* Caddyfile mode
-#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
-(package! caddyfile-mode)
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package! caddyfile-mode
-  :mode
-  (("Caddyfile\\'" . caddyfile-mode)
-   ("caddy\\.conf\\'" . caddyfile-mode)))
-#+end_src
-
-#+RESULTS:
-
-* Avy Actions
-Based on the article:
-https://karthinks.com/software/avy-can-do-anything/
-
-Pomodoro clock in -> t
-#+begin_src emacs-lisp
-(defun avy-action-org-pomodoro (pt)
-  (save-excursion
-    (goto-char pt)
-    (org-pomodoro))
-  (select-window
-   (cdr
-    (ring-ref avy-ring 0)))
-  t)
-
-(after! avy
-  (setf (alist-get ?t avy-dispatch-alist) 'avy-action-org-pomodoro))
-#+end_src
-
-Kill text -> k K
-#+begin_src emacs-lisp
-;; Kill text
-(defun avy-action-kill-whole-line (pt)
-  (save-excursion
-    (goto-char pt)
-    (kill-whole-line))
-  (select-window
-   (cdr
-    (ring-ref avy-ring 0)))
-  t)
-
-(after! avy
-  (setf (alist-get ?k avy-dispatch-alist) 'avy-action-kill-stay
-        (alist-get ?K avy-dispatch-alist) 'avy-action-kill-whole-line))
-#+end_src
-
-Copy text (remain in register) -> c C
-Yank text (paste immediately) -> y Y | ALTERSBUFFER
-#+begin_src emacs-lisp
-;; Copy text (remain in register)
-(defun avy-action-copy-whole-line (pt)
-  (save-excursion
-    (goto-char pt)
-    (cl-destructuring-bind (start . end)
-        (bounds-of-thing-at-point 'line)
-      (copy-region-as-kill start end)))
-  (select-window
-   (cdr
-    (ring-ref avy-ring 0)))
-  t)
-
-(after! avy
-  (setf (alist-get ?c avy-dispatch-alist) 'avy-action-copy
-        (alist-get ?C avy-dispatch-alist) 'avy-action-copy-whole-line))
-
-;; Yank text (paste immediately)
-(defun avy-action-yank-whole-line (pt)
-  (avy-action-copy-whole-line pt)
-  (save-excursion (yank))
-  t)
-
-(after! avy
-  (setf (alist-get ?y avy-dispatch-alist) 'avy-action-yank
-        (alist-get ?Y avy-dispatch-alist) 'avy-action-yank-whole-line))
-#+end_src
-
-Teleport/Grab -> g G
-#+begin_src emacs-lisp
-;; Transpose/Move text
-(defun avy-action-teleport-whole-line (pt)
-  (avy-action-kill-whole-line pt)
-  (save-excursion (yank)) t)
-
-(after! avy
-  (setf (alist-get ?g avy-dispatch-alist) 'avy-action-teleport
-        (alist-get ?G avy-dispatch-alist) 'avy-action-teleport-whole-line))
- #+end_src
-
-_ Mark to char -> M
-#+begin_src emacs-lisp
-(defun avy-action-mark-to-char (pt)
-  (activate-mark)
-  (goto-char pt))
-
-(after! avy
-  (setf (alist-get ?M  avy-dispatch-alist) 'avy-action-mark-to-char))
-#+end_src
-
-Flyspell -> ;
-#+begin_src emacs-lisp
-;; Flyspell words
-(defun avy-action-flyspell (pt)
-  (save-excursion
-    (goto-char pt)
-    (when (require 'flyspell nil t)
-      (flyspell-auto-correct-word)))
-  (select-window
-   (cdr (ring-ref avy-ring 0)))
-  t)
-
-;; Bind to semicolon (flyspell uses C-;)
-(after! avy
-  (setf (alist-get ?\; avy-dispatch-alist) 'avy-action-flyspell))
-#+end_src
-
-Embark -> .
-#+begin_src emacs-lisp
-(defun avy-action-embark (pt)
-  (unwind-protect
-      (save-excursion
-        (goto-char pt)
-        (embark-act))
-    (select-window
-     (cdr (ring-ref avy-ring 0))))
-  t)
-(after! avy
-  (setf (alist-get ?. avy-dispatch-alist) 'avy-action-embark))
-#+end_src
-
-* Envrc global mode
-#+begin_src emacs-lisp
-(envrc-global-mode)
-#+end_src
-
-* Racket mode
-#+begin_src emacs-lisp
-;;(add-to-list '+format-on-save-enabled-modes 'racket-mode t)
-#+end_src
-
-* JS/TS mode
-#+begin_src emacs-lisp
-;;https://github.com/js-emacs/xref-js2
-(setq xref-js2-search-program 'rg)
-(setq js-indent-level 2)
-#+end_src
-
-* Artist mode
-#+begin_src emacs-lisp
-(add-hook! artist-mode
-  (evil-emacs-state 1))
-#+end_src
-** Ascii-art-to-unicode
-#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
-(package! ascii-art-to-unicode)
-#+end_src
-* Web Mode
+* KILL Web Mode
 ** Config
-#+begin_src emacs-lisp
+#+begin_src
 (setq web-mode-markup-indent-offset 2)
 (setq-hook! 'web-mode-hook +format-with :none)
 #+end_src
@@ -818,7 +941,7 @@ Related to this issue of web mode: https://github.com/fxbois/web-mode/issues/799
 In short: changing dir-locals alone is not working with web mode. This is a hack
 to get it working.
 
-#+begin_src emacs-lisp
+#+begin_src
 (add-to-list 'safe-local-variable-values '(hack-web-mode-engine . "go"))
 (defun hack-web-mode-hook ()
   "Hooks for Web mode. Add a local hook which set the engine to the one specified by
@@ -835,21 +958,13 @@ to get it working.
          (web-mode-set-engine "none"))))))
 (add-hook 'web-mode-hook  'hack-web-mode-hook nil nil)
 #+end_src
-* Tailwind CSS
-#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
-;;(package! lsp-tailwindcss :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
-#+end_src
-
-#+begin_src emacs-lisp
-;;(use-package! lsp-tailwindcss)
-#+end_src
-* Undo tree keybindings -> SPC d
+* KILL Undo tree keybindings -> SPC d
 https://elpa.gnu.org/packages/undo-tree.html
 
 Missing argument: undo-tree-switch-branch
 I could not find any use from it because going over undo-tree-visualize anyway
 
-#+begin_src emacs-lisp
+#+begin_src
 (map! :leader :prefix "d"
         (:map global-map
          :desc "better undo-tree-visualize" "d" #'undo-tree-visualize

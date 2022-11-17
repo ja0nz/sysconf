@@ -114,6 +114,7 @@ in {
     tealdeer # A very fast implementation of tldr in [RUST]
     calc # C-style arbitrary precision calculator
     rlwrap # Readline wrapper for console programs
+    just # A handy way to save and run project-specific commands [RUST]
 
     # -- File Generators --
     pandoc # Conversion betrween markup formats
