@@ -36,7 +36,8 @@
     '';
     shellAliases = {
       # --- TODO Special sysconf/nixOS related commands
-      "nixos:updateALL" = "sudo nix-channel --update; cd ~/sysconf && rg fetchTarball -l | xargs -I@ direnv exec . update-nix-fetchgit @";
+      "nixos:updateALL" =
+        "sudo nix-channel --update; cd ~/sysconf && rg fetchTarball -l | xargs -I@ direnv exec . update-nix-fetchgit @";
       "nixos:switch" = "sudo nixos-rebuild switch";
       "nixos:boot" = "sudo nixos-rebuild boot";
       "nixos:clean" = "sudo nix-collect-garbage -d";
@@ -57,6 +58,7 @@
       rg = "rg --hidden --glob '!.git'"; # find
       vim = "nvim";
       lscert = "ssh-keygen -L -f";
+      go = "just";
       # ls, ll, la, lt, lla -> set by lsd
     };
     functions = {

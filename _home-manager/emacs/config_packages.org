@@ -251,10 +251,9 @@ https://karthinks.com/software/fifteen-ways-to-use-embark
 (map! :leader
       "a" nil
       :prefix "a"
-      :desc "Char 1" "1" #'avy-goto-char
-      :desc "Char 2" "2" #'avy-goto-char-2
-      :desc "Word 1" "3" #'avy-goto-word-1
-      :desc "Timer" "t" #'avy-goto-char-timer
+      :desc "Char" "e" #'avy-goto-char
+      :desc "Timer" "a" #'avy-goto-char-timer
+      :desc "Word" "i" #'avy-goto-word-1
       :desc "Line end" "l e" #'avy-goto-end-of-line
       :desc "Line start" "l s" #'avy-goto-line)
 #+end_src
@@ -585,9 +584,11 @@ https://karthinks.com/software/avy-can-do-anything/
       (cond ((not lastrev) nil)
             ((not (string= lastrev today))
              (save-excursion
-               (re-search-backward "REVISION" nil 1)
-               (when (re-search-forward lastrev nil 1)
-                 (replace-match today))))))))
+               (goto-line 10)
+               (when
+                 (re-search-backward "^#\\+REVISION: \\(.+\\)" nil t)
+                 (replace-match
+                  (format "#+REVISION: %s" today) nil nil))))))))
 
 (use-package! org-roam
   :custom
