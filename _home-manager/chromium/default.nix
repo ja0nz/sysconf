@@ -30,6 +30,7 @@
       { id = "hecfkgekabkkhiidlinmifelhdooeool"; } # Fraidycay
       { id = "aapbdbdomjkkjkaonfhkkikfgjllcleb"; } # Google Translate
       { id = "hoombieeljmmljlkjmnheibnpciblicm"; } # Language Reactor
+      { id = "limifnkopacddgpihodacjeckfkpbfoe"; } # Mastodon View Profile
     ];
   };
 }
