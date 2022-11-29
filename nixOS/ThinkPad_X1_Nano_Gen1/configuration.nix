@@ -93,8 +93,12 @@ with lib; {
       '';
     };
 
-    # Related to sway, no other way to set in home-manager!
-    security.pam.services.swaylock = { };
+    security = {
+      # Swaylock - see sway/default.nix
+      pam.services.swaylock = { };
+      # sway
+      polkit.enable = true;
+    };
 
     # Displays keys being pressed on a Wayland session
     # Good for demoing stuff
