@@ -24,7 +24,6 @@
 let
   modifier = "Mod4";
   chrome-flags = [
-    "--ozone-platform=wayland"
     "--extension-mime-request-handling=always-prompt-for-install"
     "--scroll-tabs=never"
     "--force-punycode-hostnames"
@@ -32,7 +31,7 @@ let
     "--hide-crashed-bubble"
     "--hide-sidepanel-button"
     # chrome://flags
-    "--enable-features='EnableTabMuting,WebRTCPipeWireCapturer'" # VaapiVideoDecoder,VaapiVideoEncoder'"
+    "--enable-features='EnableTabMuting,WebRTCPipeWireCapturer'"
   ];
 in {
 

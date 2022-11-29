@@ -13,7 +13,9 @@
 
 {
   home.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
     LIBVA_DRIVER_NAME = "iHD";
+    VDPAU_DRIVER = "va_gl";
     EDITOR = "emacsclient -c";
     # BROWSER = "chromium"; <-- set in mimeapps.list instead
   };

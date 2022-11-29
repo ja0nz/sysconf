@@ -63,10 +63,11 @@ with lib; {
       };
       opengl = {
         enable = true;
-        extraPackages = with pkgs;
-          [
-            intel-media-driver # LIBVA_DRIVER_NAME=iHD
-          ];
+        extraPackages = with pkgs; [
+          intel-media-driver # LIBVA_DRIVER_NAME=iHD
+          vaapiVdpau # libva-vdpau-driver
+          libvdpau-va-gl
+        ];
       };
       brillo.enable = true;
     };
