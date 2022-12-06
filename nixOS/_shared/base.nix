@@ -15,8 +15,8 @@
     # Console settings
     console = {
       font = "Lat2-Terminus16";
-      # TODO You may not want to use neo2 keyboard
-      keyMap = "neo";
+      # TODO You may not want to use german keyboard
+      keyMap = "de";
     };
 
     # System packages

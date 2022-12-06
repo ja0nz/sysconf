@@ -35,6 +35,9 @@ let
   ];
 in {
 
+  # Symlink mine keyboard layout
+  home.file.".xkb/symbols/mine".source = "${./mine}";
+
   # Packages
   home.packages = with pkgs; [
     wldash
@@ -168,8 +171,10 @@ in {
                     grep -q none && nmcli networking on || nmcli networking off"'';
 
         "XF86NotificationCenter" = ''exec "wofi-emoji"'';
-        #"XF86PickupPhone" = "";
-        #"XF86HangupPhone" = "";
+        "XF86PickupPhone" =
+          ''exec "swaymsg input type:keyboard xkb_switch_layout prev"'';
+        "XF86HangupPhone" =
+          ''exec "swaymsg input type:keyboard xkb_switch_layout next"'';
         "XF86Favorites" = ''
           exec "emacsclient --eval '(save-some-buffers t)' 2>/dev/null; shutdown -h now"'';
       };
@@ -203,9 +208,8 @@ in {
           pointer_accel = "-0.6";
         };
         "type:keyboard" = {
-          xkb_layout = "de,de";
-          xkb_variant = "neo,";
-          xkb_options = "grp:rctrl_rshift_toggle";
+          xkb_layout = "de,mine,de";
+          xkb_variant = "neo,mine,";
         };
       };
       # TODO Set your input/output devices
