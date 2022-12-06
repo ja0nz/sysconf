@@ -12,8 +12,8 @@
 {
   programs.emacs = {
     enable = true;
-    package = pkgs.emacsNativeComp; # TODO Req emacs-overlay (see overlays.nix)
-    #package = pkgs.emacsPgtkNativeComp; # HOLD give Pkgt a bit to mature
+    package = pkgs.emacsUnstable; # TODO Req emacs-overlay (see overlays.nix)
+    #package = pkgs.emacsPgtk;
     #extraPackages = epkgs: with epkgs; [ use-package ];
   };
   services.emacs = {

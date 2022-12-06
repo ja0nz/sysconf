@@ -850,13 +850,6 @@ strict digraph {
         " " cmdline
         " --output=" (org-babel-process-file-name out-file)) "")))
 #+end_src
-* JS/TS :local:
-#+begin_src emacs-lisp
-;;https://github.com/js-emacs/xref-js2
-(setq xref-js2-search-program 'rg)
-(setq js-indent-level 2)
-#+end_src
-
 * Caddyfile :local:
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
 (package! caddyfile-mode)
@@ -876,7 +869,43 @@ strict digraph {
 (package! ascii-art-to-unicode)
 #+end_src
 
+* Bump lsp :hack:
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+(package! lsp-mode :pin "61349dd9102e0f15fba3ec583844108dc584357f")
+#+end_src
 
+* Web Mode
+#+begin_src emacs-lisp
+(use-package! web-mode
+  :config (setq
+     web-mode-markup-indent-offset 2
+     web-mode-enable-front-matter-block t
+     web-mode-code-indent-offset 2)
+)
+#+end_src
+
+** Web Mode :hack:
+Related to this issue of web mode: https://github.com/fxbois/web-mode/issues/799
+In short: changing dir-locals alone is not working with web mode. This is a hack
+to get it working.
+
+#+begin_src
+(add-to-list 'safe-local-variable-values '(hack-web-mode-engine . "go"))
+(defun hack-web-mode-hook ()
+  "Hooks for Web mode. Add a local hook which set the engine to the one specified by
+   `hack-web-mode-engine` local variable."
+  (add-hook
+   'hack-local-variables-hook
+   (lambda ()
+     (if (boundp 'hack-web-mode-engine)
+         (progn
+           (message "web-mode-engine is %s" hack-web-mode-engine)
+           (web-mode-set-engine hack-web-mode-engine))
+       (progn
+         (message "no web-mode-engine settled")
+         (web-mode-set-engine "none"))))))
+(add-hook 'web-mode-hook  'hack-web-mode-hook nil nil)
+#+end_src
 * KILL MU4E
 [[ https://github.com/hlissner/doom-emacs/blob/develop/modules/email/mu4e/README.org][Doom Emacs MU4E]]
 #+begin_src emacs-lisp
@@ -929,35 +958,6 @@ Handled by gmail now
 (after! mu4e
   (add-to-list 'mu4e-headers-actions '("org-contact-add" . mu4e-action-add-org-contact) t)
   (add-to-list 'mu4e-view-actions '("org-contact-add" . mu4e-action-add-org-contact) t))
-#+end_src
-* KILL Web Mode
-** Config
-#+begin_src
-(setq web-mode-markup-indent-offset 2)
-(setq-hook! 'web-mode-hook +format-with :none)
-#+end_src
-
-** Web Mode :hack:
-Related to this issue of web mode: https://github.com/fxbois/web-mode/issues/799
-In short: changing dir-locals alone is not working with web mode. This is a hack
-to get it working.
-
-#+begin_src
-(add-to-list 'safe-local-variable-values '(hack-web-mode-engine . "go"))
-(defun hack-web-mode-hook ()
-  "Hooks for Web mode. Add a local hook which set the engine to the one specified by
-   `hack-web-mode-engine` local variable."
-  (add-hook
-   'hack-local-variables-hook
-   (lambda ()
-     (if (boundp 'hack-web-mode-engine)
-         (progn
-           (message "web-mode-engine is %s" hack-web-mode-engine)
-           (web-mode-set-engine hack-web-mode-engine))
-       (progn
-         (message "no web-mode-engine settled")
-         (web-mode-set-engine "none"))))))
-(add-hook 'web-mode-hook  'hack-web-mode-hook nil nil)
 #+end_src
 * KILL Undo tree keybindings -> SPC d
 https://elpa.gnu.org/packages/undo-tree.html
