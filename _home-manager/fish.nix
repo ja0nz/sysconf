@@ -26,14 +26,6 @@
 
   programs.fish = {
     enable = true;
-    loginShellInit = ''
-      if not set -q SWAYSTARTED
-        if not set -q DISPLAY && test (tty) = /dev/tty1
-          set -g SWAYSTARTED 1
-          exec sway
-        end
-      end
-    '';
     shellAliases = {
       # --- TODO Special sysconf/nixOS related commands
       "nixos:updateALL" =

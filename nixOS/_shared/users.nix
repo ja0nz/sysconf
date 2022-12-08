@@ -15,8 +15,19 @@ let
 in {
   imports = [ <home-manager/nixos> ];
 
-  # AutoLogin the main user
-  services = { getty.autologinUser = mainUser; };
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.greetd}/bin/agreety --cmd $SHELL";
+      };
+      # AutoLogin the main users
+      initial_session = {
+        user = mainUser;
+        command = "${pkgs.sway}/bin/sway";
+      };
+    };
+  };
 
   # Disable useradd/groupadd
   users.mutableUsers = false;
