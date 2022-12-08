@@ -186,9 +186,9 @@ in {
                     grep -q none && nmcli networking on || nmcli networking off"'';
 
         "XF86NotificationCenter" = ''exec "wofi-emoji"'';
-        "XF86PickupPhone" =
+        "XF86PickupPhone" = "exec ${../switch-audio-port} 2>/dev/null";
+        "XF86HangupPhone" =
           ''exec "swaymsg input type:keyboard xkb_switch_layout next"'';
-        # "XF86HangupPhone" = "";
         "XF86Favorites" = ''
           exec "emacsclient --eval '(save-some-buffers t)' 2>/dev/null; systemctl poweroff"'';
       };

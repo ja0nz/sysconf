@@ -21,7 +21,7 @@
       enable = true;
       target = "sway-session.target";
     };
-    style = builtins.readFile ./waybar.css;
+    # style = builtins.readFile ./waybar.css;
     settings = [{
       layer = "bottom";
       position = "bottom";
@@ -101,7 +101,7 @@
           #   default = [ "奄" "奔" "墳" ];
           # };
           # scroll-step = 1;
-          on-click = "${./switch-audio-port.sh} 2> /dev/null";
+          on-click = "${../switch-audio-port} 2>/dev/null";
           on-click-middle =
             "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
           on-click-right = "${pkgs.pavucontrol}/bin/pavucontrol";
@@ -118,7 +118,7 @@
         #};
         "custom/waybar-mpris" = {
           return-type = "json";
-          exec = "${./playerctl.sh} 2> /dev/null";
+          exec = "${./playerctl-mpris} 2>/dev/null";
           on-click = "${pkgs.playerctl}/bin/playerctl previous";
           on-click-middle = "${pkgs.playerctl}/bin/playerctl play-pause";
           on-click-right = "${pkgs.playerctl}/bin/playerctl next";
