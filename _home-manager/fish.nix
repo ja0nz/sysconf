@@ -64,9 +64,9 @@
       '';
     };
     interactiveShellInit = ''
-      any-nix-shell fish | source
-      zoxide init fish | source
-      starship init fish | source
+      ${pkgs.any-nix-shell}/bin/any-nix-shell fish | source
+      ${pkgs.zoxide}/bin/zoxide init fish | source
+      ${pkgs.starship}/bin/starship init fish | source
       # Bind mcfly interactively
       bind \cr __mcfly-history-widget
       bind \er fzf-history-widget

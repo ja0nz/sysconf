@@ -24,7 +24,7 @@ in {
       # AutoLogin the main users
       initial_session = {
         user = mainUser;
-        command = "${pkgs.sway}/bin/sway";
+        command = "sway";
       };
     };
   };

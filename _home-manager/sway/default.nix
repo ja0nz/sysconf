@@ -73,8 +73,7 @@ in {
       export SDL_VIDEODRIVER=wayland
       export _JAVA_AWT_WM_NONREPARENTING=1
 
-      # waybar? -> not needed anymore
-      # systemctl --user import-environment
+      systemctl --user import-environment
     '';
 
     config = {
