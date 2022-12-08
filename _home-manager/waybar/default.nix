@@ -9,8 +9,7 @@
     - pavucontrol -> launch pulseaudio control
     - duf -> disk utility
     - networkmanager -> launch network control
-    - brave browser -> launch google calendar
-    - playerctl -> player control (for spotify, brave browser, ctc)
+    - playerctl -> player control (for spotify, browser, ctc)
     - spotify -> the player itself
 */
 { pkgs, ... }:

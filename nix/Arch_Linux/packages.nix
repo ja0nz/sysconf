@@ -9,7 +9,6 @@
   imports = map (pkg: ../../_home-manager + pkg) [
     # -- Programs --
     # -- GUI --
-    #/alacritty.nix
     /xdg.nix
     #/gtk.nix
     # -- SHELL --

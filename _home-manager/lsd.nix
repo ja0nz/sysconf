@@ -2,11 +2,11 @@
    #+FILETAGS: :navigation:
 
    Lsd aliases set by enableAliases:
-      - ls = "${pkgs.exa}/bin/exa";
-      - ll = "${pkgs.exa}/bin/exa -l";
-      - la = "${pkgs.exa}/bin/exa -a";
-      - lt = "${pkgs.exa}/bin/exa --tree";
-      - lla = "${pkgs.exa}/bin/exa -la";
+      - ls = "${pkgs.lsd}/bin/lsd";
+      - ll = "${pkgs.lsd}/bin/lsd -l";
+      - la = "${pkgs.lsd}/bin/lsd -a";
+      - lt = "${pkgs.lsd}/bin/lsd --tree";
+      - lla = "${pkgs.lsd}/bin/lsd -la";
 */
 { ... }:
 

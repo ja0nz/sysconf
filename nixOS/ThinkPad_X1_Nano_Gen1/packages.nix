@@ -27,10 +27,8 @@ in {
     # -- SHELL --
     /fish.nix
     /mcfly.nix
-    # /nushell.nix
     /zoxide.nix
     /starship.nix
-    #/exa.nix
     /lsd.nix
     /fzf.nix
     /lorri.nix
@@ -38,8 +36,6 @@ in {
     /git.nix
     /gpg.nix
     /ssh.nix
-    # -- Emails  --
-    /emails.nix
     # -- Hardware connectivity --
     /blueman.nix
     /udiskie.nix
@@ -64,7 +60,6 @@ in {
     neovim # Vim text editor fork focused on extensibility and agility
     anki-bin # Spaced repetition flashcard program
     mpv # ^ General-purpose media player, fork of MPlayer and mplayer2
-    # brave # Privacy-oriented browser for Desktop and Laptop computers
     wofi-emoji # Emoji picker
     wofi # ^
 
