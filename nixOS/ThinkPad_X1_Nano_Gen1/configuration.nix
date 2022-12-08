@@ -50,6 +50,12 @@ with lib; {
       };
     };
 
+    environment.variables = {
+      # see Opengl👇
+      LIBVA_DRIVER_NAME = "iHD";
+      VDPAU_DRIVER = "va_gl";
+    };
+
     hardware = {
       cpu.intel.updateMicrocode = true;
       #pulseaudio = {
@@ -65,8 +71,7 @@ with lib; {
         enable = true;
         extraPackages = with pkgs; [
           intel-media-driver # LIBVA_DRIVER_NAME=iHD
-          vaapiVdpau # libva-vdpau-driver
-          libvdpau-va-gl
+          libvdpau-va-gl # VDPAU_DRIVER=va_gl
         ];
       };
       brillo.enable = true;

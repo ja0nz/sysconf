@@ -15,7 +15,7 @@
     - wofi && wofi-emoji -> as key combination
     - dropbox -> as service on start
     - emacs -> as key combination
-    - pamixer -> as key combination
+    - wpctl -> as key combination
     - playerctl -> as key combination
     - _monoFont! Test with: fc-list : family | grep <MonoFontName>
 */
@@ -48,7 +48,7 @@ in {
     jq # A lightweight and flexible command-line JSON processor
     slurp # Select a region in a Wayland compositor
     swaylock-effects # Screen locker for wayland
-    pamixer # Pulseaudio command line mixer
+    swaybg # Wallpaper tool for Wayland compositors
     hicolor-icon-theme # Default fallback theme used by implementations of the icon theme specification
     capitaine-cursors # An x-cursor theme inspired by macOS and based on KDE Breeze
 
@@ -59,9 +59,22 @@ in {
 
   wayland.windowManager.sway = {
     enable = true;
-    #package = null;
+    systemdIntegration = true;
     extraSessionCommands = ''
-      systemctl --user import-environment
+      # Session
+      export XDG_SESSION_TYPE=wayland
+      export XDG_SESSION_DESKTOP=sway
+      export XDG_CURRENT_DESKTOP=sway
+
+      # Wayland stuff
+      export NIXOS_OZONE_WL=1
+      export MOZ_ENABLE_WAYLAND=1
+      export QT_QPA_PLATFORM=wayland
+      export SDL_VIDEODRIVER=wayland
+      export _JAVA_AWT_WM_NONREPARENTING=1
+
+      # waybar? -> not needed anymore
+      # systemctl --user import-environment
     '';
 
     config = {
@@ -154,14 +167,17 @@ in {
         "Print" = "exec ${./take_screenshot}";
         "Ctrl+Print" = "exec ${./take_screenshot} full";
 
-        "XF86AudioMute" = ''exec "pamixer --toggle-mute"'';
-        "XF86AudioLowerVolume" = ''exec "pamixer --decrease 5"'';
-        "XF86AudioRaiseVolume" = ''exec "pamixer --increase 5"'';
+        "XF86AudioMute" = ''exec "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"'';
+        "XF86AudioLowerVolume" =
+          ''exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"'';
+        "XF86AudioRaiseVolume" =
+          ''exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"'';
         # "XF86AudioPlay" = ''exec "playerctl play"'';
         # "XF86AudioPause" = ''exec "playerctl pause"'';
         # "XF86AudioNext" = ''exec "playerctl next"'';
         # "XF86AudioPrev" = ''exec "playerctl previous"'';
-        "XF86AudioMicMute" = ''exec "pamixer --default-source --toggle-mute"'';
+        "XF86AudioMicMute" =
+          ''exec "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"'';
 
         "XF86MonBrightnessDown" = ''exec "brillo -U 1"'';
         "XF86MonBrightnessUp" = ''exec "brillo -A 1"'';
@@ -172,11 +188,10 @@ in {
 
         "XF86NotificationCenter" = ''exec "wofi-emoji"'';
         "XF86PickupPhone" =
-          ''exec "swaymsg input type:keyboard xkb_switch_layout prev"'';
-        "XF86HangupPhone" =
           ''exec "swaymsg input type:keyboard xkb_switch_layout next"'';
+        # "XF86HangupPhone" = "";
         "XF86Favorites" = ''
-          exec "emacsclient --eval '(save-some-buffers t)' 2>/dev/null; shutdown -h now"'';
+          exec "emacsclient --eval '(save-some-buffers t)' 2>/dev/null; systemctl poweroff"'';
       };
       window = {
         border = 2;
@@ -185,15 +200,15 @@ in {
 
       startup = [
         {
-          command = "dropbox start";
+          command = "${pkgs.dropbox-cli}/bin/dropbox start";
           always = true;
         }
+        #{
+        #  command = "systemctl --user restart waybar";
+        #  always = true;
+        #}
         {
-          command = "systemctl --user restart waybar";
-          always = true;
-        }
-        {
-          command = "autotiling";
+          command = "${pkgs.autotiling}/bin/autotiling";
           always = true;
         }
       ];

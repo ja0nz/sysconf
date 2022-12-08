@@ -155,7 +155,6 @@
     #+end_src
 *** Sound and light management
     #+begin_src nix
-    pamixer                  # Pulseaudio command line mixer
     playerctl                # Command-line utility for controlling media players that implement MPRIS
     brillo                   # Backlight and Keyboard LED control tool
     #+end_src

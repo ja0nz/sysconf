@@ -76,14 +76,12 @@ git-secret-reveal
 #+end_src
 
 ** Set needed channels
-This installation needs *home-manager, nixos, nixpkgs-wayland*.
-Unfortunately, only _nixos-unstable_ as main channel is supported due to nixpkgs-wayland.
+This installation needs home-manager as well as nixos-unstable or stable*
 #+begin_src shell
 # List channels
 sudo nix-channel --list
 # home-manager https://github.com/nix-community/home-manager/archive/master.tar.gz
 # nixos https://nixos.org/channels/nixos-unstable
-# nixpkgs-wayland https://github.com/colemickens/nixpkgs-wayland/archive/master.tar.gz
 
 # Add channel nixos-unstable
 sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos

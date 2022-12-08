@@ -17,7 +17,7 @@ in {
     /syncthing.nix
     # -- GUI --
     /sway
-    /waybar
+    # /waybar
     /kanshi.nix
     /mako.nix
     /gammastep.nix
@@ -109,7 +109,7 @@ in {
     cryptsetup # LUKS for dm-crypt
 
     # -- Command Line Utilities --
-    trash-cli # A simple, fast, and featureful alternative to rm [RUST]
+    trash-cli # Command line tool for the desktop trash can
     choose # A human-friendly and fast alternative to cut and (sometimes) awk [RUST]
     sd # Intuitive find & replace CLI (sed alternative) [RUST]
     hyperfine # Command-line benchmarking tool [RUST]
