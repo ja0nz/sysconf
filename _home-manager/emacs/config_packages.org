@@ -447,7 +447,7 @@ https://karthinks.com/software/avy-can-do-anything/
 #+begin_src emacs-lisp
 (use-package! terminal-here
   :config
-  (setq terminal-here-terminal-command 'alacritty)
+  (setq terminal-here-terminal-command 'foot)
   :init
   (map! :leader
         :prefix "o"
