@@ -70,7 +70,7 @@ in {
 
       # NOTE Importing of the full inherited environment block is deprecated.
       # dbus-update-activation-environment --systemd --all
-      systemctl --user import-environment PATH
+      systemctl --user import-environment PATH SSH_AUTH_SOCK
     '';
 
     config = {

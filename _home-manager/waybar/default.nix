@@ -24,7 +24,7 @@
     # style = builtins.readFile ./waybar.css;
     settings = [{
       layer = "bottom";
-      position = "top";
+      position = "bottom";
       height = 25;
       modules-left = [
         "sway/mode"

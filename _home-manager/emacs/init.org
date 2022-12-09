@@ -21,10 +21,8 @@ Init.el
 ;;      Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
 ;;      directory (for easy access to its source code).
 
-;; (when noninteractive
-;;   (add-to-list 'doom-env-whitelist "^SSH_"))
-
-;; (setq byte-compile-warnings '(cl-functions))
+(after! doom-cli-env
+  (add-to-list 'doom-env-allow "^SSH_"))
 
 (doom! :input
        ;;chinese
