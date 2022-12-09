@@ -24,24 +24,24 @@
     # style = builtins.readFile ./waybar.css;
     settings = [{
       layer = "bottom";
-      position = "bottom";
+      position = "top";
       height = 25;
       modules-left = [
         "sway/mode"
         "sway/workspaces"
-        "cpu"
+        "sway/language"
+        "pulseaudio" # "wireplumber"
         "backlight"
-        "wireplumber"
         "custom/waybar-mpris"
+        "sway/window"
       ];
-      modules-center = [ "sway/window" ];
-      modules-right =
-        [ "network" "disk" "battery" "clock" "sway/language" "tray" ];
+      # modules-center = [ "sway/window" ];
+      modules-right = [ "cpu" "disk" "network" "battery" "clock" "tray" ];
       modules = {
         tray = { spacing = 10; };
         clock = {
-          format = "{:%a %d %b | W%V | %H:%M}";
-          tooltip-format = "{:%Y-%m-%d | W%V | %H:%M}";
+          format = "{:%a %d %b ⟡ W%V ⟡ %H:%M}";
+          tooltip-format = "{:%Y-%m-%d ⟡ W%V ⟡ %H:%M}";
           format-alt = "{:%Y-%m-%d}";
           on-click-right =
             "${pkgs.xdg-utils}/bin/xdg-open https://calendar.google.com";
@@ -53,8 +53,8 @@
         backlight = {
           format = "{percent}% {icon}";
           format-icons = [ "" "" "" "" "" "" "" ];
-          on-scroll-up = "brillo -A 0.5";
-          on-scroll-down = "brillo -U 0.5";
+          on-scroll-up = "${pkgs.brillo}/bin/brillo -A 0.5";
+          on-scroll-down = "${pkgs.brillo}/bin/brillo -U 0.5";
         };
         battery = {
           states = {
@@ -83,39 +83,40 @@
             "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
           max-length = 40;
         };
-        wireplumber = {
+        pulseaudio = { # wireplumber = { format-icons = [ "奄" "奔" "墳" ];
           format = "{volume}% {icon}";
-          # format-bluetooth = "{volume}% {icon}";
+          format-bluetooth = "{volume}% {icon}";
           format-muted = "ﱝ %0";
-          format-icons = [ "奄" "奔" "墳" ];
-          # format-icons = {
-          #   headphone = "";
-          #   hands-free = "";
-          #   headset = "";
-          #   speaker = "蓼";
-          #   hdmi = "﴿";
-          #   hifi = "";
-          #   phone = "";
-          #   portable = "";
-          #   car = "";
-          #   default = [ "奄" "奔" "墳" ];
-          # };
-          # scroll-step = 1;
+          format-icons = {
+            headphone = "";
+            hands-free = "";
+            headset = "";
+            speaker = "蓼";
+            hdmi = "﴿";
+            hifi = "";
+            phone = "";
+            portable = "";
+            car = "";
+            default = [ "奄" "奔" "墳" ];
+          };
+          scroll-step = 1;
           on-click = "${../switch-audio-port} 2>/dev/null";
           on-click-middle =
-            "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+            "pamixer --toggle-mute"; # "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
           on-click-right = "${pkgs.pavucontrol}/bin/pavucontrol";
         };
         "sway/language" = {
-          format = "{variant}";
+          format = "🖮 {short} {variant}";
           on-click =
             "${pkgs.sway}/bin/swaymsg input type:keyboard xkb_switch_layout next";
         };
-        "sway/window" = { max-length = 70; };
-        #"sway/mode" = {
-        #  format = "{}";
-        #  max-length = 50;
-        #};
+        "sway/window" = {
+          max-length = 70;
+          rewrite = {
+            "(.*) - Chromium" = "🌎 $1";
+            "(.*) – Doom Emacs" = "📝 $1";
+          };
+        };
         "custom/waybar-mpris" = {
           return-type = "json";
           exec = "${./playerctl-mpris} 2>/dev/null";
@@ -123,11 +124,11 @@
           on-click-middle = "${pkgs.playerctl}/bin/playerctl play-pause";
           on-click-right = "${pkgs.playerctl}/bin/playerctl next";
           escape = true;
-          max-length = 40;
+          max-length = 10;
         };
         disk = {
-          format = "{used} | {total} ";
-          on-click-right = "${pkgs.duf}/bin/duf; read";
+          format = "{used} ";
+          on-click-right = "${pkgs.foot}/bin/foot -H duf";
         };
       };
     }];
