@@ -47,7 +47,6 @@ in {
     jq # A lightweight and flexible command-line JSON processor
     slurp # Select a region in a Wayland compositor
     swaylock-effects # Screen locker for wayland
-    pamixer # Pulseaudio command line mixer
     swaybg # Wallpaper tool for Wayland compositors
     hicolor-icon-theme # Default fallback theme used by implementations of the icon theme specification
     capitaine-cursors # An x-cursor theme inspired by macOS and based on KDE Breeze
@@ -70,7 +69,7 @@ in {
 
       # NOTE Importing of the full inherited environment block is deprecated.
       # dbus-update-activation-environment --systemd --all
-      systemctl --user import-environment PATH SSH_AUTH_SOCK
+      systemctl --user import-environment PATH
     '';
 
     config = {
@@ -164,15 +163,18 @@ in {
         "Ctrl+Print" = "exec ${./take_screenshot} full";
 
         # Pulseaudio switchers
-        "XF86AudioMute" = ''exec "pamixer --toggle-mute"'';
-        "XF86AudioLowerVolume" = ''exec "pamixer --decrease 5"'';
-        "XF86AudioRaiseVolume" = ''exec "pamixer --increase 5"'';
-        "XF86AudioMicMute" = ''exec "pamixer --default-source --toggle-mute"'';
+        # "XF86AudioMute" = ''exec "pamixer --toggle-mute"'';
+        # "XF86AudioLowerVolume" = ''exec "pamixer --decrease 5"'';
+        # "XF86AudioRaiseVolume" = ''exec "pamixer --increase 5"'';
+        # "XF86AudioMicMute" = ''exec "pamixer --default-source --toggle-mute"'';
         ## Wireplumber switchers
-        #"XF86AudioMute" = ''exec "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"'';
-        #"XF86AudioLowerVolume" = ''exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"'';
-        #"XF86AudioRaiseVolume" = ''exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"'';
-        #"XF86AudioMicMute" = ''exec "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"'';
+        "XF86AudioMute" = ''exec "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"'';
+        "XF86AudioLowerVolume" =
+          ''exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"'';
+        "XF86AudioRaiseVolume" =
+          ''exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"'';
+        "XF86AudioMicMute" =
+          ''exec "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"'';
 
         # "XF86AudioPlay" = ''exec "playerctl play"'';
         # "XF86AudioPause" = ''exec "playerctl pause"'';
@@ -220,7 +222,7 @@ in {
         };
         "type:keyboard" = {
           xkb_layout = "de,mine,de";
-          xkb_variant = "neo,mine,";
+          xkb_variant = "neo,,";
         };
       };
       # TODO Set your input/output devices

@@ -17,7 +17,7 @@ with lib; {
     (shared + /base.nix)
     (shared + /users.nix)
     (shared + /fonts.nix)
-    # (shared + /pipewire.nix)
+    (shared + /pipewire.nix)
     (shared + /localization.nix)
     (shared + /virtualization.nix)
   ];
@@ -57,8 +57,10 @@ with lib; {
     };
 
     # Sound
-    sound.enable = true;
-    hardware.pulseaudio.enable = true;
+    # [09.12.2022]
+    # TODO - Trouble with current kernel 5.15.81
+    # nix --extra-experimental-features nix-command eval -f '<nixpkgs>' 'linuxPackages.kernel.version'
+    boot.kernelPackages = pkgs.linuxPackages_latest;
 
     hardware = {
       cpu.intel.updateMicrocode = true;

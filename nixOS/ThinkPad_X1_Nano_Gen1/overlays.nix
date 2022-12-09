@@ -51,6 +51,9 @@
       }
     }/overlay.nix");
 
+  # [09.12.2022]
+  # TODO - Trouble with waybar (remove overlay after fix)
+  # https://github.com/Alexays/Waybar/issues/1852
   waybarOverlay = self: super: {
     waybar = super.waybar.override { wireplumberSupport = false; };
   };

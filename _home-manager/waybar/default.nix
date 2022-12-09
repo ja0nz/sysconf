@@ -6,7 +6,6 @@
     https://github.com/Alexays/Waybar/blob/master/resources/config
 
     Some waybar areas expect certain programs. This is a nonbreaking issue.
-    - pavucontrol -> launch pulseaudio control
     - duf -> disk utility
     - networkmanager -> launch network control
     - playerctl -> player control (for spotify, browser, ctc)
@@ -102,7 +101,7 @@
           scroll-step = 1;
           on-click = "${../switch-audio-port} 2>/dev/null";
           on-click-middle =
-            "pamixer --toggle-mute"; # "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+            "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
           on-click-right = "${pkgs.pavucontrol}/bin/pavucontrol";
         };
         "sway/language" = {
@@ -124,7 +123,7 @@
           on-click-middle = "${pkgs.playerctl}/bin/playerctl play-pause";
           on-click-right = "${pkgs.playerctl}/bin/playerctl next";
           escape = true;
-          max-length = 10;
+          max-length = 20;
         };
         disk = {
           format = "{used} ";

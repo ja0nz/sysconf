@@ -1,35 +1,41 @@
 #!/usr/bin/env bash
-# Requires:
-# - alsa-utils -> amixer
-# - pulseaudio -> pactl
+# Switch PipeWire port of the default audio sink.
+# This is a scripted approach following the official docs:
+# https://gitlab.freedesktop.org/pipewire/pipewire/-/wikis/Migrate-PulseAudio#sinksource-port-volumemuteport-latency
+#
+# CAUTION: It's a hack but it works for me.
+#
+# Usage:
+#  $ ./switch-audio-port
 
-# Ensure Auto-Mute is off
-amixer -c 0 sset 'Auto-Mute Mode' Disabled --quiet
+# Config: Devices of relevance
+OPTS=("headphones" "speaker") # hdmi
 
-# GET default sink id
-DEFAULT_S_ID=$(pactl info | grep 'Default Sink' | awk '{ print $3 }')
-# GET running sink id
-S_ID=$(pactl list sinks short | awk '{ if ($7=="RUNNING") print $2 }')
-S_ID=$(if [ -z ${S_ID-set} ]; then echo $DEFAULT_S_ID; else echo $S_ID; fi)
+# Get default audio sink name
+SINK=$(pw-metadata 0 'default.audio.sink' | sed -n 's/^.*"name":"\(\S*\)".*$/\1/p')
 
-# GET Available Ports & Active Port
-S_NO=$(pactl list sinks short | awk -v src=$S_ID '{ if ($2==src) print $1 }')
-SINK=$(pactl list sinks | awk "/^Sink #$S_NO/,/^\s*\$/")
-PORTS=$(echo $SINK | grep -o -P '(?<=Ports:)(.*)(?=Active Port:)')
-A_PORT=$(echo $SINK | grep -o -P '(?<=Active Port:)(.*)(?=Formats:)' | xargs)
+# Get related device.id
+DI=$(pw-cli i $SINK | sed -n 's/^.*device.id\s=\s"\(\S*\)".*$/\1/p')
+# Get related card.profile.device
+CPD=$(pw-cli i $SINK | sed -n 's/^.*card.profile.device\s=\s"\(\S*\)".*$/\1/p')
 
-# GET an array of port options
-readarray -t PORTS <<<$(echo $PORTS | grep -o -P '\[Out\]( |\w)+')
+# Get the index of a "speaker", "headphones", "hdmi"
+function getIDX {
+	echo $(pw-cli e $DI EnumRoute | awk "/$1/,/String \"[0-9]+\"/" | tail -n1 | grep -oP '\d+')
+}
 
-# GET an index of current port selection
-for IDX in "${!PORTS[@]}"; do
-   [[ "${PORTS[$i]}" = "${A_PORT}" ]] && break
+for opt in "${OPTS[@]}"; do
+	ISACTIVE=$(pw-cli e $DI Route | awk "/String \"$(getIDX $opt)\"/")
+	if [[ -n $ISACTIVE ]]; then
+		IDXOPT=$(echo "${OPTS[@]/$opt//}" | cut -d/ -f1 | wc -w | tr -d '')
+		LEN=$(echo "${#OPTS[@]}")
+		if [ $(($LEN - 1)) -eq $IDXOPT ]; then
+			FIRST=$(echo ${OPTS[0]})
+			pw-cli s $DI Route "{ index: $(getIDX $FIRST), device: $CPD }" 1>/dev/null
+		else
+			INC=$(echo ${OPTS[$(($IDXOPT + 1))]})
+			pw-cli s $DI Route "{ index: $(getIDX $INC), device: $CPD }" 1>/dev/null
+		fi
+		exit 0
+	fi
 done
-
-# Increment index
-IDX=$((IDX + 1))
-
-PORTS_LEN=$(echo ${#PORTS[@]})
-IDX=$(if ((IDX < PORTS_LEN)); then echo $IDX; else echo 0; fi)
-
-pactl set-sink-port "$S_ID" "${PORTS[IDX]}";
