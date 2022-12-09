@@ -50,4 +50,8 @@
         sha256 = "18w85w6v6lcmv2hiyzyii9fg0gygig98rfpgazjwv1z71nd768fy";
       }
     }/overlay.nix");
+
+  waybarOverlay = self: super: {
+    waybar = super.waybar.override { wireplumberSupport = false; };
+  };
 }

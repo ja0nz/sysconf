@@ -15,7 +15,6 @@
     - wofi && wofi-emoji -> as key combination
     - dropbox -> as service on start
     - emacs -> as key combination
-    - wpctl -> as key combination
     - playerctl -> as key combination
     - _monoFont! Test with: fc-list : family | grep <MonoFontName>
 */
@@ -48,6 +47,7 @@ in {
     jq # A lightweight and flexible command-line JSON processor
     slurp # Select a region in a Wayland compositor
     swaylock-effects # Screen locker for wayland
+    pamixer # Pulseaudio command line mixer
     swaybg # Wallpaper tool for Wayland compositors
     hicolor-icon-theme # Default fallback theme used by implementations of the icon theme specification
     capitaine-cursors # An x-cursor theme inspired by macOS and based on KDE Breeze
@@ -61,11 +61,6 @@ in {
     enable = true;
     systemdIntegration = true;
     extraSessionCommands = ''
-      # Session
-      export XDG_SESSION_TYPE=wayland
-      export XDG_SESSION_DESKTOP=sway
-      export XDG_CURRENT_DESKTOP=sway
-
       # Wayland stuff
       export NIXOS_OZONE_WL=1
       export MOZ_ENABLE_WAYLAND=1
@@ -73,7 +68,9 @@ in {
       export SDL_VIDEODRIVER=wayland
       export _JAVA_AWT_WM_NONREPARENTING=1
 
-      systemctl --user import-environment
+      # NOTE Importing of the full inherited environment block is deprecated.
+      # dbus-update-activation-environment --systemd --all
+      systemctl --user import-environment PATH
     '';
 
     config = {
@@ -166,17 +163,21 @@ in {
         "Print" = "exec ${./take_screenshot}";
         "Ctrl+Print" = "exec ${./take_screenshot} full";
 
-        "XF86AudioMute" = ''exec "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"'';
-        "XF86AudioLowerVolume" =
-          ''exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"'';
-        "XF86AudioRaiseVolume" =
-          ''exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"'';
+        # Pulseaudio switchers
+        "XF86AudioMute" = ''exec "pamixer --toggle-mute"'';
+        "XF86AudioLowerVolume" = ''exec "pamixer --decrease 5"'';
+        "XF86AudioRaiseVolume" = ''exec "pamixer --increase 5"'';
+        "XF86AudioMicMute" = ''exec "pamixer --default-source --toggle-mute"'';
+        ## Wireplumber switchers
+        #"XF86AudioMute" = ''exec "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"'';
+        #"XF86AudioLowerVolume" = ''exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"'';
+        #"XF86AudioRaiseVolume" = ''exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"'';
+        #"XF86AudioMicMute" = ''exec "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"'';
+
         # "XF86AudioPlay" = ''exec "playerctl play"'';
         # "XF86AudioPause" = ''exec "playerctl pause"'';
         # "XF86AudioNext" = ''exec "playerctl next"'';
         # "XF86AudioPrev" = ''exec "playerctl previous"'';
-        "XF86AudioMicMute" =
-          ''exec "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"'';
 
         "XF86MonBrightnessDown" = ''exec "brillo -U 1"'';
         "XF86MonBrightnessUp" = ''exec "brillo -A 1"'';
@@ -202,10 +203,6 @@ in {
           command = "${pkgs.dropbox-cli}/bin/dropbox start";
           always = true;
         }
-        #{
-        #  command = "systemctl --user restart waybar";
-        #  always = true;
-        #}
         {
           command = "${pkgs.autotiling}/bin/autotiling";
           always = true;
@@ -230,14 +227,7 @@ in {
       # swaymsg -t get_outputs
       output = {
         "*" = { bg = ''"${./background-image-secondary.png}" fill''; };
-        "eDP-1" = {
-          bg = ''"${./background-image-primary.png}" fill'';
-          # TODO Left following for future refercence:
-          # I use kanshi meanwhile but without you may set the values here
-          # pos = "0,0";
-          # scale = "1.4";
-          # res = "2160x1350";
-        };
+        "eDP-1" = { bg = ''"${./background-image-primary.png}" fill''; };
       };
     };
   };

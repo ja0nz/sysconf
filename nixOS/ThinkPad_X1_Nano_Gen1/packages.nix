@@ -17,7 +17,7 @@ in {
     /syncthing.nix
     # -- GUI --
     /sway
-    # /waybar
+    /waybar
     /kanshi.nix
     /mako.nix
     /gammastep.nix

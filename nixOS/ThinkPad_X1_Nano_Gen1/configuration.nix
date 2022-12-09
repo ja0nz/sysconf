@@ -17,7 +17,7 @@ with lib; {
     (shared + /base.nix)
     (shared + /users.nix)
     (shared + /fonts.nix)
-    (shared + /pipewire.nix)
+    # (shared + /pipewire.nix)
     (shared + /localization.nix)
     (shared + /virtualization.nix)
   ];
@@ -56,13 +56,12 @@ with lib; {
       VDPAU_DRIVER = "va_gl";
     };
 
+    # Sound
+    sound.enable = true;
+    hardware.pulseaudio.enable = true;
+
     hardware = {
       cpu.intel.updateMicrocode = true;
-      #pulseaudio = {
-      #  enable = true;
-      #  extraModules = [ pkgs.pulseaudio-modules-bt ];
-      #  package = pkgs.pulseaudioFull;
-      #};
       bluetooth = {
         enable = true;
         package = pkgs.bluez; # pkgs.bluezFull;
