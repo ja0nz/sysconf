@@ -1,53 +1,157 @@
+/* =============================================================================
+ *
+ * Waybar configuration
+ *
+ * Configuration reference: https://github.com/Alexays/Waybar/wiki/Configuration
+ *
+ * =========================================================================== */
+
+/* -----------------------------------------------------------------------------
+ * Keyframes
+ * -------------------------------------------------------------------------- */
+
+@keyframes blink-warning {
+    70% {
+        color: white;
+    }
+
+    to {
+        color: white;
+        background-color: orange;
+    }
+}
+
+@keyframes blink-critical {
+    70% {
+      color: white;
+    }
+
+    to {
+        color: white;
+        background-color: red;
+    }
+}
+
+
+/* -----------------------------------------------------------------------------
+ * Base styles
+ * -------------------------------------------------------------------------- */
+
+/* Reset all styles */
 * {
     border: none;
-    border-radius: 5px 5px 0 0;
-    font-family: "Arimo Nerd Font";
-    font-size: 13px;
+    border-radius: 0;
     min-height: 0;
+    margin: 0;
+    padding: 0;
 }
 
-window#waybar {
+/* The whole bar */
+#waybar {
     background: rgba(43, 48, 59, 0);
+    color: #fff;
+    font-family: "JetBrainsMono Nerd Font Mono", monospace;
+    font-size: 11px;
 }
 
+/* Border */
+.modules-left > :not(:last-child),
+.modules-right > :not(:last-child) {
+        border-image: linear-gradient(transparent, #fff, transparent) 1;
+        border-right: 1px solid;
+}
+
+/* Padding for all */
+.modules-right > * > *,
+.modules-left > * > * {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* -----------------------------------------------------------------------------
+ * Module styles
+ * -------------------------------------------------------------------------- */
+
+/* Mode */
+#mode {
+    background: #64727D;
+    border-top: 2px solid white;
+    /* To compensate for the top border and still have vertical centering */
+    padding-bottom: 2px;
+}
+
+/* Workspace */
 #workspaces button {
-    padding: 0 3px;
-    background: transparent;
-    border-bottom: 3px solid transparent;
-    color: #f8f8f2;
-}
-
-#workspaces {
-    margin: 0 3px;
+    border-top: 2px solid transparent;
+    /* To compensate for the top border and still have vertical centering */
+    padding-bottom: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #888888;
 }
 
 #workspaces button.focused {
-    background: #282a36;
-    border-bottom: 3px solid #ffffff;
+    border-color: #4c7899;
+    color: white;
+    background-color: #285577;
 }
 
-#clock, #battery, #cpu, #memory, #language, #temperature, #backlight, #disk, #network, #wireplumber, #custom-waybar-mpris, #tray, #idle_inhibitor, #custom-root, #custom-home {
-    padding: 0 10px;
-    margin: 0 3px;
-    background-color: #282a36;
-    color: #81c1e4;
+#workspaces button.urgent {
+    border-color: #c9545d;
+    color: #c9545d;
 }
 
-#mode {
-    padding: 0 10px;
-    margin: 0 3px;
-    color: #282a36;
-    background-color: #50fa7b;
+/* CPU */
+#cpu.warning {
+    color: orange;
 }
 
-#window {
-  color: #e4bb81;
+#cpu.critical {
+    color: red;
 }
 
-#battery.charging {
-    color: #ff79c6;
+/* Network */
+#network.disconnected {
+    color: orange;
 }
 
-#battery.critical:not(.charging) {
-    color: #f53c3c
+/* Battery */
+#battery {
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
 }
+
+#battery.warning {
+    color: orange;
+}
+
+#battery.critical {
+    color: red;
+}
+
+#battery.warning.discharging {
+    animation-name: blink-warning;
+    animation-duration: 3s;
+}
+
+#battery.critical.discharging {
+    animation-name: blink-critical;
+    animation-duration: 2s;
+}
+
+/* #memory { */
+/*     animation-timing-function: linear; */
+/*     animation-iteration-count: infinite; */
+/*     animation-direction: alternate; */
+/* } */
+
+/* #memory.warning { */
+/*     color: orange; */
+/* } */
+
+/* #memory.critical { */
+/*     color: red; */
+/*     animation-name: blink-critical; */
+/*     animation-duration: 2s; */
+/* } */
