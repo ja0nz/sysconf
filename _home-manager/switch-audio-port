@@ -11,6 +11,9 @@
 # Config: Devices of relevance
 OPTS=("headphones" "speaker") # hdmi
 
+# Obligatory Auto-Mute Disable
+amixer -c 0 sset 'Auto-Mute Mode' Disabled --quiet
+
 # Get default audio sink name
 SINK=$(pw-metadata 0 'default.audio.sink' | sed -n 's/^.*"name":"\(\S*\)".*$/\1/p')
 
@@ -28,14 +31,8 @@ for opt in "${OPTS[@]}"; do
 	ISACTIVE=$(pw-cli e $DI Route | awk "/String \"$(getIDX $opt)\"/")
 	if [[ -n $ISACTIVE ]]; then
 		IDXOPT=$(echo "${OPTS[@]/$opt//}" | cut -d/ -f1 | wc -w | tr -d '')
-		LEN=$(echo "${#OPTS[@]}")
-		if [ $(($LEN - 1)) -eq $IDXOPT ]; then
-			FIRST=$(echo ${OPTS[0]})
-			pw-cli s $DI Route "{ index: $(getIDX $FIRST), device: $CPD }" 1>/dev/null
-		else
-			INC=$(echo ${OPTS[$(($IDXOPT + 1))]})
-			pw-cli s $DI Route "{ index: $(getIDX $INC), device: $CPD }" 1>/dev/null
-		fi
-		exit 0
+		NEXT=$(if [ $((${#OPTS[@]} - 1)) -eq $IDXOPT ]; then echo 0; else echo $(($IDXOPT + 1)); fi)
+		pw-cli s $DI Route "{ index: $(getIDX ${OPTS[$NEXT]}), device: $CPD }" 1>/dev/null
+		break
 	fi
 done

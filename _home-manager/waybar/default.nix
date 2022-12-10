@@ -4,12 +4,6 @@
    * Optional configuration
     All possible config settings:
     https://github.com/Alexays/Waybar/blob/master/resources/config
-
-    Some waybar areas expect certain programs. This is a nonbreaking issue.
-    - duf -> disk utility
-    - networkmanager -> launch network control
-    - playerctl -> player control (for spotify, browser, ctc)
-    - spotify -> the player itself
 */
 { pkgs, ... }:
 
@@ -102,7 +96,7 @@
           on-click = "${../switch-audio-port} 2>/dev/null";
           on-click-middle =
             "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-          on-click-right = "${pkgs.pavucontrol}/bin/pavucontrol";
+          on-click-right = "${pkgs.helvum}/bin/helvum";
         };
         "sway/language" = {
           format = "🖮 {short} {variant}";

@@ -55,7 +55,7 @@ in {
     cinnamon.nemo # File browser for Cinnamon
     cinnamon.pix # A generic image viewer from Linux Mint
     okular # KDE document viewer
-    pavucontrol # PulseAudio Volume Control
+    helvum # A GTK patchbay for pipewire
     networkmanagerapplet # NetworkManager control applet for GNOME
     neovim # Vim text editor fork focused on extensibility and agility
     anki-bin # Spaced repetition flashcard program
