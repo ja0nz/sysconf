@@ -99,7 +99,7 @@
           on-click-right = "${pkgs.helvum}/bin/helvum";
         };
         "sway/language" = {
-          format = "🖮 {short} {variant}";
+          format = "{short} {variant} 🖮";
           on-click =
             "${pkgs.sway}/bin/swaymsg input type:keyboard xkb_switch_layout next";
         };
