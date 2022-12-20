@@ -15,7 +15,8 @@ in {
     # -- Services --
     /dropbox.nix
     /syncthing.nix
-    # -- GUI --
+    /mopidy.nix
+    # -- nix --
     /sway
     /waybar
     /kanshi.nix

@@ -48,6 +48,7 @@
       vim = "nvim";
       lscert = "ssh-keygen -L -f";
       go = "just";
+      music = "ncmpcpp";
       # ls, ll, la, lt, lla -> set by lsd
     };
     functions = {

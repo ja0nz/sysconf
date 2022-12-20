@@ -146,9 +146,9 @@ in {
 
         # Player -> BOTTOM ROW
         "${modifier}+m" = ''exec "playerctl position 3-"'';
-        "${modifier}+Shift+m" = ''exec "playerctl previous"'';
+        "${modifier}+Ctrl+m" = ''exec "playerctl previous"'';
         "${modifier}+comma" = ''exec "playerctl play-pause"'';
-        "${modifier}+Shift+period" = ''exec "playerctl next"'';
+        "${modifier}+Ctrl+period" = ''exec "playerctl next"'';
         "${modifier}+period" = ''exec "playerctl position 3+"'';
 
         # Launcher
