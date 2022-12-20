@@ -48,7 +48,7 @@
 
 /* The whole bar */
 #waybar {
-    background: rgba(43, 48, 59, 0);
+    background: rgba(43, 48, 59, 0.5);
     color: #fff;
     font-family: "JetBrainsMono Nerd Font Mono", monospace;
     font-size: 11px;
@@ -99,6 +99,12 @@
 #workspaces button.urgent {
     border-color: #c9545d;
     color: #c9545d;
+}
+
+/* waybar-mpris */
+#custom-waybar-mpris.Playing {
+    background: rgba(43, 59, 58, 0.5);
+    font-weight: bold;
 }
 
 /* CPU */
