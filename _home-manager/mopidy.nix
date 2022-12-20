@@ -10,8 +10,8 @@
   services.mopidy = {
     enable = true;
     extensionPackages = with pkgs; [
-      mopidy-mpd
-      mopidy-mpris
+      mopidy-mpd # ncmpcpp player
+      mopidy-mpris # playerctl controls
       mopidy-ytmusic
       mopidy-somafm
       # mopidy-soundcloud # TODO broken [01.01.2023]
@@ -22,10 +22,13 @@
       #  cd .config/mopidy
       #  mopidy ytmusic reauth
       ytmusic = { auth_json = "$XDG_CONFIG_DIR/mopidy/ytmusic.json"; };
+      mpd = { hostname = "::"; };
+      somafm = {
+        encoding = "aac";
+        quality = "highest";
+      };
     };
   };
-  home.packages = with pkgs; [
-    ncmpcpp # A featureful ncurses based MPD client inspired by ncmpc
-    mpd-mpris # An implementation of the MPRIS protocol for MPD
-  ];
+  # A featureful ncurses based MPD client inspired by ncmpc
+  programs.ncmpcpp.enable = true;
 }
