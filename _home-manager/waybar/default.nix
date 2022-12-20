@@ -104,7 +104,7 @@
             "${pkgs.sway}/bin/swaymsg input type:keyboard xkb_switch_layout next";
         };
         "sway/window" = {
-          max-length = 80;
+          max-length = 90;
           rewrite = {
             "(.*) - Chromium" = "🌐 $1";
             "(.*) – Doom Emacs" = "📝 $1";
@@ -123,7 +123,7 @@
             "chromium Paused" = "⏸ 🌐";
           };
           exec = ''
-            ${pkgs.playerctl}/bin/playerctl -a metadata --format '{"text": "{{artist}} - {{markup_escape(title)}}", "tooltip": "{{markup_escape(title)}} - {{playerName}}", "alt": "{{playerName}} {{status}}", "class": "{{status}}"}' -F'';
+            ${pkgs.playerctl}/bin/playerctl -a metadata --format '{"text": "{{markup_escape(title)}}", "tooltip": "{{artist}} : {{markup_escape(title)}} - {{playerName}}", "alt": "{{playerName}} {{status}}", "class": "{{status}}"}' -F'';
           max-length = 30;
         };
         disk = {
