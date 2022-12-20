@@ -4,6 +4,7 @@
    * Mandatory configuration
     Add your extensions (id can be found in URL)
    * Optional configuration
+    - Language Reactor allow cookies -> Settings; Cookies; cookies allowed to [*.]languagereactor.com
    ** Vimium
       Manual restore ./vimium-options.json
       In Brave/Chrome: Vimum -> Settings -> Advanced options
@@ -16,8 +17,6 @@
     enable = true;
     package = pkgs.ungoogled-chromium;
     extensions = [
-      # TODO <2022-01-06 Do> Language Reactor on hold because google sign in is not working
-      # { id = "hoombieeljmmljlkjmnheibnpciblicm"; }
       {
         id = "ocaahdebbfolfmndjeplogmgcagdmblk"; # chromium-web-store
         updateUrl =
@@ -31,6 +30,7 @@
       { id = "aapbdbdomjkkjkaonfhkkikfgjllcleb"; } # Google Translate
       { id = "hoombieeljmmljlkjmnheibnpciblicm"; } # Language Reactor
       { id = "limifnkopacddgpihodacjeckfkpbfoe"; } # Mastodon View Profile
+      { id = "amakigfkijfllhcekpkcknefggimkgbm"; } # Fishtail
     ];
   };
 }

@@ -454,6 +454,16 @@ https://karthinks.com/software/avy-can-do-anything/
         :desc "Launch terminal here" "t" #'terminal-here-launch
         :desc "Launch terminal ROOT" "T" #'terminal-here-project-launch))
 #+end_src
+* D2 Mode
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+(package! d2-mode
+   :recipe (:host github :repo "andorsk/d2-mode"))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! d2-mode
+  :mode "\\.d2$")
+#+end_src
 * Org :local:
 ** Base Settings
 #+begin_src emacs-lisp
@@ -881,6 +891,7 @@ strict digraph {
      web-mode-markup-indent-offset 2
      web-mode-enable-front-matter-block t
      web-mode-code-indent-offset 2)
+  :mode "\\.astro$"
 )
 #+end_src
 
