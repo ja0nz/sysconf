@@ -54,7 +54,7 @@ xkb_symbols "mine_base" {
     key <AB10> { [ k,                       K,                       NoSymbol,                Greek_kappa,             period,                  KP_Decimal,              multiply,                NoSymbol                 ] };
 };
 
-partial alphanumeric_keys modifier_keys keypad_keys
+default partial alphanumeric_keys modifier_keys keypad_keys
 xkb_symbols "mine" {
 
     include "mine(mine_base)"

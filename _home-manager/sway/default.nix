@@ -35,7 +35,7 @@ let
 in {
 
   # Symlink mine keyboard layout
-  home.file.".xkb/symbols/mine".source = "${./mine}";
+  # home.file.".xkb/symbols/mine".source = "${./mine}";
 
   # Packages
   home.packages = with pkgs; [
@@ -221,8 +221,8 @@ in {
           pointer_accel = "-0.6";
         };
         "type:keyboard" = {
-          xkb_layout = "de,mine,de";
-          xkb_variant = "neo,,";
+          xkb_layout = "de,de";
+          xkb_variant = "neo,";
         };
       };
       # TODO Set your input/output devices
