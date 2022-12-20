@@ -104,20 +104,27 @@
             "${pkgs.sway}/bin/swaymsg input type:keyboard xkb_switch_layout next";
         };
         "sway/window" = {
-          max-length = 70;
+          max-length = 80;
           rewrite = {
-            "(.*) - Chromium" = "🌎 $1";
+            "(.*) - Chromium" = "🌐 $1";
             "(.*) – Doom Emacs" = "📝 $1";
           };
         };
         "custom/waybar-mpris" = {
           return-type = "json";
-          exec = "${./playerctl-mpris} 2>/dev/null";
           on-click = "${pkgs.playerctl}/bin/playerctl previous";
           on-click-middle = "${pkgs.playerctl}/bin/playerctl play-pause";
           on-click-right = "${pkgs.playerctl}/bin/playerctl next";
-          escape = true;
-          max-length = 20;
+          format = "{icon} {}";
+          format-icons = {
+            "mopidy Playing" = "▶ 📻";
+            "mopidy Paused" = "⏸ 📻";
+            "chromium Playing" = "▶ 🌐";
+            "chromium Paused" = "⏸ 🌐";
+          };
+          exec = ''
+            ${pkgs.playerctl}/bin/playerctl -a metadata --format '{"text": "{{artist}} - {{markup_escape(title)}}", "tooltip": "{{markup_escape(title)}} - {{playerName}}", "alt": "{{playerName}} {{status}}", "class": "{{status}}"}' -F'';
+          max-length = 30;
         };
         disk = {
           format = "{used} ";
