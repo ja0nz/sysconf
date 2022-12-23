@@ -117,10 +117,10 @@
           on-click-right = "${pkgs.playerctl}/bin/playerctl next";
           format = "{icon} {}";
           format-icons = {
-            "mopidy Playing" = "▶ 📻";
-            "mopidy Paused" = "⏸ 📻";
-            "chromium Playing" = "▶ 🌐";
-            "chromium Paused" = "⏸ 🌐";
+            "mopidy Playing" = "▶️📻";
+            "mopidy Paused" = "⏸️📻";
+            "chromium Playing" = "▶️🌐";
+            "chromium Paused" = "⏸️🌐";
           };
           exec = ''
             ${pkgs.playerctl}/bin/playerctl -a metadata --format '{"text": "{{markup_escape(title)}}", "tooltip": "{{artist}} : {{markup_escape(title)}} - {{playerName}}", "alt": "{{playerName}} {{status}}", "class": "{{status}}"}' -F'';
