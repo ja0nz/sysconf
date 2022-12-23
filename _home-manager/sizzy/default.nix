@@ -8,7 +8,7 @@
 
 let
   pname = "sizzy";
-  version = "70.1.0"; # TODO Adjust version number
+  version = "70.4.0"; # TODO Adjust version number
   name = "${pname}-${version}";
   src = ./. + "/Sizzy-${version}.AppImage";
   appimageContents = appimageTools.extractType2 { inherit name src; };
@@ -20,7 +20,7 @@ in appimageTools.wrapType2 {
       ${appimageContents}/${pname}.desktop \
       $out/share/applications/${pname}.desktop
       substituteInPlace $out/share/applications/${pname}.desktop \
-      --replace 'Exec=AppRun' 'Exec=${pname}'
+      --replace 'Exec=AppRun' 'Exec=${pname} --ozone-platform=wayland'
     cp -r ${appimageContents}/usr/share/icons $out/share
   '';
   meta = with lib; {
