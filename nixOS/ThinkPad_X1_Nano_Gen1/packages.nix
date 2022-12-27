@@ -3,7 +3,12 @@
 */
 { pkgs, ... }:
 
-let sizzy = import ../../_home-manager/sizzy;
+let
+  sizzy = import ../../_home-manager/sizzy;
+  devenv = import (fetchTarball {
+    url = "https://github.com/cachix/devenv/archive/3a0dbd2d209b6e3730e51b675e9069bd68f4f662.tar.gz";
+    sha256 = "0f2f4w3akr4bqznc3d3nsiqaalrxq0ixcbwnfd95s8dw1iq0i502";
+  });
 in {
 
   # Home manager imports
@@ -126,5 +131,6 @@ in {
     niv # Easy dependency management for Nix projects -> good fit with lorri & direnv
     grex # A command-line tool for generating regular expressions from user-provided test cases [RUST]
     tokei # A program that allows you to count your code [RUST]
+    devenv.default
   ];
 }

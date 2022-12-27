@@ -37,14 +37,14 @@
   #   });
   # };
 
-  emacsOverlay = (import (builtins.fetchTarball {
+  emacsOverlay = (import (fetchTarball {
     url =
       "https://github.com/nix-community/emacs-overlay/archive/74a1e57fc7228d715c666172ffe11e38ab31e312.tar.gz";
     sha256 = "0hfzzfw0jf5apwka65pk4pdc30jyisp7ga0zjda242rwr7ymi34p";
   }));
 
   waylandOverlay = (import "${
-      builtins.fetchTarball {
+      fetchTarball {
         url =
           "https://github.com/nix-community/nixpkgs-wayland/archive/01aff1b07604cd98527f334089026f9b450c83cf.tar.gz";
         sha256 = "0li29pl7dk1nwghm641ibznn0nq66sy856kydymqq7ndisdqb3rz";
