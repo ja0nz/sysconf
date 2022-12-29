@@ -3,6 +3,7 @@
 
    * Optional configuration
     - YTMusic: https://github.com/OzymandiasTheGreat/mopidy-ytmusic
+    - Soundcloud: https://github.com/mopidy/mopidy-soundcloud
 */
 { pkgs, ... }:
 
