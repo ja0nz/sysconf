@@ -51,6 +51,18 @@
       }
     }/overlay.nix");
 
+  # [01.01.2023]
+  # Latest release dates from 12.12.2020 and is broken. Master branch seems fixed but ain't pushed to a new release.
+  mopidySoundCloudOverlay = self: super: {
+    mopidy-soundcloud = super.mopidy-soundcloud.overrideAttrs (attr: {
+      src = fetchTarball {
+        url = "https://github.com/mopidy/mopidy-soundcloud/archive/fc766b0bf17feb4fc989029b92a315a10ff453ee.tar.gz";
+        sha256 = "0gqlgcq9jd8mlmdc9ivwxm1r00h1gwc6a5alhjjalairzdnl3yrd";
+      };
+      propagatedBuildInputs = attr.propagatedBuildInputs ++ [ super.python310Packages.beautifulsoup4 ];
+    });
+  };
+
   # [09.12.2022]
   # TODO - Trouble with waybar (remove overlay after fix)
   # https://github.com/Alexays/Waybar/issues/1852

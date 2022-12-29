@@ -14,7 +14,7 @@
       mopidy-mpris # playerctl controls
       mopidy-ytmusic
       mopidy-somafm
-      # mopidy-soundcloud # TODO broken [01.01.2023]
+      mopidy-soundcloud
     ];
     settings = {
       # Reauth:
@@ -22,6 +22,7 @@
       #  cd .config/mopidy
       #  mopidy ytmusic reauth
       ytmusic = { auth_json = "$XDG_CONFIG_DIR/mopidy/ytmusic.json"; };
+      soundcloud = { auth_token = "3-35204-1397311-NMhMdw1TJIdyqoNo1"; };
       mpd = { hostname = "::"; };
       somafm = {
         encoding = "aac";
