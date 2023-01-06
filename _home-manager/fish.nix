@@ -49,6 +49,8 @@
       lscert = "ssh-keygen -L -f";
       go = "just";
       music = "ncmpcpp";
+      # Fish nix-shell
+      nix-shell = "nix-shell --command fish";
       # ls, ll, la, lt, lla -> set by lsd
     };
     functions = {
@@ -65,9 +67,6 @@
       '';
     };
     interactiveShellInit = ''
-      ${pkgs.any-nix-shell}/bin/any-nix-shell fish | source
-      ${pkgs.zoxide}/bin/zoxide init fish | source
-      ${pkgs.starship}/bin/starship init fish | source
       # Bind mcfly interactively
       bind \cr __mcfly-history-widget
       bind \er fzf-history-widget
@@ -75,8 +74,9 @@
     '';
   };
 
-  home.packages = with pkgs;
-    [
-      any-nix-shell # fish and zsh support for nix-shell
-    ];
+  # ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
+  # home.packages = with pkgs;
+  #   [
+  #     any-nix-shell # fish and zsh support for nix-shell
+  #   ];
 }
