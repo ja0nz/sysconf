@@ -1,15 +1,35 @@
 {
-  "settingsVersion": "1.67",
+  "settingsVersion": "1.67.4",
   "exclusionRules": [
     {
-      "pattern": "https?://excalidraw.com/*",
+      "pattern": "https://excalidraw.com/*",
+      "passKeys": ""
+    },
+    {
+      "pattern": "*netflix.com/*",
+      "passKeys": ""
+    },
+    {
+      "pattern": "https?://cloud.oracle.com/*",
+      "passKeys": ""
+    },
+    {
+      "pattern": "https?://www.duolingo.com/*",
+      "passKeys": ""
+    },
+    {
+      "pattern": "*languagereactor.com/*",
+      "passKeys": ""
+    },
+    {
+      "pattern": "*youtube.com/*",
       "passKeys": ""
     }
   ],
   "filterLinkHints": false,
   "waitForEnterForFilteredHints": true,
   "hideHud": false,
-  "keyMappings": "map r Vomnibar.activate\nmap R Vomnibar.activateInNewTab\nmap <c-r> Vomnibar.activateBookmarks\nmap <c-R> Vomnibar.activateBookmarksInNewTab\nmap <a-r> Vomnibar.activateTabSelection\nmap , Vomnibar.activateEditUrl\nmap – Vomnibar.activateEditUrlInNewTab\n\nmap n scrollUp\nmap N scrollPageUp\nmap <a-n> previousTab\nmap <a-N> moveTabLeft\nmap <a-c-n> firstTab\n\n\nmap t scrollDown\nmap T scrollPageDown\nmap <a-t> nextTab\nmap <a-T> moveTabRight\nmap <a-c-t> lastTab\n\nmap q restoreTab\nmap <a-q> removeTab\nmap <a-c-q> closeOtherTabs\n\nmap c reload\nmap s performFind\nmap S performBackwardsFind\n\nmap g LinkHints.activateMode\nmap G LinkHints.activateModeToOpenInNewTab\nmap h goBack\nmap f goForward",
+  "keyMappings": "map r Vomnibar.activate\nmap R Vomnibar.activateInNewTab\nmap <c-r> Vomnibar.activateBookmarks\nmap <c-R> Vomnibar.activateBookmarksInNewTab\nmap <a-r> Vomnibar.activateTabSelection\nmap m Vomnibar.activateEditUrl\nmap M Vomnibar.activateEditUrlInNewTab\n\nmap n scrollUp\nmap N scrollPageUp\nmap <a-n> previousTab\nmap <a-N> moveTabLeft\nmap <a-c-n> firstTab\n\n\nmap t scrollDown\nmap T scrollPageDown\nmap <a-t> nextTab\nmap <a-T> moveTabRight\nmap <a-c-t> lastTab\n\nmap q restoreTab\nmap <a-q> removeTab\nmap <a-c-q> closeOtherTabs\n\nmap c reload\nmap s performFind\nmap S performBackwardsFind\n\nmap g LinkHints.activateMode\nmap G LinkHints.activateModeToOpenInNewTab\nmap h goBack\nmap f goForward",
   "linkHintCharacters": "sadfjklewcmpgh",
   "linkHintNumbers": "0123456789",
   "newTabUrl": "about:newtab",

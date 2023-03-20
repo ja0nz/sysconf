@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: Full working task
+# key: task
+# --
+`(make-string (org-current-level) ?*)` TODO $1 :${2:$$(yas-choose-value (org-get-buffer-tags))}:
+${3:SCHEDULED: `(format-time-string "<%Y-%m-%d %a %H:%M>")`}
+:PROPERTIES:
+:CATEGORY: ${4:$ $(yas-choose-value '("feat" "fix" "refactor" "docs" "style" "perf" "test" "build" "chore" "reverts"))}
+:Effort:   ${5:0:25}
+:END:
+#+begin_description
+$0
+#+end_description

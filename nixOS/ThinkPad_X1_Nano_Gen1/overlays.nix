@@ -27,27 +27,28 @@
   #   };
   # };
 
-  # swaylockOverlay = self: super: {
-  #   swaylock-effects = super.swaylock-effects.overrideAttrs (attr: {
-  #     src = builtins.fetchTarball {
+  # bunOverlay = self: super: {
+  #   bun = super.bun.overrideAttrs (attr: {
+  #     version = "0.5.4";
+  #     src = super.fetchzip {
   #       url =
-  #         "https://github.com/mortie/swaylock-effects/archive/a8fc557b86e70f2f7a30ca9ff9b3124f89e7f204.tar.gz";
-  #       sha256 = "0f9571blnn7lg317js1j1spc5smz69i5aw6zkhskkm5m633rrpqq";
+  #         "https://github.com/oven-sh/bun/releases/download/bun-v${self.bun.version}/bun-linux-x64.zip";
+  #       sha256 = "O7PAj7cHBr7MhXyefY9W8viU95LphU7avaud3JsEzfA=";
   #     };
   #   });
   # };
 
   emacsOverlay = (import (fetchTarball {
     url =
-      "https://github.com/nix-community/emacs-overlay/archive/74a1e57fc7228d715c666172ffe11e38ab31e312.tar.gz";
-    sha256 = "0hfzzfw0jf5apwka65pk4pdc30jyisp7ga0zjda242rwr7ymi34p";
+      "https://github.com/nix-community/emacs-overlay/archive/e016fab49d5bb9f4db4e0dfdf925395750d6b8bc.tar.gz";
+    sha256 = "0hg0ly64qkj0f9nf8jbkm83rzyj52c8r3hrk7k1900lbm2bb7i0g";
   }));
 
   waylandOverlay = (import "${
       fetchTarball {
         url =
-          "https://github.com/nix-community/nixpkgs-wayland/archive/01aff1b07604cd98527f334089026f9b450c83cf.tar.gz";
-        sha256 = "0li29pl7dk1nwghm641ibznn0nq66sy856kydymqq7ndisdqb3rz";
+          "https://github.com/nix-community/nixpkgs-wayland/archive/f3dd8b13c1debc1665792e8101112bd753c92425.tar.gz";
+        sha256 = "0anyclcn1g1kps1hvhd67v3b65hglksm0ma7jba56jwsl9ww99i7";
       }
     }/overlay.nix");
 
@@ -56,10 +57,12 @@
   mopidySoundCloudOverlay = self: super: {
     mopidy-soundcloud = super.mopidy-soundcloud.overrideAttrs (attr: {
       src = fetchTarball {
-        url = "https://github.com/mopidy/mopidy-soundcloud/archive/fc766b0bf17feb4fc989029b92a315a10ff453ee.tar.gz";
-        sha256 = "0gqlgcq9jd8mlmdc9ivwxm1r00h1gwc6a5alhjjalairzdnl3yrd";
+        url =
+          "https://github.com/mopidy/mopidy-soundcloud/archive/c61060abd567e2ddf9ee4591b93bd0a20804a9fc.tar.gz";
+        sha256 = "0jr7jrcnl9mi2a4dqv0ic81133asbz06r6hgsy5fsrwd1rzrn2nm";
       };
-      propagatedBuildInputs = attr.propagatedBuildInputs ++ [ super.python310Packages.beautifulsoup4 ];
+      propagatedBuildInputs = attr.propagatedBuildInputs
+        ++ [ super.python310Packages.beautifulsoup4 ];
     });
   };
 

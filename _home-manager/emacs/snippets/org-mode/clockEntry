@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Time entry
+# key: clock
+# expand-env: ((now (format-time-string "[%Y-%m-%d %a %H:%M]")))
+# --
+CLOCK: `(message now)`--`(message now)`

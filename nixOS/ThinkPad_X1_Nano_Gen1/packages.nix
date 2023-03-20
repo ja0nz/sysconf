@@ -6,8 +6,9 @@
 let
   sizzy = import ../../_home-manager/sizzy;
   devenv = import (fetchTarball {
-    url = "https://github.com/cachix/devenv/archive/3a0dbd2d209b6e3730e51b675e9069bd68f4f662.tar.gz";
-    sha256 = "0f2f4w3akr4bqznc3d3nsiqaalrxq0ixcbwnfd95s8dw1iq0i502";
+    url =
+      "https://github.com/cachix/devenv/archive/71f5c3c4344c9ef3d065de85386b5481c8f26abb.tar.gz";
+    sha256 = "1qn17rpha3is24jvxj6x60f51razlcp8agmj25j0067abib43ydx";
   });
 in {
 
@@ -109,7 +110,6 @@ in {
     cryptsetup # LUKS for dm-crypt
 
     # -- Command Line Utilities --
-    trash-cli # Command line tool for the desktop trash can
     choose # A human-friendly and fast alternative to cut and (sometimes) awk [RUST]
     sd # Intuitive find & replace CLI (sed alternative) [RUST]
     hyperfine # Command-line benchmarking tool [RUST]
@@ -117,6 +117,7 @@ in {
     calc # C-style arbitrary precision calculator
     rlwrap # Readline wrapper for console programs
     just # A handy way to save and run project-specific commands [RUST]
+    rm-improved # Replacement for rm with focus on safety [RUST]
 
     # -- File Generators --
     pandoc # Conversion betrween markup formats
@@ -126,6 +127,7 @@ in {
     unzip # An extraction utility for archives compressed in .zip format
 
     # --- Programming --
+    exercism # A Go based command line tool for exercism.io
     nodejs # Some globals depend on this
     python3 # Some globals depend on this
     niv # Easy dependency management for Nix projects -> good fit with lorri & direnv

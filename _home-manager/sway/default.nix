@@ -67,6 +67,9 @@ in {
       export SDL_VIDEODRIVER=wayland
       export _JAVA_AWT_WM_NONREPARENTING=1
 
+      # Enable Anki wayland as of 03.02.2023
+      export ANKI_WAYLAND=1
+
       # NOTE Importing of the full inherited environment block is deprecated.
       # dbus-update-activation-environment --systemd --all
       systemctl --user import-environment PATH
