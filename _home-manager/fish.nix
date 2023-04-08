@@ -13,7 +13,7 @@
 
 {
   home.sessionVariables = {
-    EDITOR = "emacsclient -c";
+    # EDITOR = "emacsclient -c"; <-- set by services.emacs directly
     # BROWSER = "chromium"; <-- set in mimeapps.list instead
   };
 

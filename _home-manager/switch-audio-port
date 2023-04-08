@@ -15,7 +15,7 @@ OPTS=("headphones" "speaker") # hdmi
 amixer -c 0 sset 'Auto-Mute Mode' Disabled --quiet
 
 # Get default audio sink name
-SINK=$(pw-metadata 0 'default.audio.sink' | sed -n 's/^.*"name":"\(\S*\)".*$/\1/p')
+SINK=$(pw-metadata 0 'default.configured.audio.sink' | sed -n 's/^.*"name":"\(\S*\)".*$/\1/p')
 
 # Get related device.id
 DI=$(pw-cli i $SINK | sed -n 's/^.*device.id\s=\s"\(\S*\)".*$/\1/p')
