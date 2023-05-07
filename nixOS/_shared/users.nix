@@ -15,6 +15,7 @@ let
 in {
   imports = [ <home-manager/nixos> ];
 
+  # Login manager
   services.greetd = {
     enable = true;
     settings = {
@@ -38,7 +39,7 @@ in {
       hashedPassword =
         "$6$rBfbbdF/ghJdJo$cn/Hhzve2Lx5xmQR3p81mM.oBZ3PSyDaiUR1CfNZdBn839EFbQWqbLD73tnQCOag8ruDTgxvmwEFMTavwTC.r.";
     };
-    me = {
+    ${mainUser} = {
       shell = pkgs.fish;
       isNormalUser = true;
       home = "/home/${mainUser}";
