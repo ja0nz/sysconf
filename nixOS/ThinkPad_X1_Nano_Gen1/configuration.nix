@@ -106,10 +106,14 @@ with lib; {
       polkit.enable = true;
     };
 
-    # Displays keys being pressed on a Wayland session
-    # Good for demoing stuff
-    # Requires SETUID
-    programs.wshowkeys.enable = true;
+
+    programs = {
+      # Displays keys being pressed on a Wayland session
+      # Good for demoing stuff
+      # Requires SETUID
+      wshowkeys.enable = true;
+      fish.enable = true;
+    };
 
     #    services.gvfs.enable = true;
     #    programs.adb.enable = true;
