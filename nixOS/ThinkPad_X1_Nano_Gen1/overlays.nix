@@ -40,17 +40,17 @@
 
   emacsOverlay = (import (fetchTarball {
     url =
-      "https://github.com/nix-community/emacs-overlay/archive/e016fab49d5bb9f4db4e0dfdf925395750d6b8bc.tar.gz";
-    sha256 = "0hg0ly64qkj0f9nf8jbkm83rzyj52c8r3hrk7k1900lbm2bb7i0g";
+      "https://github.com/nix-community/emacs-overlay/archive/b4d748b3b06fece127426314c1e42e238da9c4e7.tar.gz";
+    sha256 = "13q7xmwphhfhy8j05y63dkbizx4wdbk6956c5xwckinq10cai534";
   }));
 
   waylandOverlay = (import "${
       fetchTarball {
         url =
-          "https://github.com/nix-community/nixpkgs-wayland/archive/f3dd8b13c1debc1665792e8101112bd753c92425.tar.gz";
-        sha256 = "0anyclcn1g1kps1hvhd67v3b65hglksm0ma7jba56jwsl9ww99i7";
+          "https://github.com/nix-community/nixpkgs-wayland/archive/031ace86d48def582fb8f7e098dc9a94fc25c3f7.tar.gz";
+        sha256 = "0hdbl2blm5565jbki58vgmxzcfjh68b33pjhsjqpdpc5flynslq7";
       }
-    }/overlay.nix");
+  }/overlay.nix");
 
   # [01.01.2023]
   # Latest release dates from 12.12.2020 and is broken. Master branch seems fixed but ain't pushed to a new release.
