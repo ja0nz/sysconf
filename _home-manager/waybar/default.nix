@@ -45,7 +45,7 @@
         };
         backlight = {
           format = "{percent}% {icon}";
-          format-icons = [ "" "" "" "" "" "" "" ];
+          format-icons = [ "󰽤" "󰽥" "󰽣" "󰽦" "󰽢" ];
           on-scroll-up = "${pkgs.brillo}/bin/brillo -A 0.5";
           on-scroll-down = "${pkgs.brillo}/bin/brillo -U 0.5";
         };
@@ -57,16 +57,16 @@
           };
           format = "{capacity}% {icon}";
           # RTL rendering - whyyyyy???
-          format-charging = " %{capacity}";
-          format-plugged = "ﮣ %{capacity}";
+          format-charging = "󰉁 %{capacity}";
+          format-plugged = " %{capacity}";
           # format-full = "";
-          format-icons = [ "" "" "" "" "" "" "" "" "" "" ];
+          format-icons = [ "" "" "" "" "" ];
         };
         network = {
           format-icons = {
             wifi = "";
-            ethernet = "";
-            disconnected = "睊";
+            ethernet = "󰈀";
+            disconnected = "󰌙";
           };
           format-wifi = "{essid} | {signalStrength}% {icon}";
           format-ethernet = "{ipaddr} {icon}";
@@ -79,18 +79,15 @@
         pulseaudio = { # wireplumber = { format-icons = [ "奄" "奔" "墳" ];
           format = "{volume}% {icon}";
           format-bluetooth = "{volume}% {icon}";
-          format-muted = "ﱝ %0";
+          format-muted = "󰝟";
           format-icons = {
-            headphone = "";
-            hands-free = "";
-            headset = "";
-            speaker = "蓼";
-            hdmi = "﴿";
-            hifi = "";
-            phone = "";
-            portable = "";
-            car = "";
-            default = [ "奄" "奔" "墳" ];
+            headphone = "󰋋";
+            headset = "󰋎";
+            speaker = "󰓃";
+            hdmi = "󰡁";
+            phone = "󰄜";
+            car = "";
+            default = [ "󰕿" "󰖀" "󰕾" ];
           };
           scroll-step = 1;
           on-click = "${../switch-audio-port} 2>/dev/null";
@@ -99,7 +96,7 @@
           on-click-right = "${pkgs.helvum}/bin/helvum";
         };
         "sway/language" = {
-          format = "{short} {variant} 🖮";
+          format = "{short} {variant} ";
           on-click =
             "${pkgs.sway}/bin/swaymsg input type:keyboard xkb_switch_layout next";
         };
@@ -127,7 +124,7 @@
           max-length = 30;
         };
         disk = {
-          format = "{used} ";
+          format = "{used} 󰋊";
           on-click-right = "${pkgs.foot}/bin/foot -H duf";
         };
       };
