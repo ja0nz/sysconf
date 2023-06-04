@@ -48,7 +48,7 @@
       vim = "nvim";
       lscert = "ssh-keygen -L -f";
       run = "just";
-      d = "rip"; # rm with safety
+      r = "rip"; # rm with safety
       music = "ncmpcpp";
       # Fish nix-shell
       nix-shell = "nix-shell --command fish";

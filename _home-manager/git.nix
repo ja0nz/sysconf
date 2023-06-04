@@ -15,6 +15,8 @@
 {
   programs.git = {
     enable = true;
+    delta.enable =
+      true; # delta syntax highlighter. See https://github.com/dandavison/delta.
     userName = "ja0nz"; # TODO Set your credentials
     userEmail = "mail@ja.nz"; # TODO Set your credentials
     ignores = [ "*~" ];
@@ -33,9 +35,8 @@
     };
   };
 
-  home.packages = with pkgs; [
-    gitAndTools.git-extras # GIT utilities -- repo summary, repl, changelog population
-    gitAndTools.delta # A syntax-highlighting pager for git
-    git-secret # A bash-tool to store your private data inside a git repository
-  ];
+  home.packages = with pkgs;
+    [
+      git-extras # GIT utilities -- repo summary, repl, changelog population
+    ];
 }
