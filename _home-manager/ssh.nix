@@ -30,14 +30,6 @@ in {
         identitiesOnly = true;
         identityFile = "${_secret}/ssh/peteler-family-client";
       };
-      oldPetelerFamily = {
-        host = "opf"; # Just a abbrevation ~ssh pfo~
-        hostname = "192.168.178.24";
-        port = 32347;
-        user = "root";
-        identitiesOnly = true;
-        identityFile = "${_secret}/ssh/ssh-peteler-family";
-      };
       "github.com" = { user = "git"; };
     };
   };
