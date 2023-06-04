@@ -4,7 +4,6 @@
   packages = with pkgs; [
     git
     git-secret # A bash-tool to store your private data inside a git repository
-    nixfmt # An opinionated formatter for Nix
     manix # A Fast Documentation Searcher for Nix
     update-nix-fetchgit # A program to update fetchgit values in Nix expressions
   ];
@@ -22,8 +21,6 @@
     # format *.nix
     nixfmt.enable = true;
   };
-
-  scripts = { hide.exec = "git secret hide -m"; };
 
   languages.nix.enable = true;
 }
