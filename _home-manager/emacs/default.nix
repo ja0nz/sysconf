@@ -12,7 +12,7 @@
 {
   programs.emacs = {
     enable = true;
-    package = pkgs.emacsUnstable; # TODO Req emacs-overlay (see overlays.nix)
+    package = pkgs.emacs-unstable; # TODO Req emacs-overlay (see overlays.nix)
     #package = pkgs.emacsPgtk;
     #extraPackages = epkgs: with epkgs; [ use-package ];
   };

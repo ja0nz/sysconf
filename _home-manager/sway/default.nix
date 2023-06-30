@@ -58,7 +58,7 @@ in {
 
   wayland.windowManager.sway = {
     enable = true;
-    systemdIntegration = true;
+    systemd = { enable = true; };
     extraSessionCommands = ''
       # Wayland stuff
       export NIXOS_OZONE_WL=1

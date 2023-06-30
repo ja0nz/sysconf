@@ -15,8 +15,14 @@
 {
   programs.git = {
     enable = true;
-    delta.enable =
-      true; # delta syntax highlighter. See https://github.com/dandavison/delta.
+    delta = {
+      enable =
+        true; # delta syntax highlighter. See https://github.com/dandavison/delta.
+      options = {
+        features = "line-numbers";
+        syntax-theme = "Dracula";
+      };
+    };
     userName = "ja0nz"; # TODO Set your credentials
     userEmail = "mail@ja.nz"; # TODO Set your credentials
     ignores = [ "*~" ];
@@ -27,7 +33,6 @@
     extraConfig = {
       core = {
         filemode = false;
-        pager = "delta --line-numbers --dark";
         whitespace = "fix,tab-in-indent";
       };
       init.defaultBranch = "main";

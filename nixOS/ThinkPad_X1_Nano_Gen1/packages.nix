@@ -7,8 +7,8 @@ let
   sizzy = import ../../_home-manager/sizzy;
   devenv = import (fetchTarball {
     url =
-      "https://github.com/cachix/devenv/archive/2f1d49aeee1378c44293ca2f61bf3a9004986fb7.tar.gz";
-    sha256 = "1p0rvv3izj7ajp6aljavrk060x7vf2mkqgpzk47r8dfjcb0i7dwd";
+      "https://github.com/cachix/devenv/archive/2c3f0b99dc77efc71f94cddb6ee672756751759d.tar.gz";
+    sha256 = "0s9rmmg5m9lcc8a5186k4b6k0da8xs0ajv91761azgb9fgj4xpqd";
   });
 in {
 
@@ -133,6 +133,6 @@ in {
     niv # Easy dependency management for Nix projects -> good fit with lorri & direnv
     grex # A command-line tool for generating regular expressions from user-provided test cases [RUST]
     tokei # A program that allows you to count your code [RUST]
-    devenv.default
+    devenv.default # Fast, Declarative, Reproducible, and Composable Developer Environments
   ];
 }
