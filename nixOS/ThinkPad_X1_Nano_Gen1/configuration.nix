@@ -97,6 +97,18 @@ with lib; {
         KERNEL=="BAT0", SUBSYSTEM=="power_supply", ATTR{charge_end_threshold}="70"
         KERNEL=="BAT0", SUBSYSTEM=="power_supply", ATTR{charge_control_end_threshold}="70"
       '';
+
+      # Custom DNS
+      resolved = {
+        enable = true;
+        extraConfig = ''
+          DNS=45.90.28.0#ec7379.dns.nextdns.io
+          DNS=2a07:a8c0::#ec7379.dns.nextdns.io
+          DNS=45.90.30.0#ec7379.dns.nextdns.io
+          DNS=2a07:a8c1::#ec7379.dns.nextdns.io
+          DNSOverTLS=yes
+        '';
+      };
     };
 
     security = {
@@ -105,7 +117,6 @@ with lib; {
       # sway
       polkit.enable = true;
     };
-
 
     programs = {
       # Displays keys being pressed on a Wayland session
