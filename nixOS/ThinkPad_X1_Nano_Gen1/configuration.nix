@@ -12,7 +12,8 @@ with lib; {
   imports = let shared = ../_shared;
   in [
     ./hardware-configuration.nix
-    (shared + /cachix/cachix.nix)
+    (shared + /cachix)
+    (shared + /keymap)
     (shared + /boot.nix)
     (shared + /base.nix)
     (shared + /users.nix)

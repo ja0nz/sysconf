@@ -96,9 +96,14 @@
           on-click-right = "${pkgs.helvum}/bin/helvum";
         };
         "sway/language" = {
+          min-length = 8;
           format = "{short} {variant} ";
           on-click =
-            "${pkgs.sway}/bin/swaymsg input type:keyboard xkb_switch_layout next";
+            "${pkgs.sway}/bin/swaymsg input type:keyboard xkb_switch_layout 0";
+          on-click-middle =
+            "${pkgs.sway}/bin/swaymsg input type:keyboard xkb_switch_layout 1";
+          on-click-right =
+            "${pkgs.sway}/bin/swaymsg input type:keyboard xkb_switch_layout 2";
         };
         "sway/window" = {
           max-length = 90;
