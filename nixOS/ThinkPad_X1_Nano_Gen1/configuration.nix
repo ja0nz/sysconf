@@ -101,6 +101,7 @@ with lib; {
       # Custom DNS
       resolved = {
         enable = true;
+        dnssec = "false";
         extraConfig = ''
           DNS=45.90.28.0#ec7379.dns.nextdns.io
           DNS=2a07:a8c0::#ec7379.dns.nextdns.io

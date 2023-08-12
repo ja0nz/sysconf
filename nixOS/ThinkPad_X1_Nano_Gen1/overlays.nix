@@ -40,15 +40,15 @@
 
   emacsOverlay = (import (fetchTarball {
     url =
-      "https://github.com/nix-community/emacs-overlay/archive/ca5552354228a4c10cfdc4aaa7dd22b784ee6dea.tar.gz";
-    sha256 = "0gvg4zhcafp27sl20akcv844bnlr9d3s2fkrfjzsgyjgiva1mn2i";
+      "https://github.com/nix-community/emacs-overlay/archive/ff32272f326687e101ffb3e480cec43445eb5000.tar.gz";
+    sha256 = "18v95cigwwaynpg24jyk3500fc6ji7a5r8xdaz8b7k0n6l7r00m1";
   }));
 
   waylandOverlay = (import "${
       fetchTarball {
         url =
-          "https://github.com/nix-community/nixpkgs-wayland/archive/4566430e1f5223fba757f26794b72082dcdefcb2.tar.gz";
-        sha256 = "15dcixyr073z1lydcrwzm6c7x4gjgkqghma5kwg2xn70i8jaa03b";
+          "https://github.com/nix-community/nixpkgs-wayland/archive/ceff40632fa43e1f350ca3fb227984489c3eb681.tar.gz";
+        sha256 = "14ax93474bhblqr09xmkc3whykk26s6km2yywnbd8nk7x8341d7y";
       }
     }/overlay.nix");
 
