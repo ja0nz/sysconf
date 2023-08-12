@@ -205,7 +205,7 @@ in {
 
       startup = [
         {
-          command = "${pkgs.dropbox-cli}/bin/dropbox start";
+          command = "${pkgs.maestral}/bin/maestral start";
           always = true;
         }
         {

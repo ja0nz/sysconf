@@ -8,7 +8,7 @@
     builtins.elem (lib.getName pkg) [ "symbola" ];
 
   fonts = {
-    fonts = [
+    packages = [
       config._monoFont.pkg
       config._sansFont.pkg
       config._serifFont.pkg
@@ -20,7 +20,7 @@
       # fira-code
       # source-code-pro
     ];
-    enableDefaultFonts = true;
+    enableDefaultPackages = true;
 
     fontconfig = {
       enable = true;

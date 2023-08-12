@@ -19,7 +19,7 @@ in {
     /zathura
     /chromium
     # -- Services --
-    /dropbox.nix
+    # /dropbox.nix
     /syncthing.nix
     /mopidy.nix
     # -- nix --
@@ -96,6 +96,7 @@ in {
     networkmanager_dmenu # Small script to manage NetworkManager connections with dmenu
     wget # Tool for retrieving files using HTTP, HTTPS, and FTP
     curl # A command line tool for transferring files with URL syntax
+    maestral # Open-source Dropbox client for macOS and Linux
 
     # -- XDG MIME --
     file # A program that shows the type of files
