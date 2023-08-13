@@ -33,9 +33,9 @@ s r -> (s)ubtree (r)efile
 ;;; $DOOMDIR/packages.el
 #+end_src
 
-* C-c rebinding :lib:
+* KILL C-c rebinding :lib:
 -> taken from https://github.com/darkstego/rebinder.el
-#+begin_src emacs-lisp
+#+begin_src
 (defun rebinder-dynamic-binding (key &optional toggle)
   "Act as KEY definition in the current context.
 This uses an extended menu item's capability of dynamically computing a
@@ -148,8 +148,8 @@ will be changed."
 ;; Smother scrolling
 (setq pixel-scroll-precision-mode t)
 #+end_src
-** C-c -> M-SPC rebind
-#+begin_src emacs-lisp
+** KILL C-c -> M-SPC rebind
+#+begin_src
 (define-key global-map (kbd "M-SPC") (rebinder-dynamic-binding "C-c"))
 (rebinder-hook-to-mode 't 'after-change-major-mode-hook)
 #+end_src
@@ -173,7 +173,6 @@ will be changed."
   '(font-lock-comment-face :slant italic)
   '(font-lock-keyword-face :slant italic))
 #+end_src
-
 ** wind move window switch
 #+begin_src emacs-lisp
 (map! :map global-map "M-n" #'windmove-left)
@@ -208,14 +207,25 @@ Just a dump for some used (project) variables
       (eval . (progn (org-babel-goto-named-src-block "bench") (org-babel-execute-src-block)))
      )))
 #+end_src
-** Yas Snippet Directory
-#+begin_src emacs-lisp
-(setq +snippets-dir "~/sysconf/_home-manager/emacs/snippets")
-#+end_src
 ** Calendar locale
 #+begin_src emacs-lisp
 (setq calendar-date-style "european"
       calendar-week-start-day 1)
+#+end_src
+* Yas Snippet Directory
+Setting the snippet directory
+#+begin_src emacs-lisp :var default-directory=(symbol-value 'default-directory)
+(setq +snippets-dir (expand-file-name "snippets"))
+#+end_src
+* Xah Fly Keys
+Activating Fly Keys
+https://github.com/xahlee/xah-fly-keys
+#+begin_src emacs-lisp :var default-directory=(symbol-value 'default-directory)
+(add-to-list 'load-path default-directory)
+(require 'xah-fly-keys)
+(push '("noted" . (("'" . "z") ("," . "y") ("." . "u") ("p" . "a") ("y" . "q") ("f" . "p") ("g" . "b") ("c" . "m") ("r" . "l") ("l" . "f") ("a" . "c") ("o" . "s") ("e" . "i") ("u" . "e") ("i" . "o") ("h" . "t") ("t" . "n") ("n" . "r") ("s" . "h") (";" . "v") ("q" . "x") ("j" . "ü") ("k" . "ä") ("x" . "ö") ("b" . "w") ("m" . "g") ("w" . ",") ("v" . ".") ("z" . "k") ("/" . "j") ("[" . "-") ("-" . "´"))) xah-fly-layouts)
+(xah-fly-keys-set-layout "neo2")
+(xah-fly-keys 1)
 #+end_src
 * LSP mode config
 - Ignoring spago *output* directory
@@ -888,10 +898,6 @@ strict digraph {
 (package! ascii-art-to-unicode)
 #+end_src
 
-* Bump lsp :hack:
-#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
-(package! lsp-mode :pin "61349dd9102e0f15fba3ec583844108dc584357f")
-#+end_src
 
 * Web Mode
 #+begin_src emacs-lisp
@@ -904,7 +910,7 @@ strict digraph {
 )
 #+end_src
 
-** Web Mode :hack:
+** KILL Web Mode :hack:
 Related to this issue of web mode: https://github.com/fxbois/web-mode/issues/799
 In short: changing dir-locals alone is not working with web mode. This is a hack
 to get it working.
