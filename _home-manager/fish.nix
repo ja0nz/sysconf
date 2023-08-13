@@ -9,9 +9,10 @@
     Some aliases come are preset. This is of course a non breaking setting.
     You may add/alter them to your liking.
 */
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
-{
+let inherit (config) _repoRoot;
+in {
   home.sessionVariables = {
     # EDITOR = "emacsclient -c"; <-- set by services.emacs directly
     # BROWSER = "chromium"; <-- set in mimeapps.list instead
@@ -25,8 +26,9 @@
     enable = true;
     shellAliases = {
       # --- TODO Special sysconf/nixOS related commands
-      "nixos:updateALL" =
-        "sudo nix-channel --update; cd ~/sysconf && rg fetchTarball -l | xargs -I@ direnv exec . update-nix-fetchgit @";
+      "nixos:updateALL" = "sudo nix-channel --update; cd ${
+          toString _repoRoot
+        } && rg fetchTarball -l | xargs -I@ direnv exec . update-nix-fetchgit @";
       "nixos:switch" = "sudo nixos-rebuild switch";
       "nixos:boot" = "sudo nixos-rebuild boot";
       "nixos:clean" = "sudo nix-collect-garbage -d";

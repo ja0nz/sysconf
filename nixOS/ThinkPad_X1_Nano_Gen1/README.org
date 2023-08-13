@@ -10,7 +10,6 @@ This installation holds a *full workstation* installation of NixOS.
 - [[#installation][Installation]]
   - [[#clone-this-repo][Clone this repo]]
   - [[#manually-link-to-configurationnix][Manually link to *configuration.nix*]]
-  - [[#optional-adapt-some-variables][Optional: Adapt some variables]]
   - [[#optional-decrypt-with-git-secret-if-you-have-secret-files-in-your-repo][Optional: Decrypt with git-secret if you have secret files in your repo]]
   - [[#set-needed-channels][Set needed channels]]
   - [[#run-build][Run build]]
@@ -61,10 +60,8 @@ Clone this repo into $HOME directory. If you rename it, you need to adapt some v
 This is the only manual link you need to set!
 #+begin_src shell
 # Link to configuration.nix
-sudo ln -s ~/sysconf/nixOS/ThinkPad_X1_Nano_Gen1/home.nix /etc/nixos/configuration.nix
+sudo ln -s ~/sysconf/nixOS/ThinkPad_X1_Nano_Gen1/configuration.nix /etc/nixos/configuration.nix
 #+end_src
-** Optional: Adapt some variables
-You need to adapt the /_sysconfHomeStr/ in *home.nix*. There are some *#TODO* markers which you can grep along.
 ** Optional: Decrypt with git-secret if you have secret files in your repo
 Ensure you have your *~/.gnupg* in place and necessary keys loaded
 #+begin_src shell
