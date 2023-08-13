@@ -1,5 +1,5 @@
 /* #+TITLE: Keymap Configuration
-   Set up keymaps. This will interact with the sway window manager config.
+   Set up keymaps. Sway window manager config keyboard settings may depend on this.
 */
 { ... }:
 
@@ -7,7 +7,7 @@
   services.xserver.extraLayouts = {
     noted = {
       description = "See https://github.com/dariogoetz/noted-layout";
-      languages = [ "de" ];
+      languages = [ ];
       symbolsFile = ./noted;
     };
   };
