@@ -18,12 +18,14 @@
       mopidy-soundcloud
     ];
     settings = {
-      # Reauth:
-      #  nix-shell -p mopidy mopidy-ytmusic
-      #  cd .config/mopidy
-      #  mopidy ytmusic reauth
+      # Reauth YT:
+      # goto: https://music.youtube.com
+      # F12 -> Network -> any post request (like log_event) -> Request Headers
+      # refresh values: cookie, x-goog-visitor-id
       ytmusic = { auth_json = "$XDG_CONFIG_DIR/mopidy/ytmusic.json"; };
-      soundcloud = { auth_token = "3-35204-1397311-NMhMdw1TJIdyqoNo1"; };
+      # Reauth SoundCloud:
+      # goto: https://mopidy.com/ext/soundcloud/#authentication
+      soundcloud = { auth_token = "3-35204-1397311-RauCxeZsPJuoSGVl4"; };
       mpd = { hostname = "::"; };
       somafm = {
         encoding = "aac";
