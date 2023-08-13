@@ -173,20 +173,10 @@ will be changed."
   '(font-lock-comment-face :slant italic)
   '(font-lock-keyword-face :slant italic))
 #+end_src
-** wind move window switch
+** Calendar locale
 #+begin_src emacs-lisp
-(map! :map global-map "M-n" #'windmove-left)
-(map! :map global-map "M-t" #'windmove-right)
-(map! :map global-map "M-g" #'windmove-up)
-(map! :map global-map "M-r" #'windmove-down)
-#+end_src
-** Workspace switch (non evil mode)
-#+begin_src emacs-lisp
-(defun my/ws (fn) (when (string-match-p "no workspace" (funcall fn)) (+workspace/new)))
-(map! :map global-map "M-1" #'(lambda () (interactive) (my/ws '+workspace/switch-to-0)))
-(map! :map global-map "M-2" #'(lambda () (interactive) (my/ws '+workspace/switch-to-1)))
-(map! :map global-map "M-3" #'(lambda () (interactive) (my/ws '+workspace/switch-to-2)))
-(map! :map global-map "M-4" #'(lambda () (interactive) (my/ws '+workspace/switch-to-3)))
+(setq calendar-date-style "european"
+      calendar-week-start-day 1)
 #+end_src
 ** Custom set variables
 Just a dump for some used (project) variables
@@ -207,17 +197,31 @@ Just a dump for some used (project) variables
       (eval . (progn (org-babel-goto-named-src-block "bench") (org-babel-execute-src-block)))
      )))
 #+end_src
-** Calendar locale
+** wind move window switch
 #+begin_src emacs-lisp
-(setq calendar-date-style "european"
-      calendar-week-start-day 1)
+(map! :map global-map "M-n" #'windmove-left)
+(map! :map global-map "M-t" #'windmove-right)
+(map! :map global-map "M-g" #'windmove-up)
+(map! :map global-map "M-r" #'windmove-down)
 #+end_src
-* Yas Snippet Directory
+** Workspace switch (non evil mode)
+#+begin_src emacs-lisp
+(defun my/ws (fn) (when (string-match-p "no workspace" (funcall fn)) (+workspace/new)))
+(map! :map global-map "M-1" #'(lambda () (interactive) (my/ws '+workspace/switch-to-0)))
+(map! :map global-map "M-2" #'(lambda () (interactive) (my/ws '+workspace/switch-to-1)))
+(map! :map global-map "M-3" #'(lambda () (interactive) (my/ws '+workspace/switch-to-2)))
+(map! :map global-map "M-4" #'(lambda () (interactive) (my/ws '+workspace/switch-to-3)))
+#+end_src
+** Yas Snippet Directory
 Setting the snippet directory
 #+begin_src emacs-lisp :var default-directory=(symbol-value 'default-directory)
 (setq +snippets-dir (expand-file-name "snippets"))
 #+end_src
-* Xah Fly Keys
+* Movement and interaction
+C-y -> undo-redo
+C-z -> undo
+
+** Xah Fly Keys
 Activating Fly Keys
 https://github.com/xahlee/xah-fly-keys
 #+begin_src emacs-lisp :var default-directory=(symbol-value 'default-directory)
@@ -227,44 +231,23 @@ https://github.com/xahlee/xah-fly-keys
 (xah-fly-keys-set-layout "neo2")
 (xah-fly-keys 1)
 #+end_src
-* LSP mode config
-- Ignoring spago *output* directory
-- Ignoring @rule commonly used in tailwind
-#+begin_src emacs-lisp
-(after! lsp-mode
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\output\\'")
-  (setq lsp-css-lint-unknown-at-rules "ignore")
-)
-#+end_src
-** LSP TailwindCSS
-#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
-(package! lsp-tailwindcss :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
-#+end_src
+** Consult -> l, s, n
+Space f -> switch to buffer
+C-c l . -> org heading (localleader)
+C-c s b -> buffer (search buffer)
+C-c s r -> ripgrep
+C-c n a -> agenda (notetaking agenda)
 
 #+begin_src emacs-lisp
-(use-package! lsp-tailwindcss)
-#+end_src
-
-* Consult -> M-SPC M-SPC; Search: s {g,a,l,p} :global:
-#+begin_src emacs-lisp
-(map! :leader
-      :desc "Quick Buffer/File Switcher" "M-SPC" #'consult-buffer)
-
-;; Consult search buffer
 (map! :leader
       :prefix "s"
-      :desc "Consult Org Goto Heading" "g" #'consult-org-heading
-      :desc "Consult Org Goto Heading" "l" #'consult-line
-      :desc "Consult Org Agenda" "a" #'consult-org-agenda
       :desc "Consult Ripgrep" "r" #'consult-ripgrep)
 #+end_src
-* Embark -> M-SPC SPC :global:
-https://karthinks.com/software/fifteen-ways-to-use-embark
-#+begin_src emacs-lisp
-(map! :leader :desc "Embark act" "SPC" #'embark-act)
-#+end_src
 
-* Avy -> M-SPC a :global:
+** Embark -> a; C-; (minibuffer)
+https://karthinks.com/software/fifteen-ways-to-use-embark
+
+** Avy -> C-a
 #+begin_src emacs-lisp
 (setq avy-all-windows t)
 (map! :leader
@@ -276,10 +259,11 @@ https://karthinks.com/software/fifteen-ways-to-use-embark
       :desc "Line end" "l e" #'avy-goto-end-of-line
       :desc "Line start" "l s" #'avy-goto-line)
 #+end_src
-** Avy Actions :global:
+
+*** Avy Actions :global:
 https://karthinks.com/software/avy-can-do-anything/
 
-*** Avy repeat action; char-timer :lib:
+**** Avy repeat action; char-timer :lib:
 -> Only *avy-goto-char-timer*
 #+begin_src emacs-lisp
 (defun my/avy--read-candidates ()
@@ -331,7 +315,7 @@ https://karthinks.com/software/avy-can-do-anything/
   (setq avy--old-cands (my/avy--read-candidates))
   (avy-process avy--old-cands))
 #+end_src
-*** Org agenda todo -> d
+**** Org agenda todo -> d
 #+begin_src emacs-lisp
 (defun avy-action-org-agenda-done (pt)
     (save-excursion
@@ -345,7 +329,7 @@ https://karthinks.com/software/avy-can-do-anything/
    (setf (alist-get ?D avy-dispatch-alist) 'avy-action-org-agenda-done))
 #+end_src
 
-*** Pomodoro clock in -> t
+**** Pomodoro clock in -> t
 #+begin_src emacs-lisp
 (defun avy-action-org-pomodoro (pt)
   (save-excursion
@@ -359,7 +343,7 @@ https://karthinks.com/software/avy-can-do-anything/
   (setf (alist-get ?t avy-dispatch-alist) 'avy-action-org-pomodoro))
 #+end_src
 
-*** Kill text selection or line -> k | K
+**** Kill text selection or line -> k | K
 #+begin_src emacs-lisp
 ;; Kill text
 (defun avy-action-kill-whole-line (pt)
@@ -376,7 +360,7 @@ https://karthinks.com/software/avy-can-do-anything/
         (alist-get ?K avy-dispatch-alist) 'avy-action-kill-whole-line))
 #+end_src
 
-*** Copy text selection or line -> c | C
+**** Copy text selection or line -> c | C
 #+begin_src emacs-lisp
 (defun avy-action-copy-whole-line (pt)
   (save-excursion
@@ -394,7 +378,7 @@ https://karthinks.com/software/avy-can-do-anything/
         (alist-get ?C avy-dispatch-alist) 'avy-action-copy-whole-line))
 #+end_src
 
-*** Yank text (paste immediately) selection or line -> y | Y
+**** Yank text (paste immediately) selection or line -> y | Y
 #+begin_src emacs-lisp
 (defun avy-action-yank-whole-line (pt)
   (avy-action-copy-whole-line pt)
@@ -406,7 +390,7 @@ https://karthinks.com/software/avy-can-do-anything/
         (alist-get ?Y avy-dispatch-alist) 'avy-action-yank-whole-line))
 #+end_src
 
-*** Teleport selection or line -> g | G
+**** Teleport selection or line -> g | G
 #+begin_src emacs-lisp
 ;; Transpose/Move text
 (defun avy-action-teleport-whole-line (pt)
@@ -418,7 +402,7 @@ https://karthinks.com/software/avy-can-do-anything/
         (alist-get ?G avy-dispatch-alist) 'avy-action-teleport-whole-line))
  #+end_src
 
-*** Mark to char -> M
+**** Mark to char -> M
 #+begin_src emacs-lisp
 (defun avy-action-mark-to-char (pt)
   (activate-mark)
@@ -428,7 +412,7 @@ https://karthinks.com/software/avy-can-do-anything/
   (setf (alist-get ?M  avy-dispatch-alist) 'avy-action-mark-to-char))
 #+end_src
 
-*** Flyspell -> ;
+**** Flyspell -> ;
 #+begin_src emacs-lisp
 ;; Flyspell words
 (defun avy-action-flyspell (pt)
@@ -445,7 +429,7 @@ https://karthinks.com/software/avy-can-do-anything/
   (setf (alist-get ?\; avy-dispatch-alist) 'avy-action-flyspell))
 #+end_src
 
-*** Embark -> .
+**** Embark -> .
 #+begin_src emacs-lisp
 (defun avy-action-embark (pt)
   (unwind-protect
@@ -458,7 +442,7 @@ https://karthinks.com/software/avy-can-do-anything/
 (after! avy
   (setf (alist-get ?. avy-dispatch-alist) 'avy-action-embark))
 #+end_src
-* Terminal Here -> M-SPC o {o,O} :global:
+** Terminal Here -> M-SPC o {o,O} :global:
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
 (package! terminal-here)
 #+end_src
@@ -472,19 +456,12 @@ https://karthinks.com/software/avy-can-do-anything/
         :prefix "o"
         :desc "Launch terminal here" "t" #'terminal-here-launch
         :desc "Launch terminal ROOT" "T" #'terminal-here-project-launch))
-#+end_src
-* D2 Mode
-#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
-(package! d2-mode
-   :recipe (:host github :repo "andorsk/d2-mode"))
-#+end_src
+#+end_#+begin_src
 
-#+begin_src emacs-lisp
-(use-package! d2-mode
-  :mode "\\.d2$")
 #+end_src
-* Org :local:
-** Base Settings
+* Modes
+** Org
+*** Base Settings
 #+begin_src emacs-lisp
 (setq org-directory "~/Dropbox/org/"
       _tagsorg (concat org-directory "_tags.org")
@@ -517,7 +494,7 @@ https://karthinks.com/software/avy-can-do-anything/
 ;; Org emphasize
 (map! :after org :map org-mode-map :localleader "f" #'org-emphasize)
 #+end_src
-** Org agenda icons
+*** Org agenda icons
 #+begin_src emacs-lisp
 (cl-defstruct agendaIcons
   category
@@ -554,7 +531,7 @@ https://karthinks.com/software/avy-can-do-anything/
                     (list (icons x))
                     nil nil)) agenda-icons/caticons)))
 #+end_src
-** Org Journal -> M-SPC j {n,N,c,s}
+*** Org Journal -> M-SPC j {n,N,c,s}
 #+begin_src emacs-lisp
 ;; Org Journal Settings
 (setq org-journal-dir org-directory
@@ -573,7 +550,7 @@ https://karthinks.com/software/avy-can-do-anything/
 ;;org-journal-skip-carryover-drawers (list "LOGBOOK")
 #+end_src
 
-*** Org Journal Keymap
+**** Org Journal Keymap
 #+begin_src emacs-lisp
 (map! :map org-journal-mode-map "M-s-n" #'org-journal-previous-entry)
 (map! :map org-journal-mode-map "M-s-t" #'org-journal-next-entry)
@@ -587,7 +564,7 @@ https://karthinks.com/software/avy-can-do-anything/
          :desc "Org Journal Open Current" "c" #'org-journal-open-current-journal-file
          :desc "Org Journal Stage" "s" #'(lambda () (interactive) (find-file _stageorg))))
 #+end_src
-*** Custom Export Clocktable Function :deprecated:
+**** Custom Export Clocktable Function :deprecated:
 #+begin_src
 (defun export-clocktable-csv (&optional week)
   "Export current week (no prefix argument) or weeks in the "
@@ -601,7 +578,7 @@ https://karthinks.com/software/avy-can-do-anything/
          (org-agenda-files (directory-files org-directory t (concat "^W" time-string))))
     (call-interactively #'org-clock-csv-to-file)))
 #+end_src
-** Org Roam -> M-SPC r {i,t,g,c}
+*** Org Roam -> M-SPC r {i,t,g,c}
 #+begin_src emacs-lisp
 ;; Org Roam Settings
 (defun this/org_roam__bump_revision_date ()
@@ -634,7 +611,7 @@ https://karthinks.com/software/avy-can-do-anything/
   (add-hook! 'after-save-hook #'this/org_roam__bump_revision_date))
   #+end_src
 
-*** Org Roam Keymap
+**** Org Roam Keymap
 #+begin_src emacs-lisp
 (map! :leader :prefix "r"
         (:map org-mode-map
@@ -645,12 +622,12 @@ https://karthinks.com/software/avy-can-do-anything/
          :desc "Org Roam Goto Node" "g" #'org-roam-node-find
          :desc "Org Roam Capture" "c" #'org-roam-capture))
 #+end_src
-** Org habit
+*** Org habit
 #+begin_src emacs-lisp
 (after! org
   (add-to-list 'org-modules 'org-habit))
 #+end_src
-** Org Refile
+*** Org Refile
 #+begin_src emacs-lisp
 ;; Org Refile Targets
 (after! org-refile
@@ -661,7 +638,7 @@ https://karthinks.com/software/avy-can-do-anything/
           (_archiveorg :maxlevel . 1)
           (_stageorg :maxlevel . 1))))
 #+end_src
-** Org Capture
+*** Org Capture
 I capture every activity on my laptop by (broad) category. May change over time. Currently, there are following activities:
 - development - concrete project development
 - research - various technology related explorative/design work
@@ -675,7 +652,7 @@ I capture every activity on my laptop by (broad) category. May change over time.
          '(("p" "Blog Post" entry (file+headline "~/data/git/ja.nz/README.org" "Posts") "* TODO %^{title}\nSCHEDULED: %t%^{export_hugo_bundle}p%^{export_file_name}p\n#+begin_description\n%?\n#+end_description\n** scratchpad :noexport:\n" :prepend t :jump-to-captured t)
            ("x" "Instant Todo" entry (function org-journal-open-current-journal-file) "* TODO %^{title}\nSCHEDULED: %T%^{CATEGORY}p%^{Effort}p\n%?" :jump-to-captured t))))
 #+end_src
-*** Backup (untangled)
+**** Backup (untangled)
 Backup of the Doom Emacs Capture templates for future reference
 #+begin_src
 ;;https://github.com/hlissner/doom-emacs/blob/f621ff80471e8d08a72e5ece00641c70b121873a/modules/lang/org/config.el#L342
@@ -703,7 +680,7 @@ Backup of the Doom Emacs Capture templates for future reference
  ("on" "Project notes" entry #'+org-capture-central-project-notes-file "* %U %?\n %i\n %a" :heading "Notes" :prepend t)
  ("oc" "Project changelog" entry #'+org-capture-central-project-changelog-file "* %U %?\n %i\n %a" :heading "Changelog" :prepend t))
 #+end_src
-** Org MRU Clock
+*** Org MRU Clock
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
 (package! org-mru-clock)
 #+end_src
@@ -730,11 +707,11 @@ Backup of the Doom Emacs Capture templates for future reference
 ;;          ("M-s-t o" . org-clock-out)
 ;;          ("M-s-t u" . org-update-all-dblocks)))
 #+end_src
-** Org clock export to csv
+*** Org clock export to csv
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
 (package! org-clock-csv)
 #+end_src
-** Org pomodoro
+*** Org pomodoro
 #+begin_src emacs-lisp
 (defun this/org-pomodoro-restart ()
   (interactive)
@@ -759,7 +736,7 @@ Backup of the Doom Emacs Capture templates for future reference
     (add-hook! org-pomodoro-break-finished #'this/org-pomodoro-restart)
 )
 #+end_src
-** Org hunspell
+*** Org hunspell
 #+begin_src emacs-lisp
 (add-hook! org-mode
   (after! ispell
@@ -772,7 +749,7 @@ Backup of the Doom Emacs Capture templates for future reference
     ;;(ispell-hunspell-add-multi-dic "es_ES,en_US")
 ))
 #+end_src
-** Org FC
+*** Org FC
 From own fork! https://github.com/ja0nz/org-fc
 
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
@@ -812,7 +789,7 @@ From own fork! https://github.com/ja0nz/org-fc
       "R" #'org-fc-review-resume
       "n" #'org-fc-type-normal-init ))
 #+end_src
-** Org table copy cell :hack:
+*** Org table copy cell :hack:
 #+begin_src emacs-lisp
 (defun org/org-table-yank-cell ()
   "Copy cell value and trim surrounding whitepaces."
@@ -822,7 +799,7 @@ From own fork! https://github.com/ja0nz/org-fc
       (string-trim
         (substring-no-properties(org-table-get-field))))))
 #+end_src
-** Org purge drawers :hack:
+*** Org purge drawers :hack:
 If the habits.org file gets too big it slows down emacs.
 This function will clean all the logbook entries.
 #+begin_src emacs-lisp
@@ -833,7 +810,7 @@ This function will clean all the logbook entries.
   (pop-global-mark))
 #+end_src
 
-** Org goto end of subtree :hack:
+*** Org goto end of subtree :hack:
 #+begin_src emacs-lisp
 (defun goto-last-heading ()
   "Goto to the end of a subtree at point or for ELEMENT heading."
@@ -844,7 +821,7 @@ This function will clean all the logbook entries.
 
 #+RESULTS:
 
-** Org babel execute graph-easy :hack:
+*** Org babel execute graph-easy :hack:
 #+begin_example
 \#+BEGIN_SRC graph-easy
 strict digraph {
@@ -879,7 +856,17 @@ strict digraph {
         " " cmdline
         " --output=" (org-babel-process-file-name out-file)) "")))
 #+end_src
-* Caddyfile :local:
+** D2 Mode :mode:
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+(package! d2-mode
+   :recipe (:host github :repo "andorsk/d2-mode"))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! d2-mode
+  :mode "\\.d2$")
+#+end_src
+** Caddyfile :mode:
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
 (package! caddyfile-mode)
 #+end_src
@@ -893,13 +880,12 @@ strict digraph {
 
 #+RESULTS:
 
-* aa2u artist mode to unicode :local:
+** aa2u artist mode to unicode :package:
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
 (package! ascii-art-to-unicode)
 #+end_src
 
-
-* Web Mode
+** Web Mode
 #+begin_src emacs-lisp
 (use-package! web-mode
   :mode "\\.astro$"
@@ -910,7 +896,7 @@ strict digraph {
 )
 #+end_src
 
-** KILL Web Mode :hack:
+*** KILL Web Mode :hack:
 Related to this issue of web mode: https://github.com/fxbois/web-mode/issues/799
 In short: changing dir-locals alone is not working with web mode. This is a hack
 to get it working.
@@ -932,6 +918,24 @@ to get it working.
          (web-mode-set-engine "none"))))))
 (add-hook 'web-mode-hook  'hack-web-mode-hook nil nil)
 #+end_src
+* KILL LSP mode config
+- Ignoring spago *output* directory
+- Ignoring @rule commonly used in tailwind
+#+begin_src
+(after! lsp-mode
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\output\\'")
+  (setq lsp-css-lint-unknown-at-rules "ignore")
+)
+#+end_src
+** LSP TailwindCSS
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+(package! lsp-tailwindcss :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! lsp-tailwindcss)
+#+end_src
+
 * KILL MU4E
 [[ https://github.com/hlissner/doom-emacs/blob/develop/modules/email/mu4e/README.org][Doom Emacs MU4E]]
 #+begin_src emacs-lisp
