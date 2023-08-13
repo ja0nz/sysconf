@@ -22,13 +22,12 @@
       modules-left = [
         "sway/mode"
         "sway/workspaces"
-        "sway/language"
-        "pulseaudio" # "wireplumber"
         "backlight"
-        "custom/waybar-mpris"
-        "sway/window"
+        "pulseaudio" # "wireplumber"
+        "sway/language"
+        "mpris"
       ];
-      # modules-center = [ "sway/window" ];
+      modules-center = [ "sway/window" ];
       modules-right = [ "cpu" "disk" "network" "battery" "clock" "tray" ];
       modules = {
         tray = { spacing = 10; };
@@ -112,21 +111,18 @@
             "(.*) – Doom Emacs" = "📝 $1";
           };
         };
-        "custom/waybar-mpris" = {
-          return-type = "json";
-          on-click = "${pkgs.playerctl}/bin/playerctl previous";
-          on-click-middle = "${pkgs.playerctl}/bin/playerctl play-pause";
-          on-click-right = "${pkgs.playerctl}/bin/playerctl next";
-          format = "{icon} {}";
-          format-icons = {
-            "mopidy Playing" = "▶️📻";
-            "mopidy Paused" = "⏸️📻";
-            "chromium Playing" = "▶️🌐";
-            "chromium Paused" = "⏸️🌐";
+        "mpris" = {
+          dynamic-len = 30;
+          format = "{player_icon} {status_icon} {dynamic}";
+          format-pause = "<s>{player_icon}</s> {status_icon} {dynamic}";
+          player-icons = {
+            mopidy = "📻";
+            chromium = "🌐";
           };
-          exec = ''
-            ${pkgs.playerctl}/bin/playerctl -a metadata --format '{"text": "{{markup_escape(title)}}", "tooltip": "{{artist}} : {{markup_escape(title)}} - {{playerName}}", "alt": "{{playerName}} {{status}}", "class": "{{status}}"}' -F'';
-          max-length = 30;
+          status-icons = {
+            playing = "▶";
+            paused = "⏸";
+          };
         };
         disk = {
           format = "{used} 󰋊";
