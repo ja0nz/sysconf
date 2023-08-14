@@ -10,12 +10,12 @@
     ~gpg -e --default-recipient-self <filewithpassword>~
     You may use pass or bitwarden instead. Up to you.
 */
-{ lib, config, pkgs, ... }:
+{ lib, pkgs, ... }:
 let
   mailjanz = "mail@ja.nz";
   janpetelergmailcom = "jan.peteler@gmail.com";
   maildir = ".mail";
-  passwordcmd = "gpg -q --for-your-eyes-only --no-tty -d ";
+  passwordcmd = "${pkgs.sops}/bin/sops -d";
 in {
   accounts.email = {
     maildirBasePath = maildir;
@@ -26,7 +26,7 @@ in {
       #   address = mailjanz;
       #   userName = mailjanz;
       #   realName = "Ja0nz";
-      #   passwordCommand = passwordcmd + "${config._secret}/mbsync_janz.gpg";
+      #   passwordCommand = passwordcmd + "${../_secret}/mbsync_janz";
       #   mbsync = {
       #     enable = true;
       #     create = "maildir";
@@ -43,7 +43,7 @@ in {
         address = janpetelergmailcom;
         userName = janpetelergmailcom;
         realName = "Jan";
-        passwordCommand = passwordcmd + "${config._secret}/mbsync_gmail.gpg";
+        passwordCommand = passwordcmd + "${../_secret}/mbsync_gmail";
         mbsync = {
           enable = true;
           extraConfig.account.PipelineDepth = 50;
@@ -90,7 +90,7 @@ in {
     };
   };
 
-  home.file.".authinfo.gpg".source = "${config._secret}/authinfo_emacs.gpg";
+  home.file.".authinfo.gpg".source = "${../_secret}/authinfo_emacs.gpg";
 
   programs.mbsync = {
     enable = true;
