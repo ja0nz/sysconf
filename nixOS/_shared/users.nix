@@ -56,7 +56,6 @@ in {
     config = {
 
       inherit _repoRoot _monoFont;
-      _secret = ../../_secret;
 
       nixpkgs.config = {
         #allowBroken = true;
@@ -74,7 +73,6 @@ in {
     options = with lib; {
       _repoRoot = mkOption { type = types.path; };
       _monoFont = mkOption { type = types.attrs; };
-      _secret = mkOption { type = types.path; };
     };
   };
 }

@@ -13,12 +13,12 @@
 */
 { config, ... }:
 
-let inherit (config) _secret _repoRoot;
+let inherit (config) _repoRoot;
 in {
   programs.ssh = {
     enable = true;
-    userKnownHostsFile = builtins.toString _repoRoot
-      + "/_secret/ssh/known_hosts"; # TODO Secure your known_hosts
+    # TODO Secure your known_hosts
+    userKnownHostsFile = "${toString _repoRoot}/_secret/ssh/known_hosts";
     controlMaster = "auto";
     controlPersist = "15m";
     matchBlocks = {
@@ -28,7 +28,7 @@ in {
         port = 50022;
         user = "opc";
         identitiesOnly = true;
-        identityFile = "${_secret}/ssh/peteler-family-client";
+        identityFile = "${../_secret}/ssh/peteler-family-client";
       };
       "github.com" = { user = "git"; };
     };

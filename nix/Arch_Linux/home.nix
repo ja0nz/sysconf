@@ -6,7 +6,6 @@
 
     # TODO Set your repo root path
     _repoRoot = /home/me/sysconf;
-    _secret = ../../_secret;
 
     nixpkgs.config = {
       #allowBroken = true;
@@ -32,8 +31,5 @@
   };
 
   # Global options
-  options = with lib; {
-    _repoRoot = mkOption { type = types.path; };
-    _secret = mkOption { type = types.path; };
-  };
+  options = with lib; { _repoRoot = mkOption { type = types.path; }; };
 }
