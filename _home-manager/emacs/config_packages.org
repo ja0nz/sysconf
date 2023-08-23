@@ -221,15 +221,215 @@ Setting the snippet directory
 C-y -> undo-redo
 C-z -> undo
 
-** Xah Fly Keys
-Activating Fly Keys
-https://github.com/xahlee/xah-fly-keys
-#+begin_src emacs-lisp :var default-directory=(symbol-value 'default-directory)
-(add-to-list 'load-path default-directory)
-(require 'xah-fly-keys)
-(push '("noted" . (("'" . "z") ("," . "y") ("." . "u") ("p" . "a") ("y" . "q") ("f" . "p") ("g" . "b") ("c" . "m") ("r" . "l") ("l" . "f") ("a" . "c") ("o" . "s") ("e" . "i") ("u" . "e") ("i" . "o") ("h" . "t") ("t" . "n") ("n" . "r") ("s" . "h") (";" . "v") ("q" . "x") ("j" . "ü") ("k" . "ä") ("x" . "ö") ("b" . "w") ("m" . "g") ("w" . ",") ("v" . ".") ("z" . "k") ("/" . "j") ("[" . "-") ("-" . "´"))) xah-fly-layouts)
-(xah-fly-keys-set-layout "neo2")
-(xah-fly-keys 1)
+** Meow
+https://github.com/meow-edit/meow
+
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+(package! meow)
+#+end_src
+
+Cheatsheet Layout
+#+begin_src emacs-lisp
+(defconst meow-cheatsheet-layout-noted
+  '( ;; Number row
+    (<TLDE> "^"     "ˇ")
+    (<AE01> "1"     "°")
+    (<AE02> "2"     "§")
+    (<AE03> "3"     "ℓ")
+    (<AE04> "4"     "»")
+    (<AE05> "5"     "«")
+    (<AE06> "6"     "$")
+    (<AE07> "7"     "€")
+    (<AE08> "8"     "„")
+    (<AE09> "9"     "“")
+    (<AE10> "0"     "”")
+    (<AE11> "-"     "—")
+    (<AE12> "`"     "¸")
+     ;; Top row
+    (<AD01> "z"     "Z")
+    (<AD02> "y"     "Y")
+    (<AD03> "u"     "U")
+    (<AD04> "a"     "A")
+    (<AD05> "q"     "Q")
+    (<AD06> "p"     "P")
+    (<AD07> "b"     "B")
+    (<AD08> "m"     "M")
+    (<AD09> "l"     "L")
+    (<AD10> "f"     "F")
+    (<AD11> "j"     "J")
+    (<AD12> "ß"     "ẞ")
+      ;; Center row
+    (<AC01> "c"     "C")
+    (<AC02> "s"     "S")
+    (<AC03> "i"     "I")
+    (<AC04> "e"     "E")
+    (<AC05> "o"     "O")
+    (<AC06> "d"     "D")
+    (<AC07> "t"     "T")
+    (<AC08> "n"     "N")
+    (<AC09> "r"     "R")
+    (<AC10> "h"     "H")
+    (<AC11> "M3"     "M3")
+    (<BKSL> "´"      "~")
+      ;; Bottom row
+    (<LSGT> "M4"     "M4")
+    (<AB01> "v"     "V")
+    (<AB02> "x"     "X")
+    (<AB03> "ü"     "Ü")
+    (<AB04> "ä"     "Ä")
+    (<AB05> "ö"     "Ö")
+    (<AB06> "w"     "W")
+    (<AB07> "g"     "G")
+    (<AB08> ","     "–")
+    (<AB09> "."     "•")
+    (<AB10> "k"     "K")))
+
+(defconst meow-cheatsheet-layout-neo2
+  '((<TLDE> "^"     "ˇ")
+    (<AE01> "1"     "°")
+    (<AE02> "2"     "§")
+    (<AE03> "3"     "ℓ")
+    (<AE04> "4"     "»")
+    (<AE05> "5"     "«")
+    (<AE06> "6"     "$")
+    (<AE07> "7"     "€")
+    (<AE08> "8"     "„")
+    (<AE09> "9"     "“")
+    (<AE10> "0"     "”")
+    (<AE11> "-"     "—")
+    (<AE12> "`"     "¸")
+    (<AD01> "x"     "X")
+    (<AD02> "v"     "V")
+    (<AD03> "l"     "L")
+    (<AD04> "c"     "C")
+    (<AD05> "w"     "W")
+    (<AD06> "k"     "K")
+    (<AD07> "h"     "H")
+    (<AD08> "g"     "G")
+    (<AD09> "f"     "F")
+    (<AD10> "q"     "Q")
+    (<AD11> "ß"     "ẞ")
+    (<AD12> "´"     "~")
+    (<AC01> "u"     "U")
+    (<AC02> "i"     "I")
+    (<AC03> "a"     "A")
+    (<AC04> "e"     "E")
+    (<AC05> "o"     "O")
+    (<AC06> "s"     "S")
+    (<AC07> "n"     "N")
+    (<AC08> "r"     "R")
+    (<AC09> "t"     "T")
+    (<AC10> "d"     "D")
+    (<AC11> "y"     "Y")
+    (<AB01> "ü"     "Ü")
+    (<AB02> "ö"     "Ö")
+    (<AB03> "ä"     "Ä")
+    (<AB04> "p"     "P")
+    (<AB05> "z"     "Z")
+    (<AB06> "b"     "B")
+    (<AB07> "m"     "M")
+    (<AB08> ","     "–")
+    (<AB09> "."     "•")
+    (<AB10> "j"     "J")
+    (<BKSL> ""    "")))
+#+end_src
+
+Meow setup
+#+begin_src emacs-lisp
+(defun meow-setup ()
+  (setq meow-cheatsheet-layout meow-cheatsheet-layout-noted)
+  (setq meow-cheatsheet-physical-layout meow-cheatsheet-physical-layout-iso)
+  (meow-motion-overwrite-define-key
+   '("<escape>" . ignore))
+  (meow-leader-define-key
+   '("v" . magit)
+   '("a" . org-agenda)
+   ;; Use SPC (0-9) for digit arguments.
+   '("1" . meow-digit-argument)
+   '("2" . meow-digit-argument)
+   '("3" . meow-digit-argument)
+   '("4" . meow-digit-argument)
+   '("5" . meow-digit-argument)
+   '("6" . meow-digit-argument)
+   '("7" . meow-digit-argument)
+   '("8" . meow-digit-argument)
+   '("9" . meow-digit-argument)
+   '("0" . meow-digit-argument))
+  (meow-normal-define-key
+   '("0" . meow-expand-0)
+   '("9" . meow-expand-9)
+   '("8" . meow-expand-8)
+   '("7" . meow-expand-7)
+   '("6" . meow-expand-6)
+   '("5" . meow-expand-5)
+   '("4" . meow-expand-4)
+   '("3" . meow-expand-3)
+   '("2" . meow-expand-2)
+   '("1" . meow-expand-1)
+   '("-" . negative-argument)
+   ;; Cut, copy, paste, delete
+   '("x" . meow-kill)                ;; Cut
+   '("c" . meow-save)                ;; Copy
+   '("C" . meow-sync-grab)           ;; Teleport sel -> 2.sel (grab)
+   '("v" . meow-yank)                ;; Paste
+   '("V" . meow-yank-pop)            ;; Select from kill ring
+   '("d" . meow-delete)              ;; Delete at point
+   '("D" . meow-backward-delete)     ;; Delete backward at point
+   ;; Insert mode
+   '("i" . meow-insert)
+   '("I" . meow-open-above)
+   '("a" . meow-append)
+   '("A" . meow-open-below)
+   '("k" . meow-change)              ;; Kill region w/ insert mode
+   ;; Motion and selection
+   '("w" . meow-mark-word)           ;; Select word
+   '("W" . meow-mark-symbol)         ;; Select symbol
+   '("l" . meow-line)                ;; Select line (no eol)
+   '("L" . meow-goto-line)           ;; Goto line, recenter and select
+   '("m" . meow-join)                ;; Line join selection
+   '("f" . meow-find)                ;; Find INCL next char and select
+   '("t" . meow-till)                ;; Find EXCL next char and select
+   ;; Block operations
+   '("," . meow-inner-of-thing)      ;; Select excluding (), ""
+   '("." . meow-bounds-of-thing)     ;; Select including (), ""
+   '("–" . meow-beginning-of-thing)  ;; Select to BEG
+   '("•" . meow-end-of-thing)        ;; Select to END
+   '("o" . meow-block)               ;; Bit similar to inner-of-thing
+   '("O" . meow-to-block)
+   ;; Expand selection or select from point
+   '("e" . meow-next-word)
+   '("E" . meow-next-symbol)
+   '("b" . meow-back-word)
+   '("B" . meow-back-symbol)
+   ;; Modify selection
+   '("g" . meow-cancel-selection)
+   '("G" . meow-grab)                ;; Create 2.sel or marker
+   '("r" . meow-replace)             ;; Replace selection w/ yank
+   '("R" . meow-swap-grab)           ;; Swap 2.sel <-> sel
+   ;; Goto x (pointer)
+   '("p" . meow-reverse)             ;; Exchange Point and mark
+   '("s" . +default/search-buffer)   ;; Search buffer
+   '("S" . +default/search-project)  ;; Search project
+   '("j" . meow-visit)               ;; Jump to x (similar to s)
+   '("n" . meow-search)              ;; Search selected in buffer
+    ;; Help
+   '("h" . meow-describe-key)        ;; help
+   '("H" . meow-cheatsheet)          ;; help cheatsheet
+  ;; Misc
+   '("q" . meow-quit)
+   '("u" . meow-undo)
+   '("U" . meow-undo-in-selection)   ;; --Not working--
+   '("z" . meow-pop-selection)       ;; "Undo" for selection steps
+   '("Z" . meow-pop-grab)            ;; Cancel grab
+   '("´" . repeat)                   ;; Repeat executed command
+   '("<escape>" . ignore)))
+#+end_src
+
+Starting meow
+#+begin_src emacs-lisp
+(require 'meow)
+(meow-setup)
+(meow-global-mode 1)
 #+end_src
 ** Consult -> l, s, n
 Space f -> switch to buffer
@@ -456,8 +656,6 @@ https://karthinks.com/software/avy-can-do-anything/
         :prefix "o"
         :desc "Launch terminal here" "t" #'terminal-here-launch
         :desc "Launch terminal ROOT" "T" #'terminal-here-project-launch))
-#+end_#+begin_src
-
 #+end_src
 * Modes
 ** Org
