@@ -342,6 +342,7 @@ Meow setup
   (meow-motion-overwrite-define-key
    '("<escape>" . ignore))
   (meow-leader-define-key
+   '("SPC" . consult-buffer)
    '("v" . magit)
    '("a" . org-agenda)
    ;; Use SPC (0-9) for digit arguments.
@@ -416,6 +417,7 @@ Meow setup
    '("h" . meow-describe-key)        ;; help
    '("H" . meow-cheatsheet)          ;; help cheatsheet
   ;; Misc
+   '("T" . meow-M-x)                 ;; A sane M-x
    '("q" . meow-quit)
    '("u" . meow-undo)
    '("U" . meow-undo-in-selection)   ;; --Not working--
