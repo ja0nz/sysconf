@@ -12,8 +12,7 @@
 {
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs-unstable; # TODO Req emacs-overlay (see overlays.nix)
-    #package = pkgs.emacsPgtk;
+    package = pkgs.emacs-pgtk; # TODO Req emacs-overlay (see overlays.nix)
     #extraPackages = epkgs: with epkgs; [ use-package ];
   };
   services.emacs = {
@@ -33,16 +32,16 @@
     #hunspellDicts.fr-moderne # dictionary for French
 
     # Database for org-roam
-    sqlite # A self-contained, serverless, zero-configuration SQL db engine
+    # sqlite # A self-contained, serverless, zero-configuration SQL db engine
 
     # Needed by doom emacs
-    html-tidy # A HTML validator and `tidier'
+    # html-tidy # A HTML validator and `tidier'
 
     # Artist Mode dependency
-    figlet # Program for making large letters out of ordinary text
+    # figlet # Program for making large letters out of ordinary text
 
     # Org roam dependency
-    clang # A C language family frontend for LLVM (wrapper script)
+    # clang # A C language family frontend for LLVM (wrapper script)
   ];
 
   /* config_packages.org -> ~/.doom.d/config.el & ~/.doom.d/packages.el
