@@ -55,9 +55,8 @@
             critical = 15;
           };
           format = "{capacity}% {icon}";
-          # RTL rendering - whyyyyy???
-          format-charging = "󰉁 %{capacity}";
-          format-plugged = " %{capacity}";
+          format-charging = "{capacity}% 󰉁";
+          format-plugged = "{capacity}% ";
           # format-full = "";
           format-icons = [ "" "" "" "" "" ];
         };
