@@ -19,7 +19,6 @@ in {
     /zathura
     /chromium
     # -- Services --
-    # /dropbox.nix
     /syncthing.nix
     /mopidy.nix
     # -- nix --
