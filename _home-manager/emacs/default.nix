@@ -28,7 +28,7 @@
     hunspellDicts.en_US # dictionary for English
     hunspellDicts.de_DE # dictionary for German
     hunspellDicts.it_IT # dictionary for Italian
-    #hunspellDicts.es_ES # dictionary for Spanish
+    hunspellDicts.es_ES # dictionary for spanish
     #hunspellDicts.fr-moderne # dictionary for French
 
     # Database for org-roam

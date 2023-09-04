@@ -43,7 +43,7 @@ with lib; {
     };
 
     networking = {
-      hostName = "nixos_nano";
+      hostName = "nano";
       wireless.iwd.enable = true;
       networkmanager = {
         enable = true;
