@@ -17,7 +17,7 @@ let
   # TODO Calculate right position: 2160 / 1.398438
   _posRight = lib.toInt (lib.substring 0 4 tpX1.mode) / tpX1.scale;
   lgHome = {
-    criteria = "DP-4";
+    criteria = "LG Electronics LG IPS FULLHD ";
     mode = "1920x1080@60.000Hz";
     position = "${builtins.toString (builtins.ceil _posRight)},0";
     scale = 1.0;
