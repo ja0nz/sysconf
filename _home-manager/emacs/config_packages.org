@@ -706,26 +706,26 @@ https://karthinks.com/software/avy-can-do-anything/
   (cl-flet ((icon #'make-agendaIcons))
     (list
      ;; Leisure
-     (icon :category "lang" :icon "language")
+     (icon :category "lang" :icon "nf-fa-language")
      ;; ON -> netflix, hackernews, zeit.de (non work related)
-     (icon :category "ON" :icon "toggle-on")
+     (icon :category "ON" :icon "nf-fa-toggle_on")
      ;; OFF -> jog, yoga, kite, bike, hike
-     (icon :category "OFF" :icon "toggle-off")
+     (icon :category "OFF" :icon "nf-fa-toggle_off")
      ;; Work
-     (icon :category "feat" :icon "code") ;; a new feature
-     (icon :category "fix" :icon "bug") ;; A bug fix
-     (icon :category "docs" :icon "book") ;; documentation
-     (icon :category "style" :icon "eye") ;; formatting
-     (icon :category "refactor" :icon "wrench") ;; nor feat || bug
-     (icon :category "perf" :icon "tachometer") ;; performance
-     (icon :category "test" :icon "cog") ;; add/correct tests
-     (icon :category "build" :icon "cogs") ;; build tooling
-     (icon :category "chore" :icon "coffee") ;; other nor src || test
-     (icon :category "reverts" :icon "backward")))) ;; revert/rebase commit
+     (icon :category "feat" :icon "nf-fa-code") ;; a new feature
+     (icon :category "fix" :icon "nf-fa-bug") ;; A bug fix
+     (icon :category "docs" :icon "nf-fa-book") ;; documentation
+     (icon :category "style" :icon "nf-fa-eye") ;; formatting
+     (icon :category "refactor" :icon "nf-fa-wrench") ;; nor feat || bug
+     (icon :category "perf" :icon "nf-fa-tachometer") ;; performance
+     (icon :category "test" :icon "nf-fa-cog") ;; add/correct tests
+     (icon :category "build" :icon "nf-fa-cogs") ;; build tooling
+     (icon :category "chore" :icon "nf-fa-coffee") ;; other nor src || test
+     (icon :category "reverts" :icon "nf-fa-backward")))) ;; revert/rebase commit
 
 (customize-set-value
     'org-agenda-category-icon-alist
-    (cl-flet ((icons (lambda (x) (all-the-icons-faicon (agendaIcons-icon x) :height 1))))
+    (cl-flet ((icons (lambda (x) (nerd-icons-faicon (agendaIcons-icon x) :height 1))))
       (mapcar
        (lambda (x) (list (agendaIcons-category x)
                     (list (icons x))
