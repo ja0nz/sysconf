@@ -104,11 +104,11 @@ with lib; {
         enable = true;
         dnssec = "false";
         extraConfig = ''
-          DNS=45.90.28.0#ec7379.dns.nextdns.io
-          DNS=2a07:a8c0::#ec7379.dns.nextdns.io
-          DNS=45.90.30.0#ec7379.dns.nextdns.io
-          DNS=2a07:a8c1::#ec7379.dns.nextdns.io
+          DNS=194.242.2.4#base.dns.mullvad.net
+          #DNS=194.242.2.5#extended.dns.mullvad.net
+          #DNS=194.242.2.9#all.dns.mullvad.net
           DNSOverTLS=yes
+          Domains=~.
         '';
       };
     };
