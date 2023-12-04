@@ -7,8 +7,8 @@ let
   sizzy = import ../../_home-manager/sizzy;
   devenv = import (fetchTarball {
     url =
-      "https://github.com/cachix/devenv/archive/507bdcad35253545d43a1fc0898da6ecebb6b52a.tar.gz";
-    sha256 = "058xqxljg56y54rlvfn4rclvj45rd8q9n1rndm1q91am0i33igjj";
+      "https://github.com/cachix/devenv/archive/a7c4dd8f4eb1f98a6b8f04bf08364954e1e73e4f.tar.gz";
+    sha256 = "05fl4xngwph6lsvyb48ppcf24la66prflbsvbi5kay2lyyw61jrm";
   });
 in {
 
@@ -58,6 +58,7 @@ in {
     #   extensions = [ mate.caja-extensions mate.caja-dropbox ];
     # })
     # mate.eom # An image viewing and cataloging program for the MATE desktop
+    stremio # A modern media center
     cinnamon.nemo # File browser for Cinnamon
     cinnamon.pix # A generic image viewer from Linux Mint
     okular # KDE document viewer

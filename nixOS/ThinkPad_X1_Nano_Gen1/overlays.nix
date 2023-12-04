@@ -8,7 +8,7 @@
     SHA256 checksums are a good practice to roll back if things break.
 
     There is a package for auto insertation:
-    -> haskellPackages.update-nix-fetchgit
+    -> update-nix-fetchgit
     Just run ~update-nix-fetchgit overlays.nix~ from time to time.
 */
 
@@ -40,31 +40,31 @@
 
   emacsOverlay = (import (fetchTarball {
     url =
-      "https://github.com/nix-community/emacs-overlay/archive/e709d677e1cbe46b784e990c5796a8c7592d256c.tar.gz";
-    sha256 = "0lzks54qzqvfazany625nn2f8knlm0sd25j0i2jh3g0y60srrcij";
+      "https://github.com/nix-community/emacs-overlay/archive/dc744ac6f2083258415507daa492937d14d44b55.tar.gz";
+    sha256 = "1zj69gphsj278g1xvdjkxm2lmjjgg6nl2cffy2naicvmh36rh1x6";
   }));
 
   waylandOverlay = (import "${
       fetchTarball {
         url =
-          "https://github.com/nix-community/nixpkgs-wayland/archive/dc4eff3ca393beba211047693e0ade3618483117.tar.gz";
-        sha256 = "033f150vh5rp3n1dwzgyjf3zmbfcp5i1spmb7iqivc0p3zx9chdd";
+          "https://github.com/nix-community/nixpkgs-wayland/archive/a93f12485a93df3b5c6a9961c7b8986ffa20f292.tar.gz";
+        sha256 = "0jvaj6v0dbfrbdy9kqhm01v382bcvvdir6j88s2apgs82vm16v9y";
       }
     }/overlay.nix");
 
   # [01.01.2023]
   # Latest release dates from 12.12.2020 and is broken. Master branch seems fixed but ain't pushed to a new release.
-  mopidySoundCloudOverlay = self: super: {
-    mopidy-soundcloud = super.mopidy-soundcloud.overrideAttrs (attr: {
-      src = fetchTarball {
-        url =
-          "https://github.com/mopidy/mopidy-soundcloud/archive/c77fdfd128d7e8a9c9040dadd51dd98d36346608.tar.gz";
-        sha256 = "0lcychifdviyj8a9ci3snavh4wfzsd15crbyrqa4djrg0g5x7wk9";
-      };
-      propagatedBuildInputs = attr.propagatedBuildInputs
-        ++ [ super.python310Packages.beautifulsoup4 ];
-    });
-  };
+  # mopidySoundCloudOverlay = self: super: {
+  #   mopidy-soundcloud = super.mopidy-soundcloud.overrideAttrs (attr: {
+  #     src = fetchTarball {
+  #       url =
+  #         "https://github.com/mopidy/mopidy-soundcloud/archive/c77fdfd128d7e8a9c9040dadd51dd98d36346608.tar.gz";
+  #       sha256 = "0lcychifdviyj8a9ci3snavh4wfzsd15crbyrqa4djrg0g5x7wk9";
+  #     };
+  #     propagatedBuildInputs = attr.propagatedBuildInputs
+  #       ++ [ super.python310Packages.beautifulsoup4 ];
+  #   });
+  # };
 
   # [09.12.2022]
   # TODO - Trouble with waybar (remove overlay after fix)
