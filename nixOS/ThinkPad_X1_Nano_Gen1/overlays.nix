@@ -40,15 +40,15 @@
 
   emacsOverlay = (import (fetchTarball {
     url =
-      "https://github.com/nix-community/emacs-overlay/archive/dc744ac6f2083258415507daa492937d14d44b55.tar.gz";
-    sha256 = "1zj69gphsj278g1xvdjkxm2lmjjgg6nl2cffy2naicvmh36rh1x6";
+      "https://github.com/nix-community/emacs-overlay/archive/cacd688b09b4ef4ddff5ff12ede2f24ca25119ad.tar.gz";
+    sha256 = "1kzi0dhnckndc9ax44cfdb75v6zqqvax99gkky7qmyra1hq3452z";
   }));
 
   waylandOverlay = (import "${
       fetchTarball {
         url =
-          "https://github.com/nix-community/nixpkgs-wayland/archive/a93f12485a93df3b5c6a9961c7b8986ffa20f292.tar.gz";
-        sha256 = "0jvaj6v0dbfrbdy9kqhm01v382bcvvdir6j88s2apgs82vm16v9y";
+          "https://github.com/nix-community/nixpkgs-wayland/archive/193bef6e20ab814db624b01d4bdd0c7160aa9838.tar.gz";
+        sha256 = "1dsncs30252lak5sp8mjs88g3kjhyc1ngwsk30rwy9x1i3mr3z3s";
       }
     }/overlay.nix");
 
@@ -64,12 +64,5 @@
   #     propagatedBuildInputs = attr.propagatedBuildInputs
   #       ++ [ super.python310Packages.beautifulsoup4 ];
   #   });
-  # };
-
-  # [09.12.2022]
-  # TODO - Trouble with waybar (remove overlay after fix)
-  # https://github.com/Alexays/Waybar/issues/1852
-  # waybarOverlay = self: super: {
-  #   waybar = super.waybar.override { wireplumberSupport = false; };
   # };
 }

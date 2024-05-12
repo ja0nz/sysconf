@@ -12,7 +12,7 @@
 {
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs-pgtk; # TODO Req emacs-overlay (see overlays.nix)
+    #package = pkgs.emacs-pgtk; # TODO Req emacs-overlay (see overlays.nix)
     #extraPackages = epkgs: with epkgs; [ use-package ];
   };
   services.emacs = {
@@ -27,9 +27,10 @@
 
     hunspellDicts.en_US # dictionary for English
     hunspellDicts.de_DE # dictionary for German
+    hunspellDicts.nl_NL # dictionary for Dutch
     hunspellDicts.it_IT # dictionary for Italian
-    hunspellDicts.es_ES # dictionary for spanish
-    #hunspellDicts.fr-moderne # dictionary for French
+    hunspellDicts.fr-moderne # dictionary for French
+    #hunspellDicts.es_ES # dictionary for spanish
 
     # Database for org-roam
     # sqlite # A self-contained, serverless, zero-configuration SQL db engine
@@ -41,7 +42,7 @@
     # figlet # Program for making large letters out of ordinary text
 
     # Org roam dependency
-    # clang # A C language family frontend for LLVM (wrapper script)
+    clang # A C language family frontend for LLVM (wrapper script)
   ];
 
   /* config_packages.org -> ~/.doom.d/config.el & ~/.doom.d/packages.el

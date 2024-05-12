@@ -13,7 +13,6 @@ with lib; {
   in [
     ./hardware-configuration.nix
     (shared + /cachix)
-    (shared + /keymap)
     (shared + /boot.nix)
     (shared + /base.nix)
     (shared + /users.nix)
@@ -56,12 +55,6 @@ with lib; {
       LIBVA_DRIVER_NAME = "iHD";
       VDPAU_DRIVER = "va_gl";
     };
-
-    # Sound
-    # [09.12.2022]
-    # TODO - Trouble with current kernel 5.15.81
-    # nix --extra-experimental-features nix-command eval -f '<nixpkgs>' 'linuxPackages.kernel.version'
-    boot.kernelPackages = pkgs.linuxPackages_latest;
 
     hardware = {
       cpu.intel.updateMicrocode = true;

@@ -24,7 +24,7 @@
         "sway/workspaces"
         "backlight"
         "pulseaudio" # "wireplumber"
-        "sway/language"
+        # "sway/language"
         "mpris"
       ];
       modules-center = [ "sway/window" ];

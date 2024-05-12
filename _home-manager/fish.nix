@@ -28,7 +28,9 @@ in {
       # --- TODO Special sysconf/nixOS related commands
       "nixos:updateALL" = "sudo nix-channel --update; cd ${
           toString _repoRoot
-        } && rg fetchTarball -l | xargs -I@ direnv exec . update-nix-fetchgit @";
+        } && rg fetchTarball -l | xargs -I@ direnv exec . ${
+          ./bin/update-nix-fetchgit
+        } @";
       "nixos:switch" = "sudo nixos-rebuild switch";
       "nixos:boot" = "sudo nixos-rebuild boot";
       "nixos:clean" = "sudo nix-collect-garbage -d";

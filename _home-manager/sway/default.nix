@@ -55,7 +55,12 @@ in {
 
   wayland.windowManager.sway = {
     enable = true;
-    systemd = { enable = true; };
+    # TODO Resolve https://github.com/WillPower3309/swayfx/blob/master/meson.build#L39
+    # package = pkgs.swayfx;
+    systemd = {
+      enable = true;
+      variables = [ "--all" ];
+    };
     extraSessionCommands = ''
       # Wayland stuff
       export NIXOS_OZONE_WL=1
@@ -63,18 +68,11 @@ in {
       export QT_QPA_PLATFORM=wayland
       export SDL_VIDEODRIVER=wayland
       export _JAVA_AWT_WM_NONREPARENTING=1
-
-      # Enable Anki wayland as of 03.02.2023
-      export ANKI_WAYLAND=1
-
-      # NOTE Importing of the full inherited environment block is deprecated.
-      # dbus-update-activation-environment --systemd --all
-      systemctl --user import-environment PATH
     '';
 
     config = {
-      left = "n";
-      right = "t";
+      # left = "j";
+      # right = "l";
       bars = [ ];
       seat = { "*" = { xcursor_theme = "capitaine-cursors 30"; }; };
       colors = {
@@ -124,24 +122,24 @@ in {
       keybindings = lib.mkOptionDefault {
 
         # Mover -> MIDDLE ROW
-        "${modifier}+n" = "focus left";
-        "${modifier}+Ctrl+n" = "focus output left";
-        "${modifier}+Shift+n" = "move left";
-        "${modifier}+Ctrl+Shift+n" = "move workspace to output left";
+        "${modifier}+j" = "focus left";
+        "${modifier}+Ctrl+j" = "focus output left";
+        "${modifier}+Shift+j" = "move left";
+        "${modifier}+Ctrl+Shift+j" = "move workspace to output left";
 
-        "${modifier}+t" = "focus right";
-        "${modifier}+Ctrl+t" = "focus output right";
-        "${modifier}+Shift+t" = "move right";
-        "${modifier}+Ctrl+Shift+t" = "move workspace to output right";
+        "${modifier}+l" = "focus right";
+        "${modifier}+Ctrl+l" = "focus output right";
+        "${modifier}+Shift+l" = "move right";
+        "${modifier}+Ctrl+Shift+l" = "move workspace to output right";
 
         # BOTTOM ROW
         "${modifier}+space" = "workspace back_and_forth";
 
         # Other sway -> TOP ROW
-        "${modifier}+k" = "exec ${./swaylock}";
-        "${modifier}+Ctrl+k" = ''exec "${./swaylock} && systemctl suspend"'';
-        "${modifier}+h" = "layout toggle splith tabbed";
-        "${modifier}+g" = "floating toggle";
+        "${modifier}+z" = "exec ${./swaylock}";
+        "${modifier}+Ctrl+z" = ''exec "${./swaylock} && systemctl suspend"'';
+        "${modifier}+u" = "layout toggle splith tabbed";
+        "${modifier}+i" = "floating toggle";
         "${modifier}+q" = "kill";
 
         # Player -> BOTTOM ROW
@@ -152,10 +150,10 @@ in {
         "${modifier}+period" = ''exec "playerctl position 3+"'';
 
         # Launcher
-        "${modifier}+x" = ''exec "emacsclient -c"'';
-        "${modifier}+v" =
+        "${modifier}+a" = ''exec "emacsclient -c"'';
+        "${modifier}+s" =
           "exec chromium ${lib.concatStringsSep " " chrome-flags}";
-        "${modifier}+l" = "exec nemo";
+        "${modifier}+f" = "exec nemo";
         #"${modifier}+d" = "exec wldash"; -> by system
         "${modifier}+Ctrl+d" = "exec networkmanager_dmenu";
 
@@ -221,8 +219,8 @@ in {
           pointer_accel = "-0.6";
         };
         "type:keyboard" = {
-          xkb_layout = "de,noted,de";
-          xkb_variant = "neo,noted,";
+          xkb_layout = "de";
+          xkb_variant = "neo_qwertz";
         };
       };
       # TODO Set your input/output devices

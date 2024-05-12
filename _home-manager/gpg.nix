@@ -21,7 +21,7 @@
      You may either change the startup order or "hardwire" the env variable
      in your bash/fish/doomemacs config.
 */
-{ ... }:
+{ pkgs, ... }:
 
 {
   programs.gpg = {
@@ -51,6 +51,7 @@
   # Optional: if you want to use GPG for SSH authentication
   services.gpg-agent = {
     enable = true;
+    pinentryPackage = pkgs.pinentry-gtk2;
     defaultCacheTtl = 6000;
     enableSshSupport = true;
     sshKeys = [

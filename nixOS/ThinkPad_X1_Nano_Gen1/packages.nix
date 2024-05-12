@@ -7,8 +7,8 @@ let
   sizzy = import ../../_home-manager/sizzy;
   devenv = import (fetchTarball {
     url =
-      "https://github.com/cachix/devenv/archive/a7c4dd8f4eb1f98a6b8f04bf08364954e1e73e4f.tar.gz";
-    sha256 = "05fl4xngwph6lsvyb48ppcf24la66prflbsvbi5kay2lyyw61jrm";
+      "https://github.com/cachix/devenv/archive/61033d861900f36bfa6afcd5b8580f098d65e137.tar.gz";
+    sha256 = "01adpihld6gff0hbaglwnb0sgch8rm7g41p6970dh7z15vvlkblp";
   });
 in {
 
