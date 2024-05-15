@@ -7,12 +7,11 @@
     You may remove the sha256 assignments or update them to stay updated.
     SHA256 checksums are a good practice to roll back if things break.
 
-    There is a package for auto insertation:
-    -> update-nix-fetchgit
-    Just run ~update-nix-fetchgit overlays.nix~ from time to time.
+    Sources are managed by niv (https://github.com/nmattia/niv)
+    Just run ~nix update~ in the repository root from time to time.
 */
 
-{
+{ sources }: {
   # TODO Fixed upstream; Leave this here for reference
   # discordpyOverlay = self: super: {
   #   python37 = super.python37.override {
@@ -38,17 +37,22 @@
   #   });
   # };
 
+  devenvOverlay = self: super: {
+    devenv = (import (fetchTarball {
+      url = sources.devenv.url;
+      sha256 = sources.devenv.sha256;
+    }));
+  };
+
   emacsOverlay = (import (fetchTarball {
-    url =
-      "https://github.com/nix-community/emacs-overlay/archive/cacd688b09b4ef4ddff5ff12ede2f24ca25119ad.tar.gz";
-    sha256 = "1kzi0dhnckndc9ax44cfdb75v6zqqvax99gkky7qmyra1hq3452z";
+    url = sources.emacs-overlay.url;
+    sha256 = sources.emacs-overlay.sha256;
   }));
 
   waylandOverlay = (import "${
       fetchTarball {
-        url =
-          "https://github.com/nix-community/nixpkgs-wayland/archive/193bef6e20ab814db624b01d4bdd0c7160aa9838.tar.gz";
-        sha256 = "1dsncs30252lak5sp8mjs88g3kjhyc1ngwsk30rwy9x1i3mr3z3s";
+        url = sources.nixpkgs-wayland.url;
+        sha256 = sources.nixpkgs-wayland.sha256;
       }
     }/overlay.nix");
 

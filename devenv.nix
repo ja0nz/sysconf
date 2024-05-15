@@ -5,7 +5,7 @@
     git
     sops # Mozilla sops (Secrets OPerationS) is an editor of encrypted files
     manix # A Fast Documentation Searcher for Nix
-    update-nix-fetchgit # A program to update fetchgit values in Nix expressions
+    niv # Easy dependency management for Nix projects
   ];
 
   pre-commit.hooks = {

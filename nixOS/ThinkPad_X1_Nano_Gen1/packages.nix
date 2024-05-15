@@ -3,13 +3,7 @@
 */
 { pkgs, ... }:
 
-let
-  sizzy = import ../../_home-manager/sizzy;
-  devenv = import (fetchTarball {
-    url =
-      "https://github.com/cachix/devenv/archive/61033d861900f36bfa6afcd5b8580f098d65e137.tar.gz";
-    sha256 = "01adpihld6gff0hbaglwnb0sgch8rm7g41p6970dh7z15vvlkblp";
-  });
+let sizzy = import ../../_home-manager/sizzy;
 in {
 
   # Home manager imports
@@ -131,7 +125,6 @@ in {
     exercism # A Go based command line tool for exercism.io
     nodejs # Some globals depend on this
     python3 # Some globals depend on this
-    niv # Easy dependency management for Nix projects -> good fit with lorri & direnv
     grex # A command-line tool for generating regular expressions from user-provided test cases [RUST]
     tokei # A program that allows you to count your code [RUST]
     devenv.default # Fast, Declarative, Reproducible, and Composable Developer Environments

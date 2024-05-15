@@ -64,7 +64,9 @@ in {
         #oraclejdk.accept_license = true;
       };
 
-      nixpkgs.overlays = builtins.attrValues (import overlayPath);
+      nixpkgs.overlays = builtins.attrValues (import overlayPath {
+        sources = import (_repoRoot + /nix/sources.nix);
+      });
       #_module.args.setEnvironment = config.system.build.setEnvironment;
       home.stateVersion = config.system.stateVersion;
     };

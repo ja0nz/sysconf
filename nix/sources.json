@@ -1,0 +1,38 @@
+{
+    "devenv": {
+        "branch": "main",
+        "description": "Fast, Declarative, Reproducible, and Composable Developer Environments",
+        "homepage": "https://devenv.sh",
+        "owner": "cachix",
+        "repo": "devenv",
+        "rev": "725c90407ef53cc2a1b53701c6d2d0745cf2484f",
+        "sha256": "0g1cpdvzdd6xjkavm9nrfdr10lyi27qq6p2hdnyplmvf9ysxmdab",
+        "type": "tarball",
+        "url": "https://github.com/cachix/devenv/archive/725c90407ef53cc2a1b53701c6d2d0745cf2484f.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "emacs-overlay": {
+        "branch": "master",
+        "description": "Bleeding edge emacs overlay [maintainer=@adisbladis] ",
+        "homepage": "",
+        "owner": "nix-community",
+        "repo": "emacs-overlay",
+        "rev": "c20b99a4ea0750681a9aba949a91cce211c64dc5",
+        "sha256": "09rsdkn16al5qsyrl5fjrljw7ff0z5yb9ihskbipcdiffcn11kax",
+        "type": "tarball",
+        "url": "https://github.com/nix-community/emacs-overlay/archive/c20b99a4ea0750681a9aba949a91cce211c64dc5.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nixpkgs-wayland": {
+        "branch": "master",
+        "description": "Automated, pre-built packages for Wayland (sway/wlroots) tools for NixOS. [maintainers=@colemickens, @Artturin]",
+        "homepage": "",
+        "owner": "nix-community",
+        "repo": "nixpkgs-wayland",
+        "rev": "321545f8c0f00b3c62cbec467bac036ce3119d78",
+        "sha256": "19b9j3b2i900j3yab220m0sypm974i3flgh83cwp6jzwlkzcwr75",
+        "type": "tarball",
+        "url": "https://github.com/nix-community/nixpkgs-wayland/archive/321545f8c0f00b3c62cbec467bac036ce3119d78.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    }
+}

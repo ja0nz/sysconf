@@ -25,9 +25,15 @@ let
 in {
   services.kanshi = {
     enable = true;
-    profiles = {
-      undocked.outputs = [ tpX1 ];
-      dockedHome.outputs = [ tpX1 lgHome ];
-    };
+    settings = [
+      {
+        profile.name = "undocked";
+        profile.outputs = [ tpX1 ];
+      }
+      {
+        profile.name = "docked";
+        profile.outputs = [ tpX1 lgHome ];
+      }
+    ];
   };
 }
