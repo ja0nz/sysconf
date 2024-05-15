@@ -112,7 +112,7 @@ git clone https://github.com/ja0nz/sysconf
 ** Link to repo -> home.nix
 #+begin_src shell
 rm ~/.config/nixpkgs/home.nix # remove factory home.nix
-ln -s ~/sysconf/nix/Arch_Linux/home.nix ~/.config/nixpkgs/home.nix # Adapt path url
+ln -s ~/sysconf/nixOS/Arch_Linux/home.nix ~/.config/nixpkgs/home.nix # Adapt path url
 #+end_src
 
 ** Switch to a new home generation

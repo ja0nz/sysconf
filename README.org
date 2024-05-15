@@ -43,9 +43,9 @@ This folder contains bundled home manager packages to be consumed by any system 
 * Where to start?
 This depends highly on your use case. It first may be a good idea to look around make yourself comfortable
 ** I want to poke around with nix in a VirtualBox/QEMU VM
-Fine, get yourself a running Linux VM and setup nix [[file:nix/Arch_Linux/README.org][described in this README]].
+Fine, get yourself a running Linux VM and setup nix [[file:nixOS/Arch_Linux/README.org][described in this README]].
 ** I have a running Linux machine and want to manage my packages with nix
-Same for you, setup nix (and home manager) [[file:nix/Arch_Linux/README.org][described in this README]].
+Same for you, setup nix (and home manager) [[file:nixOS/Arch_Linux/README.org][described in this README]].
 ** I already have a machine running Windows and want dual boot nixOS alongside
 Puh, long story: First you have to [[file:docs/multiboot-btrfs-partitioning.org][push Windows aside a bit]] then you need to [[file:docs/nixos-installation.org][install the barebone nixOS]] sugared with the opinionated [[file:nixOS/ThinkPad_X1_Nano_Gen1/README.org][home manager distro]] if you want to go full scale.
 ** I just want a NixOS machine
