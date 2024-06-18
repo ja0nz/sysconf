@@ -33,89 +33,12 @@ s r -> (s)ubtree (r)efile
 ;;; $DOOMDIR/packages.el
 #+end_src
 
-* KILL C-c rebinding :lib:
--> taken from https://github.com/darkstego/rebinder.el
-#+begin_src
-(defun rebinder-dynamic-binding (key &optional toggle)
-  "Act as KEY definition in the current context.
-This uses an extended menu item's capability of dynamically computing a
-definition.  This idea came from general.el.
-TOGGLE changes keymaps associated from Ctrl to regular key and vice versa"
-  `(menu-item
-     ,""
-     nil
-     :filter
-     (lambda (&optional _)
-        ,`(rebinder-key-binding ,key ,toggle))))
-
-
-;; should probably use let instead of double call to (car x)
-(defun rebinder-minor-mode-key-binding (key)
-  "Gets list of minor mode keybindings for KEY while ignoring the override map."
-  (let ((active-maps nil))
-     (mapc (lambda (x)
-                (when (and (symbolp (car x)) (symbol-value (car x)))
-                  (add-to-list 'active-maps  (lookup-key (cdr x) (kbd key)))))
-             minor-mode-map-alist )
-     (make-composed-keymap active-maps)))
-
-
-;; might need to do keymap inheretence to perserve priority
-(defun rebinder-key-binding (key &optional toggle)
-  "Get the keymap of associated KEY.
-If TOGGLE is non-nil then the Ctrl status of all bindings in the returned keymap
-will be changed."
-  (let ((map (make-composed-keymap (list (rebinder-minor-mode-key-binding key) (local-key-binding (kbd key)) (global-key-binding (kbd key))))))
-     (if toggle
-          (mapcar 'rebinder-toggle-ctrl map)
-        map)))
-
-(defun rebinder-toggle-ctrl (item)
-  "Return ITEM key with all Ctrl status of binding toggled."
-  (cond
-    ((and (listp item)
-          (not (listp (cdr item))))
-     (cons (rebinder-toggle-ctrl (car item)) (cdr item)))
-    ((listp item)
-     (mapcar 'rebinder-toggle-ctrl item))
-    ((event-basic-type item)
-     (let ((mods (event-modifiers item))
-           (key (event-basic-type item)))
-       (if (member 'control mods)
-           (event-convert-list (append (remove 'control mods) (list key)))
-         (event-convert-list (append (append mods '(control)) (list key))))))
-    (t item)))
-
-
-(defvar rebinder-mode-map (make-sparse-keymap))
-(defvar rebinder-link-mode)
-(defvar rebinder-mode)
-
-(defun rebinder-override ()
-  "Add modemap to override prefix into ‘minor-mode-overriding-map-alist’."
-  (interactive)
-  (add-to-list 'minor-mode-overriding-map-alist (cons 'rebinder-mode rebinder-mode-map)))
-(add-hook 'after-change-major-mode-hook 'rebinder-override)
-
-
-;; Remove overrides on mode exit
-(defun rebinder-update-override ()
-  "Update override mode to match linked mode."
-  (setq rebinder-mode (symbol-value rebinder-link-mode)))
-
-
-(defun rebinder-hook-to-mode (mode modehook)
-  "Link rebinder override map to associated MODE and MODEHOOK."
-  (setq rebinder-link-mode mode)
-  (add-hook modehook 'rebinder-update-override))
-#+end_src
-
 * Base settings
 ** Prelude
 #+begin_src emacs-lisp
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email clients, file templates and snippets.
 (setq user-full-name "Ja0nz"
-      user-mail-address "mail@ja.Use")
+      user-mail-address "git@ja.nz")
 
 ;; ii nz instead of jk - Neo2 Keyboard layout
 ;;(use-package! evil-escape
@@ -148,11 +71,6 @@ will be changed."
 ;; Smother scrolling
 (setq pixel-scroll-precision-mode t)
 #+end_src
-** KILL C-c -> M-SPC rebind
-#+begin_src
-(define-key global-map (kbd "M-SPC") (rebinder-dynamic-binding "C-c"))
-(rebinder-hook-to-mode 't 'after-change-major-mode-hook)
-#+end_src
 
 ** Theming
 #+begin_src emacs-lisp
@@ -173,11 +91,13 @@ will be changed."
   '(font-lock-comment-face :slant italic)
   '(font-lock-keyword-face :slant italic))
 #+end_src
+
 ** Calendar locale
 #+begin_src emacs-lisp
 (setq calendar-date-style "european"
       calendar-week-start-day 1)
 #+end_src
+
 ** Custom set variables
 Just a dump for some used (project) variables
 #+begin_src emacs-lisp
@@ -197,6 +117,7 @@ Just a dump for some used (project) variables
       (eval . (progn (org-babel-goto-named-src-block "bench") (org-babel-execute-src-block)))
      )))
 #+end_src
+
 ** wind move window switch
 #+begin_src emacs-lisp
 (map! :map global-map "M-j" #'windmove-left)
@@ -213,148 +134,17 @@ Just a dump for some used (project) variables
 (map! :map global-map "M-3" #'(lambda () (interactive) (my/ws '+workspace/switch-to-2)))
 (map! :map global-map "M-4" #'(lambda () (interactive) (my/ws '+workspace/switch-to-3)))
 #+end_src
+
 ** Yas Snippet Directory
 Setting the snippet directory
 #+begin_src emacs-lisp :var default-directory=(symbol-value 'default-directory)
 (setq +snippets-dir (expand-file-name "snippets"))
 #+end_src
+
 * Movement and interaction
 C-y -> undo-redo
 C-z -> undo
 
-** Meow
-https://github.com/meow-edit/meow
-
-#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
-(package! meow)
-#+end_src
-
-Meow setup
-#+begin_src emacs-lisp
-(defun meow-setup ()
-  (setq meow-cheatsheet-physical-layout meow-cheatsheet-physical-layout-iso)
-  (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwertz)
-
-  (meow-thing-register 'angle
-                       '(pair (";") (":"))
-                       '(pair (";") (":")))
-
-  (setq meow-char-thing-table
-        '((?f . round)
-          (?d . square)
-          (?s . curly)
-          (?a . angle)
-          (?r . string)
-          (?v . paragraph)
-          (?c . line)
-          (?x . buffer)))
-
-  (meow-leader-define-key
-    ;; CUSTOM commands
-    '("SPC" . consult-buffer)
-    '("v" . magit)
-    '("a" . org-agenda)
-    ;; Use SPC (0-9) for digit arguments.
-    '("1" . meow-digit-argument)
-    '("2" . meow-digit-argument)
-    '("3" . meow-digit-argument)
-    '("4" . meow-digit-argument)
-    '("5" . meow-digit-argument)
-    '("6" . meow-digit-argument)
-    '("7" . meow-digit-argument)
-    '("8" . meow-digit-argument)
-    '("9" . meow-digit-argument)
-    '("0" . meow-digit-argument)
-    '("-" . meow-keypad-describe-key)
-    '("_" . meow-cheatsheet))
-
-  (meow-normal-define-key
-    ;;
-    '("0" . meow-expand-0)
-    '("1" . meow-expand-1)
-    '("2" . meow-expand-2)
-    '("3" . meow-expand-3)
-    '("4" . meow-expand-4)
-    '("5" . meow-expand-5)
-    '("6" . meow-expand-6)
-    '("7" . meow-expand-7)
-    '("8" . meow-expand-8)
-    '("9" . meow-expand-9)
-    '("ä" . meow-reverse)
-
-    ;; movement
-    '("i" . meow-prev)
-    '("k" . meow-next)
-    '("j" . meow-left)
-    '("l" . meow-right)
-
-    '("z" . meow-search)
-    '("-" . meow-visit)
-
-    ;; expansion
-    '("I" . meow-prev-expand)
-    '("K" . meow-next-expand)
-    '("J" . meow-left-expand)
-    '("L" . meow-right-expand)
-
-    '("u" . meow-back-word)
-    '("U" . meow-back-symbol)
-    '("o" . meow-next-word)
-    '("O" . meow-next-symbol)
-
-    '("a" . meow-mark-word)
-    '("A" . meow-mark-symbol)
-    '("s" . meow-line)
-    '("S" . meow-goto-line)
-    '("w" . meow-block)
-    '("q" . meow-join)
-    '("g" . meow-grab)
-    '("G" . meow-pop-grab)
-    '("m" . meow-swap-grab)
-    '("M" . meow-sync-grab)
-    '("p" . meow-cancel-selection)
-    '("P" . meow-pop-selection)
-
-    '("x" . meow-till)
-    '("y" . meow-find)
-
-    '("," . meow-beginning-of-thing)
-    '("." . meow-end-of-thing)
-    '(";" . meow-inner-of-thing)
-    '(":" . meow-bounds-of-thing)
-
-    ;; editing
-    '("d" . meow-kill)
-    '("f" . meow-change)
-    '("t" . meow-delete)
-    '("c" . meow-save)
-    '("v" . meow-yank)
-    '("V" . meow-yank-pop)
-
-    '("e" . meow-insert)
-    '("E" . meow-open-above)
-    '("r" . meow-append)
-    '("R" . meow-open-below)
-
-    '("h" . undo-only)
-    '("H" . undo-redo)
-
-    '("b" . open-line)
-    '("B" . split-line)
-
-    '("ü" . indent-rigidly-left-to-tab-stop)
-    '("+" . indent-rigidly-right-to-tab-stop)
-
-    ;; ignore escape
-    '("<escape>" . ignore)))
-#+end_src
-
-Starting meow
-#+begin_src emacs-lisp
-(require 'meow)
-(meow-setup)
-(meow-global-mode 1)
-#+end_src
 ** Consult -> l, s, n
 Space f -> switch to buffer
 C-c l . -> org heading (localleader)
@@ -979,6 +769,15 @@ strict digraph {
         " " cmdline
         " --output=" (org-babel-process-file-name out-file)) "")))
 #+end_src
+** LSP TailwindCSS :mode:
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+(package! lsp-tailwindcss :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! lsp-tailwindcss)
+#+end_src
+
 ** D2 Mode :mode:
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
 (package! d2-mode
@@ -989,6 +788,7 @@ strict digraph {
 (use-package! d2-mode
   :mode "\\.d2$")
 #+end_src
+
 ** Caddyfile :mode:
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
 (package! caddyfile-mode)
@@ -1003,11 +803,6 @@ strict digraph {
 
 #+RESULTS:
 
-** aa2u artist mode to unicode :package:
-#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
-(package! ascii-art-to-unicode)
-#+end_src
-
 ** Web Mode
 #+begin_src emacs-lisp
 (use-package! web-mode
@@ -1017,114 +812,4 @@ strict digraph {
      standard-indent 2
      web-mode-enable-front-matter-block t)
 )
-#+end_src
-
-*** KILL Web Mode :hack:
-Related to this issue of web mode: https://github.com/fxbois/web-mode/issues/799
-In short: changing dir-locals alone is not working with web mode. This is a hack
-to get it working.
-
-#+begin_src
-(add-to-list 'safe-local-variable-values '(hack-web-mode-engine . "go"))
-(defun hack-web-mode-hook ()
-  "Hooks for Web mode. Add a local hook which set the engine to the one specified by
-   `hack-web-mode-engine` local variable."
-  (add-hook
-   'hack-local-variables-hook
-   (lambda ()
-     (if (boundp 'hack-web-mode-engine)
-         (progn
-           (message "web-mode-engine is %s" hack-web-mode-engine)
-           (web-mode-set-engine hack-web-mode-engine))
-       (progn
-         (message "no web-mode-engine settled")
-         (web-mode-set-engine "none"))))))
-(add-hook 'web-mode-hook  'hack-web-mode-hook nil nil)
-#+end_src
-* KILL LSP mode config
-- Ignoring spago *output* directory
-- Ignoring @rule commonly used in tailwind
-#+begin_src
-(after! lsp-mode
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\output\\'")
-  (setq lsp-css-lint-unknown-at-rules "ignore")
-)
-#+end_src
-** LSP TailwindCSS
-#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
-(package! lsp-tailwindcss :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package! lsp-tailwindcss)
-#+end_src
-
-* KILL MU4E
-[[ https://github.com/hlissner/doom-emacs/blob/develop/modules/email/mu4e/README.org][Doom Emacs MU4E]]
-#+begin_src emacs-lisp
-;; Mu4e settings
-(add-to-list 'load-path "~/.nix-profile/share/emacs/site-lisp/mu4e")
-(after! mu4e
-  (setq mu4e-update-interval 300
-        mu4e-sent-messages-behavior (lambda () (if (string-suffix-p "gmail.com" (message-sendmail-envelope-from)) 'delete 'sent))))
-
-(setq mu4e-get-mail-command "mbsync -a"
-      starttls-use-gnutls t
-      message-citation-line-format "On %a, %d %b %Y at %R, %f wrote:\n"
-      message-citation-line-function 'message-insert-formatted-citation-line)
-#+end_src
-
-** mail@ja.nz :deprecated:
-Handled by gmail now
-#+begin_src
-(set-email-account! "mail@ja.nz"
-                    '((user-mail-address . "mail@ja.nz")
-                      (user-full-name . "Ja0nz")
-                      (mu4e-sent-folder . "/mail@ja.nz/Sent")
-                      (mu4e-drafts-folder . "/mail@ja.nz/Drafts")
-                      (mu4e-trash-folder . "/mail@ja.nz/Trash")
-                      (mu4e-refile-folder . "/mail@ja.nz/Archive")
-                      (mu4e-compose-signature . "\n🤖 Jan Peteler\n💌 mail@ja.nz\n🔖 ja.nz")
-                      (smtpmail-smtp-server . "smtp.purelymail.com")
-                      (smtpmail-smtp-service . 587)
-                      (smtpmail-smtp-user . "mail@ja.nz")
-                      (smtpmail-stream-type . starttls)))
-#+end_src
-** jan.peteler@gmail.com
-#+begin_src emacs-lisp
-(set-email-account! "jan.peteler@gmail.com"
-                    '((user-mail-address . "jan.peteler@gmail.com")
-                      (user-full-name . "Jan")
-                      (mu4e-sent-folder . "/jan.peteler@gmail.com/Sent")
-                      (mu4e-drafts-folder . "/jan.peteler@gmail.com/Drafts")
-                      (mu4e-trash-folder . "/jan.peteler@gmail.com/Trash")
-                      (mu4e-refile-folder . "/jan.peteler@gmail.com/Archive")
-                      (mu4e-compose-signature . "\n🤖 Jan Peteler\n💌 jan.peteler@gmail.com\n🔖 ja.nz")
-                      (smtpmail-smtp-server . "smtp.gmail.com")
-                      (smtpmail-smtp-service . 587)
-                      (smtpmail-smtp-user . "jan.peteler@gmail.com")
-                      (smtpmail-stream-type . starttls)))
-#+end_src
-** Org Contacts Action
-#+begin_src emacs-lisp
-(setq mu4e-org-contacts-file "~/org/contacts.org")
-(after! mu4e
-  (add-to-list 'mu4e-headers-actions '("org-contact-add" . mu4e-action-add-org-contact) t)
-  (add-to-list 'mu4e-view-actions '("org-contact-add" . mu4e-action-add-org-contact) t))
-#+end_src
-* KILL Undo tree keybindings -> SPC d
-https://elpa.gnu.org/packages/undo-tree.html
-
-Missing argument: undo-tree-switch-branch
-I could not find any use from it because going over undo-tree-visualize anyway
-
-#+begin_src
-(map! :leader :prefix "d"
-        (:map global-map
-         :desc "better undo-tree-visualize" "d" #'undo-tree-visualize
-         :desc "save buffer state to register" "s" #'undo-tree-save-state-to-register
-         :desc "restore buffer state from register" "r" #'undo-tree-restore-state-from-register))
-
-(map! :nie "C-r" #'undo-tree-undo)
-(map! :nie "C-M-r" #'undo-tree-redo)
 #+end_src
