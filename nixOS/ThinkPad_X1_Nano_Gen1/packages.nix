@@ -52,15 +52,15 @@ in {
     #   extensions = [ mate.caja-extensions mate.caja-dropbox ];
     # })
     # mate.eom # An image viewing and cataloging program for the MATE desktop
-    stremio # A modern media center
+    #stremio # A modern media center
     cinnamon.nemo # File browser for Cinnamon
     cinnamon.pix # A generic image viewer from Linux Mint
     okular # KDE document viewer
     helvum # A GTK patchbay for pipewire
     networkmanagerapplet # NetworkManager control applet for GNOME
     neovim # Vim text editor fork focused on extensibility and agility
-    anki-bin # Spaced repetition flashcard program
-    mpv # ^ General-purpose media player, fork of MPlayer and mplayer2
+    #anki-bin # Spaced repetition flashcard program
+    #mpv # ^ General-purpose media player, fork of MPlayer and mplayer2
     wofi-emoji # Emoji picker
     wofi # ^
 
@@ -85,7 +85,7 @@ in {
     curlie # Frontend to curl that adds the ease of use of httpie [GO]
     bandwhich # A CLI utility for displaying current network utilization [RUST]
     xh # HTTPie; Friendly and fast tool for sending HTTP requests [RUST]
-    dogdns # A user-friendly command-line DNS client. dig on steroids [RUST]
+    doggo # Command-line DNS Client for Humans. Written in Golang [RUST]
     dmenu # A generic, highly customizable, menu for the X Window System
     networkmanager_dmenu # Small script to manage NetworkManager connections with dmenu
     wget # Tool for retrieving files using HTTP, HTTPS, and FTP
@@ -105,10 +105,10 @@ in {
     cryptsetup # LUKS for dm-crypt
 
     # -- Command Line Utilities --
-    choose # A human-friendly and fast alternative to cut and (sometimes) awk [RUST]
     sd # Intuitive find & replace CLI (sed alternative) [RUST]
     hyperfine # Command-line benchmarking tool [RUST]
     tealdeer # A very fast implementation of tldr in [RUST]
+    navi # An interactive cheatsheet tool for the command-line and application launchers [RUST]
     calc # C-style arbitrary precision calculator
     rlwrap # Readline wrapper for console programs
     just # A handy way to save and run project-specific commands [RUST]

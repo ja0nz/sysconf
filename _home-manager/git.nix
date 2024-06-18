@@ -24,10 +24,10 @@
       };
     };
     userName = "ja0nz"; # TODO Set your credentials
-    userEmail = "mail@ja.nz"; # TODO Set your credentials
+    userEmail = "git@ja.nz"; # TODO Set your credentials
     ignores = [ "*~" ];
     signing = {
-      key = "8B7845E28117C874"; # TODO Set default signing key
+      key = "5A8F0894614456ED"; # TODO Set default signing key
       signByDefault = true;
     };
     extraConfig = {

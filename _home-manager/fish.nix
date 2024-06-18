@@ -38,7 +38,7 @@ in {
       cat = "bat";
       curl = "curlie"; # net
       df = "duf"; # disk free
-      dig = "dog"; # DNS lookup
+      dig = "doggo"; # DNS lookup
       du = "dust"; # file space usage
       find = "fd"; # find
       groups = "id (whoami)";

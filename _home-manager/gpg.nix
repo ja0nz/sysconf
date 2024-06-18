@@ -27,7 +27,7 @@
   programs.gpg = {
     enable = true;
     settings = {
-      default-key = "8B7845E28117C874"; # TODO Insert default sign key
+      default-key = "5A8F0894614456ED"; # TODO Insert default sign key
       # behavior
       no-emit-version = true;
       no-comments = true;
