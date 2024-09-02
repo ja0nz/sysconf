@@ -50,10 +50,9 @@ with lib; {
       };
     };
 
-    environment.variables = {
-      # see Opengl👇
+    environment.sessionVariables = {
+      # see graphics👇
       LIBVA_DRIVER_NAME = "iHD";
-      VDPAU_DRIVER = "va_gl";
     };
 
     hardware = {
@@ -62,12 +61,12 @@ with lib; {
         enable = true;
         package = pkgs.bluez; # pkgs.bluezFull;
       };
-      opengl = {
+      graphics = {
         enable = true;
-        extraPackages = with pkgs; [
-          intel-media-driver # LIBVA_DRIVER_NAME=iHD
-          libvdpau-va-gl # VDPAU_DRIVER=va_gl
-        ];
+        extraPackages = with pkgs;
+          [
+            intel-media-driver # LIBVA_DRIVER_NAME=iHD
+          ];
       };
       brillo.enable = true;
     };

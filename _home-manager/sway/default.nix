@@ -73,6 +73,7 @@ in {
     config = {
       # left = "j";
       # right = "l";
+      defaultWorkspace = "workspace number 1";
       bars = [ ];
       seat = { "*" = { xcursor_theme = "capitaine-cursors 30"; }; };
       colors = {
@@ -139,7 +140,8 @@ in {
         "${modifier}+z" = "exec ${./swaylock}";
         "${modifier}+Ctrl+z" = ''exec "${./swaylock} && systemctl suspend"'';
         "${modifier}+u" = "layout toggle splith tabbed";
-        "${modifier}+i" = "floating toggle";
+        "${modifier}+o" = "fullscreen";
+        "${modifier}+Shift+o" = "floating toggle";
         "${modifier}+q" = "kill";
 
         # Player -> BOTTOM ROW
