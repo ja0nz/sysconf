@@ -27,16 +27,9 @@ Init.el
 (setq byte-compile-warnings '(cl-functions))
 
 (doom! :input
-       ;;chinese
-       ;;japanese
-       ;;layout            ; auie,ctsrnm is the superior home row
-
        :completion
-       company           ; the ultimate code completion backend
-       ;;helm              ; the *other* search engine for love and life
-       ;;ido               ; the other *other* search engine...
-       ;;(ivy +prescient +icons)               ; a search engine for love and life
-       (vertico +icons)           ; the search engine of the future
+       (corfu +orderless +icons)
+       (vertico +icons)
 
        :ui
        ;;deft              ; notational velocity for Emacs
@@ -70,7 +63,7 @@ Init.el
        format  ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
        ;;lispy             ; vim for lisp, for people who don't like vim
-       ;;multiple-cursors  ; editing in many places at once
+       multiple-cursors  ; editing in many places at once
        ;;objed             ; text object editing for the innocent
        parinfer            ; turn lisp into python, sort of
        ;;rotate-text       ; cycle region at point between text candidates
@@ -134,6 +127,7 @@ Init.el
        ; Browser Family
        (web +lsp +tree-sitter)
        (javascript +lsp +tree-sitter)
+       (clojure +lsp +tree-sitter)
 
        :email
        ;;(mu4e +org +gmail)

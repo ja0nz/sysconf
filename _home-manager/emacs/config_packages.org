@@ -118,8 +118,8 @@ Just a dump for some used (project) variables
      )))
 #+end_src
 
-** wind move window switch
-#+begin_src emacs-lisp
+** KILL wind move window switch
+#+begin_src
 (map! :map global-map "M-j" #'windmove-left)
 (map! :map global-map "M-l" #'windmove-right)
 (map! :map global-map "M-i" #'windmove-up)
@@ -147,7 +147,7 @@ C-z -> undo
 
 ** Consult -> l, s, n
 Space f -> switch to buffer
-C-c l . -> org heading (localleader)
+C-c m . -> org heading (localleader)
 C-c s b -> buffer (search buffer)
 C-c s r -> ripgrep
 C-c n a -> agenda (notetaking agenda)
