@@ -47,7 +47,7 @@ in {
       ping = "gping";
       ps = "procs"; # process status
       rg = "rg --hidden --glob '!.git'"; # find
-      vim = "nvim";
+      vim = "hx";
       lscert = "ssh-keygen -L -f";
       run = "just";
       r = "rip"; # rm with safety

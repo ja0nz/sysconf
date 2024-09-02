@@ -12,6 +12,7 @@ in {
     /emacs
     /zathura
     /chromium
+    /helix.nix
     # -- Services --
     /syncthing.nix
     /mopidy.nix
@@ -53,12 +54,12 @@ in {
     # })
     # mate.eom # An image viewing and cataloging program for the MATE desktop
     #stremio # A modern media center
-    cinnamon.nemo # File browser for Cinnamon
-    cinnamon.pix # A generic image viewer from Linux Mint
+    nemo # File browser for Cinnamon
+    pix # A generic image viewer from Linux Mint
     okular # KDE document viewer
     helvum # A GTK patchbay for pipewire
     networkmanagerapplet # NetworkManager control applet for GNOME
-    neovim # Vim text editor fork focused on extensibility and agility
+    #neovim # Vim text editor fork focused on extensibility and agility
     #anki-bin # Spaced repetition flashcard program
     #mpv # ^ General-purpose media player, fork of MPlayer and mplayer2
     wofi-emoji # Emoji picker
