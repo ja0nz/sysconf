@@ -1,3 +1,4 @@
+-*- mode: Org; eval: (flyspell-mode 0); -*-
 #+title: Ja0nz Emacs Configuration
 #+STARTUP: overview
 #+PROPERTY: header-args:emacs-lisp :tangle ~/.doom.d/config.el :mkdirp yes
@@ -8,20 +9,6 @@ Here are some additional functions/macros that could help you configure Doom:
 - `after!' for running code after a package has loaded
 - `add-load-path!' for adding directories to the `load-path', relative to this file. Emacs searches the `load-path' when you load packages with `require' or `use-package'.
 - `map!' for binding new keys
-
-* Mapping documentation
-a -> avy
-p -> projectile
-v -> magit
-** Org -> l
-q -> set tags
-o -> category
-t -> org-(t)odo
-c E -> (c)lock (e)ffort
-d s -> (d)ate (s)chedule
-d t/T -> (d)ate (t)imestamp
-s c -> (s)ubtree (c)lone
-s r -> (s)ubtree (r)efile
 
 * File Headers
 #+begin_src emacs-lisp
@@ -40,23 +27,8 @@ s r -> (s)ubtree (r)efile
 (setq user-full-name "Ja0nz"
       user-mail-address "git@ja.nz")
 
-;; ii nz instead of jk - Neo2 Keyboard layout
-;;(use-package! evil-escape
-;; :init (setq evil-escape-key-sequence "ii"))
-
-;; Use primary selection instead of clipboard
-(setq select-enable-primary t)
-
-;; No evil snipe mode if there is avy!
-;;(remove-hook 'doom-first-input-hook #'evil-snipe-mode)
-;;(map! :n "s" #'evil-avy-goto-char-timer)
-;;(map! :n "S" #'evil-avy-goto-char)
-
-;;(define-key evil-normal-state-map (kbd "s") 'evil-avy-goto-char-timer)
-;;(define-key evil-normal-state-map (kbd "S") 'avy-goto-char)
-
 ;; No custom file to prevent emacs from buffering agenda files
-(setq custom-file "/dev/null")
+(setq custom-file null-device)
 
 ;; Antagonist for evil-goto-definition -> g d; jump back with -> g b
 ;;(map! :map evil-motion-state-map
@@ -113,17 +85,7 @@ Just a dump for some used (project) variables
       (org-hugo-external-file-extensions-allowed-for-copying . nil)
       ;; mark org-use-tag-inheritance as safe
       (org-use-tag-inheritance . nil)
-      ;; Language learning bench
-      (eval . (progn (org-babel-goto-named-src-block "bench") (org-babel-execute-src-block)))
      )))
-#+end_src
-
-** KILL wind move window switch
-#+begin_src
-(map! :map global-map "M-j" #'windmove-left)
-(map! :map global-map "M-l" #'windmove-right)
-(map! :map global-map "M-i" #'windmove-up)
-(map! :map global-map "M-k" #'windmove-down)
 #+end_src
 
 ** Workspace switch (non evil mode)
@@ -140,17 +102,30 @@ Setting the snippet directory
 #+begin_src emacs-lisp :var default-directory=(symbol-value 'default-directory)
 (setq +snippets-dir (expand-file-name "snippets"))
 #+end_src
-
+** SPC SPC
+#+begin_src emacs-lisp
+(map! :map doom-leader-map "SPC" #'consult-buffer)
+#+end_src
+** ISpell
+Setting dictionaries
+#+begin_src emacs-lisp
+(add-hook! org-mode
+  (after! ispell
+    (ispell-set-spellchecker-params)
+    (ispell-hunspell-add-multi-dic "it_IT,en_US")
+    (ispell-hunspell-add-multi-dic "tr_TR,en_US")
+    (ispell-hunspell-add-multi-dic "de_DE,en_US")
+    (ispell-hunspell-add-multi-dic "nl_NL,en_US")
+    (ispell-hunspell-add-multi-dic "fr_FR,en_US")
+    (ispell-change-dictionary "de_DE,en_US")
+))
+#+end_src
 * Movement and interaction
-C-y -> undo-redo
-C-z -> undo
-
 ** Consult -> l, s, n
-Space f -> switch to buffer
-C-c m . -> org heading (localleader)
-C-c s b -> buffer (search buffer)
-C-c s r -> ripgrep
-C-c n a -> agenda (notetaking agenda)
+SPC m . -> org heading (localleader)
+SPC s b -> buffer (search buffer)
+SPC s r -> ripgrep
+SPC n a -> agenda (notetaking agenda)
 
 #+begin_src emacs-lisp
 (map! :leader
@@ -377,7 +352,7 @@ https://karthinks.com/software/avy-can-do-anything/
 #+begin_src emacs-lisp
 (setq org-directory "~/Dropbox/org/"
       _tagsorg (concat org-directory "_tags.org")
-      _stageorg (concat org-directory "_stage.org")
+      _benchorg (concat org-directory "_bench.org")
       _archiveorg (concat org-directory "_archive.org")
       _habitsorg (concat org-directory "_habits.org"))
 
@@ -385,8 +360,8 @@ https://karthinks.com/software/avy-can-do-anything/
 (setq org-global-properties '(("Effort_ALL" . "0:05 0:10 0:25 0:50 1:15 1:40 2:05 2:55 3:45 4:35 5:25 6:15 7:05"))
       org-agenda-files
       (append
-       (list _tagsorg _stageorg _habitsorg)
-       (directory-files org-directory t (format-time-string "^W%V")))
+       (list _tagsorg _benchorg _habitsorg)
+       (directory-files org-directory t "^20[0-9][0-9]-"))
       org-agenda-bulk-custom-functions
       '((?m (lambda () (call-interactively 'org-agenda-date-later-minutes)))
         (?h (lambda () (call-interactively 'org-agenda-date-later-hours))))
@@ -405,7 +380,22 @@ https://karthinks.com/software/avy-can-do-anything/
 
 ;; Org emphasize
 (map! :after org :map org-mode-map :localleader "f" #'org-emphasize)
+
+;; 15.03.2024
+;; https://github.com/doomemacs/doomemacs/issues/7733#issuecomment-1999844787
+(defun my/org-tab-conditional ()
+  (interactive)
+  (if (yas-active-snippets)
+      (yas-next-field-or-maybe-expand)
+    (org-cycle)))
+
+(map! :after evil-org
+      :map evil-org-mode-map
+      :i "<tab>" #'my/org-tab-conditional)
 #+end_src
+
+#+RESULTS:
+
 *** Org agenda icons
 #+begin_src emacs-lisp
 (cl-defstruct agendaIcons
@@ -418,12 +408,9 @@ https://karthinks.com/software/avy-can-do-anything/
   (cl-flet ((icon #'make-agendaIcons))
     (list
      ;; Leisure
-     (icon :category "lang" :icon "nf-fa-language")
-     ;; ON -> netflix, hackernews, zeit.de (non work related)
-     (icon :category "ON" :icon "nf-fa-toggle_on")
-     ;; OFF -> jog, yoga, kite, bike, hike
-     (icon :category "OFF" :icon "nf-fa-toggle_off")
-     ;; Work
+     (icon :category "habit" :icon "nf-fa-refresh")
+     (icon :category "task" :icon "nf-fa-tasks")
+     ;; Programming related
      (icon :category "feat" :icon "nf-fa-code") ;; a new feature
      (icon :category "fix" :icon "nf-fa-bug") ;; A bug fix
      (icon :category "docs" :icon "nf-fa-book") ;; documentation
@@ -443,30 +430,24 @@ https://karthinks.com/software/avy-can-do-anything/
                     (list (icons x))
                     nil nil)) agenda-icons/caticons)))
 #+end_src
-*** Org Journal -> M-SPC j {n,N,c,s}
+*** Org Journal -> SPC j {n,N,c,s}
 #+begin_src emacs-lisp
 ;; Org Journal Settings
 (setq org-journal-dir org-directory
-      org-journal-file-type 'weekly
-      ;; org-journal-date-prefix "#+title: "
-      org-journal-date-format "%a, %x"
-      ;; org-journal-time-prefix "* "
-      org-journal-file-format "W%V_%Y-%m-%d.org"
+      org-journal-file-type 'monthly
+      org-journal-date-format "%x, %a, %V"
+      org-journal-scheduled-string "SCHEDULED:"
+      org-journal-file-format "%Y-%m.org"
       org-journal-file-header "#+STARTUP: show2levels\n"
-      ;; But #+title tag back to first line
-      ;; org-journal-after-header-create-hook (lambda () (transpose-lines 1))
       ;; Automatic org agenda integration
       org-journal-after-entry-create-hook
       (lambda () (if (not (file-exists-p (buffer-file-name))) (org-agenda-file-to-front t))))
-;;org-journal-file-header "#+title: W%V_%Y-%m-%d\n#+roam_key: file:_stage.org\n"
+;;org-journal-file-header "#+title: W%V_%Y-%m-%d\n#+roam_key: file:_bench.org\n"
 ;;org-journal-skip-carryover-drawers (list "LOGBOOK")
 #+end_src
 
 **** Org Journal Keymap
 #+begin_src emacs-lisp
-(map! :map org-journal-mode-map "M-s-n" #'org-journal-previous-entry)
-(map! :map org-journal-mode-map "M-s-t" #'org-journal-next-entry)
-
 (map! :leader :prefix "j"
         (:map org-journal-mode-map
          :desc "Org Agenda File To Front" "f" #'org-agenda-file-to-front)
@@ -474,7 +455,7 @@ https://karthinks.com/software/avy-can-do-anything/
          :desc "Org Journal New Entry" "n" #'org-journal-new-entry
          :desc "Org Journal New Scheduled Entry" "N" #'org-journal-new-scheduled-entry
          :desc "Org Journal Open Current" "c" #'org-journal-open-current-journal-file
-         :desc "Org Journal Stage" "s" #'(lambda () (interactive) (find-file _stageorg))))
+         :desc "Goto Bench" "b" #'(lambda () (interactive) (find-file _benchorg))))
 #+end_src
 **** Custom Export Clocktable Function :deprecated:
 #+begin_src
@@ -490,7 +471,7 @@ https://karthinks.com/software/avy-can-do-anything/
          (org-agenda-files (directory-files org-directory t (concat "^W" time-string))))
     (call-interactively #'org-clock-csv-to-file)))
 #+end_src
-*** Org Roam -> M-SPC r {i,t,g,c}
+*** Org Roam -> SPC r {i,t,g,c}
 #+begin_src emacs-lisp
 ;; Org Roam Settings
 (defun this/org_roam__bump_revision_date ()
@@ -548,7 +529,7 @@ https://karthinks.com/software/avy-can-do-anything/
           (org-agenda-files :maxlevel . 1)
           (org-buffer-list :maxlevel . 1)
           (_archiveorg :maxlevel . 1)
-          (_stageorg :maxlevel . 1))))
+          (_benchorg :maxlevel . 1))))
 #+end_src
 *** Org Capture
 I capture every activity on my laptop by (broad) category. May change over time. Currently, there are following activities:
@@ -648,60 +629,6 @@ Backup of the Doom Emacs Capture templates for future reference
     (add-hook! org-pomodoro-break-finished #'this/org-pomodoro-restart)
 )
 #+end_src
-*** Org hunspell
-#+begin_src emacs-lisp
-(add-hook! org-mode
-  (after! ispell
-    (ispell-set-spellchecker-params)
-    (ispell-hunspell-add-multi-dic "it_IT,en_US")
-    (ispell-hunspell-add-multi-dic "tr_TR,en_US")
-    (ispell-hunspell-add-multi-dic "de_DE,en_US")
-    (ispell-hunspell-add-multi-dic "nl_NL,en_US")
-    (ispell-hunspell-add-multi-dic "fr_FR,en_US")
-    ;;(ispell-hunspell-add-multi-dic "es_ES,en_US")
-    ;;(ispell-hunspell-add-multi-dic "pt_BR,en_US")
-))
-#+end_src
-*** Org FC
-From own fork! https://github.com/ja0nz/org-fc
-
-#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
-(package! org-fc
-  :recipe
-  (:host github :repo "ja0nz/org-fc"
-   :files (:defaults "awk" "demo.org")))
-#+end_src
-
-#+begin_src
-(use-package! org-fc
-  :custom (org-fc-directories '("~/Dropbox/org/"))
-  :config
-  ;; Hack: https://www.leonrische.me/fc/use_with_evil-mode.html
-  (evil-define-minor-mode-key '(normal insert emacs) 'org-fc-review-flip-mode
-    (kbd "n") 'org-fc-review-flip
-    (kbd "s") 'org-fc-review-suspend-card
-    (kbd "q") 'org-fc-review-quit)
-
-  (evil-define-minor-mode-key '(normal insert emacs) 'org-fc-review-rate-mode
-    (kbd "u") 'org-fc-review-rate-again
-    (kbd "i") 'org-fc-review-rate-hard
-    (kbd "a") 'org-fc-review-rate-good
-    (kbd "e") 'org-fc-review-rate-easy
-    (kbd "s") 'org-fc-review-suspend-card
-    (kbd "q") 'org-fc-review-quit)
-
-    ;;(map! :localleader :map org-mode-map "f" nil)
-    (map! :leader :prefix "o" :map global-map :desc "Learn dashboard (org-fc)" "l" #'org-fc-dashboard)
-    (map! :leader
-      :prefix ("l" . "org-fc")
-      "c" #'org-fc-type-cloze-init
-      "w" #'org-fc-cloze-dwim
-      "d" #'org-fc-type-double-init
-      "e" #'org-fc-review-edit
-      "r" #'org-fc-review-buffer
-      "R" #'org-fc-review-resume
-      "n" #'org-fc-type-normal-init ))
-#+end_src
 *** Org table copy cell :hack:
 #+begin_src emacs-lisp
 (defun org/org-table-yank-cell ()
@@ -731,8 +658,6 @@ This function will clean all the logbook entries.
   (org-end-of-subtree))
 (map! :map evil-normal-state-map "g ." #'goto-last-heading)
 #+end_src
-
-#+RESULTS:
 
 *** Org babel execute graph-easy :hack:
 #+begin_example
@@ -769,6 +694,7 @@ strict digraph {
         " " cmdline
         " --output=" (org-babel-process-file-name out-file)) "")))
 #+end_src
+
 ** LSP TailwindCSS :mode:
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
 (package! lsp-tailwindcss :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
@@ -801,8 +727,6 @@ strict digraph {
    ("caddy\\.conf\\'" . caddyfile-mode)))
 #+end_src
 
-#+RESULTS:
-
 ** Web Mode
 #+begin_src emacs-lisp
 (use-package! web-mode
@@ -812,4 +736,25 @@ strict digraph {
      standard-indent 2
      web-mode-enable-front-matter-block t)
 )
+#+end_src
+
+** TypeScript Mode
+https://merrick.luois.me/posts/typescript-in-emacs-29
+
+#+begin_src emacs-lisp
+(after! treesit
+  (setq treesit-language-source-alist
+        '((typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src" nil nil)
+          (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src" nil nil))))
+
+(use-package! typescript-ts-mode
+  :mode (("\\.ts\\'" . typescript-ts-mode)
+         ("\\.tsx\\'" . tsx-ts-mode))
+  :config
+  (add-hook! '(typescript-ts-mode-hook tsx-ts-mode-hook) #'lsp!)
+  )
+#+end_src
+
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+(package! typescript-mode :disable t)
 #+end_src
