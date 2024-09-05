@@ -76,15 +76,15 @@ Just a dump for some used (project) variables
 (custom-set-variables
  '(safe-local-variable-values
    '(
-      ;; import org agenda files on demand
-      (eval . (org-agenda-file-to-front))
-      ;; set buffer local
-      (ispell-local-dictionary . #'stringp)
-      ;; bow ox-hugo to work with non hugo environments
-      ;; https://github.com/kaushalmodi/ox-hugo
-      (org-hugo-external-file-extensions-allowed-for-copying . nil)
-      ;; mark org-use-tag-inheritance as safe
-      (org-use-tag-inheritance . nil)
+     ;; import org agenda files on demand
+     (eval . (org-agenda-file-to-front))
+     ;; set buffer local
+     (ispell-local-dictionary . #'stringp)
+     ;; bow ox-hugo to work with non hugo environments
+     ;; https://github.com/kaushalmodi/ox-hugo
+     (org-hugo-external-file-extensions-allowed-for-copying . nil)
+     ;; mark org-use-tag-inheritance as safe
+     (org-use-tag-inheritance . nil)
      )))
 #+end_src
 
@@ -118,7 +118,7 @@ Setting dictionaries
     (ispell-hunspell-add-multi-dic "nl_NL,en_US")
     (ispell-hunspell-add-multi-dic "fr_FR,en_US")
     (ispell-change-dictionary "de_DE,en_US")
-))
+    ))
 #+end_src
 * Movement and interaction
 ** Consult -> l, s, n
@@ -172,23 +172,23 @@ https://karthinks.com/software/avy-can-do-anything/
                    (or avy-case-fold-search (string= avy-text (downcase avy-text))))
                   found)
               (avy-dowindows current-prefix-arg
-                (dolist (pair (avy--find-visible-regions
-                               (window-start)
-                               (window-end (selected-window) t)))
-                  (save-excursion
-                    (goto-char (car pair))
-                    (setq regex (funcall re-builder avy-text))
-                    (while (re-search-forward regex (cdr pair) t)
-                      (unless (not (avy--visible-p (1- (point))))
-                        (let* ((idx (if (= (length (match-data)) 4) 1 0))
-                               (ov (make-overlay
-                                    (match-beginning idx) (match-end idx))))
-                          (setq found t)
-                          (push ov overlays)
-                          (overlay-put
-                           ov 'window (selected-window))
-                          (overlay-put
-                           ov 'face 'avy-goto-char-timer-face)))))))
+                             (dolist (pair (avy--find-visible-regions
+                                            (window-start)
+                                            (window-end (selected-window) t)))
+                               (save-excursion
+                                 (goto-char (car pair))
+                                 (setq regex (funcall re-builder avy-text))
+                                 (while (re-search-forward regex (cdr pair) t)
+                                   (unless (not (avy--visible-p (1- (point))))
+                                     (let* ((idx (if (= (length (match-data)) 4) 1 0))
+                                            (ov (make-overlay
+                                                 (match-beginning idx) (match-end idx))))
+                                       (setq found t)
+                                       (push ov overlays)
+                                       (overlay-put
+                                        ov 'window (selected-window))
+                                       (overlay-put
+                                        ov 'face 'avy-goto-char-timer-face)))))))
               ;; No matches at all, so there's surely a typo in the input.
               (unless found (beep))))
           (nreverse (mapcar (lambda (ov)
@@ -207,15 +207,15 @@ https://karthinks.com/software/avy-can-do-anything/
 **** Org agenda todo -> d
 #+begin_src emacs-lisp
 (defun avy-action-org-agenda-done (pt)
-    (save-excursion
-      (goto-char pt)
-      (org-agenda-todo))
-    (select-window
-     (cdr (ring-ref avy-ring 0)))
-    (my/avy-repeat-action) t)
+  (save-excursion
+    (goto-char pt)
+    (org-agenda-todo))
+  (select-window
+   (cdr (ring-ref avy-ring 0)))
+  (my/avy-repeat-action) t)
 
 (after! avy
-   (setf (alist-get ?D avy-dispatch-alist) 'avy-action-org-agenda-done))
+  (setf (alist-get ?D avy-dispatch-alist) 'avy-action-org-agenda-done))
 #+end_src
 
 **** Pomodoro clock in -> t
@@ -289,7 +289,7 @@ https://karthinks.com/software/avy-can-do-anything/
 (after! avy
   (setf (alist-get ?g avy-dispatch-alist) 'avy-action-teleport
         (alist-get ?G avy-dispatch-alist) 'avy-action-teleport-whole-line))
- #+end_src
+#+end_src
 
 **** Mark to char -> M
 #+begin_src emacs-lisp
@@ -405,30 +405,30 @@ https://karthinks.com/software/avy-can-do-anything/
 (defvar agenda-icons/caticons)
 
 (setq agenda-icons/caticons
-  (cl-flet ((icon #'make-agendaIcons))
-    (list
-     ;; Leisure
-     (icon :category "habit" :icon "nf-fa-refresh")
-     (icon :category "task" :icon "nf-fa-tasks")
-     ;; Programming related
-     (icon :category "feat" :icon "nf-fa-code") ;; a new feature
-     (icon :category "fix" :icon "nf-fa-bug") ;; A bug fix
-     (icon :category "docs" :icon "nf-fa-book") ;; documentation
-     (icon :category "style" :icon "nf-fa-eye") ;; formatting
-     (icon :category "refactor" :icon "nf-fa-wrench") ;; nor feat || bug
-     (icon :category "perf" :icon "nf-fa-tachometer") ;; performance
-     (icon :category "test" :icon "nf-fa-cog") ;; add/correct tests
-     (icon :category "build" :icon "nf-fa-cogs") ;; build tooling
-     (icon :category "chore" :icon "nf-fa-coffee") ;; other nor src || test
-     (icon :category "reverts" :icon "nf-fa-backward")))) ;; revert/rebase commit
+      (cl-flet ((icon #'make-agendaIcons))
+        (list
+         ;; Leisure
+         (icon :category "habit" :icon "nf-fa-refresh")
+         (icon :category "task" :icon "nf-fa-tasks")
+         ;; Programming related
+         (icon :category "feat" :icon "nf-fa-code") ;; a new feature
+         (icon :category "fix" :icon "nf-fa-bug") ;; A bug fix
+         (icon :category "docs" :icon "nf-fa-book") ;; documentation
+         (icon :category "style" :icon "nf-fa-eye") ;; formatting
+         (icon :category "refactor" :icon "nf-fa-wrench") ;; nor feat || bug
+         (icon :category "perf" :icon "nf-fa-tachometer") ;; performance
+         (icon :category "test" :icon "nf-fa-cog") ;; add/correct tests
+         (icon :category "build" :icon "nf-fa-cogs") ;; build tooling
+         (icon :category "chore" :icon "nf-fa-coffee") ;; other nor src || test
+         (icon :category "reverts" :icon "nf-fa-backward")))) ;; revert/rebase commit
 
 (customize-set-value
-    'org-agenda-category-icon-alist
-    (cl-flet ((icons (lambda (x) (nerd-icons-faicon (agendaIcons-icon x) :height 1))))
-      (mapcar
-       (lambda (x) (list (agendaIcons-category x)
-                    (list (icons x))
-                    nil nil)) agenda-icons/caticons)))
+ 'org-agenda-category-icon-alist
+ (cl-flet ((icons (lambda (x) (nerd-icons-faicon (agendaIcons-icon x) :height 1))))
+   (mapcar
+    (lambda (x) (list (agendaIcons-category x)
+                      (list (icons x))
+                      nil nil)) agenda-icons/caticons)))
 #+end_src
 *** Org Journal -> SPC j {n,N,c,s}
 #+begin_src emacs-lisp
@@ -436,7 +436,6 @@ https://karthinks.com/software/avy-can-do-anything/
 (setq org-journal-dir org-directory
       org-journal-file-type 'monthly
       org-journal-date-format "%x, %a, %V"
-      org-journal-scheduled-string "SCHEDULED:"
       org-journal-file-format "%Y-%m.org"
       org-journal-file-header "#+STARTUP: show2levels\n"
       ;; Automatic org agenda integration
@@ -448,14 +447,9 @@ https://karthinks.com/software/avy-can-do-anything/
 
 **** Org Journal Keymap
 #+begin_src emacs-lisp
-(map! :leader :prefix "j"
-        (:map org-journal-mode-map
-         :desc "Org Agenda File To Front" "f" #'org-agenda-file-to-front)
-        (:map global-map
-         :desc "Org Journal New Entry" "n" #'org-journal-new-entry
-         :desc "Org Journal New Scheduled Entry" "N" #'org-journal-new-scheduled-entry
-         :desc "Org Journal Open Current" "c" #'org-journal-open-current-journal-file
-         :desc "Goto Bench" "b" #'(lambda () (interactive) (find-file _benchorg))))
+(map! :leader :prefix "o"
+      :desc "Org Journal Current" "J" #'org-journal-open-current-journal-file
+      :desc "WorkBench" "j" #'(lambda () (interactive) (find-file _benchorg)))
 #+end_src
 **** Custom Export Clocktable Function :deprecated:
 #+begin_src
@@ -485,7 +479,7 @@ https://karthinks.com/software/avy-can-do-anything/
              (save-excursion
                (goto-line 10)
                (when
-                 (re-search-backward "^#\\+REVISION: \\(.+\\)" nil t)
+                   (re-search-backward "^#\\+REVISION: \\(.+\\)" nil t)
                  (replace-match
                   (format "#+REVISION: %s" today) nil nil))))))))
 
@@ -502,18 +496,18 @@ https://karthinks.com/software/avy-can-do-anything/
   :config
   (setq org-roam-completion-everywhere nil)
   (add-hook! 'after-save-hook #'this/org_roam__bump_revision_date))
-  #+end_src
+#+end_src
 
 **** Org Roam Keymap
 #+begin_src emacs-lisp
 (map! :leader :prefix "r"
-        (:map org-mode-map
-         :desc "Org Roam Node Insert" "i" #'org-roam-node-insert
-         ;;:desc "Org Table Column Toggle" "t" #'org-table-toggle-column-width)
-         :desc "Org Roam Buffer Toggle" "t" #'org-roam-buffer-toggle)
-        (:map global-map
-         :desc "Org Roam Goto Node" "g" #'org-roam-node-find
-         :desc "Org Roam Capture" "c" #'org-roam-capture))
+      (:map org-mode-map
+       :desc "Org Roam Node Insert" "i" #'org-roam-node-insert
+       ;;:desc "Org Table Column Toggle" "t" #'org-table-toggle-column-width)
+       :desc "Org Roam Buffer Toggle" "t" #'org-roam-buffer-toggle)
+      (:map global-map
+       :desc "Org Roam Goto Node" "g" #'org-roam-node-find
+       :desc "Org Roam Capture" "c" #'org-roam-capture))
 #+end_src
 *** Org habit
 #+begin_src emacs-lisp
@@ -532,19 +526,23 @@ https://karthinks.com/software/avy-can-do-anything/
           (_benchorg :maxlevel . 1))))
 #+end_src
 *** Org Capture
-I capture every activity on my laptop by (broad) category. May change over time. Currently, there are following activities:
-- development - concrete project development
-- research - various technology related explorative/design work
-- operations - linux/emacs related time sinks
-- spanish - language learning
-- cooking - offline topic; Gathering of cooking recipes
 #+begin_src emacs-lisp
+(defvar org-journal--date-location-scheduled-time nil)
+(defun org-journal-date-location ()
+  (let ((scheduled-time (org-time-string-to-time (org-read-date nil nil nil "Date:"))))
+    (setq org-journal--date-location-scheduled-time scheduled-time)
+    (org-journal-new-entry t scheduled-time)))
+
 ;; Org Capture Templates
 (after! org-capture
   (setq org-capture-templates
-         '(("p" "Blog Post" entry (file+headline "~/data/git/ja.nz/README.org" "Posts") "* TODO %^{title}\nSCHEDULED: %t%^{export_hugo_bundle}p%^{export_file_name}p\n#+begin_description\n%?\n#+end_description\n** scratchpad :noexport:\n" :prepend t :jump-to-captured t)
-           ("x" "Instant Todo" entry (function org-journal-open-current-journal-file) "* TODO %^{title}\nSCHEDULED: %T%^{CATEGORY}p%^{Effort}p\n%?" :jump-to-captured t))))
+        '(("p" "Blog Post" entry (file+headline "~/data/git/ja.nz/README.org" "Posts") "* TODO %^{title}\nSCHEDULED: %t%^{export_hugo_bundle}p%^{export_file_name}p\n#+begin_description\n%?\n#+end_description\n** scratchpad :noexport:\n" :prepend t :jump-to-captured t)
+          ("s" "Scheduled Journal" plain (function org-journal-date-location) "** TODO %(if org-time-was-given (format-time-string org-journal-time-format org-journal--date-location-scheduled-time))%^{Title}\n%(org-insert-timestamp org-journal--date-location-scheduled-time org-time-was-given)" :jump-to-captured t :immediate-finish t)
+          ("j" "Journal entry" plain (function (lambda () (org-journal-new-entry t))) "** %(format-time-string org-journal-time-format)%^{Title}" :jump-to-captured t :immediate-finish t)
+          )))
 #+end_src
+
+
 **** Backup (untangled)
 Backup of the Doom Emacs Capture templates for future reference
 #+begin_src
@@ -609,25 +607,25 @@ Backup of the Doom Emacs Capture templates for future reference
 (defun this/org-pomodoro-restart ()
   (interactive)
   (let ((use-dialog-box nil))
-   (when (y-or-n-p "Start a new pomodoro?")
-     (save-window-excursion
-       (org-clock-goto)
-       (org-pomodoro)))))
+    (when (y-or-n-p "Start a new pomodoro?")
+      (save-window-excursion
+        (org-clock-goto)
+        (org-pomodoro)))))
 
 (use-package! org-pomodoro
   :custom
-    (org-pomodoro-start-sound-p t)
-    (org-pomodoro-killed-sound-p t)
-    (org-pomodoro-start-sound "GO⏰")
-    (org-pomodoro-finished-sound "FINISH🏁")
-    (org-pomodoro-overtime-sound "OVERTIME😵")
-    (org-pomodoro-killed-sound "KILLED💀")
-    (org-pomodoro-short-break-sound "SHORTBREAK☕ FINISHED🏁")
-    (org-pomodoro-long-break-sound "LONGBREAK😴 FINISHED🏁")
+  (org-pomodoro-start-sound-p t)
+  (org-pomodoro-killed-sound-p t)
+  (org-pomodoro-start-sound "GO⏰")
+  (org-pomodoro-finished-sound "FINISH🏁")
+  (org-pomodoro-overtime-sound "OVERTIME😵")
+  (org-pomodoro-killed-sound "KILLED💀")
+  (org-pomodoro-short-break-sound "SHORTBREAK☕ FINISHED🏁")
+  (org-pomodoro-long-break-sound "LONGBREAK😴 FINISHED🏁")
   :config
-    (setq org-pomodoro-audio-player nil)
-    (add-hook! org-pomodoro-break-finished #'this/org-pomodoro-restart)
-)
+  (setq org-pomodoro-audio-player nil)
+  (add-hook! org-pomodoro-break-finished #'this/org-pomodoro-restart)
+  )
 #+end_src
 *** Org table copy cell :hack:
 #+begin_src emacs-lisp
@@ -636,8 +634,8 @@ Backup of the Doom Emacs Capture templates for future reference
   (interactive)
   (when (org-at-table-p)
     (kill-new
-      (string-trim
-        (substring-no-properties(org-table-get-field))))))
+     (string-trim
+      (substring-no-properties(org-table-get-field))))))
 #+end_src
 *** Org purge drawers :hack:
 If the habits.org file gets too big it slows down emacs.
@@ -680,19 +678,19 @@ strict digraph {
 (defun org-babel-execute:graph-easy (body params)
   "Execute a block of dot code with org-babel:graph-easy."
   (let* ((out-file (or (cdr (assq :file params)) "/dev/stdout"))
-        (in-file (org-babel-temp-file "tmp" ".dot"))
-        (cmdline (or (cdr (assq :cmdline params))
-                     (if-let ((ext (file-name-extension out-file)))
-                         (format "--as=%s" ext)
-                         (format "--as=%s" "ascii"))))
-        (cmd (or (cdr (assq :cmd params)) "graph-easy")))
+         (in-file (org-babel-temp-file "tmp" ".dot"))
+         (cmdline (or (cdr (assq :cmdline params))
+                      (if-let ((ext (file-name-extension out-file)))
+                          (format "--as=%s" ext)
+                        (format "--as=%s" "ascii"))))
+         (cmd (or (cdr (assq :cmd params)) "graph-easy")))
     (with-temp-file in-file
       (insert body))
     (org-babel-eval
      (concat cmd
-        " --input=" (org-babel-process-file-name in-file)
-        " " cmdline
-        " --output=" (org-babel-process-file-name out-file)) "")))
+             " --input=" (org-babel-process-file-name in-file)
+             " " cmdline
+             " --output=" (org-babel-process-file-name out-file)) "")))
 #+end_src
 
 ** LSP TailwindCSS :mode:
@@ -707,7 +705,7 @@ strict digraph {
 ** D2 Mode :mode:
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
 (package! d2-mode
-   :recipe (:host github :repo "andorsk/d2-mode"))
+  :recipe (:host github :repo "andorsk/d2-mode"))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -732,10 +730,10 @@ strict digraph {
 (use-package! web-mode
   :mode "\\.astro$"
   :config (setq
-     ;; check indent -> lsp--formatting-indent-alist
-     standard-indent 2
-     web-mode-enable-front-matter-block t)
-)
+           ;; check indent -> lsp--formatting-indent-alist
+           standard-indent 2
+           web-mode-enable-front-matter-block t)
+  )
 #+end_src
 
 ** TypeScript Mode

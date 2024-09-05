@@ -1,4 +1,0 @@
-# -*- mode: snippet -*-
-# name: cloze
-# --
-{{$1}{$2}@$3}
