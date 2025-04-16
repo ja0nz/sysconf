@@ -40,7 +40,7 @@
         };
         cpu = {
           format = "<b>CPU</b>: {usage}%";
-          on-click-right = "${pkgs.foot}/bin/foot btm";
+          on-click-right = "${pkgs.alacritty}/bin/alacritty btm";
         };
         backlight = {
           format = "{percent}% {icon}";
@@ -91,7 +91,7 @@
           on-click = "${../switch-audio-port} 2>/dev/null";
           on-click-middle =
             "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-          on-click-right = "${pkgs.helvum}/bin/helvum";
+          on-click-right = "${pkgs.pwvucontrol}/bin/pwvucontrol";
         };
         "sway/language" = {
           min-length = 8;
@@ -125,7 +125,7 @@
         };
         disk = {
           format = "{used} 󰋊";
-          on-click-right = "${pkgs.foot}/bin/foot -H duf";
+          on-click-right = "${pkgs.alacritty}/bin/alacritty -H duf";
         };
       };
     }];

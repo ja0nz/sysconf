@@ -117,7 +117,7 @@ in {
         smartBorders = "on";
       };
       menu = "wldash";
-      terminal = "footclient";
+      terminal = "alacritty";
       #workspaceAutoBackAndForth = true;
       inherit modifier;
       keybindings = lib.mkOptionDefault {
