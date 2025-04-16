@@ -28,15 +28,15 @@ let
     "--force-punycode-hostnames"
     "--show-avatar-button=never"
     "--hide-crashed-bubble"
-    "--hide-sidepanel-button"
     # chrome://flags
-    "--enable-features='EnableTabMuting,WebRTCPipeWireCapturer'"
+    "--enable-features=''"
   ];
 in {
 
   # Packages
   home.packages = with pkgs; [
-    wldash
+    fuzzel
+    swayr # a window-switcher & more for sway
     autotiling # Script for sway and i3 to automatically switch the horizontal / vertical window split orientation
     kanshi # Dynamic display configuration tool
     wl-clipboard # Command-line copy/paste utilities for Wayland
@@ -73,7 +73,7 @@ in {
     config = {
       # left = "j";
       # right = "l";
-      defaultWorkspace = "workspace number 1";
+      # defaultWorkspace = "workspace number 1";
       bars = [ ];
       seat = { "*" = { xcursor_theme = "capitaine-cursors 30"; }; };
       colors = {
@@ -116,32 +116,49 @@ in {
         bottom = -6;
         smartBorders = "on";
       };
-      menu = "wldash";
+      menu = "fuzzel";
       terminal = "alacritty";
       #workspaceAutoBackAndForth = true;
       inherit modifier;
       keybindings = lib.mkOptionDefault {
 
-        # Mover -> MIDDLE ROW
-        "${modifier}+j" = "focus left";
-        "${modifier}+Ctrl+j" = "focus output left";
-        "${modifier}+Shift+j" = "move left";
-        "${modifier}+Ctrl+Shift+j" = "move workspace to output left";
+        # Fix "Workspace 10"
+        "${modifier}+0" = "kill";
 
-        "${modifier}+l" = "focus right";
-        "${modifier}+Ctrl+l" = "focus output right";
+        # VIM style -> MIDDlE ROW
+        "${modifier}+h" = ''exec "swayr prev-window all-workspaces"'';
+        "${modifier}+Shift+h" = "move left";
+        "${modifier}+Ctrl+h" = "focus output left";
+        "${modifier}+Ctrl+Shift+h" = "move workspace to output left";
+
+        "${modifier}+j" = "focus down";
+        "${modifier}+Shift+j" = "move down";
+        "${modifier}+k" = "focus up";
+        "${modifier}+Shift+k" = "move up";
+
+        "${modifier}+l" = ''exec "swayr next-window all-workspaces"'';
         "${modifier}+Shift+l" = "move right";
+        "${modifier}+Ctrl+l" = "focus output right";
         "${modifier}+Ctrl+Shift+l" = "move workspace to output right";
+        "${modifier}+f" = "fullscreen toggle";
 
         # BOTTOM ROW
-        "${modifier}+space" = "workspace back_and_forth";
+        "${modifier}+space" = ''exec "swayr switch-window"'';
+        "${modifier}+Ctrl+space" = ''exec "swayr switch-workspace-or-window"'';
+        "${modifier}+tab" = ''exec "swayr switch-to-urgent-or-lru-window"'';
+        "${modifier}+Ctrl+tab" = "workspace back_and_forth";
 
         # Other sway -> TOP ROW
+        #"${modifier}+u" = ''exec "papersway-msg cols incr"'';
+        #"${modifier}+Ctrl+u" = ''exec "papersway-msg cols decr"'';
+        #"${modifier}+i" = ''exec "papersway-msg absorb_expel left"'';
+        #"${modifier}+Shift+i" = ''exec "papersway-msg absorb_expel right"'';
+
+        #"${modifier}+o" = ''exec "papersway-msg fresh-workspace take"'';
+        #"${modifier}+Ctrl+o" = ''exec "papersway-msg fresh-workspace send"'';
+
         "${modifier}+z" = "exec ${./swaylock}";
         "${modifier}+Ctrl+z" = ''exec "${./swaylock} && systemctl suspend"'';
-        "${modifier}+u" = "layout toggle splith tabbed";
-        "${modifier}+o" = "fullscreen";
-        "${modifier}+Shift+o" = "floating toggle";
         "${modifier}+q" = "kill";
 
         # Player -> BOTTOM ROW
@@ -155,9 +172,8 @@ in {
         "${modifier}+a" = ''exec "emacsclient -c"'';
         "${modifier}+s" =
           "exec chromium ${lib.concatStringsSep " " chrome-flags}";
-        "${modifier}+f" = "exec nemo";
         #"${modifier}+d" = "exec wldash"; -> by system
-        "${modifier}+Ctrl+d" = "exec networkmanager_dmenu";
+        "${modifier}+Ctrl+d" = "exec nemo";
 
         "Print" = "exec ${./take_screenshot}";
         "Ctrl+Print" = "exec ${./take_screenshot} full";
@@ -188,7 +204,7 @@ in {
           exec "nmcli networking connectivity | \
                     grep -q none && nmcli networking on || nmcli networking off"'';
 
-        "XF86Messenger" = ''exec "wofi-emoji"'';
+        "XF86NotificationCenter" = ''exec "wofi-emoji"'';
         "XF86Go" = "exec ${../switch-audio-port} 2>/dev/null";
         "Cancel" =
           ''exec "swaymsg input type:keyboard xkb_switch_layout next"'';
@@ -201,12 +217,10 @@ in {
       };
 
       startup = [
+        { command = "${pkgs.maestral}/bin/maestral start"; }
+        { command = "${pkgs.autotiling}/bin/autotiling"; }
         {
-          command = "${pkgs.maestral}/bin/maestral start";
-          always = true;
-        }
-        {
-          command = "${pkgs.autotiling}/bin/autotiling";
+          command = "${pkgs.swayr}/bin/swayrd";
           always = true;
         }
       ];
