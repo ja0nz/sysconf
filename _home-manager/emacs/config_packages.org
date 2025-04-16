@@ -113,12 +113,26 @@ Setting dictionaries
   (after! ispell
     (ispell-set-spellchecker-params)
     (ispell-hunspell-add-multi-dic "it_IT,en_US")
-    (ispell-hunspell-add-multi-dic "tr_TR,en_US")
     (ispell-hunspell-add-multi-dic "de_DE,en_US")
     (ispell-hunspell-add-multi-dic "nl_NL,en_US")
     (ispell-hunspell-add-multi-dic "fr_FR,en_US")
     (ispell-change-dictionary "de_DE,en_US")
     ))
+#+end_src
+** Custom functions
+#+begin_src emacs-lisp
+;; based on http://emacsredux.com/blog/2013/04/03/delete-file-and-buffer/
+(defun delete-file-and-buffer ()
+  "Kill the current buffer and deletes the file it is visiting."
+  (interactive)
+  (let ((filename (buffer-file-name)))
+    (if filename
+        (if (y-or-n-p (concat "Do you really want to delete file " filename " ?"))
+            (progn
+              (delete-file filename)
+              (message "Deleted file %s." filename)
+              (kill-buffer)))
+      (message "Not a file visiting buffer!"))))
 #+end_src
 * Movement and interaction
 ** Consult -> l, s, n
@@ -172,23 +186,23 @@ https://karthinks.com/software/avy-can-do-anything/
                    (or avy-case-fold-search (string= avy-text (downcase avy-text))))
                   found)
               (avy-dowindows current-prefix-arg
-                             (dolist (pair (avy--find-visible-regions
-                                            (window-start)
-                                            (window-end (selected-window) t)))
-                               (save-excursion
-                                 (goto-char (car pair))
-                                 (setq regex (funcall re-builder avy-text))
-                                 (while (re-search-forward regex (cdr pair) t)
-                                   (unless (not (avy--visible-p (1- (point))))
-                                     (let* ((idx (if (= (length (match-data)) 4) 1 0))
-                                            (ov (make-overlay
-                                                 (match-beginning idx) (match-end idx))))
-                                       (setq found t)
-                                       (push ov overlays)
-                                       (overlay-put
-                                        ov 'window (selected-window))
-                                       (overlay-put
-                                        ov 'face 'avy-goto-char-timer-face)))))))
+                (dolist (pair (avy--find-visible-regions
+                               (window-start)
+                               (window-end (selected-window) t)))
+                  (save-excursion
+                    (goto-char (car pair))
+                    (setq regex (funcall re-builder avy-text))
+                    (while (re-search-forward regex (cdr pair) t)
+                      (unless (not (avy--visible-p (1- (point))))
+                        (let* ((idx (if (= (length (match-data)) 4) 1 0))
+                               (ov (make-overlay
+                                    (match-beginning idx) (match-end idx))))
+                          (setq found t)
+                          (push ov overlays)
+                          (overlay-put
+                           ov 'window (selected-window))
+                          (overlay-put
+                           ov 'face 'avy-goto-char-timer-face)))))))
               ;; No matches at all, so there's surely a typo in the input.
               (unless found (beep))))
           (nreverse (mapcar (lambda (ov)
@@ -350,18 +364,11 @@ https://karthinks.com/software/avy-can-do-anything/
 ** Org
 *** Base Settings
 #+begin_src emacs-lisp
-(setq org-directory "~/Dropbox/org/"
-      _tagsorg (concat org-directory "_tags.org")
-      _benchorg (concat org-directory "_bench.org")
-      _archiveorg (concat org-directory "_archive.org")
-      _habitsorg (concat org-directory "_habits.org"))
+(setq org-directory (expand-file-name "~/Syncthing/jan/org"))
 
 ;; Org Mode - Base Settings
 (setq org-global-properties '(("Effort_ALL" . "0:05 0:10 0:25 0:50 1:15 1:40 2:05 2:55 3:45 4:35 5:25 6:15 7:05"))
-      org-agenda-files
-      (append
-       (list _tagsorg _benchorg _habitsorg)
-       (directory-files org-directory t "^20[0-9][0-9]-"))
+      org-agenda-files (list (expand-file-name "tasks" org-directory))
       org-agenda-bulk-custom-functions
       '((?m (lambda () (call-interactively 'org-agenda-date-later-minutes)))
         (?h (lambda () (call-interactively 'org-agenda-date-later-hours))))
@@ -373,28 +380,9 @@ https://karthinks.com/software/avy-can-do-anything/
       org-goto-interface 'outline-path-completion
       org-startup-with-inline-images t)
 
-;; Fancy priorities
-(after! org-fancy-priorities
-  (setq
-   org-fancy-priorities-list '("🟥" "🟨" "🟩")))
-
 ;; Org emphasize
 (map! :after org :map org-mode-map :localleader "f" #'org-emphasize)
-
-;; 15.03.2024
-;; https://github.com/doomemacs/doomemacs/issues/7733#issuecomment-1999844787
-(defun my/org-tab-conditional ()
-  (interactive)
-  (if (yas-active-snippets)
-      (yas-next-field-or-maybe-expand)
-    (org-cycle)))
-
-(map! :after evil-org
-      :map evil-org-mode-map
-      :i "<tab>" #'my/org-tab-conditional)
 #+end_src
-
-#+RESULTS:
 
 *** Org agenda icons
 #+begin_src emacs-lisp
@@ -430,45 +418,48 @@ https://karthinks.com/software/avy-can-do-anything/
                       (list (icons x))
                       nil nil)) agenda-icons/caticons)))
 #+end_src
-*** Org Journal -> SPC j {n,N,c,s}
-#+begin_src emacs-lisp
-;; Org Journal Settings
-(setq org-journal-dir org-directory
-      org-journal-file-type 'monthly
-      org-journal-date-format "%x, %a, %V"
-      org-journal-file-format "%Y-%m.org"
-      org-journal-file-header "#+STARTUP: show2levels\n"
-      ;; Automatic org agenda integration
-      org-journal-after-entry-create-hook
-      (lambda () (if (not (file-exists-p (buffer-file-name))) (org-agenda-file-to-front t))))
-;;org-journal-file-header "#+title: W%V_%Y-%m-%d\n#+roam_key: file:_bench.org\n"
-;;org-journal-skip-carryover-drawers (list "LOGBOOK")
+*** Org Denote
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+(package! denote)
+(package! tmr)
 #+end_src
 
-**** Org Journal Keymap
 #+begin_src emacs-lisp
-(map! :leader :prefix "o"
-      :desc "Org Journal Current" "J" #'org-journal-open-current-journal-file
-      :desc "WorkBench" "j" #'(lambda () (interactive) (find-file _benchorg)))
+(use-package! denote
+  :hook
+  ((dired-mode . denote-dired-mode)
+  (denote-journal-extras . (lambda () (tmr "10" "Practice writing journal"))))
+  :config (require 'denote-journal-extras)
+  :custom
+  (denote-directory org-directory)
+  (denote-journal-extras-title-format 'day-date-month-year)
+
+  ;; Automatically rename Denote buffers when opening them so that
+  ;; instead of their long file name they have, for example, a literal
+  ;; "[D]" followed by the file's title.  Read the doc string of
+  ;; `denote-rename-buffer-format' for how to modify this.
+  (denote-rename-buffer-mode 1)
+  :init
+  (map! :leader :prefix "n"
+      ;; (:map org-mode-map
+      ;;  :desc "Org Roam Node Insert" "i" #'org-roam-node-insert
+      ;;  ;;:desc "Org Table Column Toggle" "t" #'org-table-toggle-column-width)
+      ;;  :desc "Org Roam Buffer Toggle" "t" #'org-roam-buffer-toggle)
+      (:map global-map
+       :desc "Denote" "n" #'denote
+       :desc "Denote Journal" "j" #'denote-journal-extras-new-or-existing-entry
+       :desc "Denote rename file" "r" #'denote-rename-file
+       :desc "Denote link" "l" #'denote-link
+       :desc "Denote backlinks" "b" #'denote-backlinks
+       :desc "Denote dired sort" "d" #'denote-sort-dired
+       ))
+  )
 #+end_src
-**** Custom Export Clocktable Function :deprecated:
-#+begin_src
-(defun export-clocktable-csv (&optional week)
-  "Export current week (no prefix argument) or weeks in the "
-  (interactive "P")
-  (let* ((week (if week week 0))
-         (time-string (format-time-string "%V"))
-         (new-time-number (- (string-to-number time-string) week))
-         (new-time-string (number-to-string new-time-number))
-         (time-string (if (< new-time-number 10)
-                          (concat "0" new-time-string) new-time-string))
-         (org-agenda-files (directory-files org-directory t (concat "^W" time-string))))
-    (call-interactively #'org-clock-csv-to-file)))
-#+end_src
+
 *** Org Roam -> SPC r {i,t,g,c}
 #+begin_src emacs-lisp
 ;; Org Roam Settings
-(defun this/org_roam__bump_revision_date ()
+(defun this/org_roam__bump_revision_date_DEPRECATED ()
   "Retriving REVISION and replace it naively with current time stamp."
   (when (cond ((eq major-mode 'org-mode))
               ((string-match-p "^[0-9]\\{14\\}-" (file-name-base))))
@@ -485,21 +476,28 @@ https://karthinks.com/software/avy-can-do-anything/
 
 (use-package! org-roam
   :custom
-  (org-roam-directory org-directory)
+  (org-roam-directory "~/Syncthing/jan/org")
+  (org-roam-completion-everywhere t)
+  ;; (org-roam-dailies-capture-templates
+  ;;     '(("d" "default" entry
+  ;;        "* %?"
+  ;;        :if-new (
+  ;;        file+name+olp "%<%Y-%m>.org"
+  ;;        "#+TITLE: %<%Y-%m>\n\n\n"
+  ;;        ("%<%Y-%m-%d>")
+  ;;        ))))
   (org-roam-capture-templates
    '(("d" "default" plain
       "%?"
       :if-new
       (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                 "#+title: ${title}\n#+CREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+REVISION: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+STARTUP: overview\n")
+                 "#+title: ${title}\n#+CREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n#+STARTUP: overview\n")
       :unnarrowed t)))
-  :config
-  (setq org-roam-completion-everywhere nil)
-  (add-hook! 'after-save-hook #'this/org_roam__bump_revision_date))
+  )
 #+end_src
 
 **** Org Roam Keymap
-#+begin_src emacs-lisp
+#+begin_src
 (map! :leader :prefix "r"
       (:map org-mode-map
        :desc "Org Roam Node Insert" "i" #'org-roam-node-insert
@@ -507,8 +505,31 @@ https://karthinks.com/software/avy-can-do-anything/
        :desc "Org Roam Buffer Toggle" "t" #'org-roam-buffer-toggle)
       (:map global-map
        :desc "Org Roam Goto Node" "g" #'org-roam-node-find
+       :desc "Org Roam Captue Journal today" "j j" #'org-roam-dailies-capture-today
+       :desc "Org Roam Captue Journal yesterday" "j y" #'org-roam-dailies-capture-yesterday
+       :desc "Org Roam Captue Journal tomorrow" "j t" #'org-roam-dailies-capture-tomorrow
        :desc "Org Roam Capture" "c" #'org-roam-capture))
 #+end_src
+
+**** Org Roam Archive
+#+begin_src emacs-lisp
+(defun this/org-archive-subtree-to-daily (&optional _find_done)
+  "Archive the current subtree to the roam daily file."
+  (interactive)
+  (require 'org-roam)
+  (org-set-tags "ARCHIVE")
+  (let (headline filename org-archive-location)
+    (save-excursion
+      (org-roam-dailies-goto-date nil "d")
+      (setq headline (substring-no-properties (org-display-outline-path nil t "/" t))
+            filename (buffer-file-name)
+            org-archive-location (concat filename "::* " headline)))
+    (org-archive-subtree 0)))
+
+(custom-set-variables
+ '(org-archive-default-command #'this/org-archive-subtree-to-daily))
+#+end_src
+
 *** Org habit
 #+begin_src emacs-lisp
 (after! org
@@ -522,23 +543,13 @@ https://karthinks.com/software/avy-can-do-anything/
         '((nil :maxlevel . 1) ; Same buffer
           (org-agenda-files :maxlevel . 1)
           (org-buffer-list :maxlevel . 1)
-          (_archiveorg :maxlevel . 1)
-          (_benchorg :maxlevel . 1))))
+          )))
 #+end_src
 *** Org Capture
 #+begin_src emacs-lisp
-(defvar org-journal--date-location-scheduled-time nil)
-(defun org-journal-date-location ()
-  (let ((scheduled-time (org-time-string-to-time (org-read-date nil nil nil "Date:"))))
-    (setq org-journal--date-location-scheduled-time scheduled-time)
-    (org-journal-new-entry t scheduled-time)))
-
-;; Org Capture Templates
 (after! org-capture
   (setq org-capture-templates
         '(("p" "Blog Post" entry (file+headline "~/data/git/ja.nz/README.org" "Posts") "* TODO %^{title}\nSCHEDULED: %t%^{export_hugo_bundle}p%^{export_file_name}p\n#+begin_description\n%?\n#+end_description\n** scratchpad :noexport:\n" :prepend t :jump-to-captured t)
-          ("s" "Scheduled Journal" plain (function org-journal-date-location) "** TODO %(if org-time-was-given (format-time-string org-journal-time-format org-journal--date-location-scheduled-time))%^{Title}\n%(org-insert-timestamp org-journal--date-location-scheduled-time org-time-was-given)" :jump-to-captured t :immediate-finish t)
-          ("j" "Journal entry" plain (function (lambda () (org-journal-new-entry t))) "** %(format-time-string org-journal-time-format)%^{Title}" :jump-to-captured t :immediate-finish t)
           )))
 #+end_src
 
@@ -627,6 +638,41 @@ Backup of the Doom Emacs Capture templates for future reference
   (add-hook! org-pomodoro-break-finished #'this/org-pomodoro-restart)
   )
 #+end_src
+*** Org Journal -> SPC j {n,N,c,s} :deprecated:
+#+begin_src
+;; Org Journal Settings
+(setq org-journal-dir "~/Dropbox/org"
+      org-journal-file-type 'monthly
+      org-journal-date-format "%x, %a, %V"
+      org-journal-file-format "%Y-%m.org"
+      org-journal-file-header "#+STARTUP: show2levels\n"
+      ;; Automatic org agenda integration
+      org-journal-after-entry-create-hook
+      (lambda () (if (not (file-exists-p (buffer-file-name))) (org-agenda-file-to-front t))))
+;;org-journal-file-header "#+title: W%V_%Y-%m-%d\n#+roam_key: file:_bench.org\n"
+;;org-journal-skip-carryover-drawers (list "LOGBOOK")
+#+end_src
+
+**** Org Journal Keymap :deprecated:
+#+begin_src
+(map! :leader :prefix "o"
+      :desc "Org Journal Current" "J" #'org-journal-open-current-journal-file
+      :desc "WorkBench" "j" #'(lambda () (interactive) (find-file _benchorg)))
+#+end_src
+**** Custom Export Clocktable Function :deprecated:
+#+begin_src
+(defun export-clocktable-csv (&optional week)
+  "Export current week (no prefix argument) or weeks in the "
+  (interactive "P")
+  (let* ((week (if week week 0))
+         (time-string (format-time-string "%V"))
+         (new-time-number (- (string-to-number time-string) week))
+         (new-time-string (number-to-string new-time-number))
+         (time-string (if (< new-time-number 10)
+                          (concat "0" new-time-string) new-time-string))
+         (org-agenda-files (directory-files org-directory t (concat "^W" time-string))))
+    (call-interactively #'org-clock-csv-to-file)))
+#+end_src
 *** Org table copy cell :hack:
 #+begin_src emacs-lisp
 (defun org/org-table-yank-cell ()
@@ -691,6 +737,17 @@ strict digraph {
              " --input=" (org-babel-process-file-name in-file)
              " " cmdline
              " --output=" (org-babel-process-file-name out-file)) "")))
+#+end_src
+** CV creation
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+(package! org-cv
+  :recipe (:host gitlab
+           :repo "Titan-C/org-cv"))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! ox-awesomecv
+  :after org)
 #+end_src
 
 ** LSP TailwindCSS :mode:
