@@ -15,7 +15,6 @@ in {
     /helix.nix
     # -- Services --
     /syncthing.nix
-    /mopidy.nix
     # -- nix --
     /sway
     /waybar
@@ -48,7 +47,7 @@ in {
 
   home.packages = with pkgs; [
     # -- Programs --
-    (callPackage sizzy { }) # The browser for Developers & Designers
+    # (callPackage sizzy { }) # The browser for Developers & Designers
     # INFO: no wayland support for MATE yet (as of 2022)...
     # (mate.caja-with-extensions.override {
     #   extensions = [ mate.caja-extensions mate.caja-dropbox ];
@@ -57,8 +56,8 @@ in {
     #stremio # A modern media center
     nemo # File browser for Cinnamon
     pix # A generic image viewer from Linux Mint
-    okular # KDE document viewer
-    helvum # A GTK patchbay for pipewire
+    kdePackages.okular # KDE document viewer
+    pwvucontrol # Pipewire Volume Control
     networkmanagerapplet # NetworkManager control applet for GNOME
     #neovim # Vim text editor fork focused on extensibility and agility
     #anki-bin # Spaced repetition flashcard program
@@ -115,6 +114,8 @@ in {
     rlwrap # Readline wrapper for console programs
     just # A handy way to save and run project-specific commands [RUST]
     rm-improved # Replacement for rm with focus on safety [RUST]
+    nix-search-cli # CLI for searching packages on search.nixos.org
+    aider-chat
 
     # -- File Generators --
     pandoc # Conversion betrween markup formats
@@ -129,6 +130,6 @@ in {
     python3 # Some globals depend on this
     grex # A command-line tool for generating regular expressions from user-provided test cases [RUST]
     tokei # A program that allows you to count your code [RUST]
-    devenv.default # Fast, Declarative, Reproducible, and Composable Developer Environments
+    devenv # Fast, Declarative, Reproducible, and Composable Developer Environments
   ];
 }
