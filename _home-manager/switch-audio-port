@@ -8,31 +8,16 @@
 # Usage:
 #  $ ./switch-audio-port
 
-# Config: Devices of relevance
-OPTS=("headphones" "speaker") # hdmi
-
 # Obligatory Auto-Mute Disable
 amixer -c 0 sset 'Auto-Mute Mode' Disabled --quiet
 
-# Get default audio sink name
-SINK=$(pw-metadata 0 'default.configured.audio.sink' | sed -n 's/^.*"name":"\(\S*\)".*$/\1/p')
+DI=$(pw-cli ls Device | grep -zoP "id \d\d(?:(?!id \d\d)(.|\n))*?Audio\/Device" | sed -n 's/id\s\(\S*\),.*$/\1/p')
 
-# Get related device.id
-DI=$(pw-cli i $SINK | sed -n 's/^.*device.id\s=\s"\(\S*\)".*$/\1/p')
-# Get related card.profile.device
-CPD=$(pw-cli i $SINK | sed -n 's/^.*card.profile.device\s=\s"\(\S*\)".*$/\1/p')
+PRO=$(pw-cli e $DI Profile | grep -zoP "Profile:index(.|\n)*?Int \d" | tr -d '\0' | tail -c2)
 
-# Get the index of a "speaker", "headphones", "hdmi"
-function getIDX {
-	echo $(pw-cli e $DI EnumRoute | awk "/$1/,/String \"[0-9]+\"/" | tail -n1 | grep -oP '\d+')
-}
-
-for opt in "${OPTS[@]}"; do
-	ISACTIVE=$(pw-cli e $DI Route | awk "/String \"$(getIDX $opt)\"/")
-	if [[ -n $ISACTIVE ]]; then
-		IDXOPT=$(echo "${OPTS[@]/$opt//}" | cut -d/ -f1 | wc -w | tr -d '')
-		NEXT=$(if [ $((${#OPTS[@]} - 1)) -eq $IDXOPT ]; then echo 0; else echo $(($IDXOPT + 1)); fi)
-		pw-cli s $DI Route "{ index: $(getIDX ${OPTS[$NEXT]}), device: $CPD }" 1>/dev/null
-		break
-	fi
-done
+# Super quick and dirty
+if [ "$PRO" -eq "1" ]; then
+	pw-cli s $DI Profile '{ index: 2, save: true }' 1>/dev/null
+else
+	pw-cli s $DI Profile '{ index: 1, save: true }' 1>/dev/null
+fi
