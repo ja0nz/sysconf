@@ -37,10 +37,10 @@ in {
           family = fontfamily;
           style = "Italic";
         };
-        bold-italic = {
-          family = fontfamily;
-          style = "Bold Italic";
-        };
+        #bold-italic = {
+        #  family = fontfamily;
+        #  style = "Bold Italic";
+        #};
         size = 11;
       };
       colors = {

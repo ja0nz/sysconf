@@ -25,20 +25,19 @@ with lib; {
   config = {
     # TODO Set your values
     # Consult: https://www.nerdfonts.com/font-downloads
-    # nixpkgs: https://github.com/NixOS/nixpkgs/blob/master/pkgs/data/fonts/nerdfonts/shas.nix
     _repoRoot = /home/me/sysconf;
     _configInUse = ../ThinkPad_X1_Nano_Gen1;
     _monoFont = {
       name = "JetBrainsMono Nerd Font";
-      pkg = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
+      pkg = pkgs.nerd-fonts.jetbrains-mono;
     };
     _sansFont = {
       name = "Arimo Nerd Font";
-      pkg = pkgs.nerdfonts.override { fonts = [ "Arimo" ]; };
+      pkg = pkgs.nerd-fonts.arimo;
     };
     _serifFont = {
       name = "Tinos Nerd Font";
-      pkg = pkgs.nerdfonts.override { fonts = [ "Tinos" ]; };
+      pkg = pkgs.nerd-fonts.tinos;
     };
 
     networking = {
@@ -96,7 +95,9 @@ with lib; {
         enable = true;
         dnssec = "false";
         extraConfig = ''
-          DNS=194.242.2.4#base.dns.mullvad.net
+          DNS=76.76.2.2#p2.freedns.controld.com
+          DNS=76.76.10.2#p2.freedns.controld.com
+          #DNS=194.242.2.4#base.dns.mullvad.net
           #DNS=194.242.2.5#extended.dns.mullvad.net
           #DNS=194.242.2.9#all.dns.mullvad.net
           DNSOverTLS=yes

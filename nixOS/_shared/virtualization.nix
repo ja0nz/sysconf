@@ -5,10 +5,9 @@
    You have to add user in the libvirtd group.
    users.users.<myuser>.extraGroups = [ "libvirtd" ];
 */
-{ pkgs, ... }:
+{ ... }:
 
 {
-  programs.dconf.enable = true;
-  #   environment.systemPackages = with pkgs; [ virt-manager ];
-  #   virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
+  virtualisation.libvirtd.enable = true;
 }

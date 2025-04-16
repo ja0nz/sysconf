@@ -26,7 +26,7 @@
       extraOptions = ''
         keep-outputs = true
         keep-derivations = true
-        # experimental-features = nix-command flakes
+        experimental-features = nix-command flakes
       '';
       settings.auto-optimise-store = true;
       settings.trusted-users = [ "@wheel" ];

@@ -37,12 +37,12 @@
   #   });
   # };
 
-  devenvOverlay = self: super: {
-    devenv = (import (fetchTarball {
-      url = sources.devenv.url;
-      sha256 = sources.devenv.sha256;
-    }));
-  };
+  # devenvOverlay = self: super: {
+  #   devenv = (import (fetchTarball {
+  #     url = sources.devenv.url;
+  #     sha256 = sources.devenv.sha256;
+  #   }));
+  # };
 
   emacsOverlay = (import (fetchTarball {
     url = sources.emacs-overlay.url;

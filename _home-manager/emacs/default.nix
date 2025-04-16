@@ -12,7 +12,7 @@
 {
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs-pgtk; # TODO Req emacs-overlay (see overlays.nix)
+    package = pkgs.emacs-git-pgtk; # TODO Req emacs-overlay (see overlays.nix)
     #extraPackages = epkgs: with epkgs; [ use-package ];
   };
   services.emacs = {
@@ -33,7 +33,7 @@
     #hunspellDicts.es_ES # dictionary for spanish
 
     # Database for org-roam
-    # sqlite # A self-contained, serverless, zero-configuration SQL db engine
+    sqlite # A self-contained, serverless, zero-configuration SQL db engine
 
     # Needed by doom emacs
     # html-tidy # A HTML validator and `tidier'
