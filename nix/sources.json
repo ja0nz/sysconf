@@ -1,26 +1,14 @@
 {
-    "devenv": {
-        "branch": "main",
-        "description": "Fast, Declarative, Reproducible, and Composable Developer Environments",
-        "homepage": "https://devenv.sh",
-        "owner": "cachix",
-        "repo": "devenv",
-        "rev": "1e4ef61205b9aa20fe04bf1c468b6a316281c4f1",
-        "sha256": "1z8sbwk87di164pc1j5rpv1i18hdr0vynji3dki8r9695b09nvd1",
-        "type": "tarball",
-        "url": "https://github.com/cachix/devenv/archive/1e4ef61205b9aa20fe04bf1c468b6a316281c4f1.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "emacs-overlay": {
         "branch": "master",
         "description": "Bleeding edge emacs overlay [maintainer=@adisbladis] ",
         "homepage": "",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "3169e5e682432a38e768b68e2557dc610ca0a426",
-        "sha256": "1k7lr8gsq35lpsx5nwrs45r1v0sjj5xdbgnxsxjd1dr04flgvyah",
+        "rev": "097bb2373e84a4c544754bb09d0742f0362818dd",
+        "sha256": "05giy64csmv11p12sd6rcfdgfd1yd24w0amfmxm9dhxwizgs2c0g",
         "type": "tarball",
-        "url": "https://github.com/nix-community/emacs-overlay/archive/3169e5e682432a38e768b68e2557dc610ca0a426.tar.gz",
+        "url": "https://github.com/nix-community/emacs-overlay/archive/097bb2373e84a4c544754bb09d0742f0362818dd.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs-wayland": {
@@ -29,10 +17,10 @@
         "homepage": "",
         "owner": "nix-community",
         "repo": "nixpkgs-wayland",
-        "rev": "90cf4eb6d71f1ee8124fd57535a3569048771b33",
-        "sha256": "0cvwks1vhyb2w4ykwgm123rm6lf5r1sb157wqhr4nfqw3s1jk5h7",
+        "rev": "c57eafc1ba678b4d713b12337052ef0244f0bfa4",
+        "sha256": "17p1bwi3gvhyr8w8vznbbsfbh22bml3jybya3k57k2a4rin2ffcn",
         "type": "tarball",
-        "url": "https://github.com/nix-community/nixpkgs-wayland/archive/90cf4eb6d71f1ee8124fd57535a3569048771b33.tar.gz",
+        "url": "https://github.com/nix-community/nixpkgs-wayland/archive/c57eafc1ba678b4d713b12337052ef0244f0bfa4.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }
