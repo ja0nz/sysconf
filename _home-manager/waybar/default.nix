@@ -40,7 +40,7 @@
         };
         cpu = {
           format = "<b>CPU</b>: {usage}%";
-          on-click-right = "${pkgs.alacritty}/bin/alacritty btm";
+          on-click-right = "${pkgs.foot}/bin/foot btm";
         };
         backlight = {
           format = "{percent}% {icon}";
@@ -125,7 +125,7 @@
         };
         disk = {
           format = "{used} 󰋊";
-          on-click-right = "${pkgs.alacritty}/bin/alacritty -H duf";
+          on-click-right = "${pkgs.foot}/bin/foot -H duf";
         };
       };
     }];

@@ -23,8 +23,7 @@ in {
     /kanshi.nix
     /mako.nix
     /gammastep.nix
-    # /foot.nix
-    /alacritty.nix
+    /foot.nix
     /xdg.nix
     /gtk.nix
     # -- SHELL --

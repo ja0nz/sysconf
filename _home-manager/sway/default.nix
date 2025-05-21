@@ -117,7 +117,7 @@ in {
         smartBorders = "on";
       };
       menu = "fuzzel";
-      terminal = "alacritty";
+      terminal = "footclient";
       #workspaceAutoBackAndForth = true;
       inherit modifier;
       keybindings = lib.mkOptionDefault {
