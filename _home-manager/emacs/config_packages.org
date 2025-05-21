@@ -73,6 +73,7 @@ Here are some additional functions/macros that could help you configure Doom:
 ** Custom set variables
 Just a dump for some used (project) variables
 #+begin_src emacs-lisp
+(put 'org-capture-templates 'safe-local-variable #'listp)
 (custom-set-variables
  '(safe-local-variable-values
    '(
@@ -418,42 +419,54 @@ https://karthinks.com/software/avy-can-do-anything/
                       (list (icons x))
                       nil nil)) agenda-icons/caticons)))
 #+end_src
-*** Org Denote
+*** DONE Org Denote & Denote Journal
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
 (package! denote)
-(package! tmr)
+(package! denote-journal)
 #+end_src
 
 #+begin_src emacs-lisp
 (use-package! denote
-  :hook
-  ((dired-mode . denote-dired-mode)
-  (denote-journal-extras . (lambda () (tmr "10" "Practice writing journal"))))
-  :config (require 'denote-journal-extras)
+  :hook (dired-mode . denote-dired-mode)
   :custom
   (denote-directory org-directory)
-  (denote-journal-extras-title-format 'day-date-month-year)
 
   ;; Automatically rename Denote buffers when opening them so that
   ;; instead of their long file name they have, for example, a literal
   ;; "[D]" followed by the file's title.  Read the doc string of
   ;; `denote-rename-buffer-format' for how to modify this.
   (denote-rename-buffer-mode 1)
+  :config
+  (setq denote-org-front-matter "#+title:      %s\n#+date:       %s\n#+filetags:   %s\n#+identifier: %s\n#+signature:  %s\n#+startup:    content\n\n")
   :init
   (map! :leader :prefix "n"
-      ;; (:map org-mode-map
-      ;;  :desc "Org Roam Node Insert" "i" #'org-roam-node-insert
-      ;;  ;;:desc "Org Table Column Toggle" "t" #'org-table-toggle-column-width)
-      ;;  :desc "Org Roam Buffer Toggle" "t" #'org-roam-buffer-toggle)
-      (:map global-map
-       :desc "Denote" "n" #'denote
-       :desc "Denote Journal" "j" #'denote-journal-extras-new-or-existing-entry
-       :desc "Denote rename file" "r" #'denote-rename-file
-       :desc "Denote link" "l" #'denote-link
-       :desc "Denote backlinks" "b" #'denote-backlinks
-       :desc "Denote dired sort" "d" #'denote-sort-dired
-       ))
+        ;; (:map org-mode-map
+        ;;  :desc "Org Roam Node Insert" "i" #'org-roam-node-insert
+        ;;  ;;:desc "Org Table Column Toggle" "t" #'org-table-toggle-column-width)
+        ;;  :desc "Org Roam Buffer Toggle" "t" #'org-roam-buffer-toggle)
+        (:map global-map
+         :desc "Denote" "n" #'denote
+         :desc "Denote rename file" "r" #'denote-rename-file
+         :desc "Denote link" "l" #'denote-link
+         :desc "Denote backlinks" "b" #'denote-backlinks
+         :desc "Denote dired sort" "d" #'denote-sort-dired
+         ))
   )
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! denote-journal
+  :hook (calendar-mode . denote-journal-calendar-mode)
+  :custom
+  (denote-journal-directory (expand-file-name "journal" denote-directory))
+  (denote-journal-title-format 'day-date-month-year)
+  (denote-journal-keyword "journal")
+  :init
+  (map! :leader :prefix "n"
+        (:map global-map
+         :desc "Denote Journal" "j" #'denote-journal-new-or-existing-entry
+         :desc "Denote Journal link" "J" #'denote-journal-link-or-create-entry))
+)
 #+end_src
 
 *** Org Roam -> SPC r {i,t,g,c}
