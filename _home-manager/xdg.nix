@@ -14,7 +14,7 @@
     enable = true;
     associations = { added = { "image/png" = "pix.desktop"; }; };
     defaultApplications = {
-      "application/pdf" = [ "org.pwmt.zathura.desktop" ];
+      "application/pdf" = [ "okularApplication_pdf.desktop" ];
       "text/html" = [ "chromium-browser.desktop" ];
       "x-scheme-handler/https" = [ "chromium-browser.desktop" ];
       "x-scheme-handler/http" = [ "chromium-browser.desktop" ];

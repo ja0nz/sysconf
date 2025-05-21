@@ -13,7 +13,7 @@
 {
   programs.lsd = {
     enable = true;
-    enableAliases = true;
+    enableFishIntegration = true;
     # TODO Settings
     # https://github.com/Peltoche/lsd#config-file-content
     settings = { date = "relative"; };
