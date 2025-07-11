@@ -1,11 +1,16 @@
-/* #+TITLE: Font Configuration
-   Set up the fonts
+/*
+  #+TITLE: Font Configuration
+  Set up the fonts
 */
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [ "symbola" ];
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "symbola" ];
 
   fonts = {
     packages = [

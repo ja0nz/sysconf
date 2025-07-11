@@ -1,5 +1,6 @@
-/* #+TITLE: Mako - a lightweigth wayland notification daemon
-   #+FILETAGS: :ui:sway:
+/*
+  #+TITLE: Mako - a lightweigth wayland notification daemon
+  #+FILETAGS: :ui:sway:
 */
 { ... }:
 

@@ -1,25 +1,26 @@
-/* #+TITLE: GnuPG - GNU Privacy Guard + Agent
-   #+FILETAGS: :encrypt:auth:ssh:
+/*
+  #+TITLE: GnuPG - GNU Privacy Guard + Agent
+  #+FILETAGS: :encrypt:auth:ssh:
 
-   * Mandatory configuration
-    Set up GPG and insert default key value.
-    Get keys and keygrip by: ~gpg -K --with-keygrip --keyid-format LONG~
-    Look out for [S] for signing key
+  * Mandatory configuration
+   Set up GPG and insert default key value.
+   Get keys and keygrip by: ~gpg -K --with-keygrip --keyid-format LONG~
+   Look out for [S] for signing key
 
-   * Optional configuration
-   ** Change GPG Settings
-     The settings section following the Riseup OpenGPG Best Practices
-     https://github.com/ioerror/duraconf/blob/master/configs/gnupg/gpg.conf
+  * Optional configuration
+  ** Change GPG Settings
+    The settings section following the Riseup OpenGPG Best Practices
+    https://github.com/ioerror/duraconf/blob/master/configs/gnupg/gpg.conf
 
-   ** Use GPG Agent
-     You can manage your ssh authentication(s) with GPG! Except for
-     ssh certificates this works pretty well.
+  ** Use GPG Agent
+    You can manage your ssh authentication(s) with GPG! Except for
+    ssh certificates this works pretty well.
 
-     *One word of warning for Emacs/magit users:*
-     Emacs server will start earlier than GPG and consequently miss
-     the later set SSH_AUTH_SOCK variable. Magit won't work.
-     You may either change the startup order or "hardwire" the env variable
-     in your bash/fish/doomemacs config.
+    *One word of warning for Emacs/magit users:*
+    Emacs server will start earlier than GPG and consequently miss
+    the later set SSH_AUTH_SOCK variable. Magit won't work.
+    You may either change the startup order or "hardwire" the env variable
+    in your bash/fish/doomemacs config.
 */
 { pkgs, ... }:
 
@@ -43,8 +44,7 @@
       personal-cipher-preferences = "AES256 AES192 AES CAST5";
       personal-digest-preferences = "SHA512 SHA384 SHA256 SHA224";
       cert-digest-algo = "SHA512";
-      default-preference-list =
-        "SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed";
+      default-preference-list = "SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed";
     };
   };
 

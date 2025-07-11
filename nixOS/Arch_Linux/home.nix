@@ -4,9 +4,6 @@
   imports = [ ./packages.nix ];
   config = {
 
-    # TODO Set your repo root path
-    _repoRoot = /home/me/sysconf;
-
     nixpkgs.config = {
       #allowBroken = true;
       allowUnfree = true;
@@ -30,6 +27,4 @@
     programs.home-manager.enable = true;
   };
 
-  # Global options
-  options = with lib; { _repoRoot = mkOption { type = types.path; }; };
 }

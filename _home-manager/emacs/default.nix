@@ -1,11 +1,12 @@
-/* #+TITLE: Emacs
-   #+FILETAGS: :program:
+/*
+  #+TITLE: Emacs
+  #+FILETAGS: :program:
 
-   * Mandatory configuration
-    Add emacs-overlay if needed. This is the fast, compiled emacs version
+  * Mandatory configuration
+   Add emacs-overlay if needed. This is the fast, compiled emacs version
 
-   * Optional configuration
-    Add your config.el files or untangle them
+  * Optional configuration
+   Add your config.el files or untangle them
 */
 { lib, pkgs, ... }:
 
@@ -45,8 +46,9 @@
     clang # A C language family frontend for LLVM (wrapper script)
   ];
 
-  /* config_packages.org -> ~/.doom.d/config.el & ~/.doom.d/packages.el
-     init.el -> ~/.doom.d/init.el
+  /*
+    config_packages.org -> ~/.doom.d/config.el & ~/.doom.d/packages.el
+    init.el -> ~/.doom.d/init.el
   */
   home.activation.initEmacs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     emacs --batch --eval "(require 'org)" --eval '(progn

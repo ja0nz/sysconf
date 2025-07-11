@@ -1,5 +1,6 @@
-/* #+TITLE: Pipewire multimedia framework
-   Replaces pulseaudio and enables screen sharing
+/*
+  #+TITLE: Pipewire multimedia framework
+  Replaces pulseaudio and enables screen sharing
 */
 { pkgs, ... }:
 

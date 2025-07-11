@@ -1,14 +1,15 @@
-/* #+TITLE: Email Accounts w/ isync & mu
-   #+FILETAGS: :user:
+/*
+  #+TITLE: Email Accounts w/ isync & mu
+  #+FILETAGS: :user:
 
-   This config hosts two examples of a normal/plain email account
-   and a Gmail account which needs extra treatment.
-   Handle with care: This section is highly subjective.
+  This config hosts two examples of a normal/plain email account
+  and a Gmail account which needs extra treatment.
+  Handle with care: This section is highly subjective.
 
-   * Mandatory configuration
-    Set up your GPG keyfiles:
-    ~gpg -e --default-recipient-self <filewithpassword>~
-    You may use pass or bitwarden instead. Up to you.
+  * Mandatory configuration
+   Set up your GPG keyfiles:
+   ~gpg -e --default-recipient-self <filewithpassword>~
+   You may use pass or bitwarden instead. Up to you.
 */
 { lib, pkgs, ... }:
 let
@@ -16,7 +17,8 @@ let
   janpetelergmailcom = "jan.peteler@gmail.com";
   maildir = ".mail";
   passwordcmd = "${pkgs.sops}/bin/sops -d";
-in {
+in
+{
   accounts.email = {
     maildirBasePath = maildir;
     accounts = {
@@ -51,12 +53,16 @@ in {
             inbox = {
               farPattern = "INBOX";
               nearPattern = "INBOX";
-              extraConfig = { Expunge = "both"; };
+              extraConfig = {
+                Expunge = "both";
+              };
             };
             trash = {
               farPattern = "[Gmail]/Bin";
               nearPattern = "Trash";
-              extraConfig = { Create = "near"; };
+              extraConfig = {
+                Create = "near";
+              };
             };
             drafts = {
               farPattern = "[Gmail]/Drafts";
@@ -69,7 +75,9 @@ in {
             sent = {
               farPattern = "[Gmail]/Sent Mail";
               nearPattern = "Sent";
-              extraConfig = { Create = "near"; };
+              extraConfig = {
+                Create = "near";
+              };
             };
             archive = {
               farPattern = "[Gmail]/All Mail";
@@ -96,13 +104,13 @@ in {
     enable = true;
     package = pkgs.isync; # Free IMAP and MailDir mailbox synchronizer
   };
-  home.packages = with pkgs;
-    [
-      mu # A collection of utilties for indexing and searching Maildirs
-    ];
+  home.packages = with pkgs; [
+    mu # A collection of utilties for indexing and searching Maildirs
+  ];
 
-  /* Init and index mu!
-     .mail and .mail/.attachments are the default locations of Doom Emacs
+  /*
+    Init and index mu!
+    .mail and .mail/.attachments are the default locations of Doom Emacs
   */
   home.activation.muInit = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     # For single user:

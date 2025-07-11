@@ -1,8 +1,9 @@
-/* #+TITLE: Zathura - a document viewer
-   #+FILETAGS: :program:
+/*
+  #+TITLE: Zathura - a document viewer
+  #+FILETAGS: :program:
 
-   * Optional configuration
-    Add your config
+  * Optional configuration
+   Add your config
 */
 { ... }:
 

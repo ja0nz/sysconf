@@ -1,8 +1,9 @@
-/* #+TITLE: Fzf - a command line fuzzy finder in Go
-   #+FILETAGS: :find:
+/*
+  #+TITLE: Fzf - a command line fuzzy finder in Go
+  #+FILETAGS: :find:
 
-   * Mandatory configuration
-    Ensure fd is installed
+  * Mandatory configuration
+   Ensure fd is installed
 */
 { ... }:
 
@@ -14,6 +15,9 @@
     defaultCommand = "fd --type f";
     fileWidgetCommand = "fd --type f";
     fileWidgetOptions = [ "--preview 'head {}'" ];
-    historyWidgetOptions = [ "--sort" "--exact" ];
+    historyWidgetOptions = [
+      "--sort"
+      "--exact"
+    ];
   };
 }

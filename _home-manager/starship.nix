@@ -1,5 +1,6 @@
-/* #+TITLE: Starship - extremely customizable prompt for any shell
-   #+FILETAGS: :shell:
+/*
+  #+TITLE: Starship - extremely customizable prompt for any shell
+  #+FILETAGS: :shell:
 */
 { ... }:
 

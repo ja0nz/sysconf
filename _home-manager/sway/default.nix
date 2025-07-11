@@ -1,24 +1,30 @@
-/* #+TITLE: Sway - Tiling window manager based on wayland
-   #+FILETAGS: :sway:
-   !Attention! Using this sway module by home manager alone is not sufficient!
-   Related discussion: https://github.com/NixOS/nixpkgs/pull/89019#issuecomment-634845631
+/*
+  #+TITLE: Sway - Tiling window manager based on wayland
+  #+FILETAGS: :sway:
+  !Attention! Using this sway module by home manager alone is not sufficient!
+  Related discussion: https://github.com/NixOS/nixpkgs/pull/89019#issuecomment-634845631
 
-   * Mandatory configuration
-    - Set your input/output devices!
-    - To make swaylock work: security.pam.services.swaylock = { };
+  * Mandatory configuration
+   - Set your input/output devices!
+   - To make swaylock work: security.pam.services.swaylock = { };
 
-   * Optional configuration / packages (not imported here)
-    - brillo -> as key combination
-    - nemo -> as key combination
-    - chromium browser -> as key combination
-    - networkmanager_dmenu -> as key combination
-    - wofi && wofi-emoji -> as key combination
-    - dropbox -> as service on start
-    - emacs -> as key combination
-    - playerctl -> as key combination
-    - _monoFont! Test with: fc-list : family | grep <MonoFontName>
+  * Optional configuration / packages (not imported here)
+   - brillo -> as key combination
+   - nemo -> as key combination
+   - chromium browser -> as key combination
+   - networkmanager_dmenu -> as key combination
+   - wofi && wofi-emoji -> as key combination
+   - dropbox -> as service on start
+   - emacs -> as key combination
+   - playerctl -> as key combination
+   - _monoFont! Test with: fc-list : family | grep <MonoFontName>
 */
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 let
   modifier = "Mod4";
@@ -31,7 +37,8 @@ let
     # chrome://flags
     "--enable-features=''"
   ];
-in {
+in
+{
 
   # Packages
   home.packages = with pkgs; [
@@ -75,7 +82,11 @@ in {
       # right = "l";
       # defaultWorkspace = "workspace number 1";
       bars = [ ];
-      seat = { "*" = { xcursor_theme = "capitaine-cursors 30"; }; };
+      seat = {
+        "*" = {
+          xcursor_theme = "capitaine-cursors 30";
+        };
+      };
       colors = {
         focused = {
           border = "#81c1e4";
@@ -170,8 +181,7 @@ in {
 
         # Launcher
         "${modifier}+a" = ''exec "emacsclient -c"'';
-        "${modifier}+s" =
-          "exec chromium ${lib.concatStringsSep " " chrome-flags}";
+        "${modifier}+s" = "exec chromium ${lib.concatStringsSep " " chrome-flags}";
         #"${modifier}+d" = "exec wldash"; -> by system
         "${modifier}+Ctrl+d" = "exec nemo";
 
@@ -185,12 +195,9 @@ in {
         # "XF86AudioMicMute" = ''exec "pamixer --default-source --toggle-mute"'';
         ## Wireplumber switchers
         "XF86AudioMute" = ''exec "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"'';
-        "XF86AudioLowerVolume" =
-          ''exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"'';
-        "XF86AudioRaiseVolume" =
-          ''exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"'';
-        "XF86AudioMicMute" =
-          ''exec "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"'';
+        "XF86AudioLowerVolume" = ''exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"'';
+        "XF86AudioRaiseVolume" = ''exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"'';
+        "XF86AudioMicMute" = ''exec "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"'';
 
         # "XF86AudioPlay" = ''exec "playerctl play"'';
         # "XF86AudioPause" = ''exec "playerctl pause"'';
@@ -206,10 +213,9 @@ in {
 
         "XF86NotificationCenter" = ''exec "wofi-emoji"'';
         "XF86Go" = "exec ${../switch-audio-port} 2>/dev/null";
-        "Cancel" =
-          ''exec "swaymsg input type:keyboard xkb_switch_layout next"'';
-        "XF86Favorites" = ''
-          exec "emacsclient --eval '(save-some-buffers t)' 2>/dev/null; systemctl poweroff"'';
+        "Cancel" = ''exec "swaymsg input type:keyboard xkb_switch_layout next"'';
+        "XF86Favorites" =
+          ''exec "emacsclient --eval '(save-some-buffers t)' 2>/dev/null; systemctl poweroff"'';
       };
       window = {
         border = 2;
@@ -242,8 +248,12 @@ in {
       # TODO Set your input/output devices
       # swaymsg -t get_outputs
       output = {
-        "*" = { bg = ''"${./background-image-secondary.png}" fill''; };
-        "eDP-1" = { bg = ''"${./background-image-primary.png}" fill''; };
+        "*" = {
+          bg = ''"${./background-image-secondary.png}" fill'';
+        };
+        "eDP-1" = {
+          bg = ''"${./background-image-primary.png}" fill'';
+        };
       };
     };
   };

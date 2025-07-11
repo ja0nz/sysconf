@@ -1,17 +1,19 @@
-/* #+TITLE: Define some useful overlays
+/*
+  #+TITLE: Define some useful overlays
 
-   This file defines some overlays which are needed by wayland/sway and the
-   Emacs GCC version. Imported by ../_shared/users.nix
+  This file defines some overlays which are needed by wayland/sway and the
+  Emacs GCC version. Imported by ../_shared/users.nix
 
-   * Mandatory configuration
-    You may remove the sha256 assignments or update them to stay updated.
-    SHA256 checksums are a good practice to roll back if things break.
+  * Mandatory configuration
+   You may remove the sha256 assignments or update them to stay updated.
+   SHA256 checksums are a good practice to roll back if things break.
 
-    Sources are managed by niv (https://github.com/nmattia/niv)
-    Just run ~nix update~ in the repository root from time to time.
+   Sources are managed by niv (https://github.com/nmattia/niv)
+   Just run ~nix update~ in the repository root from time to time.
 */
 
-{ sources }: {
+{ sources }:
+{
   # TODO Fixed upstream; Leave this here for reference
   # discordpyOverlay = self: super: {
   #   python37 = super.python37.override {
@@ -44,17 +46,21 @@
   #   }));
   # };
 
-  emacsOverlay = (import (fetchTarball {
-    url = sources.emacs-overlay.url;
-    sha256 = sources.emacs-overlay.sha256;
-  }));
+  emacsOverlay = (
+    import (fetchTarball {
+      url = sources.emacs-overlay.url;
+      sha256 = sources.emacs-overlay.sha256;
+    })
+  );
 
-  waylandOverlay = (import "${
+  waylandOverlay = (
+    import "${
       fetchTarball {
         url = sources.nixpkgs-wayland.url;
         sha256 = sources.nixpkgs-wayland.sha256;
       }
-    }/overlay.nix");
+    }/overlay.nix"
+  );
 
   # [01.01.2023]
   # Latest release dates from 12.12.2020 and is broken. Master branch seems fixed but ain't pushed to a new release.

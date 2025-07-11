@@ -1,13 +1,14 @@
-/* #+TITLE: Nushell - a modern shell written in Rust w/ starship
-   #+FILETAGS: :shell:development:
+/*
+  #+TITLE: Nushell - a modern shell written in Rust w/ starship
+  #+FILETAGS: :shell:development:
 
-   --CURRENTLY ON HOLD--
-   Currently, 01.12.2021, does not play with (nix-)direnv
-   https://github.com/nushell/nushell/issues/2549
+  --CURRENTLY ON HOLD--
+  Currently, 01.12.2021, does not play with (nix-)direnv
+  https://github.com/nushell/nushell/issues/2549
 
-   * Optional configuration
-    Some aliases are preset. This is of course a non breaking setting.
-    You may add/alter them to your liking.
+  * Optional configuration
+   Some aliases are preset. This is of course a non breaking setting.
+   You may add/alter them to your liking.
 */
 { pkgs, lib, ... }:
 

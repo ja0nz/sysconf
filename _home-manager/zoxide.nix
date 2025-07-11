@@ -1,5 +1,6 @@
-/* #+TITLE: Zoxide - a fast cd command that learns your habits
-   #+FILETAGS: :shell:
+/*
+  #+TITLE: Zoxide - a fast cd command that learns your habits
+  #+FILETAGS: :shell:
 */
 { ... }:
 

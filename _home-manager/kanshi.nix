@@ -1,8 +1,9 @@
-/* #+TITLE: Kanshi - dynamc display configuration tool
-   #+FILETAGS: :sway:
+/*
+  #+TITLE: Kanshi - dynamc display configuration tool
+  #+FILETAGS: :sway:
 
-   * Mandatory configuration
-    - Set your output profiles!
+  * Mandatory configuration
+   - Set your output profiles!
 */
 { lib, ... }:
 
@@ -22,7 +23,8 @@ let
     position = "${builtins.toString (builtins.ceil _posRight)},0";
     scale = 1.0;
   };
-in {
+in
+{
   services.kanshi = {
     enable = true;
     settings = [
@@ -32,7 +34,10 @@ in {
       }
       {
         profile.name = "docked";
-        profile.outputs = [ tpX1 lgHome ];
+        profile.outputs = [
+          tpX1
+          lgHome
+        ];
       }
     ];
   };

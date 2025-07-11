@@ -1,5 +1,6 @@
-/* #+TITLE: Packages in use
-   Packages imported by ./home.nix
+/*
+  #+TITLE: Packages in use
+  Packages imported by ./home.nix
 */
 { pkgs, ... }:
 

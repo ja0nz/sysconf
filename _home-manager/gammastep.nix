@@ -1,16 +1,17 @@
-/* #+TITLE: Gammastep/wlsunset - adjust the screen color temperature
-   #+FILETAGS: :ui:sway:
+/*
+  #+TITLE: Gammastep/wlsunset - adjust the screen color temperature
+  #+FILETAGS: :ui:sway:
 
-   * Mandatory configuration
-    ** Automatic geolocation (gammastep)
-      Geoclue2 must be enabled to retrieve the position which
-      is used to calculate the screen temperature.
+  * Mandatory configuration
+   ** Automatic geolocation (gammastep)
+     Geoclue2 must be enabled to retrieve the position which
+     is used to calculate the screen temperature.
 
-      Enable geoclue2 in nixOS:
-      ~geoclue2.enable = true;~
+     Enable geoclue2 in nixOS:
+     ~geoclue2.enable = true;~
 
-    ** Manual geolocation
-      Alternatively you can set it manually.
+   ** Manual geolocation
+     Alternatively you can set it manually.
 */
 { ... }:
 

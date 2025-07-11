@@ -1,15 +1,18 @@
-/* #+TITLE: Alacritty - a terminal emulater
-   #+FILETAGS: :shell:ui:sway:
+/*
+  #+TITLE: Alacritty - a terminal emulater
+  #+FILETAGS: :shell:ui:sway:
 
-   * Mandatory configuration
-    Alacritty needs a (monospace) font.
-    You either pass the variable in your config or set manually.
-    Run ~fc-list : family~ and choose a font family.
+  * Mandatory configuration
+   Alacritty needs a (monospace) font.
+   You either pass the variable in your config or set manually.
+   Run ~fc-list : family~ and choose a font family.
 */
 { config, ... }:
 
-let fontfamily = config._monoFont.name; # TODO Pass in a font or set it manually
-in {
+let
+  fontfamily = config._monoFont.name; # TODO Pass in a font or set it manually
+in
+{
   programs.alacritty = {
     enable = true;
     settings = {
@@ -48,8 +51,12 @@ in {
           background = "#282a36";
           foreground = "#f8f8f2";
         };
-        cursor = { cursor = "#81c1e4"; };
-        selection = { background = "#ccccc7"; };
+        cursor = {
+          cursor = "#81c1e4";
+        };
+        selection = {
+          background = "#ccccc7";
+        };
         normal = {
           black = "#000000";
           red = "#ff5555";

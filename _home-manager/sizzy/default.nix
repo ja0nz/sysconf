@@ -1,8 +1,9 @@
-/* #+TITLE: Sizzy Dev Brower
-   #+FILETAGS: :development:
+/*
+  #+TITLE: Sizzy Dev Brower
+  #+FILETAGS: :development:
 
-   * Mandatory configuration
-    After obtaining the latest AppImage adjust the version accordingly
+  * Mandatory configuration
+   After obtaining the latest AppImage adjust the version accordingly
 */
 { appimageTools, lib, ... }:
 
@@ -12,7 +13,8 @@ let
   name = "${pname}-${version}";
   src = ./. + "/Sizzy-${version}.AppImage";
   appimageContents = appimageTools.extractType2 { inherit name src; };
-in appimageTools.wrapType2 {
+in
+appimageTools.wrapType2 {
   inherit name src;
   extraInstallCommands = ''
     mv $out/bin/${name} $out/bin/${pname}

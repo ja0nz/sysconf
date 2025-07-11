@@ -1,15 +1,18 @@
-/* #+TITLE: Foot - a wayland terminal emulater
-   #+FILETAGS: :shell:ui:sway:
+/*
+  #+TITLE: Foot - a wayland terminal emulater
+  #+FILETAGS: :shell:ui:sway:
 
-   * Mandatory configuration
-    Foot needs a (monospace) font.
-    You either pass the variable in your config or set manually.
-    Run ~fc-list : family~ and choose a font family.
+  * Mandatory configuration
+   Foot needs a (monospace) font.
+   You either pass the variable in your config or set manually.
+   Run ~fc-list : family~ and choose a font family.
 */
 { config, ... }:
 
-let fontfamily = config._monoFont.name; # TODO Pass in a font or set it manually
-in {
+let
+  fontfamily = config._monoFont.name; # TODO Pass in a font or set it manually
+in
+{
   programs.foot = {
     enable = true;
     server.enable = true;

@@ -14,7 +14,7 @@
 }:
 
 let
-  inherit (config) _configInUse _repoRoot _monoFont;
+  inherit (config) _configInUse _monoFont;
   packagePath = _configInUse + /packages.nix;
   overlayPath = _configInUse + /overlays.nix;
   mainUser = "me";
@@ -69,35 +69,37 @@ in
     };
   };
 
-  home-manager.users.me =
-    { ... }:
-    {
+  home-manager.users = {
+    ${mainUser} =
+      { ... }:
+      {
 
-      imports = [ packagePath ];
-      config = {
+        imports = [ packagePath ];
+        config = {
 
-        inherit _configInUse _monoFont;
+          inherit _configInUse _monoFont;
 
-        nixpkgs.config = {
-          #allowBroken = true;
-          allowUnfree = true;
-          #allowUnsupportedSystem = true;
-          #oraclejdk.accept_license = true;
+          nixpkgs.config = {
+            #allowBroken = true;
+            allowUnfree = true;
+            #allowUnsupportedSystem = true;
+            #oraclejdk.accept_license = true;
+          };
+
+          nixpkgs.overlays = builtins.attrValues (
+            import overlayPath {
+              inherit sources;
+            }
+          );
+          #_module.args.setEnvironment = config.system.build.setEnvironment;
+          home.stateVersion = config.system.stateVersion;
         };
 
-        nixpkgs.overlays = builtins.attrValues (
-          import overlayPath {
-            inherit sources;
-          }
-        );
-        #_module.args.setEnvironment = config.system.build.setEnvironment;
-        home.stateVersion = config.system.stateVersion;
+        # Global options
+        options = with lib; {
+          _configInUse = mkOption { type = types.path; };
+          _monoFont = mkOption { type = types.attrs; };
+        };
       };
-
-      # Global options
-      options = with lib; {
-        _configInUse = mkOption { type = types.path; };
-        _monoFont = mkOption { type = types.attrs; };
-      };
-    };
+  };
 }

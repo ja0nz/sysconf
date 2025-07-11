@@ -1,20 +1,30 @@
-/* #+TITLE: Systemd --user services
-   #+FILETAGS: :user:
+/*
+  #+TITLE: Systemd --user services
+  #+FILETAGS: :user:
 
-   Currently not use! But here for reference if needed:)
-   Gather status of runnung user services:
-   ~systemctl --user status~
+  Currently not use! But here for reference if needed:)
+  Gather status of runnung user services:
+  ~systemctl --user status~
 */
-{ config, pkgs, lib, setEnvironment, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  setEnvironment,
+  ...
+}:
 
 let
   # Match the default socket path for the Neovim version so neovide continues
   # to work without wrapping it.
   socketDir = "%t/nvim";
   socketPath = "${socketDir}/server";
-in {
+in
+{
   systemd.user.sockets.nvim = {
-    Unit = { Description = pkgs.neovim.meta.description; };
+    Unit = {
+      Description = pkgs.neovim.meta.description;
+    };
     Socket = {
       ListenStream = socketPath;
       FileDescriptorName = "server";

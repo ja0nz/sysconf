@@ -1,12 +1,13 @@
-/* #+TITLE: Brave Browser
-   #+FILETAGS: :program:
+/*
+  #+TITLE: Brave Browser
+  #+FILETAGS: :program:
 
-   * Mandatory configuration
-    Add your extensions (id can be found in URL)
-   * Optional configuration
-   ** Vimium
-      Manual restore ./vimium-options.json
-      In Brave/Chrome: Vimum -> Settings -> Advanced options
+  * Mandatory configuration
+   Add your extensions (id can be found in URL)
+  * Optional configuration
+  ** Vimium
+     Manual restore ./vimium-options.json
+     In Brave/Chrome: Vimum -> Settings -> Advanced options
 */
 { pkgs, ... }:
 

@@ -1,9 +1,10 @@
-/* #+TITLE: XDG - base directory specification for X11/Wayland
-   #+FILETAGS: :ui:
+/*
+  #+TITLE: XDG - base directory specification for X11/Wayland
+  #+FILETAGS: :ui:
 
-   * Optional configuration
-    This mimeapps list is not crucial. It's just replicating the values
-    set by the system. You may easily go without using this module.
+  * Optional configuration
+   This mimeapps list is not crucial. It's just replicating the values
+   set by the system. You may easily go without using this module.
 */
 { ... }:
 
@@ -12,7 +13,11 @@
   xdg.configFile."mimeapps.list".force = true;
   xdg.mimeApps = {
     enable = true;
-    associations = { added = { "image/png" = "pix.desktop"; }; };
+    associations = {
+      added = {
+        "image/png" = "pix.desktop";
+      };
+    };
     defaultApplications = {
       "application/pdf" = [ "okularApplication_pdf.desktop" ];
       "text/html" = [ "chromium-browser.desktop" ];

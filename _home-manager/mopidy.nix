@@ -1,9 +1,10 @@
-/* #+TITLE: Mopidy - An extensible music server
-   #+FILETAGS: :music:service:
+/*
+  #+TITLE: Mopidy - An extensible music server
+  #+FILETAGS: :music:service:
 
-   * Optional configuration
-    - YTMusic: https://github.com/OzymandiasTheGreat/mopidy-ytmusic
-    - Soundcloud: https://github.com/mopidy/mopidy-soundcloud
+  * Optional configuration
+   - YTMusic: https://github.com/OzymandiasTheGreat/mopidy-ytmusic
+   - Soundcloud: https://github.com/mopidy/mopidy-soundcloud
 */
 { pkgs, ... }:
 
@@ -22,11 +23,17 @@
       # goto: https://music.youtube.com
       # F12 -> Network -> any post request (like log_event) -> Request Headers
       # refresh values: cookie, x-goog-visitor-id
-      ytmusic = { auth_json = "$XDG_CONFIG_DIR/mopidy/ytmusic.json"; };
+      ytmusic = {
+        auth_json = "$XDG_CONFIG_DIR/mopidy/ytmusic.json";
+      };
       # Reauth SoundCloud:
       # goto: https://mopidy.com/ext/soundcloud/#authentication
-      soundcloud = { auth_token = "3-35204-1397311-RauCxeZsPJuoSGVl4"; };
-      mpd = { hostname = "::"; };
+      soundcloud = {
+        auth_token = "3-35204-1397311-RauCxeZsPJuoSGVl4";
+      };
+      mpd = {
+        hostname = "::";
+      };
       somafm = {
         encoding = "aac";
         quality = "highest";

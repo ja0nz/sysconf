@@ -1,13 +1,14 @@
-/* #+TITLE: Ungoogled Chrome Browser
-   #+FILETAGS: :program:
+/*
+  #+TITLE: Ungoogled Chrome Browser
+  #+FILETAGS: :program:
 
-   * Mandatory configuration
-    Add your extensions (id can be found in URL)
-   * Optional configuration
-    - Language Reactor allow cookies -> Settings; Cookies; cookies allowed to [*.]languagereactor.com
-   ** Vimium
-      Manual restore ./vimium-options.json
-      In Brave/Chrome: Vimum -> Settings -> Advanced options
+  * Mandatory configuration
+   Add your extensions (id can be found in URL)
+  * Optional configuration
+   - Language Reactor allow cookies -> Settings; Cookies; cookies allowed to [*.]languagereactor.com
+  ** Vimium
+     Manual restore ./vimium-options.json
+     In Brave/Chrome: Vimum -> Settings -> Advanced options
 */
 { pkgs, ... }:
 
@@ -19,8 +20,7 @@
     extensions = [
       {
         id = "ocaahdebbfolfmndjeplogmgcagdmblk"; # chromium-web-store
-        updateUrl =
-          "https://raw.githubusercontent.com/NeverDecaf/chromium-web-store/master/updates.xml";
+        updateUrl = "https://raw.githubusercontent.com/NeverDecaf/chromium-web-store/master/updates.xml";
       }
       { id = "nngceckbapebfimnlniiiahkandclblb"; } # Bitwarden
       { id = "fihnjjcciajhdojfnbdddfaoknhalnja"; } # I don't care about cookies
@@ -34,4 +34,3 @@
     ];
   };
 }
-

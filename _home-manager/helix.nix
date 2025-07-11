@@ -1,5 +1,6 @@
-/* #+TITLE: Zoxide - Post-modern modal text editor, with vim keybindings
-   #+FILETAGS: :editor:
+/*
+  #+TITLE: Zoxide - Post-modern modal text editor, with vim keybindings
+  #+FILETAGS: :editor:
 */
 { pkgs, ... }:
 
@@ -23,7 +24,10 @@
     settings = {
       theme = "dracula";
       editor = {
-        shell = [ "fish" "-c" ];
+        shell = [
+          "fish"
+          "-c"
+        ];
         mouse = false;
         bufferline = "always";
         cursor-shape.insert = "bar";

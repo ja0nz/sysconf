@@ -1,5 +1,6 @@
-/* #+TITLE: Base configuration
-   Just some minimal but sane defaults
+/*
+  #+TITLE: Base configuration
+  Just some minimal but sane defaults
 */
 { pkgs, ... }:
 

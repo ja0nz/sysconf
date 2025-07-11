@@ -1,5 +1,6 @@
-/* #+TITLE: Boot loader
-   Settings concerned the boot process
+/*
+  #+TITLE: Boot loader
+  Settings concerned the boot process
 */
 { ... }:
 
@@ -10,5 +11,7 @@
     efi.canTouchEfiVariables = true;
     # supportedFilesystems = [ "ntfs" ];
   };
-  boot.kernel.sysctl = { "net.core.rmem_max" = 2500000; };
+  boot.kernel.sysctl = {
+    "net.core.rmem_max" = 2500000;
+  };
 }

@@ -30,8 +30,7 @@ with lib;
   config = {
     # TODO Set your values
     # Consult: https://www.nerdfonts.com/font-downloads
-    _repoRoot = /home/me/sysconf;
-    _configInUse = ../ThinkPad_X1_Nano_Gen1;
+    _configInUse = ./.;
     _monoFont = {
       name = "JetBrainsMono Nerd Font";
       pkg = pkgs.nerd-fonts.jetbrains-mono;
@@ -132,7 +131,6 @@ with lib;
 
   # Global options
   options = {
-    _repoRoot = mkOption { type = types.path; };
     _configInUse = mkOption { type = types.path; };
     _monoFont = mkOption { type = types.attrs; };
     _sansFont = mkOption { type = types.attrs; };

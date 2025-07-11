@@ -1,10 +1,13 @@
-/* #+TITLE: Packages in use
-   Packages imported by ../_shared/users.nix
+/*
+  #+TITLE: Packages in use
+  Packages imported by ../_shared/users.nix
 */
 { pkgs, ... }:
 
-let sizzy = import ../../_home-manager/sizzy;
-in {
+let
+  sizzy = import ../../_home-manager/sizzy;
+in
+{
 
   # Home manager imports
   imports = map (pkg: ../../_home-manager + pkg) [
