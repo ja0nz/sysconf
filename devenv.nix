@@ -10,7 +10,7 @@
 
   pre-commit.hooks = {
     # format *.nix
-    nixfmt.enable = true;
+    nixfmt-rfc-style.enable = true;
   };
 
   languages.nix.enable = true;

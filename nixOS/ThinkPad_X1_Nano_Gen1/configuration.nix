@@ -1,26 +1,31 @@
-/* #+TITLE: ThinkPad X1 Nano Gen1
+/*
+  #+TITLE: ThinkPad X1 Nano Gen1
 
-   * Mandatory configuration
-     Set repoPath and configPath
+  * Mandatory configuration
+    Set repoPath and configPath
 
-   * Optional configuration
+  * Optional configuration
 */
 { pkgs, lib, ... }:
 
-with lib; {
+with lib;
+{
 
-  imports = let shared = ../_shared;
-  in [
-    ./hardware-configuration.nix
-    (shared + /cachix)
-    (shared + /boot.nix)
-    (shared + /base.nix)
-    (shared + /users.nix)
-    (shared + /fonts.nix)
-    (shared + /pipewire.nix)
-    (shared + /localization.nix)
-    (shared + /virtualization.nix)
-  ];
+  imports =
+    let
+      shared = ../_shared;
+    in
+    [
+      ./hardware-configuration.nix
+      (shared + /cachix)
+      (shared + /boot.nix)
+      (shared + /base.nix)
+      (shared + /users.nix)
+      (shared + /fonts.nix)
+      (shared + /pipewire.nix)
+      (shared + /localization.nix)
+      (shared + /virtualization.nix)
+    ];
 
   config = {
     # TODO Set your values
@@ -55,17 +60,15 @@ with lib; {
     };
 
     hardware = {
-      cpu.intel.updateMicrocode = true;
       bluetooth = {
         enable = true;
         package = pkgs.bluez; # pkgs.bluezFull;
       };
       graphics = {
         enable = true;
-        extraPackages = with pkgs;
-          [
-            intel-media-driver # LIBVA_DRIVER_NAME=iHD
-          ];
+        extraPackages = with pkgs; [
+          intel-media-driver # LIBVA_DRIVER_NAME=iHD
+        ];
       };
       brillo.enable = true;
     };

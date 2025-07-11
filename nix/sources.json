@@ -5,10 +5,34 @@
         "homepage": "",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "dab8132d4a9bffeaadb5af2e5a04140439477b7b",
-        "sha256": "183m2ywyjzab7p3kfkfik6gjxgq2ccmalaj7f3ykhzk7rshmfbjf",
+        "rev": "4bf862fff2ff0d2618813b698d5b2dbf9cc355cc",
+        "sha256": "1ziqfvy8hxmcipgpnp64wxrvxxgwq9y9qsw08c96ah5hxrqlydxp",
         "type": "tarball",
-        "url": "https://github.com/nix-community/emacs-overlay/archive/dab8132d4a9bffeaadb5af2e5a04140439477b7b.tar.gz",
+        "url": "https://github.com/nix-community/emacs-overlay/archive/4bf862fff2ff0d2618813b698d5b2dbf9cc355cc.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "home-manager": {
+        "branch": "master",
+        "description": "Manage a user environment using Nix  [maintainer=@rycee] ",
+        "homepage": "https://nix-community.github.io/home-manager/",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "fab659b346c0d4252208434c3c4b3983a4b38fec",
+        "sha256": "0p7v0pmazmknc8jcrzm7rsb6h5y7ld2h0cj347cji01qg219yxlj",
+        "type": "tarball",
+        "url": "https://github.com/nix-community/home-manager/archive/fab659b346c0d4252208434c3c4b3983a4b38fec.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nixpkgs": {
+        "branch": "nixpkgs-unstable",
+        "description": "Nix Packages collection & NixOS",
+        "homepage": "",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "9b008d60392981ad674e04016d25619281550a9d",
+        "sha256": "1pxnwzrwcgasascapd6f0l8ricv6dgads3rgz2m45hyny80720cs",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/9b008d60392981ad674e04016d25619281550a9d.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs-wayland": {
@@ -17,10 +41,10 @@
         "homepage": "",
         "owner": "nix-community",
         "repo": "nixpkgs-wayland",
-        "rev": "1f684e6ca6f18b7ba2e8e2fbbf883c69dea33ac5",
-        "sha256": "1jwllxqhfhgaiyxfc70g3j5si0a88g4q195phj8jg27mvq76piw4",
+        "rev": "9263ec8961b15211483fa2494c18895f2dd6d794",
+        "sha256": "1ypj9afvcllzf2dadgjv1b5w7547f2l3ybvayxcgx1g9lws0hi2h",
         "type": "tarball",
-        "url": "https://github.com/nix-community/nixpkgs-wayland/archive/1f684e6ca6f18b7ba2e8e2fbbf883c69dea33ac5.tar.gz",
+        "url": "https://github.com/nix-community/nixpkgs-wayland/archive/9263ec8961b15211483fa2494c18895f2dd6d794.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

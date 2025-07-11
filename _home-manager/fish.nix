@@ -1,18 +1,21 @@
-/* #+TITLE: Fish - a friendly interactive shell
-   #+FILETAGS: :shell:development:
+/*
+  #+TITLE: Fish - a friendly interactive shell
+  #+FILETAGS: :shell:development:
 
-   * Mandatory configuration
-    Take a look at the shell aliases! You may not be able to use
-    ls, cat, find, etc. if you don't install it's dependencies too.
+  * Mandatory configuration
+   Take a look at the shell aliases! You may not be able to use
+   ls, cat, find, etc. if you don't install it's dependencies too.
 
-   * Optional configuration
-    Some aliases come are preset. This is of course a non breaking setting.
-    You may add/alter them to your liking.
+  * Optional configuration
+   Some aliases come are preset. This is of course a non breaking setting.
+   You may add/alter them to your liking.
 */
 { config, pkgs, ... }:
 
-let inherit (config) _repoRoot;
-in {
+let
+  inherit (config) _configInUse;
+in
+{
   home.sessionVariables = {
     # EDITOR = "emacsclient -c"; <-- set by services.emacs directly
     # BROWSER = "chromium"; <-- set in mimeapps.list instead
@@ -26,14 +29,11 @@ in {
     enable = true;
     shellAliases = {
       # --- TODO Special sysconf/nixOS related commands
-      "nixos:updateALL" = "sudo nix-channel --update; cd ${
-          toString _repoRoot
-        } && ${pkgs.niv}/bin/niv update; cd -";
-      "nixos:switch" = "sudo nixos-rebuild switch";
-      "nixos:boot" = "sudo nixos-rebuild boot";
+      "nixos:updateALL" = "cd ${toString ../.} && ${pkgs.niv}/bin/niv update; cd -";
+      "nixos:switch" = "sudo nixos-rebuild switch -f ${toString _configInUse}";
+      "nixos:boot" = "sudo nixos-rebuild boot -f ${toString _configInUse}";
       "nixos:clean" = "sudo nix-collect-garbage -d";
-      nix-stray-roots =
-        "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/w+-system|{memory)'";
+      nix-stray-roots = "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/w+-system|{memory)'";
       # --- TODO General purpose
       cat = "bat";
       curl = "curlie"; # net
