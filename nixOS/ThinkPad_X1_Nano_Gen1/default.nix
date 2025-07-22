@@ -8,6 +8,7 @@ let
 in
 nixosSystem {
   system = null;
+  specialArgs = { inherit sources; };
   modules = [
     ./configuration.nix
   ];

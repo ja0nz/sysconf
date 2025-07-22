@@ -2,7 +2,12 @@
   #+TITLE: Base configuration
   Just some minimal but sane defaults
 */
-{ pkgs, ... }:
+{
+  pkgs,
+  config,
+  sources,
+  ...
+}:
 
 {
   config = {
@@ -24,6 +29,8 @@
 
     # Nix settings
     nix = {
+      channel.enable = false;
+      nixPath = [ "nixpkgs=${sources.nixpkgs}" ];
       extraOptions = ''
         keep-outputs = true
         keep-derivations = true

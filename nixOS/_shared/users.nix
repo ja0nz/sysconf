@@ -10,6 +10,7 @@
   lib,
   pkgs,
   config,
+  sources,
   ...
 }:
 
@@ -18,7 +19,6 @@ let
   packagePath = _configInUse + /packages.nix;
   overlayPath = _configInUse + /overlays.nix;
   mainUser = "me";
-  sources = import ../../nix/sources.nix;
 
   home-manager = builtins.fetchTarball {
     url = sources.home-manager.url;
