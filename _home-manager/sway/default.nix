@@ -43,6 +43,7 @@ in
   # Packages
   home.packages = with pkgs; [
     fuzzel
+    cliphist # Wayland clipboard manager
     swayr # a window-switcher & more for sway
     autotiling # Script for sway and i3 to automatically switch the horizontal / vertical window split orientation
     kanshi # Dynamic display configuration tool
@@ -160,6 +161,7 @@ in
         "${modifier}+Ctrl+tab" = "workspace back_and_forth";
 
         # Other sway -> TOP ROW
+        "${modifier}+p" = ''exec "cliphist list | wofi -S dmenu | cliphist decode | wl-copy"'';
         #"${modifier}+u" = ''exec "papersway-msg cols incr"'';
         #"${modifier}+Ctrl+u" = ''exec "papersway-msg cols decr"'';
         #"${modifier}+i" = ''exec "papersway-msg absorb_expel left"'';

@@ -41,6 +41,7 @@ in
     /git.nix
     /gpg.nix
     /ssh.nix
+    /cliphist.nix
     # -- Hardware connectivity --
     /blueman.nix
     /udiskie.nix
@@ -71,7 +72,7 @@ in
     wofi # ^
 
     # -- System information --
-    neofetch # A fast, highly customizable system info script
+    fastfetchMinimal # A fast, highly customizable system info script
     du-dust # du + rust = dust. Like du but more intuitive [RUST]
     duf # Disk Usage/Free Utility [GO]
     inxi # A full featured CLI system information tool
