@@ -51,6 +51,7 @@
   # Optional: if you want to use GPG for SSH authentication
   services.gpg-agent = {
     enable = true;
+    noAllowExternalCache = true;
     pinentry.package = pkgs.pinentry-gnome3;
     defaultCacheTtl = 6000;
     enableSshSupport = true;
