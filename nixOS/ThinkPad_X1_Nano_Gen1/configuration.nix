@@ -43,6 +43,10 @@ with lib;
       name = "Tinos Nerd Font";
       pkg = pkgs.nerd-fonts.tinos;
     };
+    _emojiFont = {
+      name = "Noto Color Emoji";
+      pkg = pkgs.noto-fonts-color-emoji;
+    };
 
     networking = {
       hostName = "nano";
@@ -111,8 +115,8 @@ with lib;
     security = {
       # Swaylock - see sway/default.nix
       pam.services.swaylock = { };
-      # sway
-      polkit.enable = true;
+      pam.services.hyprlock = { };
+      pam.services.greetd.enableGnomeKeyring = true;
     };
 
     programs = {
@@ -135,5 +139,6 @@ with lib;
     _monoFont = mkOption { type = types.attrs; };
     _sansFont = mkOption { type = types.attrs; };
     _serifFont = mkOption { type = types.attrs; };
+    _emojiFont = mkOption { type = types.attrs; };
   };
 }

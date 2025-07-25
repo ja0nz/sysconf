@@ -17,6 +17,7 @@
       config._monoFont.pkg
       config._sansFont.pkg
       config._serifFont.pkg
+      config._emojiFont.pkg
       pkgs.emacs-all-the-icons-fonts
       pkgs.symbola
       # nerdfonts
@@ -35,6 +36,7 @@
         monospace = [ config._monoFont.name ];
         sansSerif = [ config._sansFont.name ];
         serif = [ config._serifFont.name ];
+        emoji = [ config._emojiFont.name ];
       };
     };
   };

@@ -17,6 +17,17 @@
   programs.chromium = {
     enable = true;
     package = pkgs.ungoogled-chromium;
+    commandLineArgs = [
+      "--extension-mime-request-handling=always-prompt-for-install"
+      "--scroll-tabs=never"
+      "--force-punycode-hostnames"
+      "--show-avatar-button=never"
+      "--hide-crashed-bubble"
+      # chrome://flags
+      "--enable-features=AcceleratedVideoEncoder"
+      "--ignore-gpu-blocklist"
+      "--enable-zero-copy"
+    ];
     extensions = [
       {
         id = "ocaahdebbfolfmndjeplogmgcagdmblk"; # chromium-web-store

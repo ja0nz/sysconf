@@ -62,6 +62,18 @@
     }/overlay.nix"
   );
 
+  niriOverlay =
+    let
+      f = builtins.getFlake sources.niri-flake.url;
+    in
+    f.overlays.niri;
+
+  waybarOverlay =
+    let
+      f = builtins.getFlake sources.Waybar.url;
+    in
+    f.overlays.waybar;
+
   # [01.01.2023]
   # Latest release dates from 12.12.2020 and is broken. Master branch seems fixed but ain't pushed to a new release.
   # mopidySoundCloudOverlay = self: super: {

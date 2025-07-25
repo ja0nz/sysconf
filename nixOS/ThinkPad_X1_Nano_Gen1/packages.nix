@@ -20,13 +20,18 @@ in
     # -- Services --
     /syncthing.nix
     /systemd.nix
+    /swww.nix
+    /gnome.nix
     # -- nix --
     /sway
+    /niri
+    /hyprlock.nix
     /waybar
     /kanshi.nix
     /mako.nix
     /gammastep.nix
     /foot.nix
+    /fuzzel.nix
     /xdg.nix
     /gtk.nix
     # -- SHELL --
@@ -45,6 +50,7 @@ in
     # -- Hardware connectivity --
     /blueman.nix
     /udiskie.nix
+    /networkmanager_dmenu.nix
   ];
 
   # Is a sane 'cat' replacement
@@ -59,17 +65,25 @@ in
     # })
     # mate.eom # An image viewing and cataloging program for the MATE desktop
     #stremio # A modern media center
-    nemo # File browser for Cinnamon
-    pix # A generic image viewer from Linux Mint
-    kdePackages.okular # KDE document viewer
     pwvucontrol # Pipewire Volume Control
     networkmanagerapplet # NetworkManager control applet for GNOME
     readest # Modern, feature-rich ebook reader
     remnote # Note-taking application focused on learning and productivity
     # anki-bin # Spaced repetition flashcard program
     # mpv # ^ General-purpose media player, fork of MPlayer and mplayer2
-    wofi-emoji # Emoji picker
-    wofi # ^
+
+    # -- GNOME --
+    amberol
+    #cavalier
+    (celluloid.override { youtubeSupport = true; })
+    nautilus
+    gnome-control-center
+    gnome-text-editor
+    file-roller
+    (papers.override { supportNautilus = true; })
+    loupe
+    keypunch
+    eyedropper
 
     # -- System information --
     fastfetchMinimal # A fast, highly customizable system info script
@@ -93,8 +107,6 @@ in
     bandwhich # A CLI utility for displaying current network utilization [RUST]
     xh # HTTPie; Friendly and fast tool for sending HTTP requests [RUST]
     doggo # Command-line DNS Client for Humans. Written in Golang [RUST]
-    dmenu # A generic, highly customizable, menu for the X Window System
-    networkmanager_dmenu # Small script to manage NetworkManager connections with dmenu
     wget # Tool for retrieving files using HTTP, HTTPS, and FTP
     curl # A command line tool for transferring files with URL syntax
     maestral # Open-source Dropbox client for macOS and Linux

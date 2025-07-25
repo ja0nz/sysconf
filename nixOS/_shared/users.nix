@@ -15,7 +15,7 @@
 }:
 
 let
-  inherit (config) _configInUse _monoFont;
+  inherit (config) _configInUse _monoFont _emojiFont;
   packagePath = _configInUse + /packages.nix;
   overlayPath = _configInUse + /overlays.nix;
   mainUser = "me";
@@ -40,7 +40,8 @@ in
       # AutoLogin the main users
       initial_session = {
         user = mainUser;
-        command = "sway";
+        command = "${pkgs.niri}/bin/niri-session";
+        #command = "sway";
       };
     };
   };
@@ -69,6 +70,7 @@ in
     };
   };
 
+  home-manager.extraSpecialArgs = { inherit sources; };
   home-manager.users = {
     ${mainUser} =
       { ... }:
@@ -77,7 +79,7 @@ in
         imports = [ packagePath ];
         config = {
 
-          inherit _configInUse _monoFont;
+          inherit _configInUse _monoFont _emojiFont;
 
           nixpkgs.config = {
             #allowBroken = true;
@@ -99,6 +101,7 @@ in
         options = with lib; {
           _configInUse = mkOption { type = types.path; };
           _monoFont = mkOption { type = types.attrs; };
+          _emojiFont = mkOption { type = types.attrs; };
         };
       };
   };

@@ -11,6 +11,7 @@
 
 let
   fontfamily = config._monoFont.name; # TODO Pass in a font or set it manually
+  emojifont = config._emojiFont.name;
 in
 {
   programs.foot = {
@@ -19,7 +20,7 @@ in
     settings = {
       main = {
         term = "xterm-256color";
-        font = "${fontfamily}:size=12";
+        font = "${fontfamily}:size=12, ${emojifont}:size=12";
       };
       colors = {
         alpha = 0.9;

@@ -419,7 +419,7 @@ https://karthinks.com/software/avy-can-do-anything/
                       (list (icons x))
                       nil nil)) agenda-icons/caticons)))
 #+end_src
-*** DONE Org Denote & Denote Journal
+*** Org Denote & Denote Journal
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
 (package! denote)
 (package! denote-journal)

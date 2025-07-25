@@ -1,14 +1,26 @@
 {
+    "Waybar": {
+        "branch": "master",
+        "description": "Highly customizable Wayland bar for Sway and Wlroots based compositors. :v: :tada:",
+        "homepage": "",
+        "owner": "Alexays",
+        "repo": "Waybar",
+        "rev": "0776e694df56c2c849b682369148210d81324e93",
+        "sha256": "1ynvy6maz4kl4xik2iv86xjrlk62aixc9q79fm5ha0axlvh7n0xg",
+        "type": "tarball",
+        "url": "https://github.com/Alexays/Waybar/archive/0776e694df56c2c849b682369148210d81324e93.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "emacs-overlay": {
         "branch": "master",
         "description": "Bleeding edge emacs overlay [maintainer=@adisbladis] ",
         "homepage": "",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "4bf862fff2ff0d2618813b698d5b2dbf9cc355cc",
-        "sha256": "1ziqfvy8hxmcipgpnp64wxrvxxgwq9y9qsw08c96ah5hxrqlydxp",
+        "rev": "b768ba904f606b4970f9f3f67e009c4f247d9759",
+        "sha256": "0sb0fi44js86a8cz6xb6gl89hbbvbgkvvj8myqw2gc55jnh0hzm7",
         "type": "tarball",
-        "url": "https://github.com/nix-community/emacs-overlay/archive/4bf862fff2ff0d2618813b698d5b2dbf9cc355cc.tar.gz",
+        "url": "https://github.com/nix-community/emacs-overlay/archive/b768ba904f606b4970f9f3f67e009c4f247d9759.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "home-manager": {
@@ -17,10 +29,22 @@
         "homepage": "https://nix-community.github.io/home-manager/",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "fab659b346c0d4252208434c3c4b3983a4b38fec",
-        "sha256": "0p7v0pmazmknc8jcrzm7rsb6h5y7ld2h0cj347cji01qg219yxlj",
+        "rev": "1fde6fb1be6cd5dc513dc1c287d69e4eb2de973e",
+        "sha256": "1qp170x37yd4h81bz8b9qfjgb0wrpzmhsxl0fl09y7b59ymy0dyl",
         "type": "tarball",
-        "url": "https://github.com/nix-community/home-manager/archive/fab659b346c0d4252208434c3c4b3983a4b38fec.tar.gz",
+        "url": "https://github.com/nix-community/home-manager/archive/1fde6fb1be6cd5dc513dc1c287d69e4eb2de973e.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "niri-flake": {
+        "branch": "main",
+        "description": "Nix-native configuration for niri",
+        "homepage": "https://github.com/YaLTeR/niri",
+        "owner": "sodiboo",
+        "repo": "niri-flake",
+        "rev": "fdeb0c5367f6e183f19ee1521644cb0440582bde",
+        "sha256": "0x4ncrcfhda4dgz2p6scy1dr30d11f8qfp3gfdv3738f6r98pq31",
+        "type": "tarball",
+        "url": "https://github.com/sodiboo/niri-flake/archive/fdeb0c5367f6e183f19ee1521644cb0440582bde.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {
@@ -29,10 +53,10 @@
         "homepage": "",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "9b008d60392981ad674e04016d25619281550a9d",
-        "sha256": "1pxnwzrwcgasascapd6f0l8ricv6dgads3rgz2m45hyny80720cs",
+        "rev": "83e677f31c84212343f4cc553bab85c2efcad60a",
+        "sha256": "0a607fp9fczly64bawpsk7y4i6pxaacn75gqzxg187ja0kmk492x",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/9b008d60392981ad674e04016d25619281550a9d.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/83e677f31c84212343f4cc553bab85c2efcad60a.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs-wayland": {
@@ -41,10 +65,10 @@
         "homepage": "",
         "owner": "nix-community",
         "repo": "nixpkgs-wayland",
-        "rev": "9263ec8961b15211483fa2494c18895f2dd6d794",
-        "sha256": "1ypj9afvcllzf2dadgjv1b5w7547f2l3ybvayxcgx1g9lws0hi2h",
+        "rev": "bb8049bdbd44a675aa05cc5a8e3431d8af0887d2",
+        "sha256": "0kw7hvzdr4sdlg76wg7ff7y7bpfhn9ggjj27d3zpr7gb8p5869jc",
         "type": "tarball",
-        "url": "https://github.com/nix-community/nixpkgs-wayland/archive/9263ec8961b15211483fa2494c18895f2dd6d794.tar.gz",
+        "url": "https://github.com/nix-community/nixpkgs-wayland/archive/bb8049bdbd44a675aa05cc5a8e3431d8af0887d2.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

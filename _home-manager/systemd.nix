@@ -46,18 +46,41 @@ in
     };
   };
   systemd.user.services = {
-    #   waybar = {
-    #     Unit = {
-    #       Description = pkgs.waybar.meta.description;
-    #       PartOf = [ "graphical-session.target" ];
-    #     };
-    #     Install = { WantedBy = [ "sway-session.target" ]; };
-    #     Service = {
-    #       ExecStart = "${pkgs.waybar}/bin/waybar";
-    #       RestartSec = 3;
-    #       Restart = "always";
-    #     };
-    #   };
+    maestral = {
+      Unit = {
+        Description = pkgs.maestral.meta.description;
+        After = [ "network-online.target" ];
+      };
+
+      Service = {
+        ExecStart = "${pkgs.maestral}/bin/maestral start -f";
+        ExecStop = "${pkgs.maestral}/bin/maestral stop";
+        Restart = "on-failure";
+        RestartSec = 5;
+        Environment = "PYTHONUNBUFFERED=1";
+      };
+
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
+    };
+    polkit-gnome-authentication-agent-1 = {
+      Unit = {
+        Description = pkgs.polkit_gnome.meta.description;
+        After = [ "graphical-session.target" ];
+        PartOf = [ "graphical-session.target" ];
+      };
+
+      Install.WantedBy = [ "graphical-session.target" ];
+
+      Service = {
+        Type = "simple";
+        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
+    };
     #   mako = {
     #     Unit = {
     #       Description = pkgs.mako.meta.description;

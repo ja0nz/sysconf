@@ -13,7 +13,7 @@
     enable = true;
     systemd = {
       enable = true;
-      target = "sway-session.target";
+      target = "graphical-session.target";
     };
     # style = builtins.readFile ./waybar.css;
     settings = [
