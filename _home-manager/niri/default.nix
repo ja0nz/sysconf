@@ -15,13 +15,6 @@
    - cliphist
    - swww
    - kanshi
-   - chromium browser -> as key combination
-   - networkmanager_dmenu -> as key combination
-   - wofi && wofi-emoji -> as key combination
-   - dropbox -> as service on start
-   - emacs -> as key combination
-   - playerctl -> as key combination
-   - _monoFont! Test with: fc-list : family | grep <MonoFontName>
 */
 { pkgs, sources, ... }:
 
