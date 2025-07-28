@@ -1,0 +1,84 @@
+{
+  // Prelude
+  "exlusive": "true",
+  "layer": "top",
+  "position": "top",
+  "gtk-layer-shell": "true",
+  "passthrough": "true",
+  "margin": 5,
+
+  // Layout
+  "modules-left": ["battery", "cpu", "memory", "disk"],
+  "modules-center": ["niri/workspaces"],
+  "modules-right": [
+    "wireplumber",
+    "wireplumber#source",
+    "network",
+    "bluetooth",
+    "separator",
+    "clock",
+  ],
+
+  // Modules left
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 15,
+    },
+    "format": "<big><span color='#f9c440'>{icon}</span></big> {capacity}%",
+    "format-charging": "<big><span color='#f9c440'>󰉁</span></big> {capacity}%",
+    "format-plugged": "<big><span color='#f9c440'></span></big> {capacity}%",
+    "format-icons": ["", "", "", "", ""],
+  },
+  "cpu": {
+    "format": "<big><span color='#c6262e'>󰍛</span></big> {usage}%",
+  },
+  "memory": {
+    "format": "<big><span color='#28bca3'></span></big> {used:0.1f}G",
+  },
+  "disk": {
+    "format": "<big><span color='#f37329'></span></big> {free}",
+    "unit": "GB",
+  },
+  // Modules center
+  "niri/workspaces": {
+    "format": "<big>{icon}</big>",
+    "format-icons": {
+      "active": "",
+      "default": "",
+    },
+  },
+  // Modules right
+  "wireplumber": {
+    "format": "<span color='#68b723'>{node_name}</span> {volume}%",
+    "format-muted": "<big><span color='#ffb86c'>󰖁</span></big>",
+  },
+  "wireplumber#source": {
+    "node-type": "Audio/Source",
+    "format": "<big><span color='#a56de2'>󰍬</span></big> {volume}%",
+    "format-muted": "<big><span color='#ffb86c'>󰍭</span></big>",
+  },
+  "network": {
+    "format-wifi": "<big><span color='#de3e80'></span></big> {essid} {signalStrength}%",
+    "format-disconnected": "<span color='#ffb86c'> Disconnected</span>",
+  },
+  "bluetooth": {
+    "format": "<big><span color='#3689e6'></span></big> {status}",
+    "format-disabled": "", // an empty format will hide the module
+    "format-connected": "<big><span color='#3689e6'></span></big> {device_alist}",
+    "tooltip-format": "{controller_alias}\t{controller_address}",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+  },
+  "clock": {
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format": "<big><span color='#485a6c'>󰥔 </span></big>{:%H:%M | %a %d %b}",
+    "format-alt": "{:%d.%m.%Y}",
+  },
+  "tray": {
+    "icon-size": 16,
+    "icon-theme": "White Sur",
+    "spacing": 2,
+  },
+}

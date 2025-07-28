@@ -32,6 +32,14 @@
         action = spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-";
         allow-when-locked = true;
       };
+      "${modifier}+XF86AudioRaiseVolume" = {
+        action = spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SOURCE@" "5%+";
+        allow-when-locked = true;
+      };
+      "${modifier}+XF86AudioLowerVolume" = {
+        action = spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SOURCE@" "5%-";
+        allow-when-locked = true;
+      };
 
       "XF86MonBrightnessUp" = {
         action = spawn "${pkgs.brillo}/bin/brillo" "-q" "-u" "300000" "-A" "4";

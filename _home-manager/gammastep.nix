@@ -27,7 +27,7 @@
   services.wlsunset = {
     enable = true;
     # TODO Set your location
-    latitude = "49.8";
-    longitude = "9.9";
+    latitude = "47.997";
+    longitude = "7.853";
   };
 }

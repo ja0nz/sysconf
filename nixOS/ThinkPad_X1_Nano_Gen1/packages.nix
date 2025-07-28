@@ -23,7 +23,7 @@ in
     /swww.nix
     /gnome.nix
     # -- nix --
-    /sway
+    # /sway
     /niri
     /hyprlock.nix
     /waybar
@@ -34,6 +34,7 @@ in
     /fuzzel.nix
     /xdg.nix
     /gtk.nix
+    /darkman.nix
     # -- SHELL --
     /fish.nix
     /mcfly.nix

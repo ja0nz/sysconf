@@ -65,6 +65,7 @@ with lib;
     hardware = {
       bluetooth = {
         enable = true;
+        powerOnBoot = false;
         package = pkgs.bluez; # pkgs.bluezFull;
       };
       graphics = {
@@ -125,6 +126,7 @@ with lib;
       # Requires SETUID
       wshowkeys.enable = true;
       fish.enable = true;
+      dconf.enable = true;
     };
 
     #    services.gvfs.enable = true;

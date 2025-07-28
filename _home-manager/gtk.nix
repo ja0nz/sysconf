@@ -23,9 +23,13 @@
       name = config._monoFont.name;
       size = 10;
     };
+
     iconTheme = {
-      package = pkgs.numix-icon-theme;
-      name = "Numix";
+      name = "WhiteSur";
+      package = pkgs.whitesur-icon-theme.override {
+        boldPanelIcons = true;
+        alternativeIcons = true;
+      };
     };
     theme = {
       # package = pkgs.dracula-theme;
@@ -33,5 +37,8 @@
       package = pkgs.ant-bloody-theme;
       name = "Ant-Bloody";
     };
+  };
+  home.sessionVariables = {
+    XDG_ICON_DIR = "${pkgs.whitesur-icon-theme}/share/icons/WhiteSur";
   };
 }

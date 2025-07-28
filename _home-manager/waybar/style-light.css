@@ -1,0 +1,20 @@
+/* Ant-Bloody GTK light tokens */
+@define-color theme_fg_color #1e1f29;
+@define-color theme_text_color #1e1f29;
+@define-color theme_bg_color #eee;
+@define-color theme_base_color #f8f8f2;
+@define-color theme_selected_bg_color #FF512F;
+@define-color theme_selected_fg_color #f8f8f2;
+@define-color borders rgba(0, 0, 0, 0.2);
+
+@define-color warning_color #ffb86c;
+@define-color error_color #ED3A53;
+@define-color success_color #66D7D1;
+
+@define-color waybar_border_color @theme_selected_bg_color;
+@define-color waybar_hover_bg alpha(@theme_selected_bg_color, 0.12);
+@define-color waybar_critical_color #ED3A53;
+@define-color waybar_warning_color #ffb86c;
+
+/* ---- Shared module styling ---- */
+@import "style-base.css";
