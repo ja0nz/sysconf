@@ -91,6 +91,7 @@ in
     du-dust # du + rust = dust. Like du but more intuitive [RUST]
     duf # Disk Usage/Free Utility [GO]
     inxi # A full featured CLI system information tool
+    libnotify
 
     # -- Find and discover --
     ripgrep # A utility that combines the usability of The Silver Searcher [RUST]

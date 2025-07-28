@@ -7,7 +7,12 @@
    You either pass the variable in your config or set manually.
    Run ~fc-list : family~ and choose a font family.
 */
-{ config, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   fontfamily = config._monoFont.name; # TODO Pass in a font or set it manually
@@ -21,6 +26,30 @@ in
       main = {
         term = "xterm-256color";
         font = "${fontfamily}:size=12, ${emojifont}:size=12";
+        selection-target = "clipboard";
+        horizontal-letter-offset = 0;
+        vertical-letter-offset = 0;
+        pad = "15x6center";
+      };
+      desktop-notifications.command = "${lib.getExe pkgs.libnotify} -a \${app-id} -i \${app-id} \${title} \${body}";
+      scrollback = {
+        lines = 10000;
+        multiplier = 3;
+        indicator-position = "relative";
+        indicator-format = "line";
+      };
+      url = {
+        launch = "${pkgs.xdg-utils}/bin/xdg-open \${url}";
+        label-letters = "sadfjklewcmpgh";
+        osc8-underline = "url-mode";
+      };
+      cursor = {
+        style = "beam";
+        beam-thickness = "2";
+      };
+      tweak = {
+        font-monospace-warn = "no";
+        sixel = "yes";
       };
       colors = {
         alpha = 0.9;
