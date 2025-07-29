@@ -6,13 +6,19 @@
    All possible config settings:
    https://github.com/Alexays/Waybar/blob/master/resources/config
 */
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
-  home.file.".config/waybar/style-base.css".source = ./style-base.css;
-  home.file.".config/waybar/style-dark.css".source = ./style-dark.css;
-  home.file.".config/waybar/style-light.css".source = ./style-light.css;
-  home.file.".config/waybar/config.jsonc".source = ./config.jsonc;
+  home.file =
+    let
+      ln = config.lib.file.mkOutOfStoreSymlink;
+    in
+    {
+      ".config/waybar/style-base.css".source = ln ./style-base.css;
+      ".config/waybar/style-dark.css".source = ln ./style-dark.css;
+      ".config/waybar/style-light.css".source = ln ./style-light.css;
+      ".config/waybar/config.jsonc".source = ln ./config.jsonc;
+    };
 
   programs.waybar = {
     enable = true;

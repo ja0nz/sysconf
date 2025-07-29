@@ -30,8 +30,7 @@
 
     fontconfig = {
       enable = true;
-      antialias = true;
-      cache32Bit = true;
+      antialias = true; # At high resolution (> 200 DPI), antialiasing has no visible effect
       defaultFonts = {
         monospace = [ config._monoFont.name ];
         sansSerif = [ config._sansFont.name ];

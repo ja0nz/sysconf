@@ -19,16 +19,10 @@ let
   packagePath = _configInUse + /packages.nix;
   overlayPath = _configInUse + /overlays.nix;
   mainUser = "me";
-
-  home-manager = builtins.fetchTarball {
-    url = sources.home-manager.url;
-    sha256 = sources.home-manager.sha256;
-  };
-
 in
 {
   imports = [
-    (import "${home-manager}/nixos")
+    (import "${sources.home-manager}/nixos")
   ];
   # Login manager
   services.greetd = {

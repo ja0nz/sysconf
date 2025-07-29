@@ -35,6 +35,7 @@ in
     /xdg.nix
     /gtk.nix
     /darkman.nix
+    /bat.nix
     # -- SHELL --
     /fish.nix
     /mcfly.nix
@@ -53,9 +54,6 @@ in
     /udiskie.nix
     /networkmanager_dmenu.nix
   ];
-
-  # Is a sane 'cat' replacement
-  programs.bat.enable = true;
 
   home.packages = with pkgs; [
     # -- Programs --
@@ -91,7 +89,8 @@ in
     du-dust # du + rust = dust. Like du but more intuitive [RUST]
     duf # Disk Usage/Free Utility [GO]
     inxi # A full featured CLI system information tool
-    libnotify
+    libnotify # A library that sends desktop notifications to a notification daemon
+    wl-clipboard # Command-line copy/paste utilities for Wayland
 
     # -- Find and discover --
     ripgrep # A utility that combines the usability of The Silver Searcher [RUST]

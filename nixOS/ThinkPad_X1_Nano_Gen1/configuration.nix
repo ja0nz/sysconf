@@ -8,7 +8,6 @@
 */
 { pkgs, lib, ... }:
 
-with lib;
 {
 
   imports =
@@ -136,7 +135,7 @@ with lib;
   };
 
   # Global options
-  options = {
+  options = with lib; {
     _configInUse = mkOption { type = types.path; };
     _monoFont = mkOption { type = types.attrs; };
     _sansFont = mkOption { type = types.attrs; };
