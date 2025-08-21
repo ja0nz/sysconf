@@ -46,21 +46,9 @@
   #   }));
   # };
 
-  emacsOverlay = (
-    import (fetchTarball {
-      url = sources.emacs-overlay.url;
-      sha256 = sources.emacs-overlay.sha256;
-    })
-  );
+  emacsOverlay = (import sources.emacs-overlay);
 
-  waylandOverlay = (
-    import "${
-      fetchTarball {
-        url = sources.nixpkgs-wayland.url;
-        sha256 = sources.nixpkgs-wayland.sha256;
-      }
-    }/overlay.nix"
-  );
+  waylandOverlay = (import "${sources.nixpkgs-wayland}/overlay.nix");
 
   niriOverlay =
     let

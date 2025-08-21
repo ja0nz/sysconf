@@ -54,9 +54,9 @@ tooltip {
   margin-left: 5px;
 }
 
-#clock:hover {
-  background: @waybar_hover_bg;
-}
+/* #clock:hover { */
+/*   background: @waybar_hover_bg; */
+/* } */
 
 #battery {
   animation-timing-function: linear;
