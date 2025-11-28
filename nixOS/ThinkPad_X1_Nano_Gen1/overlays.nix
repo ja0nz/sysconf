@@ -46,21 +46,21 @@
   #   }));
   # };
 
-  emacsOverlay = (import sources.emacs-overlay);
+  # emacsOverlay = (import sources.emacs-overlay);
 
-  waylandOverlay = (import "${sources.nixpkgs-wayland}/overlay.nix");
+  # waylandOverlay = (import "${sources.nixpkgs-wayland}/overlay.nix");
 
-  niriOverlay =
-    let
-      f = builtins.getFlake sources.niri-flake.url;
-    in
-    f.overlays.niri;
+  # niriOverlay =
+  #   let
+  #     f = builtins.getFlake (sources.niri-flake.url + "?rev=${sources.niri-flake.rev}&sha256=${sources.niri-flake.sha256}");
+  #   in
+  #   f.overlays.niri;
 
-  waybarOverlay =
-    let
-      f = builtins.getFlake sources.Waybar.url;
-    in
-    f.overlays.waybar;
+  # waybarOverlay =
+  #   let
+  #     f = builtins.getFlake (sources.Waybar.url + "?rev=${sources.Waybar.rev}&sha256=${sources.Waybar.sha256}");
+  #   in
+  #   f.overlays.waybar;
 
   # [01.01.2023]
   # Latest release dates from 12.12.2020 and is broken. Master branch seems fixed but ain't pushed to a new release.
