@@ -3,22 +3,29 @@
   #+FILETAGS: :program:
 
   * Mandatory configuration
-   Add emacs-overlay if needed. This is the fast, compiled emacs version
 
   * Optional configuration
    Add your config.el files or untangle them
 */
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  sources,
+  ...
+}:
 
+let
+  flake = sources.emacs-overlay;
+  emacs-community = (import sources.flake-compat { src = flake; }).outputs;
+in
 {
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs-git-pgtk; # TODO Req emacs-overlay (see overlays.nix)
+    package = emacs-community.packages.${builtins.currentSystem}.emacs-git-pgtk;
     #extraPackages = epkgs: with epkgs; [ use-package ];
   };
   services.emacs = {
     enable = true;
-    defaultEditor = true;
     socketActivation.enable = true;
   };
 

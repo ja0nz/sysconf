@@ -7,6 +7,7 @@
 {
   programs.helix = {
     enable = true;
+    defaultEditor = true;
     package = pkgs.evil-helix;
     extraPackages = with pkgs; [
       # Markdown

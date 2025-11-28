@@ -29,7 +29,7 @@ in
     enable = true;
     shellAliases = {
       # --- TODO Special sysconf/nixOS related commands
-      "nixos:updateALL" = "cd ${toString ../.} && ${pkgs.niv}/bin/niv update; cd -";
+      "nixos:updateALL" = "cd ${toString ../.} && ${pkgs.npins}/bin/npins update; cd -";
       "nixos:switch" = "sudo nixos-rebuild switch -f ${toString _configInUse}";
       "nixos:boot" = "sudo nixos-rebuild boot -f ${toString _configInUse}";
       "nixos:clean" = "sudo nix-collect-garbage -d";

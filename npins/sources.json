@@ -1,0 +1,75 @@
+{
+  "pins": {
+    "Waybar": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "Alexays",
+        "repo": "Waybar"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "161367d9617673a4ef9caf8299411dc5153464d1",
+      "url": "https://github.com/Alexays/Waybar/archive/161367d9617673a4ef9caf8299411dc5153464d1.tar.gz",
+      "hash": "1fbwcazx5scp7b6rf4xwbflf2nm5vn9sb9xvsvmkdcbs4wabfr21"
+    },
+    "emacs-overlay": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "emacs-overlay"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "6f2683c7c916b7e6d5e4fe01268a24f78c6483e4",
+      "url": "https://github.com/nix-community/emacs-overlay/archive/6f2683c7c916b7e6d5e4fe01268a24f78c6483e4.tar.gz",
+      "hash": "01zwlb5zdlr5fmr9k3yrhp8938bz7fhag8rzzbq8gq4123wdqlc0"
+    },
+    "flake-compat": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "https://git.lix.systems/lix-project/flake-compat.git"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "549f2762aebeff29a2e5ece7a7dc0f955281a1d1",
+      "url": null,
+      "hash": "0g4izwn5k7qpavlk3w41a92rhnp4plr928vmrhc75041vzm3vb1l"
+    },
+    "home-manager": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "home-manager"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "86ff0ef506c209bb397849706e85cc3a913cb577",
+      "url": "https://github.com/nix-community/home-manager/archive/86ff0ef506c209bb397849706e85cc3a913cb577.tar.gz",
+      "hash": "1g7zqng287z5glg5jg6sq9z6yx9vcc32hsan9sxh3sn5yqvwbvkc"
+    },
+    "niri-flake": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "sodiboo",
+        "repo": "niri-flake"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "de569ce56a6328617b17ec095b287ad77dfdec93",
+      "url": "https://github.com/sodiboo/niri-flake/archive/de569ce56a6328617b17ec095b287ad77dfdec93.tar.gz",
+      "hash": "0s7qfv6lwnjrph4ajgc4lv6ggizs8z71qbprb1ij8wr7wj49jsr6"
+    },
+    "nixpkgs": {
+      "type": "Channel",
+      "name": "nixpkgs-unstable",
+      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.05pre903204.0d59e0290eef/nixexprs.tar.xz",
+      "hash": "0zkhijkc8zn0imixpvmdk2rnp7kwfhad62wn49k2k01m1pg3sr9c"
+    }
+  },
+  "version": 5
+}

@@ -6,8 +6,12 @@
    All possible config settings:
    https://github.com/Alexays/Waybar/blob/master/resources/config
 */
-{ pkgs, config, ... }:
+{ config, sources, ... }:
 
+let
+  flake = sources.Waybar;
+  waybar = (import sources.flake-compat { src = flake; }).outputs;
+in
 {
   home.file =
     let
@@ -22,6 +26,7 @@
 
   programs.waybar = {
     enable = true;
+    package = waybar.packages.${builtins.currentSystem}.waybar;
     systemd = {
       enable = true;
       target = "graphical-session.target";

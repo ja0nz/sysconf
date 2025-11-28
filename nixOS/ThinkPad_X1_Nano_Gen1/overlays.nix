@@ -8,7 +8,7 @@
    You may remove the sha256 assignments or update them to stay updated.
    SHA256 checksums are a good practice to roll back if things break.
 
-   Sources are managed by niv (https://github.com/nmattia/niv)
+   Sources are managed by npins (https://github.com/andir/npins)
    Just run ~nix update~ in the repository root from time to time.
 */
 

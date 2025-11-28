@@ -1,5 +1,5 @@
 let
-  sources = import ../../nix/sources.nix;
+  sources = import ../../npins;
   nixosSystem = import "${sources.nixpkgs}/nixos/lib/eval-config.nix";
 in
 nixosSystem {
