@@ -29,6 +29,7 @@
 
     # Nix settings
     nix = {
+      package = pkgs.lixPackageSets.stable.lix; # Using lix
       channel.enable = false;
       nixPath = [ "nixpkgs=${sources.nixpkgs}" ];
       extraOptions = ''

@@ -82,11 +82,16 @@ in
             #oraclejdk.accept_license = true;
           };
 
-          nixpkgs.overlays = builtins.attrValues (
-            import overlayPath {
-              inherit sources;
-            }
-          );
+          nixpkgs.overlays = builtins.attrValues (import overlayPath { inherit sources; }) ++ [
+            (final: prev: {
+              inherit (prev.lixPackageSets.stable)
+                nixpkgs-review
+                nix-eval-jobs
+                nix-fast-build
+                colmena
+                ;
+            })
+          ];
           #_module.args.setEnvironment = config.system.build.setEnvironment;
           home.stateVersion = config.system.stateVersion;
         };
