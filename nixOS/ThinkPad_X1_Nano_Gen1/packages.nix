@@ -49,6 +49,7 @@ in
     /gpg.nix
     /ssh.nix
     /cliphist.nix
+    /yazi.nix
     # -- Hardware connectivity --
     /blueman.nix
     /udiskie.nix
