@@ -77,18 +77,16 @@
       "${modifier}+o".action = playerctl "position 3+";
 
       # Print screen
-      "Print".action.screenshot-screen = {
-        write-to-disk = true;
-      };
-      "Ctrl+Print".action = screenshot-window;
-      "Ctrl+Shift+Print".action.screenshot = {
-        show-pointer = false;
-      };
+      # https://github.com/sodiboo/niri-flake/issues/1380
+      "Print".action.screenshot = [ ];
+      "Ctrl+Print".action.screenshot-window = [ ];
+      "Ctrl+Shift+Print".action.screenshot-screen = [ ];
 
       # Launchers
       "${modifier}+D".action = spawn "${pkgs.fuzzel}/bin/fuzzel";
       # "${modifier}+Ctrl+D".action = spawn "${pkgs.raffi}/bin/raffi";
       "${modifier}+Return".action = spawn "${pkgs.foot}/bin/footclient";
+      "${modifier}+Alt+H".action = show-hotkey-overlay;
       # "${modifier}+E".action = spawn "emacsclient" "-c";
       # "${modifier}+C".action = spawn "chromium";
 
