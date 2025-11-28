@@ -16,27 +16,28 @@
 {
   programs.git = {
     enable = true;
-    delta = {
-      enable = true; # delta syntax highlighter. See https://github.com/dandavison/delta.
-      options = {
-        features = "line-numbers";
-        syntax-theme = "Dracula";
-      };
-    };
-    userName = "ja0nz"; # TODO Set your credentials
-    userEmail = "git@ja.nz"; # TODO Set your credentials
-    ignores = [ "*~" ];
-    signing = {
-      key = "5A8F0894614456ED"; # TODO Set default signing key
-      signByDefault = true;
-    };
-    extraConfig = {
+    settings = {
+      user.name = "ja0nz"; # TODO Set your credentials
+      user.email = "git@ja.nz"; # TODO Set your credentials
       core = {
         filemode = false;
         whitespace = "fix,tab-in-indent";
       };
       init.defaultBranch = "main";
       pull.rebase = true;
+    };
+    ignores = [ "*~" ];
+    signing = {
+      key = "5A8F0894614456ED"; # TODO Set default signing key
+      signByDefault = true;
+    };
+  };
+  programs.delta = {
+    enable = true; # delta syntax highlighter. See https://github.com/dandavison/delta.
+    enableGitIntegration = true;
+    options = {
+      features = "line-numbers";
+      syntax-theme = "Dracula";
     };
   };
 

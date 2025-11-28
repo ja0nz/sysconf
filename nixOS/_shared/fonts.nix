@@ -10,6 +10,7 @@
 }:
 
 {
+  # Allow the unfree symbola font
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "symbola" ];
 
   fonts = {

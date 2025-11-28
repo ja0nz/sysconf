@@ -29,7 +29,7 @@ in
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.greetd}/bin/agreety --cmd $SHELL";
+        command = "${pkgs.greetd}/bin/agreety --cmd $SHELL";
       };
       # AutoLogin the main users
       initial_session = {

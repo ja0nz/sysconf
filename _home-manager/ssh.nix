@@ -17,11 +17,19 @@
 {
   programs.ssh = {
     enable = true;
-    # TODO Secure your known_hosts
-    userKnownHostsFile = toString ../_secret/ssh/known_hosts;
-    controlMaster = "auto";
-    controlPersist = "15m";
     matchBlocks = {
+      "*" = {
+        serverAliveInterval = 0; # TODO if long running ssh sessions accross reboots, etc
+        serverAliveCountMax = 3;
+        addKeysToAgent = "no";
+        hashKnownHosts = false; # TODO might set to true for more security
+        forwardAgent = false;
+        compression = false;
+        controlPath = "~/.ssh/master-%r@%n:%p";
+        controlMaster = "auto"; # reuse connections
+        controlPersist = "15m"; # reuse timeout
+        userKnownHostsFile = toString ../_secret/ssh/known_hosts;
+      };
       petelerFamily = {
         host = "pf"; # Just a abbrevation ~ssh pf~
         hostname = "knock-knock.peteler.family";

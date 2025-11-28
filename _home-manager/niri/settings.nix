@@ -45,6 +45,9 @@ in
           middle-emulation = true;
           accel-profile = "adaptive";
         };
+        mouse = {
+          scroll-factor = 2;
+        };
         focus-follows-mouse = {
           enable = true;
           max-scroll-amount = "90%";

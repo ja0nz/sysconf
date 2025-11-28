@@ -806,10 +806,10 @@ strict digraph {
   )
 #+end_src
 
-** TypeScript Mode
+** KILL TypeScript Mode
 https://merrick.luois.me/posts/typescript-in-emacs-29
 
-#+begin_src emacs-lisp
+#+begin_src 
 (after! treesit
   (setq treesit-language-source-alist
         '((typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src" nil nil)
@@ -823,6 +823,6 @@ https://merrick.luois.me/posts/typescript-in-emacs-29
   )
 #+end_src
 
-#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+#+begin_src :tangle ~/.doom.d/packages.el
 (package! typescript-mode :disable t)
 #+end_src

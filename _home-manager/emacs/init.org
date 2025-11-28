@@ -120,7 +120,7 @@ Init.el
        (org +pomodoro +pretty +hugo +roam2)
        (markdown +grip)
        ; Config Family
-       (nix +tree-sitter)
+       (nix +lsp +tree-sitter)
        (sh +fish +tree-sitter)
        (json +lsp +tree-sitter)
        (yaml +lsp +tree-sitter)

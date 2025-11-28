@@ -18,6 +18,7 @@
     enable = true;
     package = pkgs.ungoogled-chromium;
     commandLineArgs = [
+      "--password-store=basic"
       "--extension-mime-request-handling=always-prompt-for-install"
       "--scroll-tabs=never"
       "--force-punycode-hostnames"

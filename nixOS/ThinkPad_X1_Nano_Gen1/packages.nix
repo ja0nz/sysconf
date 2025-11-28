@@ -20,7 +20,7 @@ in
     # -- Services --
     /syncthing.nix
     /systemd.nix
-    /swww.nix
+    # /swww.nix
     /gnome.nix
     # -- nix --
     # /sway
@@ -86,7 +86,7 @@ in
 
     # -- System information --
     fastfetchMinimal # A fast, highly customizable system info script
-    du-dust # du + rust = dust. Like du but more intuitive [RUST]
+    dust # du + rust = dust. Like du but more intuitive [RUST]
     duf # Disk Usage/Free Utility [GO]
     inxi # A full featured CLI system information tool
     libnotify # A library that sends desktop notifications to a notification daemon

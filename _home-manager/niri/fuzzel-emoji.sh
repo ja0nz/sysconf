@@ -2,7 +2,7 @@
 #
 # emoji_picker.sh
 # Fuzzy-selects an emoji from a predefined list and types or copies it using wtype and wl-copy.
-# Supports modes: type, copy, both (default: type).
+# Supports modes: type, copy, both (default: both).
 #
 # Usage:
 #   emoji_picker.sh [type|copy|both]
@@ -10,8 +10,8 @@
 
 set -euo pipefail
 
-# Determine the mode from the first argument; defaults to 'type' if not provided
-MODE="${1:-type}"
+# Determine the mode from the first argument; defaults to 'both' if not provided
+MODE="${1:-both}"
 
 # Extract emojis from the data section below using sed:
 # - Delete everything up to and including the line containing "### DATA ###"
