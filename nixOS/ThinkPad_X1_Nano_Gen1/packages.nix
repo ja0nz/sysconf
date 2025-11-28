@@ -53,7 +53,7 @@ in
     # -- Hardware connectivity --
     /blueman.nix
     /udiskie.nix
-    /networkmanager_dmenu.nix
+    # /networkmanager_dmenu.nix
   ];
 
   home.packages = with pkgs; [
@@ -65,8 +65,9 @@ in
     # })
     # mate.eom # An image viewing and cataloging program for the MATE desktop
     #stremio # A modern media center
+    iwgtk # Lightweight, graphical wifi management utility for Linux
     pwvucontrol # Pipewire Volume Control
-    networkmanagerapplet # NetworkManager control applet for GNOME
+    # networkmanagerapplet # NetworkManager control applet for GNOME
     readest # Modern, feature-rich ebook reader
     remnote # Note-taking application focused on learning and productivity
     # anki-bin # Spaced repetition flashcard program

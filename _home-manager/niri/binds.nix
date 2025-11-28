@@ -55,7 +55,8 @@
           "wlr-randr | grep -A5 ^${externalMonitor} | grep -q 'Enabled: yes' && wlr-randr --output ${externalMonitor} --off || wlr-randr --output ${externalMonitor} --on";
       "XF86WLAN".action =
         spawn "sh" "-c"
-          "nmcli networking connectivity | grep -q none && nmcli networking on || nmcli networking off";
+          "ping -q -c 1 -W 1 1.1.1.1 >/dev/null && ip link set wlan0 down || ip link set wlan0 up";
+      # "nmcli networking connectivity | grep -q none && nmcli networking on || nmcli networking off";
 
       "XF86NotificationCenter".action = spawn "${./fuzzel-emoji.sh}";
       "XF86PickupPhone".action = spawn "${../switch-audio-port}";

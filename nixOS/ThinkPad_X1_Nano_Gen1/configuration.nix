@@ -16,6 +16,7 @@
     in
     [
       ./hardware-configuration.nix
+      ./networking.nix
       (shared + /cachix)
       (shared + /boot.nix)
       (shared + /base.nix)
@@ -47,15 +48,6 @@
       pkg = pkgs.noto-fonts-color-emoji;
     };
 
-    networking = {
-      hostName = "nano";
-      wireless.iwd.enable = true;
-      networkmanager = {
-        enable = true;
-        wifi.backend = "iwd";
-      };
-    };
-
     environment.sessionVariables = {
       # see graphics👇
       LIBVA_DRIVER_NAME = "iHD";
@@ -83,9 +75,11 @@
       #geoclue2.enable = true; <- Went with manual location settings, no need for a geo service
       blueman.enable = true;
       tlp.enable = true;
-      logind.lidSwitch = "ignore";
-      # Udev laptop killswitch
+      logind = {
+        settings.Login.HandleLidSwitch = "ignore";
+      };
       udev.extraRules = ''
+        # Udev laptop killswitch
         ACTION=="remove", SUBSYSTEM=="block", ENV{ID_SERIAL_SHORT}=="0116007138600721", RUN+="${pkgs.systemd}/bin/shutdown -h now"
 
         # TODO Battery saving rules - x < 70 && x > 65
@@ -95,21 +89,6 @@
         KERNEL=="BAT0", SUBSYSTEM=="power_supply", ATTR{charge_end_threshold}="70"
         KERNEL=="BAT0", SUBSYSTEM=="power_supply", ATTR{charge_control_end_threshold}="70"
       '';
-
-      # Custom DNS
-      resolved = {
-        enable = true;
-        dnssec = "false";
-        extraConfig = ''
-          DNS=76.76.2.2#p2.freedns.controld.com
-          DNS=76.76.10.2#p2.freedns.controld.com
-          #DNS=194.242.2.4#base.dns.mullvad.net
-          #DNS=194.242.2.5#extended.dns.mullvad.net
-          #DNS=194.242.2.9#all.dns.mullvad.net
-          DNSOverTLS=yes
-          Domains=~.
-        '';
-      };
     };
 
     security = {
