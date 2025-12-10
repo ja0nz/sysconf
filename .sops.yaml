@@ -1,3 +1,3 @@
 creation_rules:
   - path_regex: _secret
-    pgp: 7D4A6988337B09DC2A380B874EC3576D41793CCA
+    age: "age1rd2zs5c8mxhgdmjs2jsy8hu9sj6kdplmp0mzv3lm6a5j0rpx8sqqut4qum"

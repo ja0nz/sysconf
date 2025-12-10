@@ -27,6 +27,7 @@
 
   # https://devenv.sh/scripts/
   scripts = {
+    encrypt.exec = ''SOPS_AGE_KEY_FILE="$HOME/.gnupg/age/sysconf.txt" sops --encrypt "$1" > "$1.sops"'';
     encryptAll.exec = ./devenv.encrypt.sh;
     decryptAll.exec = ./devenv.decrypt.sh;
   };
