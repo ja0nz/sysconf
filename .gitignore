@@ -5,6 +5,9 @@
 _secret/ssh/known_hosts
 _secret/ssh/peteler-family-client
 _secret/ssh/peteler-family-client-cert.pub
+_secret/mbsync_gmail
+_secret/mbsync_janz
+_secret/syncthing.tar.gz
 
 # Devenv
 .devenv*
