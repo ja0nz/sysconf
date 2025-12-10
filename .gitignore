@@ -8,6 +8,7 @@ _secret/ssh/peteler-family-client-cert.pub
 _secret/mbsync_gmail
 _secret/mbsync_janz
 _secret/syncthing.tar.gz
+_secret/wg-profiles.nix
 
 # Devenv
 .devenv*
