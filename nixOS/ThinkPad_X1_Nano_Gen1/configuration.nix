@@ -17,7 +17,7 @@
     [
       ./hardware-configuration.nix
       ./networking.nix
-      (shared + /cachix)
+      (shared + /cache)
       (shared + /boot.nix)
       (shared + /base.nix)
       (shared + /users.nix)
