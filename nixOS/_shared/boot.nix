@@ -14,4 +14,6 @@
   boot.kernel.sysctl = {
     "net.core.rmem_max" = 2500000;
   };
+
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 }

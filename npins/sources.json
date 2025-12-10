@@ -22,9 +22,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "f4e598cbb10021c93f73dd4c0cf01ec791ea53f9",
-      "url": "https://github.com/DeterminateSystems/determinate/archive/f4e598cbb10021c93f73dd4c0cf01ec791ea53f9.tar.gz",
-      "hash": "02kf0cr5h58rc6xx8dzy7h9z3341ydf7yzcfn6mazja110d0c9j0"
+      "revision": "3ccc0297525e51ac3d7905509e0616c9c8350108",
+      "url": "https://github.com/DeterminateSystems/determinate/archive/3ccc0297525e51ac3d7905509e0616c9c8350108.tar.gz",
+      "hash": "0m9y5rdz1ryhzypvnw3857dn8m2y3snfm3x3p9za33b7w1jvy0wh"
     },
     "emacs-overlay": {
       "type": "Git",
@@ -35,9 +35,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "0d82ba9b285a6a026f8c3986ed3d071af5c2f078",
-      "url": "https://github.com/nix-community/emacs-overlay/archive/0d82ba9b285a6a026f8c3986ed3d071af5c2f078.tar.gz",
-      "hash": "1z0sjz7p7xsr362w6m7iwh5n9xacb36i4kp1cpv8myc1xgdkh013"
+      "revision": "bfbeffef5baf1bee4eb6b0ff3b5137254088ddb8",
+      "url": "https://github.com/nix-community/emacs-overlay/archive/bfbeffef5baf1bee4eb6b0ff3b5137254088ddb8.tar.gz",
+      "hash": "04ynf0vz9drwvdabw4kp9493630ziyrbj8hxhc60zjnnn0v8299x"
     },
     "flake-compat": {
       "type": "Git",
@@ -58,11 +58,11 @@
         "owner": "nix-community",
         "repo": "home-manager"
       },
-      "branch": "master",
+      "branch": "release-25.11",
       "submodules": false,
-      "revision": "e4e25a8c310fa45f2a8339c7972dc43d2845a612",
-      "url": "https://github.com/nix-community/home-manager/archive/e4e25a8c310fa45f2a8339c7972dc43d2845a612.tar.gz",
-      "hash": "18ljhl70i9554qmpfyl7fs86wb19cp1mg2akmv5nrcnlxs64cl0r"
+      "revision": "20561be440a11ec57a89715480717baf19fe6343",
+      "url": "https://github.com/nix-community/home-manager/archive/20561be440a11ec57a89715480717baf19fe6343.tar.gz",
+      "hash": "1n2l891p04y3xmd0sl5i3553ndgpxkinysg1bf8iiixmxhcm7i9v"
     },
     "niri-flake": {
       "type": "Git",
@@ -73,9 +73,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "9b1ac5828fc04bd7b07f147f26908eeaebb31ca7",
-      "url": "https://github.com/sodiboo/niri-flake/archive/9b1ac5828fc04bd7b07f147f26908eeaebb31ca7.tar.gz",
-      "hash": "0qwzb6lg7p1l4brbn6i58sw86jpasfd8x6h8lgjfiyrr9967v47a"
+      "revision": "7546342de11138550fcadf104b5257f6534886e2",
+      "url": "https://github.com/sodiboo/niri-flake/archive/7546342de11138550fcadf104b5257f6534886e2.tar.gz",
+      "hash": "1snay9w29l0csh8xrmys3r11gz18gxdh14dvaqhbz06b6fknazkp"
     },
     "nixpkgs": {
       "type": "Git",
@@ -86,9 +86,9 @@
       },
       "branch": "nixos-25.11",
       "submodules": false,
-      "revision": "8bb5646e0bed5dbd3ab08c7a7cc15b75ab4e1d0f",
-      "url": "https://github.com/NixOS/nixpkgs/archive/8bb5646e0bed5dbd3ab08c7a7cc15b75ab4e1d0f.tar.gz",
-      "hash": "19ljxfhs2i85rqrkawdz7wn16gx006s2hni51qlzk5z1b022x9aa"
+      "revision": "d9bc5c7dceb30d8d6fafa10aeb6aa8a48c218454",
+      "url": "https://github.com/NixOS/nixpkgs/archive/d9bc5c7dceb30d8d6fafa10aeb6aa8a48c218454.tar.gz",
+      "hash": "1fmgk95zsz29nb5c2928yfbd619j4742qjpm7y0g49z3bwm4zd6b"
     }
   },
   "version": 5
