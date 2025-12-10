@@ -1,6 +1,23 @@
 { pkgs, ... }:
 
+let
+  enc =
+    pkgs.runCommand "encryptAll-script"
+      {
+        src = ./devenv.encrypt.sh;
+      }
+      ''
+        mkdir -p $out
+        cp "$src" $out/devenv.encrypt.sh
+        chmod +x "$out/devenv.encrypt.sh"
+      '';
+in
 {
+
+  enterShell = ''
+    export SOPS_AGE_KEY_FILE="$HOME/.gnupg/age/sysconf.txt"
+  '';
+
   packages = with pkgs; [
     git
     sops # Mozilla sops (Secrets OPerationS) is an editor of encrypted files
@@ -16,7 +33,7 @@
     encrypt-sops = {
       enable = true;
       name = "Encrypt SOPS files if modified";
-      entry = "encryptAll";
+      entry = "${enc}/devenv.encrypt.sh";
       files = "\\.sops$";
       types = [ "text" ];
       excludes = [ ];
@@ -27,8 +44,8 @@
 
   # https://devenv.sh/scripts/
   scripts = {
-    encrypt.exec = ''SOPS_AGE_KEY_FILE="$HOME/.gnupg/age/sysconf.txt" sops --encrypt "$1" > "$1.sops"'';
-    encryptAll.exec = ./devenv.encrypt.sh;
+    encrypt.exec = ''sops --encrypt "$1" > "$1.sops"'';
+    encryptAll.exec = "${enc}/devenv.encrypt.sh";
     decryptAll.exec = ./devenv.decrypt.sh;
   };
 

@@ -4,8 +4,6 @@ set -euo pipefail
 # Encrypt all files with a corresponding `.sops` file if they are newer.
 # Skips files that are not newer or do not exist.
 
-export SOPS_AGE_KEY_FILE="$HOME/.gnupg/age/sysconf.txt"
-
 find . -type f -name "*.sops" | while read -r sops_file; do
     # Determine the corresponding unencrypted file
     orig_file="${sops_file%.sops}"

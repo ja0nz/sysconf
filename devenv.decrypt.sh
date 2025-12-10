@@ -5,8 +5,6 @@ set -euo pipefail
 # For each `.sops` file found, it writes the decrypted content
 # to the corresponding file without the `.sops` extension.
 
-export SOPS_AGE_KEY_FILE="$HOME/.gnupg/age/sysconf.txt"
-
 # Traverse the tree starting from current directory
 find . -type f -name "*.sops" | while read -r sops_file; do
     # Determine the corresponding unencrypted file
