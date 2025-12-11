@@ -1,4 +1,5 @@
 # #+TITLE: Stub: Just a small wireguard config
+# This is basically a caputure all traffic configuration
 { ... }:
 let
   wgProfiles = import ../../_secret/wg-profiles.nix;
@@ -10,12 +11,12 @@ let
   routeTable = 1000;
 in
 {
-  environment.etc."wireguard/secret.key" = {
+  environment.etc."wireguard/${wgName}-secret.key" = {
     text = profile.privateKey;
     mode = "0440";
     group = "systemd-network";
   };
-  environment.etc."wireguard/psk.key" = {
+  environment.etc."wireguard/${wgName}-psk.key" = {
     text = profile.presharedKey;
     mode = "0440";
     group = "systemd-network";
@@ -30,13 +31,13 @@ in
         Name = "${wgName}";
       };
       wireguardConfig = {
-        PrivateKeyFile = "/etc/wireguard/secret.key";
+        PrivateKeyFile = "/etc/wireguard/${wgName}-secret.key";
         FirewallMark = fwMark;
       };
       wireguardPeers = [
         {
           PublicKey = profile.publicKey;
-          PresharedKeyFile = "/etc/wireguard/psk.key";
+          PresharedKeyFile = "/etc/wireguard/${wgName}-psk.key";
           Endpoint = "${if v6 != "" then v6 else v4}";
           AllowedIPs = [ "0.0.0.0/0" ];
           PersistentKeepalive = 25;
@@ -47,11 +48,12 @@ in
     networks."10-${wgName}" = {
       matchConfig.Name = "${wgName}";
       address = [ profile.address ];
-      dns = [ profile.endpointDNS ];
-      domains = [ "~." ];
-      networkConfig = {
-        DNSDefaultRoute = true;
-      };
+      # Using DoH anyway, don't care about DNS tunneling
+      # dns = [ profile.endpointDNS ];
+      # domains = [ "~." ];
+      # networkConfig = {
+      #   DNSDefaultRoute = true;
+      # };
       routingPolicyRules = [
         {
           Family = "both";
@@ -68,8 +70,11 @@ in
     };
   };
 
+  # Switching off IPv4 or IPv6
+  # Not sure if this is actually needed
+  # but it does not do harm so far
   systemd.services."${wgName}-firewall" = {
-    enable = true;
+    enable = false; # TODO set true if desired
     description = "Blocking unwanted traffic on IPv4 and IPv6";
     wantedBy = [ "multi-user.target" ];
     after = [ "network-online.target" ];
