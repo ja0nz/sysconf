@@ -7,20 +7,22 @@
 {
   programs.starship = {
     enable = true;
-    enableFishIntegration = true;
     settings = {
-      # add_newline = false;
-      # format = lib.concatStrings [
-      #   "$line_break"
-      #   "$package"
-      #   "$line_break"
-      #   "$character"
-      # ];
-      # scan_timeout = 10;
-      # character = {
-      #   success_symbol = "➜";
-      #   error_symbol = "➜";
-      # };
+      add_newline = false; # Keeps the terminal tight
+
+      # This part makes the prompt "Character" turn purple when in a Nix Shell
+      nix_shell = {
+        symbol = "❄️ ";
+        format = "via [$symbol$state( \($name\))]($style) ";
+      };
+
+      character = {
+        success_symbol = "[➜](bold green)";
+        error_symbol = "[➜](bold red)";
+      };
+
+      # Disable the timeout warning if you are working on large disk arrays or slow networks
+      scan_timeout = 30;
     };
   };
 }

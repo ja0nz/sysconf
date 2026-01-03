@@ -39,6 +39,8 @@ in
     /bat.nix
     # -- SHELL --
     /fish.nix
+    /nushell.nix
+    /carapace.nix
     /mcfly.nix
     /zoxide.nix
     /starship.nix

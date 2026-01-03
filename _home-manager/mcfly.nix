@@ -10,7 +10,6 @@
 {
   programs.mcfly = {
     enable = true;
-    enableFishIntegration = true;
     fuzzySearchFactor = 2;
     keyScheme = "vim";
   };

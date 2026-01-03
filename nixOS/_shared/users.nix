@@ -49,7 +49,7 @@ in
       hashedPassword = "$6$rBfbbdF/ghJdJo$cn/Hhzve2Lx5xmQR3p81mM.oBZ3PSyDaiUR1CfNZdBn839EFbQWqbLD73tnQCOag8ruDTgxvmwEFMTavwTC.r.";
     };
     ${mainUser} = {
-      shell = pkgs.fish;
+      shell = pkgs.nushell;
       isNormalUser = true;
       home = "/home/${mainUser}";
       extraGroups = [
@@ -88,7 +88,13 @@ in
             }
           );
           #_module.args.setEnvironment = config.system.build.setEnvironment;
-          home.stateVersion = config.system.stateVersion;
+          home = {
+            stateVersion = config.system.stateVersion;
+            shell = {
+              enableFishIntegration = true;
+              enableNushellIntegration = true;
+            };
+          };
         };
 
         # Global options

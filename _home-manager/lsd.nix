@@ -14,11 +14,17 @@
 {
   programs.lsd = {
     enable = true;
-    enableFishIntegration = true;
-    # TODO Settings
-    # https://github.com/Peltoche/lsd#config-file-content
     settings = {
       date = "relative";
+      # The 'icons' block requires 'when' and 'theme'
+      icons = {
+        when = "auto";
+        theme = "fancy";
+      };
+      # The 'sorting' block requires 'dir-grouping'
+      sorting = {
+        dir-grouping = "first";
+      };
     };
   };
 }
