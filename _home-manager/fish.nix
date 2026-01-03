@@ -50,8 +50,6 @@ in
       vim = "hx";
       lscert = "ssh-keygen -L -f";
       run = "just";
-      r = "rip"; # rm with safety
-      music = "ncmpcpp";
       # Fish nix-shell
       nix-shell = "nix-shell --command fish";
       # ls, ll, la, lt, lla -> set by lsd

@@ -76,22 +76,17 @@ in
       "nixos:clean" = "sudo nix-collect-garbage -d";
       nix-stray-roots = "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/w+-system|{memory)'";
       # --- TODO General purpose
-      cat = "bat";
       curl = "curlie"; # net
       df = "duf"; # disk free
       dig = "doggo"; # DNS lookup
-      du = "dust"; # file space usage
-      find = "fd"; # find
       groups = "id (whoami)";
       http = "xh"; # net
       network = "sudo bandwhich"; # net
       ping = "gping";
-      ps = "procs"; # process status
       rg = "rg --hidden --glob '!.git'"; # find
       vim = "hx";
       lscert = "ssh-keygen -L -f";
       run = "just";
-      r = "rip"; # rm with safety
       nix-shell = "nix-shell --command nu";
     };
   };

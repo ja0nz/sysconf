@@ -138,7 +138,6 @@ in
     calc # C-style arbitrary precision calculator
     rlwrap # Readline wrapper for console programs
     just # A handy way to save and run project-specific commands [RUST]
-    rm-improved # Replacement for rm with focus on safety [RUST]
     nix-search-cli # CLI for searching packages on search.nixos.org
     aider-chat
 
