@@ -17,6 +17,7 @@
 {
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
     matchBlocks = {
       "*" = {
         serverAliveInterval = 0; # TODO if long running ssh sessions accross reboots, etc

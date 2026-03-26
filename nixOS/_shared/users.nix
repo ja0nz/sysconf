@@ -49,7 +49,7 @@ in
       hashedPassword = "$6$rBfbbdF/ghJdJo$cn/Hhzve2Lx5xmQR3p81mM.oBZ3PSyDaiUR1CfNZdBn839EFbQWqbLD73tnQCOag8ruDTgxvmwEFMTavwTC.r.";
     };
     ${mainUser} = {
-      shell = pkgs.nushell;
+      shell = pkgs.fish;
       isNormalUser = true;
       home = "/home/${mainUser}";
       extraGroups = [
@@ -57,7 +57,6 @@ in
         "networkmanager"
         "video"
         "audio"
-        "libvirtd"
       ];
       uid = 1000;
       hashedPassword = "$6$rBfbbdF/ghJdJo$cn/Hhzve2Lx5xmQR3p81mM.oBZ3PSyDaiUR1CfNZdBn839EFbQWqbLD73tnQCOag8ruDTgxvmwEFMTavwTC.r.";

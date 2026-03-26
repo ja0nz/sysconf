@@ -40,16 +40,11 @@ in
       df = "duf"; # disk free
       dig = "doggo"; # DNS lookup
       du = "dust"; # file space usage
-      find = "fd"; # find
       groups = "id (whoami)";
-      http = "xh"; # net
-      network = "sudo bandwhich"; # net
-      ping = "gping";
+      ping = "prettyping";
       ps = "procs"; # process status
       rg = "rg --hidden --glob '!.git'"; # find
       vim = "hx";
-      lscert = "ssh-keygen -L -f";
-      run = "just";
       # Fish nix-shell
       nix-shell = "nix-shell --command fish";
       # ls, ll, la, lt, lla -> set by lsd

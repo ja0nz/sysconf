@@ -31,13 +31,18 @@
     nix = {
       channel.enable = false;
       nixPath = [ "nixpkgs=${sources.nixpkgs}" ];
-      extraOptions = ''
-        keep-outputs = true
-        keep-derivations = true
-        experimental-features = nix-command flakes
-      '';
-      settings.auto-optimise-store = true;
-      settings.trusted-users = [ "@wheel" ];
+
+      settings = {
+        keep-outputs = true;
+        keep-derivations = true;
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
+
+        auto-optimise-store = true;
+        trusted-users = [ "@wheel" ];
+      };
     };
   };
 }

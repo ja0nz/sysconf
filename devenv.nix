@@ -13,11 +13,6 @@ let
       '';
 in
 {
-
-  enterShell = ''
-    export SOPS_AGE_KEY_FILE="$HOME/.gnupg/age/sysconf.txt"
-  '';
-
   packages = with pkgs; [
     git
     sops # Mozilla sops (Secrets OPerationS) is an editor of encrypted files

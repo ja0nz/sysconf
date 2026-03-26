@@ -22,7 +22,7 @@ in
   programs.emacs = {
     enable = true;
     package = emacs-community.packages.${builtins.currentSystem}.emacs-git-pgtk;
-    #extraPackages = epkgs: with epkgs; [ use-package ];
+    extraPackages = epkgs: with epkgs; [ jinx ];
   };
   services.emacs = {
     enable = true;

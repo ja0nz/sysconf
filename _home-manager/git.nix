@@ -11,27 +11,41 @@
    This config uses https://github.com/dandavison/delta as git pager.
    You may like it or not.
 */
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
+let
+  user = "ja0nz";
+  email = "git@ja.nz";
+  signKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIb46mNzQBJQS7c5xKQWRYPOk3z5+q78bzPTVCC2PDVl";
+in
 {
   programs.git = {
     enable = true;
     settings = {
-      user.name = "ja0nz"; # TODO Set your credentials
-      user.email = "git@ja.nz"; # TODO Set your credentials
+      user.name = user;
+      user.email = email;
       core = {
         filemode = false;
         whitespace = "fix,tab-in-indent";
       };
+      gpg.ssh.allowedSignersFile = "${config.home.homeDirectory}/.config/git/allowed_signers";
       init.defaultBranch = "main";
       pull.rebase = true;
     };
     ignores = [ "*~" ];
     signing = {
-      key = "5A8F0894614456ED"; # TODO Set default signing key
+      format = "ssh";
+      key = signKey;
       signByDefault = true;
     };
   };
+
+  # Create allowed_signers file for SSH signature verification
+  # Add your own SSH public key(s) here
+  home.file.".config/git/allowed_signers".text = ''
+    ${email} namespaces="git" ${signKey} 
+  '';
+
   programs.delta = {
     enable = true; # delta syntax highlighter. See https://github.com/dandavison/delta.
     enableGitIntegration = true;

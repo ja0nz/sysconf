@@ -32,6 +32,7 @@
         mouse = false;
         bufferline = "always";
         cursor-shape.insert = "bar";
+        default-yank-register = "+";
       };
     };
   };

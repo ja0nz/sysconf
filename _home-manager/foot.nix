@@ -43,6 +43,10 @@ in
         label-letters = "sadfjklewcmpgh";
         osc8-underline = "url-mode";
       };
+      key-bindings = {
+        font-increase = "Control+Up";
+        font-decrease = "Control+Down";
+      };
       cursor = {
         style = "beam";
         beam-thickness = "2";

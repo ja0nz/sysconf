@@ -7,7 +7,7 @@
     Change hostname to your liking
     Change user directory to your liking
 */
-{ pkgs, config, ... }:
+{ ... }:
 
 {
   networking = {
@@ -32,10 +32,10 @@
     resolved = {
       enable = true;
       dnssec = "false";
+      dnsovertls = "true";
+      domains = [ "~." ];
       extraConfig = ''
         DNS=194.242.2.4#base.dns.mullvad.net 2a07:e340::4#base.dns.mullvad.net
-        DNSOverTLS=yes
-        Domains=~.
       '';
     };
 

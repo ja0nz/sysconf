@@ -49,11 +49,6 @@
       pkg = pkgs.noto-fonts-color-emoji;
     };
 
-    environment.sessionVariables = {
-      # see graphics👇
-      LIBVA_DRIVER_NAME = "iHD";
-    };
-
     hardware = {
       bluetooth = {
         enable = true;
@@ -90,6 +85,14 @@
         KERNEL=="BAT0", SUBSYSTEM=="power_supply", ATTR{charge_end_threshold}="70"
         KERNEL=="BAT0", SUBSYSTEM=="power_supply", ATTR{charge_control_end_threshold}="70"
       '';
+
+      # needed for GNOME services outside of GNOME Desktop
+      dbus = {
+        implementation = "broker";
+        packages = with pkgs; [
+          gcr
+        ];
+      };
     };
 
     security = {
