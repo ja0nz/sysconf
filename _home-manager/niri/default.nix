@@ -31,8 +31,8 @@ in
   ];
   home.packages = with pkgs; [
     playerctl # Command-line utility for controlling media players that implement MPRIS
-    wtype # xdotool type for wayland
-    swww # Animated wallpaper daemon for wayland
+    # wtype # xdotool type for wayland
+    # swww # Animated wallpaper daemon for wayland
     # seatd
     # jaq
   ];

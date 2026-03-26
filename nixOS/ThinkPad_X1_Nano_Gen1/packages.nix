@@ -22,20 +22,13 @@ in
     /syncthing.nix
     /systemd.nix
     # /swww.nix
-    /gnome.nix
     # -- nix --
     # /sway
     /niri
-    /hyprlock.nix
-    /waybar
-    /kanshi.nix
-    /mako.nix
-    /gammastep.nix
+    /dankmaterialshell
     /foot.nix
-    /fuzzel.nix
     /xdg.nix
     /gtk.nix
-    /darkman.nix
     /bat.nix
     # -- SHELL --
     /fish.nix

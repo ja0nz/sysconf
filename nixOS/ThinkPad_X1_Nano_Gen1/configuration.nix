@@ -96,10 +96,8 @@
     };
 
     security = {
-      # Swaylock - see sway/default.nix
-      pam.services.swaylock = { };
-      pam.services.hyprlock = { };
-      pam.services.greetd.enableGnomeKeyring = true;
+      # pam.services.hyprlock = { };
+      # pam.services.greetd.enableGnomeKeyring = true;
     };
 
     programs = {

@@ -1,17 +1,36 @@
 {
   "pins": {
-    "Waybar": {
-      "type": "Git",
+    "DankMaterialShell": {
+      "type": "GitRelease",
       "repository": {
         "type": "GitHub",
-        "owner": "Alexays",
-        "repo": "Waybar"
+        "owner": "AvengeMedia",
+        "repo": "DankMaterialShell"
       },
-      "branch": "master",
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
       "submodules": false,
-      "revision": "161367d9617673a4ef9caf8299411dc5153464d1",
-      "url": "https://github.com/Alexays/Waybar/archive/161367d9617673a4ef9caf8299411dc5153464d1.tar.gz",
-      "hash": "1fbwcazx5scp7b6rf4xwbflf2nm5vn9sb9xvsvmkdcbs4wabfr21"
+      "version": "v1.4.4",
+      "revision": "516fc5ec6252b12c6fa224ddc3629c4d0f0830b2",
+      "url": "https://api.github.com/repos/AvengeMedia/DankMaterialShell/tarball/v1.4.4",
+      "hash": "0s4m98kdqhbnmvfl4s2b0id1zggz6b9snzqsk2irpbnmndcszxdd"
+    },
+    "danksearch": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "AvengeMedia",
+        "repo": "danksearch"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.2.0",
+      "revision": "417401be9d7f3ecdf48d96be950a007432ad5cf3",
+      "url": "https://api.github.com/repos/AvengeMedia/danksearch/tarball/v0.2.0",
+      "hash": "050ymfl1kpvwi4h1p7y5lpr72634c58l4ri8a93vidhk00k2i3ns"
     },
     "determinate": {
       "type": "Git",
@@ -22,9 +41,25 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "3ccc0297525e51ac3d7905509e0616c9c8350108",
-      "url": "https://github.com/DeterminateSystems/determinate/archive/3ccc0297525e51ac3d7905509e0616c9c8350108.tar.gz",
-      "hash": "0m9y5rdz1ryhzypvnw3857dn8m2y3snfm3x3p9za33b7w1jvy0wh"
+      "revision": "dc4d71b197a9bce053178291da2ead757cdf93bc",
+      "url": "https://github.com/DeterminateSystems/determinate/archive/dc4d71b197a9bce053178291da2ead757cdf93bc.tar.gz",
+      "hash": "0bhg9v7plb72mb6ziy2rlqzbvdgwhlpacnw6l8jqc9vawm6ax5yb"
+    },
+    "dgop": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "AvengeMedia",
+        "repo": "dgop"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.2.2",
+      "revision": "6b0b2d10d67845e2bb3c2f99a0f62bff2e78e6ee",
+      "url": "https://api.github.com/repos/AvengeMedia/dgop/tarball/v0.2.2",
+      "hash": "1swzpzviqf8p060mj0pv3g9ask9nm2a45fjvh0awi9a0y8k0b0ci"
     },
     "emacs-overlay": {
       "type": "Git",

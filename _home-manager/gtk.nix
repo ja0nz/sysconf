@@ -31,12 +31,6 @@
         alternativeIcons = true;
       };
     };
-    theme = {
-      # package = pkgs.dracula-theme;
-      # name = "Dracula"
-      package = pkgs.ant-bloody-theme;
-      name = "Ant-Bloody";
-    };
   };
   home.sessionVariables = {
     XDG_ICON_DIR = "${pkgs.whitesur-icon-theme}/share/icons/WhiteSur";
