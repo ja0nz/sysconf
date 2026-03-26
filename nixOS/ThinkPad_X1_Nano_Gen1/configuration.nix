@@ -95,11 +95,6 @@
       };
     };
 
-    security = {
-      # pam.services.hyprlock = { };
-      # pam.services.greetd.enableGnomeKeyring = true;
-    };
-
     programs = {
       # Displays keys being pressed on a Wayland session
       # Good for demoing stuff
@@ -109,8 +104,11 @@
       dconf.enable = true;
     };
 
-    #    services.gvfs.enable = true;
-    #    programs.adb.enable = true;
+    xdg.portal = {
+      enable = true;
+      config.common.default = [ "gtk" ];
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    };
 
     system.stateVersion = "21.05"; # Did you read the comment?
   };

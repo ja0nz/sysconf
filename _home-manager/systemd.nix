@@ -64,23 +64,23 @@ in
         WantedBy = [ "default.target" ];
       };
     };
-    polkit-gnome-authentication-agent-1 = {
-      Unit = {
-        Description = pkgs.polkit_gnome.meta.description;
-        After = [ "graphical-session.target" ];
-        PartOf = [ "graphical-session.target" ];
-      };
+    # polkit-gnome-authentication-agent-1 = {
+    #   Unit = {
+    #     Description = pkgs.polkit_gnome.meta.description;
+    #     After = [ "graphical-session.target" ];
+    #     PartOf = [ "graphical-session.target" ];
+    #   };
 
-      Install.WantedBy = [ "graphical-session.target" ];
+    #   Install.WantedBy = [ "graphical-session.target" ];
 
-      Service = {
-        Type = "simple";
-        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-        Restart = "on-failure";
-        RestartSec = 1;
-        TimeoutStopSec = 10;
-      };
-    };
+    #   Service = {
+    #     Type = "simple";
+    #     ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+    #     Restart = "on-failure";
+    #     RestartSec = 1;
+    #     TimeoutStopSec = 10;
+    #   };
+    # };
     #   mako = {
     #     Unit = {
     #       Description = pkgs.mako.meta.description;

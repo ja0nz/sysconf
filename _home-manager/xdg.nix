@@ -16,6 +16,7 @@ let
   imageViewer = [ "org.gnome.Loupe" ];
   videoPlayer = [ "io.github.celluloid_player.Celluloid" ];
   audioPlayer = [ "io.bassi.Amberol" ];
+  textEditor = [ "emacsclient" ];
 
   xdgAssociations =
     type: program: list:
@@ -25,7 +26,17 @@ let
         value = program;
       }) list
     );
-
+  text = xdgAssociations "text" textEditor [
+    "plain"
+    "markdown"
+    "x-python"
+    "x-shellscript"
+    "css"
+    "x-c"
+    "x-c++"
+    "x-rust"
+    "x-nix"
+  ];
   image = xdgAssociations "image" imageViewer [
     "png"
     "jpg"
@@ -72,7 +83,6 @@ let
   ];
   browserTypes =
     (xdgAssociations "application" browser [
-      "json"
       "x-extension-htm"
       "x-extension-html"
       "x-extension-shtml"
@@ -96,21 +106,13 @@ let
       "application/x-rar-compressed" = [ "org.gnome.FileRoller" ];
       "application/x-tar" = [ "org.gnome.FileRoller" ];
       "application/gzip" = [ "org.gnome.FileRoller" ];
+      "application/json" = textEditor;
+      "application/xml" = textEditor;
+      "application/javascript" = textEditor;
       "text/html" = browser;
-      "text/plain" = [ "org.gnome.TextEditor" ];
-      "text/markdown" = [ "org.gnome.TextEditor" ];
-      "text/x-python" = [ "org.gnome.TextEditor" ];
-      "text/x-shellscript" = [ "org.gnome.TextEditor" ];
-      "application/json" = [ "org.gnome.TextEditor" ];
-      "application/xml" = [ "org.gnome.TextEditor" ];
-      "application/javascript" = [ "org.gnome.TextEditor" ];
-      "text/css" = [ "org.gnome.TextEditor" ];
-      "text/x-c" = [ "org.gnome.TextEditor" ];
-      "text/x-c++" = [ "org.gnome.TextEditor" ];
-      "text/x-rust" = [ "org.gnome.TextEditor" ];
-      "text/x-nix" = [ "org.gnome.TextEditor" ];
-      "x-scheme-handler/chrome" = [ "chromium-browser" ];
+      "x-scheme-handler/chrome" = browser;
     }
+    // text
     // image
     // video
     // audio
@@ -143,24 +145,4 @@ in
     '')
     pkgs.xdg-utils
   ];
-
-  xdg.portal = {
-    enable = true;
-    xdgOpenUsePortal = true;
-    config = {
-      common = {
-        default = [
-          "gnome"
-          "gtk"
-        ];
-        "org.freedesktop.impl.portal.ScreenCast" = "gnome";
-        "org.freedesktop.impl.portal.Screenshot" = "gnome";
-        "org.freedesktop.impl.portal.RemoteDesktop" = "gnome";
-      };
-    };
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal-gnome
-    ];
-  };
 }
