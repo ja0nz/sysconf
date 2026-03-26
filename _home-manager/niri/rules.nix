@@ -54,6 +54,7 @@ let
       matches = [
         { app-id = "zen"; }
         { app-id = "firefox"; }
+        { app-id = "thunderbird"; }
         { app-id = "chromium-browser"; }
         { app-id = "xdg-desktop-portal-gtk"; }
       ];
@@ -63,6 +64,7 @@ let
       matches = [
         { app-id = "zen"; }
         { app-id = "firefox"; }
+        { app-id = "thunderbird"; }
         { app-id = "chromium-browser"; }
         { app-id = "edge"; }
       ];

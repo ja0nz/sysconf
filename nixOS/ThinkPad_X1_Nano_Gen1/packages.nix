@@ -18,6 +18,7 @@ in
     # /zathura
     /chromium
     /helix.nix
+    /thunderbird.nix
     # -- Services --
     /syncthing.nix
     /systemd.nix
