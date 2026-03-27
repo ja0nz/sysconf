@@ -21,14 +21,6 @@ in
         SDL_VIDEODRIVER = "wayland";
         _JAVA_AWT_WM_NONREPARENTING = "1";
       };
-      spawn-at-startup = [
-        {
-          command = [
-            "${pkgs.rbw}/bin/rbw"
-            "unlock"
-          ];
-        }
-      ];
       input = {
         keyboard.xkb = {
           layout = "de";

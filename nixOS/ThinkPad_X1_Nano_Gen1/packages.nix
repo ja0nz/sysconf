@@ -43,7 +43,8 @@ in
     /lorri.nix
     /direnv.nix
     /git.nix
-    /gpg.nix
+    # /gpg.nix -> Replaced by rbw.nix
+    /rbw.nix
     /ssh.nix
     /cliphist.nix
     /yazi.nix
