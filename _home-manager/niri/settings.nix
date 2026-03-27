@@ -12,13 +12,12 @@ in
     package = pkgs.niri;
     settings = {
       environment = {
-        XDG_CURRENT_DESKTOP = "gnome";
-        DISPLAY = null;
-        GDK_BACKEND = "wayland,x11";
+        # XDG_CURRENT_DESKTOP = "gnome";
+        # DISPLAY = null;
+        # GDK_BACKEND = "wayland,x11"; # GTK4 auto negotiate wayland
         NIXOS_OZONE_WL = "1";
-        QT_QPA_PLATFORM = "wayland";
+        QT_QPA_PLATFORM = "wayland;xcb";
         QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-        SDL_VIDEODRIVER = "wayland";
         _JAVA_AWT_WM_NONREPARENTING = "1";
       };
       input = {

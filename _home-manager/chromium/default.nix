@@ -18,16 +18,14 @@
     enable = true;
     package = pkgs.ungoogled-chromium;
     commandLineArgs = [
+      # https://github.com/ungoogled-software/ungoogled-chromium/blob/master/docs/flags.md
       "--password-store=basic"
       "--extension-mime-request-handling=always-prompt-for-install"
       "--scroll-tabs=never"
+      "--remove-tabsearch-button"
       "--force-punycode-hostnames"
       "--show-avatar-button=never"
       "--hide-crashed-bubble"
-      # chrome://flags
-      "--enable-features=AcceleratedVideoEncoder"
-      "--ignore-gpu-blocklist"
-      "--enable-zero-copy"
     ];
     extensions = [
       {
