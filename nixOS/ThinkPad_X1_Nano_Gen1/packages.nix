@@ -2,7 +2,7 @@
   #+TITLE: Packages in use
   Packages imported by ../_shared/users.nix
 */
-{ pkgs, ... }:
+{ pkgs, sources, ... }:
 
 let
   sizzy = import ../../_home-manager/sizzy;
@@ -70,30 +70,30 @@ in
     pwvucontrol # Pipewire Volume Control
     # networkmanagerapplet # NetworkManager control applet for GNOME
     readest # Modern, feature-rich ebook reader
-    remnote # Note-taking application focused on learning and productivity
+
+    # -- Learning toos --
+    # remnote # Note-taking application focused on learning and productivity
     # anki-bin # Spaced repetition flashcard program
     # mpv # ^ General-purpose media player, fork of MPlayer and mplayer2
 
     # -- GNOME --
-    amberol
+    amberol # Music player
     #cavalier
-    (celluloid.override { youtubeSupport = true; })
-    nautilus
-    gnome-control-center
-    gnome-text-editor
-    file-roller
-    (papers.override { supportNautilus = true; })
-    loupe
-    keypunch
-    eyedropper
+    (celluloid.override { youtubeSupport = true; }) # Video player
+    nautilus # Files
+    # gnome-control-center
+    # gnome-text-editor
+    file-roller # Compressed files viewer
+    (papers.override { supportNautilus = true; }) # Document viewer
+    loupe # Image viewer
+    # eyedropper # Color selector tool
 
     # -- System information --
-    fastfetchMinimal # A fast, highly customizable system info script
+    # fastfetchMinimal # A fast, highly customizable system info script
     dust # du + rust = dust. Like du but more intuitive [RUST]
-    duf # Disk Usage/Free Utility [GO]
-    inxi # A full featured CLI system information tool
+    # duf # Disk Usage/Free Utility [GO]
+    # inxi # A full featured CLI system information tool
     libnotify # A library that sends desktop notifications to a notification daemon
-    wl-clipboard # Command-line copy/paste utilities for Wayland
 
     # -- Find and discover --
     ripgrep # A utility that combines the usability of The Silver Searcher [RUST]
@@ -103,21 +103,20 @@ in
     # -- Process management --
     htop # An interactive process viewer for Linux
     procs # A modern replacement for ps written in [RUST]
-    bottom # A cross-platform graphical process/system monitor with a customizable interface [RUST]
+    # bottom # A cross-platform graphical process/system monitor with a customizable interface [RUST]
 
     # -- Networking --
-    gping # Ping, but with a graph [RUST]
+    prettyping # Wrapper around the standard ping tool
+    # trippy # Network diagnostic tool
     curlie # Frontend to curl that adds the ease of use of httpie [GO]
-    bandwhich # A CLI utility for displaying current network utilization [RUST]
-    xh # HTTPie; Friendly and fast tool for sending HTTP requests [RUST]
+    # bandwhich # A CLI utility for displaying current network utilization [RUST]
+    # xh # HTTPie; Friendly and fast tool for sending HTTP requests [RUST]
     doggo # Command-line DNS Client for Humans. Written in Golang [RUST]
     wget # Tool for retrieving files using HTTP, HTTPS, and FTP
-    curl # A command line tool for transferring files with URL syntax
     maestral # Open-source Dropbox client for macOS and Linux
 
     # -- XDG MIME --
-    file # A program that shows the type of files
-    xdg-utils # A set of command line tools that assist applications desktop integration
+    # file # A program that shows the type of files
     shared-mime-info # A database of common MIME types
 
     # -- Sound and light management --
@@ -125,32 +124,34 @@ in
     alsa-utils # ALSA, the Advanced Linux Sound Architecture utils
 
     # -- Security --
-    cryptsetup # LUKS for dm-crypt
+    # cryptsetup # LUKS for dm-crypt
+    bitwarden-desktop # Secure and free password manager for all of your devices
+    # age # Modern encryption tool with small explicit keys
+    # sops # Simple and flexible tool for managing secrets
 
     # -- Command Line Utilities --
-    sd # Intuitive find & replace CLI (sed alternative) [RUST]
-    hyperfine # Command-line benchmarking tool [RUST]
+    # sd # Intuitive find & replace CLI (sed alternative) [RUST]
+    # hyperfine # Command-line benchmarking tool [RUST]
     tealdeer # A very fast implementation of tldr in [RUST]
-    navi # An interactive cheatsheet tool for the command-line and application launchers [RUST]
-    calc # C-style arbitrary precision calculator
-    rlwrap # Readline wrapper for console programs
-    just # A handy way to save and run project-specific commands [RUST]
-    nix-search-cli # CLI for searching packages on search.nixos.org
-    aider-chat
+    # navi # An interactive cheatsheet tool for the command-line and application launchers [RUST]
+    # calc # C-style arbitrary precision calculator
+    # rlwrap # Readline wrapper for console programs
+    # just # A handy way to save and run project-specific commands [RUST]
+    nh # Yet another nix cli helper
 
     # -- File Generators --
-    pandoc # Conversion betrween markup formats
-    graphviz # Graph visualization tools
-    graph-easy # Render/convert graphs in/from various formats
-    ditaa # Convert ascii art diagrams into proper bitmap graphics
-    unzip # An extraction utility for archives compressed in .zip format
+    # pandoc # Conversion betrween markup formats
+    # graphviz # Graph visualization tools
+    # graph-easy # Render/convert graphs in/from various formats
+    # ditaa # Convert ascii art diagrams into proper bitmap graphics
+    # unzip # An extraction utility for archives compressed in .zip format
 
     # --- Programming --
-    exercism # A Go based command line tool for exercism.io
+    # exercism # A Go based command line tool for exercism.io
     nodejs # Some globals depend on this
     python3 # Some globals depend on this
-    grex # A command-line tool for generating regular expressions from user-provided test cases [RUST]
-    tokei # A program that allows you to count your code [RUST]
+    # grex # A command-line tool for generating regular expressions from user-provided test cases [RUST]
+    # tokei # A program that allows you to count your code [RUST]
     devenv # Fast, Declarative, Reproducible, and Composable Developer Environments
   ];
 }
