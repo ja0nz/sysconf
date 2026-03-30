@@ -63,7 +63,7 @@ in
           Priority = 10;
         }
         {
-          To = "${builtins.head (builtins.split ":" (if v6 != "" then v6 else v4))}/32";
+          To = builtins.head (builtins.split ":" (if v6 != "" then v6 else v4));
           Priority = 5;
         }
       ];
