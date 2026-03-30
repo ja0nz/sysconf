@@ -7,6 +7,7 @@
 let
   sizzy = import ../../_home-manager/sizzy;
   sandbox = import ../../_home-manager/sandbox;
+  rass = import ../../_home-manager/emacs/rass.nix;
 in
 {
 
@@ -58,6 +59,7 @@ in
     # -- Programs --
     # (callPackage sizzy { }) # The browser for Developers & Designers
     (callPackage sandbox { })
+    (callPackage rass { })
     # INFO: no wayland support for MATE yet (as of 2022)...
     # (mate.caja-with-extensions.override {
     #   extensions = [ mate.caja-extensions mate.caja-dropbox ];
