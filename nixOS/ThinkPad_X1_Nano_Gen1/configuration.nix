@@ -24,7 +24,6 @@
       (shared + /fonts.nix)
       (shared + /pipewire.nix)
       (shared + /localization.nix)
-      (shared + /virtualization.nix)
       # (shared + /wireguard.nix)
     ];
 
