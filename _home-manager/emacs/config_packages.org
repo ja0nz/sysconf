@@ -626,8 +626,8 @@ Backup of the Doom Emacs Capture templates for future reference
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
 (package! org-clock-csv)
 #+end_src
-*** Org pomodoro
-#+begin_src emacs-lisp
+*** KILL Org pomodoro 
+#+begin_src
 (defun this/org-pomodoro-restart ()
   (interactive)
   (let ((use-dialog-box nil))
@@ -751,6 +751,16 @@ strict digraph {
              " " cmdline
              " --output=" (org-babel-process-file-name out-file)) "")))
 #+end_src
+*** Org make hook
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+(package! org-make-toc)
+#+end_src
+
+#+begin_src emacs-lisp
+;; Directly
+(require 'org-make-toc)
+#+end_src
+
 ** CV creation
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
 (package! org-cv
@@ -783,6 +793,19 @@ strict digraph {
   :mode "\\.d2$")
 #+end_src
 
+** Mise Hook
+#+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
+(package! mise)
+#+end_src
+
+#+begin_src emacs-lisp
+;; Directly
+(require 'mise)
+
+;; enable globally
+(add-hook 'after-init-hook #'global-mise-mode)
+#+end_src
+
 ** Caddyfile :mode:
 #+begin_src emacs-lisp :tangle ~/.doom.d/packages.el
 (package! caddyfile-mode)
@@ -805,7 +828,6 @@ strict digraph {
            web-mode-enable-front-matter-block t)
   )
 #+end_src
-
 ** KILL TypeScript Mode
 https://merrick.luois.me/posts/typescript-in-emacs-29
 
