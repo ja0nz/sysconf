@@ -109,6 +109,7 @@ let
       "application/json" = textEditor;
       "application/xml" = textEditor;
       "application/javascript" = textEditor;
+      "inode/directory" = [ "org.gnome.Nautilus" ];
       "text/html" = browser;
       "x-scheme-handler/chrome" = browser;
     }
