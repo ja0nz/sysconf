@@ -29,12 +29,12 @@ in
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd}/bin/agreety --cmd $SHELL";
+        command = "${lib.getExe' pkgs.greetd "agreety"} --cmd $SHELL";
       };
       # AutoLogin the main users
       initial_session = {
         user = mainUser;
-        command = "${pkgs.niri}/bin/niri-session";
+        command = lib.getExe' pkgs.niri "niri-session";
         #command = "sway";
       };
     };

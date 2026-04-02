@@ -53,8 +53,8 @@ in
       };
 
       Service = {
-        ExecStart = "${pkgs.maestral}/bin/maestral start -f";
-        ExecStop = "${pkgs.maestral}/bin/maestral stop";
+        ExecStart = "${lib.getExe pkgs.maestral} start -f";
+        ExecStop = "${lib.getExe pkgs.maestral} stop";
         Restart = "on-failure";
         RestartSec = 5;
         Environment = "PYTHONUNBUFFERED=1";

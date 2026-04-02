@@ -42,6 +42,10 @@
       "github.com" = {
         user = "git";
       };
+      "192.168.83.*" = {
+        checkHostIP = false;
+        userKnownHostsFile = "/dev/null";
+      };
     };
   };
 }

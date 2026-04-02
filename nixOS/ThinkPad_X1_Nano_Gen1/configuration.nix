@@ -17,6 +17,7 @@
     [
       ./hardware-configuration.nix
       ./networking.nix
+      ./microvm.nix
       (shared + /cache)
       (shared + /boot.nix)
       (shared + /base.nix)
@@ -24,7 +25,6 @@
       (shared + /fonts.nix)
       (shared + /pipewire.nix)
       (shared + /localization.nix)
-      (shared + /virtualization.nix)
       # (shared + /wireguard.nix)
     ];
 
@@ -76,7 +76,7 @@
       };
       udev.extraRules = ''
         # Udev laptop killswitch
-        # ACTION=="remove", SUBSYSTEM=="block", ENV{ID_SERIAL_SHORT}=="0116007138600721", RUN+="${pkgs.systemd}/bin/shutdown -h now"
+        # ACTION=="remove", SUBSYSTEM=="block", ENV{ID_SERIAL_SHORT}=="0116007138600721", RUN+="${lib.getExe' pkgs.systemd "shutdown"} -h now"
 
         # TODO Battery saving rules - x < 70 && x > 65
         # Double check if /sys/class/power_supply/BAT0/<filename> exists!

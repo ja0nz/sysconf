@@ -39,7 +39,7 @@ in
         indicator-format = "line";
       };
       url = {
-        launch = "${pkgs.xdg-utils}/bin/xdg-open \${url}";
+        launch = "${lib.getExe' pkgs.xdg-utils "xdg-open"} \${url}";
         label-letters = "sadfjklewcmpgh";
         osc8-underline = "url-mode";
       };

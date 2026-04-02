@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }:
 {
@@ -12,7 +13,7 @@
     let
       modifier = "Mod";
       externalMonitor = "DP-3";
-      playerctl = spawn "${pkgs.playerctl}/bin/playerctl";
+      playerctl = spawn (lib.getExe pkgs.playerctl);
       dms-ipc = spawn "dms" "ipc";
     in
     {
@@ -149,7 +150,7 @@
       # Launchers
       # "${modifier}+D".action = spawn "${pkgs.fuzzel}/bin/fuzzel";
       # "${modifier}+Ctrl+D".action = spawn "${pkgs.raffi}/bin/raffi";
-      "${modifier}+Return".action = spawn "${pkgs.foot}/bin/footclient";
+      "${modifier}+Return".action = spawn (lib.getExe' pkgs.foot "footclient");
       "${modifier}+Alt+H".action = show-hotkey-overlay;
       # "${modifier}+E".action = spawn "emacsclient" "-c";
       # "${modifier}+C".action = spawn "chromium";

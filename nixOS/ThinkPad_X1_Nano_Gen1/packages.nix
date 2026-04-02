@@ -94,6 +94,7 @@ in
     # duf # Disk Usage/Free Utility [GO]
     # inxi # A full featured CLI system information tool
     libnotify # A library that sends desktop notifications to a notification daemon
+    wl-clipboard # Command-line copy/paste utilities for Wayland
 
     # -- Find and discover --
     ripgrep # A utility that combines the usability of The Silver Searcher [RUST]
