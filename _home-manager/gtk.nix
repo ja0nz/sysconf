@@ -34,5 +34,8 @@
   };
   home.sessionVariables = {
     XDG_ICON_DIR = "${pkgs.whitesur-icon-theme}/share/icons/WhiteSur";
+    XDG_SESSION_TYPE = "wayland";
+    GTK_USE_PORTAL = "1";
+    QT_QPA_PLATFORMTHEME = "qt6ct";
   };
 }

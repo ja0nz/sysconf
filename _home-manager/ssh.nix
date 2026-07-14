@@ -18,7 +18,7 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks = {
+    settings = {
       "*" = {
         serverAliveInterval = 0; # TODO if long running ssh sessions accross reboots, etc
         serverAliveCountMax = 3;
@@ -37,7 +37,7 @@
         port = 50022;
         user = "opc";
         identitiesOnly = true;
-        identityFile = "${../_secret}/ssh/peteler-family-client";
+        identityFile = "${../_secret}/ssh/peteler-family";
       };
       "github.com" = {
         user = "git";

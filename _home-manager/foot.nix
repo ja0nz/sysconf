@@ -55,7 +55,7 @@ in
         font-monospace-warn = "no";
         sixel = "yes";
       };
-      colors = {
+      colors-dark = {
         alpha = 0.9;
         selection-background = "ccccc7";
         selection-foreground = "333338";

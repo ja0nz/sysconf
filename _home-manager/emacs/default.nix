@@ -58,7 +58,7 @@ in
     init.el -> ~/.doom.d/init.el
   */
   home.activation.initEmacs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    emacs --batch --eval "(require 'org)" --eval '(progn
+    ${pkgs.emacs}/bin/emacs --batch --eval "(require 'org)" --eval '(progn
       (org-babel-tangle-file "${toString ./.}/config_packages.org")
       (org-babel-tangle-file "${toString ./.}/init.org")
       )'

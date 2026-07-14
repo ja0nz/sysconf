@@ -106,11 +106,20 @@
 
     xdg.portal = {
       enable = true;
-      config.common.default = [ "gtk" ];
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      config.common = {
+        default = [
+          "gnome"
+          "gtk"
+        ];
+        "org.freedesktop.impl.portal.ScreenCast" = [ "gnome" ];
+      };
+      extraPortals = [
+        pkgs.xdg-desktop-portal-gtk
+        pkgs.xdg-desktop-portal-gnome
+      ];
     };
 
-    system.stateVersion = "21.05"; # Did you read the comment?
+    system.stateVersion = "26.05"; # Did you read the comment?
   };
 
   # Global options

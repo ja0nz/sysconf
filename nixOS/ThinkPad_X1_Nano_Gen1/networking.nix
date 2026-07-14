@@ -29,13 +29,13 @@
 
   services = {
     # Custom DNS
-    resolved = {
-      enable = true;
-      dnssec = "false";
-      dnsovertls = "true";
+    resolved.enable = true;
+    resolved.settings.Resolve = {
+      DNSSEC = "false";
+      DNSOverTLS = "true";
       domains = [ "~." ];
-      extraConfig = ''
-        DNS=194.242.2.4#base.dns.mullvad.net 2a07:e340::4#base.dns.mullvad.net
+      DNS = ''
+        194.242.2.4#base.dns.mullvad.net 2a07:e340::4#base.dns.mullvad.net
       '';
     };
 
