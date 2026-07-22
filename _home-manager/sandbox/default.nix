@@ -1,25 +1,11 @@
-/*
-  #+TITLE: Emacs
-  #+FILETAGS: :program:
+{ pkgs, sources, ... }:
 
-  * Mandatory configuration
-
-  * Optional configuration
-   Add your config.el files or untangle them
-*/
+let
+  jail-nix = (import sources.flake-compat { src = sources.jail-nix; }).outputs;
+  jail = jail-nix.lib.init pkgs;
+in
 {
-  pkgs ? import <nixpkgs> { },
-}:
-
-pkgs.writeShellApplication {
-  name = "sandbox";
-
-  # Optional: add tools your script expects
-  runtimeInputs = [
-    pkgs.bubblewrap
+  home.packages = [
+    (pkgs.callPackage ./sandbox.nix { inherit jail; })
   ];
-
-  text = ''
-    exec ${toString ./sandbox.sh} "$@"
-  '';
 }

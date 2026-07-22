@@ -6,7 +6,6 @@
 
 let
   sizzy = import ../../_home-manager/sizzy;
-  sandbox = import ../../_home-manager/sandbox;
 in
 {
 
@@ -15,6 +14,7 @@ in
     # -- Programs --
     /emacs
     /neovim
+    /sandbox
     # /zathura
     /chromium
     /helix.nix
@@ -57,7 +57,6 @@ in
   home.packages = with pkgs; [
     # -- Programs --
     # (callPackage sizzy { }) # The browser for Developers & Designers
-    (callPackage sandbox { })
     # INFO: no wayland support for MATE yet (as of 2022)...
     # (mate.caja-with-extensions.override {
     #   extensions = [ mate.caja-extensions mate.caja-dropbox ];
