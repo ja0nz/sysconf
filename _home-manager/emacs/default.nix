@@ -51,6 +51,9 @@ in
 
     # Org roam dependency
     clang # A C language family frontend for LLVM (wrapper script)
+
+    # LSP client multiplexer
+    rassumfrassum
   ];
 
   /*
